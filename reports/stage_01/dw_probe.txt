@@ -1,0 +1,12 @@
+Stage 1 DesignWare probe
+DW sim dir: provided by DW_SIM_DIR
+Probe dir: build/stage1_dw_probe
+vcs_compile_exit_code=0
+vcs_run_exit_code=0
+probe_errors=0
+result=PASS
+
+Run markers:
+DW_PROBE_CONVERSION_UNCONFIRMED h_to_f_z=07c00000 h_to_f_status=00 f_to_h_z=7bff f_to_h_status=30
+DW_PROBE_PASS
+Full logs: build/stage1_dw_probe/vcs_compile.log and build/stage1_dw_probe/vcs_run.log

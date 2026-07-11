@@ -1,0 +1,6 @@
+Static RTL hygiene: PASS
+$ vlogan -full64 -sverilog -work work <stage1 RTL files>
+vlogan_log=build/stage1_vlogan_lint/vlogan.log
+vlogan_exit_code=0
+vlogan_diagnostics: none
+External RTL lint: SKIPPED - verilator executable not found.

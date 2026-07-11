@@ -1,0 +1,16 @@
+
+****************************************
+check_design summary:
+Version:     L-2016.03-SP1
+Date:        Sat Jul 11 19:46:22 2026
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Cells                                                               1
+    Connected to power or ground (LINT-32)                          1
+--------------------------------------------------------------------------------
+
+Warning: In design 'round_sat', a pin on submodule 'u_result_reg' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_data[16]' is connected to logic 0.
+1

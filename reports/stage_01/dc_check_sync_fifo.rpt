@@ -1,0 +1,18 @@
+
+****************************************
+check_design summary:
+Version:     L-2016.03-SP1
+Date:        Sat Jul 11 19:46:09 2026
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Cells                                                               4
+    Cells do not drive (LINT-1)                                     4
+--------------------------------------------------------------------------------
+
+Warning: In design 'sync_fifo', cell 'C675' does not drive any nets. (LINT-1)
+Warning: In design 'sync_fifo', cell 'C680' does not drive any nets. (LINT-1)
+Warning: In design 'sync_fifo', cell 'C691' does not drive any nets. (LINT-1)
+Warning: In design 'sync_fifo', cell 'C692' does not drive any nets. (LINT-1)
+1

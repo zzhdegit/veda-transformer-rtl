@@ -1,0 +1,81 @@
+# Build and simulation
+build/
+work/
+logs/
+simv
+simv.daidir/
+csrc/
+ucli.key
+DVEfiles/
+verdiLog/
+novas.conf
+novas.rc
+*.log
+*.vcd
+*.vpd
+*.fsdb
+*.saif
+*.wlf
+*.jou
+*.str
+
+# Synopsys generated files
+*.ddc
+*.svf
+*.sdf
+*.spef
+*.sdc.tmp
+*.mr
+*.pvl
+*.syn
+*.chk
+*.nlib
+*.ndm
+
+# Physical design and technology
+*.gds
+*.gdsii
+*.lef
+*.def
+*.lib
+*.db
+*.tf
+*.tluplus
+*.itf
+*.mw
+pdk/
+PDK/
+technology/
+tech/
+foundry/
+memory_compiler/
+sram_macro/
+standard_cells/
+
+# Local tools and licenses
+license*
+*.lic
+.env
+.env.*
+local.env
+scripts/local_env.sh
+tool_install/
+synopsys/
+eda_install/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+
+# OS and editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Temporary review packages
+stage1_review_bundle.zip
+stage1_review_bundle.previous.zip

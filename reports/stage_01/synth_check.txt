@@ -1,0 +1,12 @@
+Stage 1 synthesis check
+This script does not generate PPA. It only reports whether a real synthesis environment is visible.
+
+dc_shell: found
+SYNOPSYS_ROOT: not set
+TECH_LIB_ROOT: not set
+$ dc_shell -f scripts/synth/stage1_elaborate.tcl
+dc_exit_code=0
+Target library root: not set; DC run is analyze/elaborate/check_design only.
+DC log: reports/stage_01/dc_elaborate.log
+DC elaboration result: PASS
+No area, power, WNS, frequency, or process timing conclusion is produced.

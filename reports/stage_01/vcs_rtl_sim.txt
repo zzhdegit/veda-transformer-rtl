@@ -1,0 +1,22 @@
+Stage 1 VCS RTL simulation
+Root: /workspace/VEDA
+Build dir: build/stage1_rtl_sim
+vcs: FOUND
+vcs script version : O-2018.09
+
+compile_exit_code=0
+run_exit_code=0
+assertion_or_tb_errors=0
+pass_marker=1
+result=PASS
+
+Run markers:
+TEST stream_reg
+TEST skid_buffer
+TEST sync_fifo depth5
+TEST sync_fifo depth3 full pop+push
+TEST sram_1p_wrapper
+TEST sram_2p_wrapper
+TEST arithmetic wrappers
+STAGE1_RTL_SIM_PASS
+Full logs: build/stage1_rtl_sim/compile.log and build/stage1_rtl_sim/run.log

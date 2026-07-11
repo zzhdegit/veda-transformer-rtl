@@ -1,0 +1,15 @@
+
+****************************************
+check_design summary:
+Version:     L-2016.03-SP1
+Date:        Sat Jul 11 19:46:21 2026
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Inputs/Outputs                                                      1
+    Feedthrough (LINT-29)                                           1
+--------------------------------------------------------------------------------
+
+Warning: In design 'sram_2p_wrapper', input port 'clk_en' is connected directly to output port 'wr_ready'. (LINT-29)
+1
