@@ -1,0 +1,14 @@
+Stage 5 synthesis/elaboration check
+This is analyze/elaborate/link/check_design only. It does not generate PPA.
+
+dc_shell: found
+DW_FOUNDATION_SLDB: found
+TECH_LIB_ROOT: not set
+$ dc_shell -f scripts/synth/stage5_elaborate.tcl
+dc_exit_code=0
+Target library root: not set
+DC log: reports/stage_05/dc_elaborate.log
+DC elaboration result: PASS
+Checked multi_head_kv_cache_manager and multi_head_generation_engine H1/D8, H2/D16, H4/D8 small configs.
+Behavioral cache memory remains provisional; no SRAM macro binding or physical memory conclusion is produced.
+No area, power, WNS, frequency, or process timing conclusion is produced.

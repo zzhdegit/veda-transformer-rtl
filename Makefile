@@ -1,6 +1,6 @@
 PYTHON ?= $(shell if command -v python >/dev/null 2>&1; then echo python; else echo python3; fi)
 
-.PHONY: stage0-test stage1-test stage1-rtl-sim stage1-lint stage1-synth stage1-sta stage1b-test stage1b-rtl-sim stage1b-lint stage1b-synth stage2-test stage2-rtl-sim stage2-lint stage2-synth stage3-test stage3-rtl-sim stage3-lint stage3-synth
+.PHONY: stage0-test stage1-test stage1-rtl-sim stage1-lint stage1-synth stage1-sta stage1b-test stage1b-rtl-sim stage1b-lint stage1b-synth stage2-test stage2-rtl-sim stage2-lint stage2-synth stage3-test stage3-rtl-sim stage3-lint stage3-synth stage4-test stage4-rtl-sim stage4-lint stage4-synth stage4p1-test stage4p1-rtl-sim stage4p1-lint stage4p1-synth stage5-test stage5-rtl-sim stage5-lint stage5-synth
 
 stage0-test:
 	$(PYTHON) -m pytest tb/model/test_reference_attention.py
@@ -55,3 +55,35 @@ stage3-lint:
 
 stage3-synth:
 	$(PYTHON) scripts/synth/run_stage3_synth_check.py
+
+stage4-test:
+	$(PYTHON) scripts/sim/run_stage4_tests.py
+
+stage4-rtl-sim:
+	bash scripts/sim/run_stage4_vcs.sh
+
+stage4-lint:
+	$(PYTHON) scripts/lint/run_stage4_lint.py
+
+stage4-synth:
+	$(PYTHON) scripts/synth/run_stage4_synth_check.py
+
+stage4p1-test: stage4-test
+
+stage4p1-rtl-sim: stage4-rtl-sim
+
+stage4p1-lint: stage4-lint
+
+stage4p1-synth: stage4-synth
+
+stage5-test:
+	$(PYTHON) scripts/sim/run_stage5_tests.py
+
+stage5-rtl-sim:
+	bash scripts/sim/run_stage5_vcs.sh
+
+stage5-lint:
+	$(PYTHON) scripts/lint/run_stage5_lint.py
+
+stage5-synth:
+	$(PYTHON) scripts/synth/run_stage5_synth_check.py

@@ -1,300 +1,276 @@
 # Stage Handoff
 
 ## Stage
-Stage 3: Single-Head Generation Attention
+Stage 5: Shared Multi-Head Generation Attention
 
 ## Status
-STAGE 3 PASS.
+STAGE 5 PASS.
 
-Correctness attention accepted. Performance pipeline provisional. No PPA claim
-is made.
+shared multi-head correctness accepted.
 
-## Preflight Notes
-- Observed branch: `stage2-pe-core`.
-- Requested branch `stage3-single-head-attention` was not present.
-- Requested tag `stage2-correctness-accepted` was not present.
-- Working tree was already dirty with uncommitted Stage 1B/2 deliverables.
-- Stage 3 was implemented on the existing verified Stage 2 working tree without
-  destructive git operations.
+throughput and physical memory provisional.
 
 ## Completed
-- Added FP32 SFU wrappers:
-  - `rtl/arithmetic/fp32_exp_wrapper.sv`
-  - `rtl/arithmetic/fp32_recip_wrapper.sv`
-- Added Stage 3 attention RTL:
-  - `rtl/attention/attention_score_scaler.sv`
-  - `rtl/attention/score_buffer.sv`
-  - `rtl/attention/softmax_reduction.sv`
-  - `rtl/attention/softmax_normalization.sv`
-  - `rtl/attention/single_head_attention_controller.sv`
-  - `rtl/attention/single_head_attention.sv`
-- Added Python bit/cycle models:
-  - `model/attention/softmax_reference.py`
-  - `model/attention/single_head_reference.py`
-  - `model/attention/single_head_cycle_model.py`
-- Added Stage 3 model tests, VCS testbenches, vector generation, lint, synth
-  scripts, Makefile targets, and reports under `reports/stage_03/`.
+- Added a Stage 5 multi-head generation top that reuses one shared
+  `single_head_attention` compute path.
+- Added head-banked token-major K/V cache:
+  - `rtl/cache/multi_head_kv_cache_manager.sv`
+  - logical layout `K_cache[head][token][dimension]`
+  - linear address `((head * MAX_SEQ_LEN) + token) * D_HEAD + dimension`
+  - one shared committed `valid_seq_len`
+- Added all-head provisional transaction semantics:
+  - all heads write K/V provisional row `valid_seq_len`
+  - current token is visible to the active operation only after all-head
+    provisional completion
+  - no committed `valid_seq_len` increment until all heads finish
+  - abort clears all provisional head state
+- Added `rtl/cache/multi_head_generation_controller.sv`.
+  - Checks input order `head 0 dim 0..D_HEAD-1`, then next head.
+  - Loads each head into the shared Stage 3 path.
+  - Schedules heads strictly from 0 to `N_HEAD-1`.
+  - Emits per-head output tiles and head/last metadata.
+  - Commits once after all heads complete.
+- Added `rtl/attention/multi_head_generation_engine.sv`.
+  - Instantiates one cache manager, one controller, and one shared
+    `single_head_attention`.
+  - Does not instantiate N copies of `generation_attention_engine`.
+- Added Python models:
+  - `model/cache/multi_head_kv_cache_reference.py`
+  - `model/cache/multi_head_generation_reference.py`
+- Added Stage 5 tests and scripts:
+  - `tb/model/test_stage5_multihead_generation.py`
+  - `tb/rtl/stage5/tb_multi_head_kv_cache_manager.sv`
+  - `tb/rtl/stage5/tb_multi_head_generation_engine.sv`
+  - `scripts/sim/gen_stage5_vectors.py`
+  - `scripts/sim/run_stage5_tests.py`
+  - `scripts/sim/run_stage5_vcs.sh`
+  - `scripts/lint/run_stage5_lint.py`
+  - `scripts/synth/run_stage5_synth_check.py`
+  - `scripts/synth/stage5_elaborate.tcl`
+- Added Makefile targets:
+  - `make stage5-test`
+  - `make stage5-rtl-sim`
+  - `make stage5-lint`
+  - `make stage5-synth`
+- Updated:
+  - `PROJECT_STATE.md`
+  - `reports/stage_05/summary.md`
 
 ## Not Completed
-- Dynamic KV append and continuous token generation.
-- KV Cache Manager.
-- Multi-head attention.
-- QKV projection and output projection.
+- QKV projection.
+- Output projection.
+- Head concat plus linear projection.
+- FFN.
+- LayerNorm/RMSNorm.
 - Full Transformer layer.
-- Voting.
-- P&R, STA, formal timing closure, area, power, frequency, or PPA.
+- Voting, eviction, sliding window, or circular overwrite.
+- Parallel multi-head compute engines.
+- SRAM macro binding, P&R, STA, timing closure, power, area, frequency, or PPA.
+
+## Start-of-Stage Notes
+- Stage 5 branch is `stage5-shared-multihead`.
+- Requested clean worktree was not present at stage start.
+- Required tag `stage4p1-attention-accepted` was not present.
+- Existing Stage 4/4.1 files and reports were already modified/untracked.
+- No user or pre-existing changes were reverted or cleaned.
+- Stage 4.1 baseline before Stage 5 edits passed host Python, Docker VCS,
+  Docker vlogan lint, and Docker DC.
 
 ## Top Interface
-`single_head_attention` is a first-version single-operation engine.
+`multi_head_generation_engine` is the Stage 5 top.
 
-Load interface:
-- `load_valid/load_ready`
-- `load_kind`: `0=q`, `1=K`, `2=V`
-- `load_token`
-- `load_dim`
-- `load_data` FP16
+Token input is serial by head and dimension:
+- `token_valid/token_ready`
+- `token_head`
+- `token_dim`
+- `token_q_fp16`
+- `token_k_fp16`
+- `token_v_fp16`
+- `token_last_dim`
+- `token_last_head`
+- `token_meta`
 
-Command:
-- `start_valid/start_ready`
-- `start_seq_len`
-- `start_meta`
+Required order:
 
-Output stream:
+```text
+head 0 dim 0..D_HEAD-1
+head 1 dim 0..D_HEAD-1
+...
+head N_HEAD-1 dim 0..D_HEAD-1
+```
+
+Output stream is per-head FP32 tiles:
 - `output_valid/output_ready`
+- `output_head`
 - `output_base_dim`
 - `output_vector_fp32`
 - `output_lane_mask`
 - `output_status`
 - `output_invalid`
 - `output_meta`
-- `output_last`
+- `output_last_tile`
+- `output_last_head`
+- `output_last_token`
 
 Done:
 - `done_valid/done_ready`
 - `done_status`
 - `done_invalid`
 - `done_meta`
+- `done_valid_seq_len`
+- `current_valid_seq_len`
 
-The output is tiled by output dimension. For `D_HEAD=16, PE_NUM=8`, two output
-tiles are emitted.
-
-## Supported Range
-- RTL VCS verified:
-  - `PE_NUM=8, D_HEAD=8, MAX_SEQ_LEN=32`
-  - `PE_NUM=8, D_HEAD=16, MAX_SEQ_LEN=32`
-- Python bit model tests cover:
-  - `d_head = 1, 7, 8, 9, 13, 16`
-  - `seq_len = 1, 2, 3, 7, 8, 15, 31, 32`
-- DC check includes:
-  - default `single_head_attention`
-  - `single_head_attention PE_NUM=8 D_HEAD=16 MAX_SEQ_LEN=32`
-  - `score_buffer DEPTH=4096`
-
-## Score Buffer
-- Module: `rtl/attention/score_buffer.sv`
-- Storage: FP32.
-- Write order: token index order; assertion checks `wr_addr == valid_count`.
-- Read order: controller reads token order for normalization.
-- `READ_LATENCY=1` is explicit.
-- Reset does not clear memory contents; it clears valid length, read count, and
-  peak occupancy.
-- Reads before write are assertion-checked.
-- A second instance stores probabilities so the unchanged Stage 2 PE core can
-  process multiple output dimension tiles for `D_HEAD > PE_NUM`.
-
-## Scale Constants
-`attention_score_scaler` uses `fp32_mac_wrapper` to compute:
-
-```text
-scaled = raw_score * scale + 0
-```
-
-Supported constants:
-
-| D_HEAD | scale FP32 |
-|---:|---|
-| 1 | `32'h3F800000` |
-| 7 | `32'h3EC1848F` |
-| 8 | `32'h3EB504F3` |
-| 9 | `32'h3EAAAAAB` |
-| 13 | `32'h3E8E00D5` |
-| 16 | `32'h3E800000` |
-| 128 | `32'h3DB504F3` |
-
-## Online Softmax
-`softmax_reduction` is serial and correctness-first.
-
-First score:
-
-```text
-m = score
-z = 1.0
-```
-
-Later scores:
-
-```text
-m_new = max(m_old, x)
-z_new = z_old * exp(m_old - m_new) + exp(x - m_new)
-```
-
-Subtraction is implemented as FP32 add with the second operand sign bit flipped,
-for finite/zero inputs only.
-
-## EXP And Reciprocal
-- `fp32_exp_wrapper` wraps `DW_fp_exp`.
-- Finite EXP inputs below `-20.0` (`32'hC1A00000`) clamp to `+0.0`.
-- Directed EXP vectors cover:
-  - `0`
-  - `-0.001`
-  - `-0.1`
-  - `-1`
-  - `-5`
-  - `-10`
-  - `-20`
-  - below clamp input `-21`
-- `fp32_recip_wrapper` computes `1.0 / x` through `DW_fp_div`.
-- SFU wrappers are verified by `tb/rtl/stage3/tb_fp32_exp_recip_wrappers.sv`.
-
-## Normalization
-`softmax_normalization` computes one reciprocal:
-
-```text
-inv_sum = 1 / exp_sum
-```
-
-Then for each token:
-
-```text
-numerator_i = exp(score_i - max_final)
-p_i = numerator_i * inv_sum + 0
-```
-
-Each probability carries token index and `last`; the controller writes it to the
-probability buffer in token order.
-
-## QK Scheduling
-For each token:
-- The controller sends `MODE_QK_INNER` tile transactions to
-  `reconfigurable_pe_core`.
-- `tile_first` is asserted on the first dimension tile.
-- `tile_last` is asserted on the final dimension tile.
-- The final tile uses the computed lane mask.
-- The next tile or token waits for real PE `in_ready`.
-- The raw score is consumed only when PE `out_valid && out_ready`.
-- No fixed cycle guess is used for PE service time.
-
-## SV Scheduling
-For each output dimension tile:
-- The probability buffer is rewound.
-- For every token, the controller reads `p_i`, aligns it with the same token's
-  `V_i` tile, and sends `MODE_SV_OUTER`.
-- `tile_first`/`in_clear` are asserted on the first token for that output tile.
-- `tile_last` is asserted on the final token for that output tile.
-- The accumulated output vector is consumed only on PE
-  `out_valid && out_ready`.
-
-This supports `D_HEAD > PE_NUM` without changing `reconfigurable_pe_core`, but
-it is not a throughput-optimized schedule.
-
-## Assertions
-Stage 3 RTL includes assertion/stability checks for:
-- no start while busy
-- score write count bounded by `seq_len`
-- score write order
-- no score read before written
-- no buffer overflow
-- no SV update before probability valid
-- score/probability token index alignment
-- output stable until ready
-- metadata stable
-- no unknown output when valid
-- load payload stable under backpressure
-- wrapper invalid input policy
-
-VCS runs with assertions enabled through `-assert svaext`.
-
-## Performance Counters
-The top exposes:
-- `perf_total_attention_cycles`
-- `perf_qk_cycles`
-- `perf_qk_pe_busy_cycles`
-- `perf_scale_cycles`
-- `perf_reduction_cycles`
-- `perf_reduction_finalize_cycles`
-- `perf_normalization_cycles`
-- `perf_sv_cycles`
+Performance counters:
+- `perf_generation_steps`
+- `perf_total_cycles`
+- `perf_per_head_attention_cycles`
+- `perf_head_switch_cycles`
+- `perf_provisional_write_cycles`
+- `perf_cache_read_cycles`
+- `perf_cache_write_cycles`
+- `perf_cache_stall_cycles`
+- `perf_commit_cycles`
 - `perf_pe_stall_cycles`
 - `perf_sfu_stall_cycles`
-- `perf_buffer_stall_cycles`
 - `perf_output_stall_cycles`
-- `perf_score_buffer_peak_occupancy`
+- `perf_peak_valid_seq_len`
 
-Measured RTL cycles:
+## Generation Semantics
+For each generation token `t` and head `h`:
 
-| D_HEAD | case | seq_len | total | qk | scale | reduction | reduction_finalize | normalization | sv | pe_stall | sfu_stall | buffer_stall | output_stall | score_peak |
-|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 8 | zero | 1 | 48 | 21 | 2 | 2 | 1 | 11 | 9 | 22 | 6 | 0 | 1 | 1 |
-| 8 | uniform | 4 | 176 | 84 | 8 | 41 | 13 | 41 | 21 | 82 | 36 | 0 | 0 | 4 |
-| 8 | onehot | 7 | 293 | 147 | 14 | 80 | 13 | 71 | 33 | 142 | 54 | 0 | 0 | 7 |
-| 8 | mixed | 8 | 332 | 168 | 16 | 93 | 13 | 81 | 37 | 162 | 60 | 0 | 0 | 8 |
-| 16 | zero | 1 | 77 | 41 | 2 | 2 | 1 | 11 | 19 | 44 | 6 | 0 | 1 | 1 |
-| 16 | uniform | 4 | 277 | 164 | 8 | 41 | 13 | 41 | 42 | 164 | 36 | 0 | 0 | 4 |
-| 16 | onehot | 7 | 466 | 287 | 14 | 80 | 13 | 71 | 66 | 284 | 54 | 0 | 0 | 7 |
-| 16 | mixed | 8 | 531 | 328 | 16 | 93 | 13 | 81 | 75 | 324 | 60 | 0 | 2 | 8 |
+```text
+output[h] = Attention(q[h,t], K[h,0:t], V[h,0:t])
+```
 
-These are RTL simulation counters only.
+The current token participates in every head's causal attention. The first token
+therefore runs every head with `start_seq_len=1`.
 
-## Reproduction
+All heads share one committed `valid_seq_len`. Commit is atomic across heads:
+
+```text
+receive all q/k/v heads
+write all provisional K/V heads at token valid_seq_len
+run head 0
+run head 1
+...
+run head N_HEAD-1
+emit every head output
+commit current token once
+valid_seq_len += 1
+```
+
+If the cache is full, Stage 5 does not write, output, overwrite, or commit. It
+returns invalid status `8'h82` and leaves `valid_seq_len` unchanged.
+
+If any head fails before commit, the controller aborts all provisional head
+state and leaves committed `valid_seq_len` unchanged.
+
+## Assertions
+Stage 5 includes checks for:
+- `head_and_dim_order_legal`
+- `no_head_start_before_all_provisional_complete`
+- `each_head_attention_seq_len_equals_valid_plus_one`
+- `no_next_head_before_current_done`
+- `no_commit_before_all_heads_done`
+- `no_partial_head_commit`
+- `all_heads_share_valid_seq_len`
+- `provisional_head_token_index_legal`
+- `output_head_order_preserved`
+- `no_overwrite_when_full`
+- `abort_clears_all_head_provisional_state`
+- `output stable under backpressure`
+- `transaction count conserved`
+- `no unknown output when valid`
+
+VCS runs use assertions through `-assert svaext`.
+
+## Verification Results
 Host:
 
 ```bash
-python scripts/sim/run_stage2_tests.py
+python scripts/sim/run_stage5_tests.py
+python scripts/sim/run_stage4_tests.py
 python scripts/sim/run_stage3_tests.py
 ```
+
+PASS:
+- Stage 5 model tests and py_compile: 31 tests passed.
+- Stage 4.1 model tests and py_compile: 23 tests passed.
+- Stage 3 model tests and py_compile: 17 tests passed.
+- Host RTL simulation skipped because host has no `vcs`.
 
 Docker:
 
 ```bash
-docker exec nailong bash -lc 'cd /workspace/VEDA && make stage2-rtl-sim'
-docker exec nailong bash -lc 'cd /workspace/VEDA && make stage2-lint'
-docker exec nailong bash -lc 'cd /workspace/VEDA && make stage2-synth'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage5-rtl-sim'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage5-lint'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage5-synth'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage4p1-rtl-sim'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage4p1-lint'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage4p1-synth'
 docker exec nailong bash -lc 'cd /workspace/VEDA && make stage3-rtl-sim'
 docker exec nailong bash -lc 'cd /workspace/VEDA && make stage3-lint'
 docker exec nailong bash -lc 'cd /workspace/VEDA && make stage3-synth'
 ```
 
-## Verification Results
-- Host Stage 3 Python: 17 tests passed; py_compile passed.
-- Docker Stage 3 RTL simulation: PASS.
-- Docker Stage 3 lint: PASS.
-- Docker Stage 3 DC analyze/elaborate/check_design: PASS.
-- Stage 2 host and Docker regressions remain PASS after Stage 3.
+PASS:
+- Stage 5 VCS:
+  - `multi_head_kv_cache_manager`: PASS.
+  - `N_HEAD=1,D_HEAD=8`: PASS.
+  - `N_HEAD=2,D_HEAD=8`: PASS.
+  - `N_HEAD=4,D_HEAD=8`: PASS.
+  - `N_HEAD=2,D_HEAD=16`: PASS.
+- Stage 5 vlogan lint: PASS with no diagnostics.
+- Stage 5 DC analyze/elaborate/link/check_design: PASS.
+- Stage 4.1 Docker VCS/lint/DC regression: PASS.
+- Stage 3 Docker RTL/lint/DC regression: PASS.
 
-## Known Limitations
-- `D_HEAD` is an elaboration parameter, not a runtime input.
-- Probability buffering is a correctness-first schedule for `D_HEAD > PE_NUM`;
-  it does not hide normalization or SV latency.
-- Softmax reduction and normalization are serial.
-- Internal q/K/V memories are behavioral verification memories, not SRAM macro
-  bindings.
-- `score_buffer DEPTH=4096` is elaborated, but the full top was not elaborated
-  with `MAX_SEQ_LEN=4096` because that would instantiate large behavioral K/V
-  memories without real SRAM macros.
-- No PPA, timing, area, power, WNS, frequency, STA, P&R, DRC, or LVS conclusion
-  exists.
+Docker `make stage3-test` was attempted but fails because the container Python
+does not support existing repository files using
+`from __future__ import annotations`. This is a tooling/runtime limitation; host
+Python Stage 3 tests pass and Docker Stage 3 VCS/lint/DC pass.
 
-## Stage 4 Cautions
-- Preserve token-major K/V layout.
-- Add dynamic KV append through an explicit cache-manager interface; do not
-  silently change Stage 3 q/K/V load or output formats.
-- Keep probability/token index alignment explicit if adding overlap.
-- Continue to respect PE `in_ready/out_valid` and drain; do not assume PE II=1.
-- If Stage 4 changes K/V storage layout, PE interface, runtime `D_HEAD`, latency,
-  or softmax scheduling, document it in `PROJECT_STATE.md` before implementation
-  and get confirmation.
+DC checks are analyze/elaborate/link/check_design only. No area, power, WNS,
+frequency, process timing, or layout claim is produced.
+
+## Dependencies
+- Host Python for model tests.
+- Docker container `nailong` for VCS, vlogan, and DC.
+- Synopsys VCS/vlogan and Design Compiler inside the container.
+- DesignWare simulation and foundation libraries inside the container.
+- No PDK or standard-cell library path is required for the checked DC
+  elaboration flow.
+
+## Reproduction Steps
+From `D:\IC_Workspace\VEDA`:
+
+```bash
+python scripts/sim/run_stage5_tests.py
+python scripts/sim/run_stage4_tests.py
+python scripts/sim/run_stage3_tests.py
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage5-rtl-sim'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage5-lint'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage5-synth'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage4p1-rtl-sim'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage4p1-lint'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage4p1-synth'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage3-rtl-sim'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage3-lint'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage3-synth'
+```
+
+## Next-Stage Cautions
+- Do not start projection or Transformer layer work from this handoff.
+- Preserve Stage 5 all-head atomic provisional/commit semantics.
+- Preserve current-token causal attention for every head.
+- Do not instantiate N copies of the full attention engine unless a future
+  accepted spec explicitly changes the resource-sharing requirement.
+- Do not make any provisional head globally committed before all heads complete.
+- Cache full must not write, output, commit, or overwrite.
+- Preserve Stage 3 ready/valid behavior and do not assume fixed PE/SFU latency.
+- Keep behavioral cache memory out of PPA claims.
 
 ## Recommended Commit Message
 ```text
-stage3: implement verified single-head generation attention
+stage5: implement shared multi-head causal generation attention
 ```

@@ -1,0 +1,22 @@
+ 
+****************************************
+check_design summary:
+Version:     L-2016.03-SP1
+Date:        Sun Jul 12 22:10:51 2026
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Cells                                                               8
+    Cells do not drive (LINT-1)                                     8
+--------------------------------------------------------------------------------
+
+Warning: In design 'multi_head_kv_cache_manager', cell 'C166829' does not drive any nets. (LINT-1)
+Warning: In design 'multi_head_kv_cache_manager', cell 'C166852' does not drive any nets. (LINT-1)
+Warning: In design 'multi_head_kv_cache_manager', cell 'C166857' does not drive any nets. (LINT-1)
+Warning: In design 'multi_head_kv_cache_manager', cell 'C166884' does not drive any nets. (LINT-1)
+Warning: In design 'multi_head_kv_cache_manager', cell 'C166896' does not drive any nets. (LINT-1)
+Warning: In design 'multi_head_kv_cache_manager', cell 'C168400' does not drive any nets. (LINT-1)
+Warning: In design 'multi_head_kv_cache_manager', cell 'C168402' does not drive any nets. (LINT-1)
+Warning: In design 'multi_head_kv_cache_manager', cell 'C168415' does not drive any nets. (LINT-1)
+1

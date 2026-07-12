@@ -1,0 +1,29 @@
+ 
+****************************************
+check_design summary:
+Version:     L-2016.03-SP1
+Date:        Sun Jul 12 22:12:47 2026
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Inputs/Outputs                                                      3
+    Shorted outputs (LINT-31)                                       1
+    Constant outputs (LINT-52)                                      2
+
+Cells                                                               8
+    Cells do not drive (LINT-1)                                     8
+--------------------------------------------------------------------------------
+
+Warning: In design 'kv_cache_manager', cell 'C67848' does not drive any nets. (LINT-1)
+Warning: In design 'kv_cache_manager', cell 'C67872' does not drive any nets. (LINT-1)
+Warning: In design 'kv_cache_manager', cell 'C67897' does not drive any nets. (LINT-1)
+Warning: In design 'kv_cache_manager', cell 'C67909' does not drive any nets. (LINT-1)
+Warning: In design 'kv_cache_manager', cell 'C68660' does not drive any nets. (LINT-1)
+Warning: In design 'kv_cache_manager', cell 'C68674' does not drive any nets. (LINT-1)
+Warning: In design 'kv_cache_manager', cell 'C68676' does not drive any nets. (LINT-1)
+Warning: In design 'kv_cache_manager', cell 'C68689' does not drive any nets. (LINT-1)
+Warning: In design 'kv_address_generator_D_HEAD8_MAX_SEQ_LEN32', output port 'token_in_range' is connected directly to output port 'dim_in_range'. (LINT-31)
+Warning: In design 'kv_address_generator_D_HEAD8_MAX_SEQ_LEN32', output port 'token_in_range' is connected directly to 'logic 1'. (LINT-52)
+Warning: In design 'kv_address_generator_D_HEAD8_MAX_SEQ_LEN32', output port 'dim_in_range' is connected directly to 'logic 1'. (LINT-52)
+1

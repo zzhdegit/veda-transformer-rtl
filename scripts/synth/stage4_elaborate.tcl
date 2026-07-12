@@ -1,8 +1,8 @@
 set script_path [file normalize [info script]]
 set script_dir [file dirname $script_path]
 set root_dir [file dirname [file dirname $script_dir]]
-set report_dir "$root_dir/reports/stage_03"
-set build_dir "$root_dir/build/stage3_dc"
+set report_dir "$root_dir/reports/stage_04"
+set build_dir "$root_dir/build/stage4_dc"
 file mkdir $report_dir
 file mkdir $build_dir
 
@@ -44,23 +44,23 @@ set rtl_files [list \
   "$root_dir/rtl/attention/softmax_normalization.sv" \
   "$root_dir/rtl/attention/single_head_attention_controller.sv" \
   "$root_dir/rtl/attention/single_head_attention.sv" \
+  "$root_dir/rtl/cache/kv_address_generator.sv" \
+  "$root_dir/rtl/cache/kv_cache_manager.sv" \
+  "$root_dir/rtl/cache/generation_attention_controller.sv" \
+  "$root_dir/rtl/attention/generation_attention_engine.sv" \
 ]
 
-puts "STAGE3_DC_ELABORATE: analyze RTL with SYNTHESIS defined; this is not PPA."
+puts "STAGE4_DC_ELABORATE: analyze RTL with SYNTHESIS defined; this is not PPA."
 analyze -format sverilog -define SYNTHESIS $rtl_files
 
 set tops [list \
-  fp32_exp_wrapper \
-  fp32_recip_wrapper \
-  attention_score_scaler \
-  score_buffer \
-  softmax_reduction \
-  softmax_normalization \
-  single_head_attention \
+  kv_address_generator \
+  kv_cache_manager \
+  generation_attention_engine \
 ]
 
 foreach top $tops {
-  puts "STAGE3_DC_ELABORATE_TOP: $top"
+  puts "STAGE4_DC_ELABORATE_TOP: $top"
   elaborate $top
   current_design $top
   link
@@ -68,17 +68,23 @@ foreach top $tops {
   remove_design -designs
 }
 
-puts "STAGE3_DC_ELABORATE_TOP: score_buffer_DEPTH4096"
-elaborate score_buffer -parameters "DEPTH=4096"
+puts "STAGE4_DC_ELABORATE_TOP: generation_attention_engine_D16_MAX8"
+elaborate generation_attention_engine -parameters "PE_NUM=8,D_HEAD=16,MAX_SEQ_LEN=8,META_W=16"
 link
-redirect -file "$report_dir/dc_check_score_buffer_depth4096.rpt" { check_design }
+redirect -file "$report_dir/dc_check_generation_attention_engine_d16_max8.rpt" { check_design }
 remove_design -designs
 
-puts "STAGE3_DC_ELABORATE_TOP: single_head_attention_D16"
-elaborate single_head_attention -parameters "PE_NUM=8,D_HEAD=16,MAX_SEQ_LEN=32,META_W=16"
+puts "STAGE4_DC_ELABORATE_TOP: kv_cache_manager_D16_MAX8"
+elaborate kv_cache_manager -parameters "D_HEAD=16,MAX_SEQ_LEN=8"
 link
-redirect -file "$report_dir/dc_check_single_head_attention_d16.rpt" { check_design }
+redirect -file "$report_dir/dc_check_kv_cache_manager_d16_max8.rpt" { check_design }
 remove_design -designs
 
-puts "STAGE3_DC_ELABORATE_PASS"
+puts "STAGE4_DC_ELABORATE_TOP: kv_address_generator_D128_MAX4096"
+elaborate kv_address_generator -parameters "D_HEAD=128,MAX_SEQ_LEN=4096"
+link
+redirect -file "$report_dir/dc_check_kv_address_generator_d128_max4096.rpt" { check_design }
+remove_design -designs
+
+puts "STAGE4_DC_ELABORATE_PASS"
 exit 0

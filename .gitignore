@@ -25,6 +25,7 @@ novas.rc
 *.sdf
 *.spef
 *.sdc.tmp
+*.sldb
 *.mr
 *.pvl
 *.syn

@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
-REPORT = ROOT / "reports/stage_03/synth_check.txt"
+REPORT = ROOT / "reports/stage_04/synth_check.txt"
 
 
 def find_dw_sldb():
@@ -27,7 +27,7 @@ def find_dw_sldb():
 def main():
     REPORT.parent.mkdir(parents=True, exist_ok=True)
     lines = [
-        "Stage 3 synthesis/elaboration check",
+        "Stage 4 synthesis/elaboration check",
         "This is analyze/elaborate/link/check_design only. It does not generate PPA.",
         "",
     ]
@@ -47,11 +47,11 @@ def main():
         lines.append("DC elaboration: SKIPPED - DesignWare foundation library not found.")
         errors.append("DW foundation library not found")
     else:
-        work_dir = ROOT / "build" / "stage3_dc_run"
+        work_dir = ROOT / "build" / "stage4_dc_run"
         work_dir.mkdir(parents=True, exist_ok=True)
         env = os.environ.copy()
         env["DW_FOUNDATION_SLDB"] = dw_sldb
-        cmd = [dc_shell, "-f", str(ROOT / "scripts" / "synth" / "stage3_elaborate.tcl")]
+        cmd = [dc_shell, "-f", str(ROOT / "scripts" / "synth" / "stage4_elaborate.tcl")]
         proc = subprocess.run(
             cmd,
             cwd=str(work_dir),
@@ -60,16 +60,16 @@ def main():
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
         )
-        dc_log = ROOT / "reports" / "stage_03" / "dc_elaborate.log"
+        dc_log = ROOT / "reports" / "stage_04" / "dc_elaborate.log"
         dc_log.write_text(proc.stdout, encoding="utf-8", errors="ignore")
         dc_errors = [
             line for line in proc.stdout.splitlines()
             if re.search(r"^(Error:|\*\*\* .*errors?)", line)
         ]
-        lines.append("$ dc_shell -f scripts/synth/stage3_elaborate.tcl")
+        lines.append("$ dc_shell -f scripts/synth/stage4_elaborate.tcl")
         lines.append("dc_exit_code=%d" % proc.returncode)
         lines.append("Target library root: %s" % ("set, but no PPA generated" if target_lib else "not set"))
-        lines.append("DC log: reports/stage_03/dc_elaborate.log")
+        lines.append("DC log: reports/stage_04/dc_elaborate.log")
         if proc.returncode != 0 or dc_errors:
             lines.append("DC elaboration result: FAIL")
             if dc_errors:
@@ -78,7 +78,8 @@ def main():
             errors.append("dc_shell elaboration failed")
         else:
             lines.append("DC elaboration result: PASS")
-        lines.append("Checked default D_HEAD=8 top, D_HEAD=16 top, and score_buffer DEPTH=4096.")
+        lines.append("Checked cache manager, generation_attention_engine D_HEAD=8/16, and address generation D_HEAD=128/MAX_SEQ_LEN=4096.")
+        lines.append("Full D_HEAD=128/MAX_SEQ_LEN=4096 cache memory is not elaborated as flip-flop behavioral storage; physical memory remains provisional.")
         lines.append("No area, power, WNS, frequency, or process timing conclusion is produced.")
 
     REPORT.write_text("\n".join(lines) + "\n", encoding="utf-8")

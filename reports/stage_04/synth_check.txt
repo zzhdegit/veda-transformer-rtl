@@ -1,0 +1,14 @@
+Stage 4 synthesis/elaboration check
+This is analyze/elaborate/link/check_design only. It does not generate PPA.
+
+dc_shell: found
+DW_FOUNDATION_SLDB: found
+TECH_LIB_ROOT: not set
+$ dc_shell -f scripts/synth/stage4_elaborate.tcl
+dc_exit_code=0
+Target library root: not set
+DC log: reports/stage_04/dc_elaborate.log
+DC elaboration result: PASS
+Checked cache manager, generation_attention_engine D_HEAD=8/16, and address generation D_HEAD=128/MAX_SEQ_LEN=4096.
+Full D_HEAD=128/MAX_SEQ_LEN=4096 cache memory is not elaborated as flip-flop behavioral storage; physical memory remains provisional.
+No area, power, WNS, frequency, or process timing conclusion is produced.

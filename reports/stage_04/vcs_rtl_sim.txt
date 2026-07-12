@@ -1,0 +1,34 @@
+Stage 4 VCS RTL simulation
+Build dir: build/stage4_rtl_sim
+vcs: FOUND
+vcs script version : O-2018.09
+DesignWare sim dir: detected
+
+kv_cache_manager result=PASS run_exit_code=0
+generation_attention_d8 result=PASS run_exit_code=0
+generation_attention_d16 result=PASS run_exit_code=0
+
+Run markers:
+STAGE4_GENERATION_PERF D_HEAD=16 step=step0 seq_before=0 seq_after=1 total=191 attention=157 provisional_append=16 commit=1 cache_read=32 cache_write=16 cache_stall=0 pe_stall=44 sfu_stall=6 peak_seq=1
+STAGE4_GENERATION_PERF D_HEAD=16 step=step1 seq_before=1 seq_after=2 total=522 attention=453 provisional_append=32 commit=2 cache_read=96 cache_write=32 cache_stall=0 pe_stall=128 sfu_stall=30 peak_seq=2
+STAGE4_GENERATION_PERF D_HEAD=16 step=step2 seq_before=2 seq_after=3 total=979 attention=876 provisional_append=48 commit=3 cache_read=192 cache_write=48 cache_stall=0 pe_stall=252 sfu_stall=60 peak_seq=3
+STAGE4_GENERATION_PERF D_HEAD=16 step=step3 seq_before=3 seq_after=4 total=1564 attention=1427 provisional_append=64 commit=4 cache_read=320 cache_write=64 cache_stall=0 pe_stall=416 sfu_stall=96 peak_seq=4
+STAGE4_GENERATION_PERF D_HEAD=16 step=step4 seq_before=4 seq_after=5 total=2275 attention=2104 provisional_append=80 commit=5 cache_read=480 cache_write=80 cache_stall=0 pe_stall=620 sfu_stall=138 peak_seq=5
+STAGE4_GENERATION_PERF D_HEAD=16 step=step5 seq_before=5 seq_after=6 total=3114 attention=2909 provisional_append=96 commit=6 cache_read=672 cache_write=96 cache_stall=0 pe_stall=864 sfu_stall=186 peak_seq=6
+STAGE4_GENERATION_PERF D_HEAD=16 step=step6 seq_before=6 seq_after=7 total=4079 attention=3840 provisional_append=112 commit=7 cache_read=896 cache_write=112 cache_stall=0 pe_stall=1148 sfu_stall=240 peak_seq=7
+STAGE4_GENERATION_PERF D_HEAD=16 step=step7 seq_before=7 seq_after=8 total=5171 attention=4898 provisional_append=128 commit=8 cache_read=1152 cache_write=128 cache_stall=0 pe_stall=1472 sfu_stall=300 peak_seq=8
+STAGE4_GENERATION_PERF D_HEAD=16 step=step8 seq_before=8 seq_after=8 total=5189 attention=4898 provisional_append=128 commit=8 cache_read=1152 cache_write=128 cache_stall=0 pe_stall=1472 sfu_stall=300 peak_seq=8
+STAGE4_GENERATION_ATTENTION_PASS D_HEAD=16
+STAGE4_GENERATION_PERF D_HEAD=8 step=step0 seq_before=0 seq_after=1 total=106 attention=88 provisional_append=8 commit=1 cache_read=16 cache_write=8 cache_stall=0 pe_stall=22 sfu_stall=6 peak_seq=1
+STAGE4_GENERATION_PERF D_HEAD=8 step=step1 seq_before=1 seq_after=2 total=296 attention=259 provisional_append=16 commit=2 cache_read=48 cache_write=16 cache_stall=0 pe_stall=64 sfu_stall=30 peak_seq=2
+STAGE4_GENERATION_PERF D_HEAD=8 step=step2 seq_before=2 seq_after=3 total=557 attention=502 provisional_append=24 commit=3 cache_read=96 cache_write=24 cache_stall=0 pe_stall=126 sfu_stall=60 peak_seq=3
+STAGE4_GENERATION_PERF D_HEAD=8 step=step3 seq_before=3 seq_after=4 total=888 attention=815 provisional_append=32 commit=4 cache_read=160 cache_write=32 cache_stall=0 pe_stall=208 sfu_stall=96 peak_seq=4
+STAGE4_GENERATION_PERF D_HEAD=8 step=step4 seq_before=4 seq_after=5 total=1290 attention=1199 provisional_append=40 commit=5 cache_read=240 cache_write=40 cache_stall=0 pe_stall=310 sfu_stall=138 peak_seq=5
+STAGE4_GENERATION_PERF D_HEAD=8 step=step5 seq_before=5 seq_after=6 total=1763 attention=1654 provisional_append=48 commit=6 cache_read=336 cache_write=48 cache_stall=0 pe_stall=432 sfu_stall=186 peak_seq=6
+STAGE4_GENERATION_PERF D_HEAD=8 step=step6 seq_before=6 seq_after=7 total=2307 attention=2180 provisional_append=56 commit=7 cache_read=448 cache_write=56 cache_stall=0 pe_stall=574 sfu_stall=240 peak_seq=7
+STAGE4_GENERATION_PERF D_HEAD=8 step=step7 seq_before=7 seq_after=8 total=2924 attention=2778 provisional_append=64 commit=8 cache_read=576 cache_write=64 cache_stall=0 pe_stall=736 sfu_stall=300 peak_seq=8
+STAGE4_GENERATION_PERF D_HEAD=8 step=step8 seq_before=8 seq_after=8 total=2934 attention=2778 provisional_append=64 commit=8 cache_read=576 cache_write=64 cache_stall=0 pe_stall=736 sfu_stall=300 peak_seq=8
+STAGE4_GENERATION_ATTENTION_PASS D_HEAD=8
+STAGE4_KV_CACHE_MANAGER_PASS read_cycles=10 write_cycles=13 stall_cycles=3 peak_seq=3
+result=PASS
+Full logs: build/stage4_rtl_sim/*_compile.log and *_run.log
