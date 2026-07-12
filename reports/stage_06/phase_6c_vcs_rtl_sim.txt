@@ -1,0 +1,18 @@
+Stage 6C VCS RTL simulation
+Build dir: build/stage6c_rtl_sim
+vcs: FOUND
+vcs script version : O-2018.09
+DesignWare sim dir: detected
+
+qkv_h1_d8 result=PASS run_exit_code=0
+qkv_h2_d8 result=PASS run_exit_code=0
+qkv_h4_d8 result=PASS run_exit_code=0
+qkv_h2_d16 result=PASS run_exit_code=0
+
+Run markers:
+STAGE6C_QKV_PROJECTION_PASS N_HEAD=1 D_HEAD=8 q=372 k=372 v=372 quant=96 pe_stall=0 output_stall=6
+STAGE6C_QKV_PROJECTION_PASS N_HEAD=2 D_HEAD=16 q=5316 k=5316 v=5316 quant=384 pe_stall=10944 output_stall=28
+STAGE6C_QKV_PROJECTION_PASS N_HEAD=2 D_HEAD=8 q=1380 k=1380 v=1380 quant=192 pe_stall=1824 output_stall=16
+STAGE6C_QKV_PROJECTION_PASS N_HEAD=4 D_HEAD=8 q=5316 k=5316 v=5316 quant=384 pe_stall=10944 output_stall=28
+result=PASS
+Full logs: build/stage6c_rtl_sim/*_compile.log and *_run.log

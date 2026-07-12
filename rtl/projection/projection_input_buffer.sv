@@ -23,6 +23,7 @@ module projection_input_buffer #(
 );
     logic [15:0] data_q [0:D_MODEL-1];
     logic [D_MODEL-1:0] loaded_q;
+    logic [D_MODEL-1:0] loaded_after_write;
     logic error_q;
 
     wire load_fire = load_valid && load_ready;
@@ -38,6 +39,13 @@ module projection_input_buffer #(
     assign loaded_mask = loaded_q;
     assign complete = &loaded_q;
     assign error_valid = error_q;
+
+    always_comb begin
+        loaded_after_write = loaded_q;
+        if (load_fire && index_legal) begin
+            loaded_after_write[int'(load_index)] = 1'b1;
+        end
+    end
 
     always_comb begin
         vector_flat_fp16 = '0;
@@ -66,7 +74,7 @@ module projection_input_buffer #(
                     loaded_q[int'(load_index)] <= 1'b1;
                 end
             end
-            if (load_commit && !complete) begin
+            if (load_commit && !(&loaded_after_write)) begin
                 error_q <= 1'b1;
             end
         end
@@ -77,7 +85,7 @@ module projection_input_buffer #(
         if (rst_n) begin
             assert (!(load_fire && !index_legal))
                 else $error("projection_input_buffer hidden_dimension_order_legal failed");
-            assert (!(load_commit && !complete))
+            assert (!(load_commit && !(&loaded_after_write)))
                 else $error("projection_input_buffer no_projection_start_without_complete_input failed");
             assert (!(complete && $isunknown(vector_flat_fp16)))
                 else $error("projection_input_buffer no_unknown_output_when_valid failed");
