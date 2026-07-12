@@ -1,0 +1,37 @@
+ 
+****************************************
+check_design summary:
+Version:     L-2016.03-SP1
+Date:        Sun Jul 12 12:34:41 2026
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Inputs/Outputs                                                      1
+    Feedthrough (LINT-29)                                           1
+
+Cells                                                              11
+    Cells do not drive (LINT-1)                                     5
+    Connected to power or ground (LINT-32)                          5
+    Nets connected to multiple pins on same cell (LINT-33)          1
+--------------------------------------------------------------------------------
+
+Warning: In design 'score_buffer_DEPTH4096', cell 'B_9' does not drive any nets. (LINT-1)
+Warning: In design 'score_buffer_DEPTH4096', cell 'B_10' does not drive any nets. (LINT-1)
+Warning: In design 'score_buffer_DEPTH4096', cell 'C467' does not drive any nets. (LINT-1)
+Warning: In design 'score_buffer_DEPTH4096', cell 'C479' does not drive any nets. (LINT-1)
+Warning: In design 'score_buffer_DEPTH4096', cell 'C484' does not drive any nets. (LINT-1)
+Warning: In design 'sram_2p_wrapper_DATA_W32_DEPTH4096_READ_LATENCY1', input port 'clk_en' is connected directly to output port 'wr_ready'. (LINT-29)
+Warning: In design 'score_buffer_DEPTH4096', a pin on submodule 'u_mem' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'clk_en' is connected to logic 1. 
+Warning: In design 'score_buffer_DEPTH4096', a pin on submodule 'u_mem' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'wr_wstrb[3]' is connected to logic 1. 
+Warning: In design 'score_buffer_DEPTH4096', a pin on submodule 'u_mem' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'wr_wstrb[2]' is connected to logic 1. 
+Warning: In design 'score_buffer_DEPTH4096', a pin on submodule 'u_mem' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'wr_wstrb[1]' is connected to logic 1. 
+Warning: In design 'score_buffer_DEPTH4096', a pin on submodule 'u_mem' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'wr_wstrb[0]' is connected to logic 1. 
+Warning: In design 'score_buffer_DEPTH4096', the same net is connected to more than one pin on submodule 'u_mem'. (LINT-33)
+   Net '*Logic1*' is connected to pins 'clk_en', 'wr_wstrb[3]'', 'wr_wstrb[2]', 'wr_wstrb[1]', 'wr_wstrb[0]'.
+1

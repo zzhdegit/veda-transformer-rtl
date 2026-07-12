@@ -1,0 +1,100 @@
+ 
+****************************************
+check_design summary:
+Version:     L-2016.03-SP1
+Date:        Sun Jul 12 12:37:14 2026
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Cells                                                              32
+    Cells do not drive (LINT-1)                                     9
+    Connected to power or ground (LINT-32)                         22
+    Nets connected to multiple pins on same cell (LINT-33)          1
+
+Nets                                                               26
+    Unloaded nets (LINT-2)                                         26
+--------------------------------------------------------------------------------
+
+Warning: In design 'fp32_reduction_tree_8_16_1', cell 'C3570' does not drive any nets. (LINT-1)
+Warning: In design 'pe_perf_counter_PE_NUM8_COUNTER_W64', cell 'C3731' does not drive any nets. (LINT-1)
+Warning: In design 'pe_perf_counter_PE_NUM8_COUNTER_W64', cell 'C3733' does not drive any nets. (LINT-1)
+Warning: In design 'pe_perf_counter_PE_NUM8_COUNTER_W64', cell 'C3735' does not drive any nets. (LINT-1)
+Warning: In design 'pe_perf_counter_PE_NUM8_COUNTER_W64', cell 'C3737' does not drive any nets. (LINT-1)
+Warning: In design 'pe_perf_counter_PE_NUM8_COUNTER_W64', cell 'C3739' does not drive any nets. (LINT-1)
+Warning: In design 'pe_perf_counter_PE_NUM8_COUNTER_W64', cell 'C3741' does not drive any nets. (LINT-1)
+Warning: In design 'pe_perf_counter_PE_NUM8_COUNTER_W64', cell 'C3743' does not drive any nets. (LINT-1)
+Warning: In design 'pe_perf_counter_PE_NUM8_COUNTER_W64', cell 'C3745' does not drive any nets. (LINT-1)
+Warning: In design 'reconfigurable_pe_core', net 'lane_out_active[1]' driven by pin 'g_lanes[1].u_pe_lane/out_lane_active' has no loads. (LINT-2)
+Warning: In design 'reconfigurable_pe_core', net 'lane_out_active[2]' driven by pin 'g_lanes[2].u_pe_lane/out_lane_active' has no loads. (LINT-2)
+Warning: In design 'reconfigurable_pe_core', net 'lane_out_active[3]' driven by pin 'g_lanes[3].u_pe_lane/out_lane_active' has no loads. (LINT-2)
+Warning: In design 'reconfigurable_pe_core', net 'lane_out_active[4]' driven by pin 'g_lanes[4].u_pe_lane/out_lane_active' has no loads. (LINT-2)
+Warning: In design 'reconfigurable_pe_core', net 'lane_out_active[5]' driven by pin 'g_lanes[5].u_pe_lane/out_lane_active' has no loads. (LINT-2)
+Warning: In design 'reconfigurable_pe_core', net 'lane_out_active[6]' driven by pin 'g_lanes[6].u_pe_lane/out_lane_active' has no loads. (LINT-2)
+Warning: In design 'reconfigurable_pe_core', net 'lane_out_active[7]' driven by pin 'g_lanes[7].u_pe_lane/out_lane_active' has no loads. (LINT-2)
+Warning: In design 'reconfigurable_pe_core', net 'reduce_busy' driven by pin 'u_reduction_tree/busy' has no loads. (LINT-2)
+Warning: In design 'reconfigurable_pe_core', net 'lane_out_active[0]' driven by pin 'g_lanes[0].u_pe_lane/out_lane_active' has no loads. (LINT-2)
+Warning: In design 'reconfigurable_pe_core', net 'u_reduction_tree/add_out_last' driven by pin 'u_reduction_tree/u_add/out_last' has no loads. (LINT-2)
+Warning: In design 'reconfigurable_pe_core', net 'u_reduction_tree/add_out_meta[0]' driven by pin 'u_reduction_tree/u_add/out_meta[0]' has no loads. (LINT-2)
+Warning: In design 'reconfigurable_pe_core', net 'u_reduction_tree/add_out_meta[1]' driven by pin 'u_reduction_tree/u_add/out_meta[1]' has no loads. (LINT-2)
+Warning: In design 'reconfigurable_pe_core', net 'u_reduction_tree/add_out_meta[2]' driven by pin 'u_reduction_tree/u_add/out_meta[2]' has no loads. (LINT-2)
+Warning: In design 'reconfigurable_pe_core', net 'u_reduction_tree/add_out_meta[3]' driven by pin 'u_reduction_tree/u_add/out_meta[3]' has no loads. (LINT-2)
+Warning: In design 'reconfigurable_pe_core', net 'u_reduction_tree/add_out_meta[4]' driven by pin 'u_reduction_tree/u_add/out_meta[4]' has no loads. (LINT-2)
+Warning: In design 'reconfigurable_pe_core', net 'u_reduction_tree/add_out_meta[5]' driven by pin 'u_reduction_tree/u_add/out_meta[5]' has no loads. (LINT-2)
+Warning: In design 'reconfigurable_pe_core', net 'u_reduction_tree/add_out_meta[6]' driven by pin 'u_reduction_tree/u_add/out_meta[6]' has no loads. (LINT-2)
+Warning: In design 'reconfigurable_pe_core', net 'u_reduction_tree/add_out_meta[7]' driven by pin 'u_reduction_tree/u_add/out_meta[7]' has no loads. (LINT-2)
+Warning: In design 'reconfigurable_pe_core', net 'u_reduction_tree/add_out_meta[8]' driven by pin 'u_reduction_tree/u_add/out_meta[8]' has no loads. (LINT-2)
+Warning: In design 'reconfigurable_pe_core', net 'u_reduction_tree/add_out_meta[9]' driven by pin 'u_reduction_tree/u_add/out_meta[9]' has no loads. (LINT-2)
+Warning: In design 'reconfigurable_pe_core', net 'u_reduction_tree/add_out_meta[10]' driven by pin 'u_reduction_tree/u_add/out_meta[10]' has no loads. (LINT-2)
+Warning: In design 'reconfigurable_pe_core', net 'u_reduction_tree/add_out_meta[11]' driven by pin 'u_reduction_tree/u_add/out_meta[11]' has no loads. (LINT-2)
+Warning: In design 'reconfigurable_pe_core', net 'u_reduction_tree/add_out_meta[12]' driven by pin 'u_reduction_tree/u_add/out_meta[12]' has no loads. (LINT-2)
+Warning: In design 'reconfigurable_pe_core', net 'u_reduction_tree/add_out_meta[13]' driven by pin 'u_reduction_tree/u_add/out_meta[13]' has no loads. (LINT-2)
+Warning: In design 'reconfigurable_pe_core', net 'u_reduction_tree/add_out_meta[14]' driven by pin 'u_reduction_tree/u_add/out_meta[14]' has no loads. (LINT-2)
+Warning: In design 'reconfigurable_pe_core', net 'u_reduction_tree/add_out_meta[15]' driven by pin 'u_reduction_tree/u_add/out_meta[15]' has no loads. (LINT-2)
+Warning: In design 'reconfigurable_pe_core', a pin on submodule 'g_lanes[0].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_lane_enable' is connected to logic 1. 
+Warning: In design 'reconfigurable_pe_core', a pin on submodule 'g_lanes[1].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_lane_enable' is connected to logic 1. 
+Warning: In design 'reconfigurable_pe_core', a pin on submodule 'g_lanes[2].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_lane_enable' is connected to logic 1. 
+Warning: In design 'reconfigurable_pe_core', a pin on submodule 'g_lanes[3].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_lane_enable' is connected to logic 1. 
+Warning: In design 'reconfigurable_pe_core', a pin on submodule 'g_lanes[4].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_lane_enable' is connected to logic 1. 
+Warning: In design 'reconfigurable_pe_core', a pin on submodule 'g_lanes[5].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_lane_enable' is connected to logic 1. 
+Warning: In design 'reconfigurable_pe_core', a pin on submodule 'g_lanes[6].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_lane_enable' is connected to logic 1. 
+Warning: In design 'reconfigurable_pe_core', a pin on submodule 'g_lanes[7].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_lane_enable' is connected to logic 1. 
+Warning: In design 'reconfigurable_pe_core', a pin on submodule 'u_perf_counter' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'clear' is connected to logic 0. 
+Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_data[12]' is connected to logic 0. 
+Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_data[11]' is connected to logic 0. 
+Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_data[10]' is connected to logic 0. 
+Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_data[9]' is connected to logic 0. 
+Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_data[8]' is connected to logic 0. 
+Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_data[7]' is connected to logic 0. 
+Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_data[6]' is connected to logic 0. 
+Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_data[5]' is connected to logic 0. 
+Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_data[4]' is connected to logic 0. 
+Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_data[3]' is connected to logic 0. 
+Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_data[2]' is connected to logic 0. 
+Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_data[1]' is connected to logic 0. 
+Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_data[0]' is connected to logic 0. 
+Warning: In design 'fp16_to_fp32_16_1', the same net is connected to more than one pin on submodule 'u_output_reg'. (LINT-33)
+   Net '*Logic0*' is connected to pins 'in_data[12]', 'in_data[11]'', 'in_data[10]', 'in_data[9]', 'in_data[8]', 'in_data[7]', 'in_data[6]', 'in_data[5]', 'in_data[4]', 'in_data[3]', 'in_data[2]', 'in_data[1]', 'in_data[0]'.
+1

@@ -1,0 +1,13 @@
+Stage 2 synthesis/elaboration check
+This is analyze/elaborate/link/check_design only. It does not generate PPA.
+
+dc_shell: found
+DW_FOUNDATION_SLDB: found
+TECH_LIB_ROOT: not set
+$ dc_shell -f scripts/synth/stage2_elaborate.tcl
+dc_exit_code=0
+Target library root: not set
+DC log: reports/stage_02/dc_elaborate.log
+DC elaboration result: PASS
+Checked default PE_NUM=8 top and parameterized PE_NUM=128 core.
+No area, power, WNS, frequency, or process timing conclusion is produced.

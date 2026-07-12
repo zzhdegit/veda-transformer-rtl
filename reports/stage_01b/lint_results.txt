@@ -1,0 +1,5 @@
+Static Stage 1B RTL hygiene: PASS
+$ vlogan -full64 -sverilog -work work <DW sim files> <stage1b RTL files>
+vlogan_log=build/stage1b_vlogan_lint/vlogan.log
+vlogan_exit_code=0
+vlogan_diagnostics: none

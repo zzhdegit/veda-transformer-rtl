@@ -1,0 +1,27 @@
+Stage 1B VCS RTL simulation
+Build dir: build/stage1b_rtl_sim
+vcs: FOUND
+vcs script version : O-2018.09
+DesignWare sim dir: detected
+
+fp16_to_fp32 result=PASS run_exit_code=0
+fp16_to_fp32_invalid result=PASS_EXPECTED_FAILURE run_exit_code=0 assertion_markers=1
+dw_fp_mac_semantics result=PASS run_exit_code=0
+dw_fp_mac_semantics=fused
+dw_fp_mac_rne_rnd=4
+fp32_mac_wrapper result=PASS run_exit_code=0
+fp32_mac_invalid result=PASS_EXPECTED_FAILURE run_exit_code=0 assertion_markers=1
+
+Run markers:
+DW_FP_MAC_SEMANTICS_FUSED rnd=3 result=bd9cc126 status=20
+DW_FP_MAC_SEMANTICS_FUSED rnd=4 result=bd9cc126 status=20
+DW_FP_MAC_RNE_RND=4 result=bd9cc126 rne_result=c30ba101 status=20 rne_status=20
+DW_FP_MAC_SEMANTICS_FUSED rnd=5 result=bd9cc126 status=20
+DW_FP_MAC_SEMANTICS_PROBE_DONE fused=bd9cc126 non_fused=bd9cc128
+STAGE1B_FP16_TO_FP32_PASS
+STAGE1B_FP32_MAC_VECTORS count=105 expect_fused=1
+STAGE1B_FP32_MAC_DISCRIMINATOR got=bd9cc126 expected=bd9cc126 status=20
+STAGE1B_FP32_MAC_WRAPPER_PASS
+vector_count=105
+result=PASS
+Full logs: build/stage1b_rtl_sim/*_compile.log and *_run.log

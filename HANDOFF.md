@@ -1,185 +1,300 @@
 # Stage Handoff
 
 ## Stage
-Stage 1: Arithmetic and Memory Primitives
+Stage 3: Single-Head Generation Attention
 
-## Input
-- `AGENTS.md`
-- `PROJECT_STATE.md`
-- `docs/stage_00_spec.md`
-- `transformer_rtl_plan_md/01_arithmetic_and_memory_primitives.md`
-- Stage 0 software reference model and tests
-- `README_TOOL_USAGE.md` for local Docker usage
-- User request for Stage 1 Docker toolchain closure and floating-point feasibility checks dated 2026-07-11
+## Status
+STAGE 3 PASS.
+
+Correctness attention accepted. Performance pipeline provisional. No PPA claim
+is made.
+
+## Preflight Notes
+- Observed branch: `stage2-pe-core`.
+- Requested branch `stage3-single-head-attention` was not present.
+- Requested tag `stage2-correctness-accepted` was not present.
+- Working tree was already dirty with uncommitted Stage 1B/2 deliverables.
+- Stage 3 was implemented on the existing verified Stage 2 working tree without
+  destructive git operations.
 
 ## Completed
-- Implemented reusable ready/valid primitives:
-  - `stream_reg`
-  - `skid_buffer`
-- Implemented memory primitives:
-  - `sync_fifo`
-  - `sram_1p_wrapper`
-  - `sram_2p_wrapper`
-- Implemented signed two's-complement integer/fixed-point helper arithmetic wrappers:
-  - `mul_unit`
-  - `add_unit`
-  - `mac_unit`
-  - `compare_max`
-  - `round_sat`
-- Added Python reference models for implemented arithmetic and memory behavior.
-- Added pytest/static tests for Stage 0 and Stage 1 reference behavior and RTL hygiene.
-- Added VCS SystemVerilog testbench `tb/rtl/stage1/tb_stage1_all.sv`.
-- Added `make stage1-rtl-sim`.
-- Added/updated scripts for Stage 1 VCS simulation, vlogan lint, DC elaboration, and DesignWare probes.
-- Ran real Docker VCS simulation of Stage 1 RTL with assertions enabled.
-- Ran Docker vlogan compile/lint and DC analyze/elaborate/check_design.
-- Ran DesignWare VCS and DC probes for local floating-point IP feasibility.
-- Added `reports/stage_01/docker_closure.md`.
+- Added FP32 SFU wrappers:
+  - `rtl/arithmetic/fp32_exp_wrapper.sv`
+  - `rtl/arithmetic/fp32_recip_wrapper.sv`
+- Added Stage 3 attention RTL:
+  - `rtl/attention/attention_score_scaler.sv`
+  - `rtl/attention/score_buffer.sv`
+  - `rtl/attention/softmax_reduction.sv`
+  - `rtl/attention/softmax_normalization.sv`
+  - `rtl/attention/single_head_attention_controller.sv`
+  - `rtl/attention/single_head_attention.sv`
+- Added Python bit/cycle models:
+  - `model/attention/softmax_reference.py`
+  - `model/attention/single_head_reference.py`
+  - `model/attention/single_head_cycle_model.py`
+- Added Stage 3 model tests, VCS testbenches, vector generation, lint, synth
+  scripts, Makefile targets, and reports under `reports/stage_03/`.
 
-## Files added or modified
-- `PROJECT_STATE.md`
-- `HANDOFF.md`
-- `Makefile`
-- `rtl/common/stream_reg.sv`
-- `rtl/common/skid_buffer.sv`
-- `rtl/memory/sync_fifo.sv`
-- `rtl/memory/sram_1p_wrapper.sv`
-- `rtl/memory/sram_2p_wrapper.sv`
-- `rtl/arithmetic/mul_unit.sv`
-- `rtl/arithmetic/add_unit.sv`
-- `rtl/arithmetic/mac_unit.sv`
-- `rtl/arithmetic/compare_max.sv`
-- `rtl/arithmetic/round_sat.sv`
-- `model/arithmetic/__init__.py`
-- `model/arithmetic/numeric_format.py`
-- `model/arithmetic/arithmetic_reference.py`
-- `model/memory/__init__.py`
-- `model/memory/fifo_reference.py`
-- `tb/model/test_stage1_arithmetic.py`
-- `tb/model/test_stage1_memory.py`
-- `tb/unit/test_stage1_rtl_static.py`
-- `tb/rtl/stage1/tb_stage1_all.sv`
-- `scripts/sim/run_stage1_tests.py`
-- `scripts/sim/run_stage1_vcs.py`
-- `scripts/sim/run_stage1_vcs.sh`
-- `scripts/sim/run_stage1_dw_probe.sh`
-- `scripts/lint/run_stage1_lint.py`
-- `scripts/synth/run_stage1_synth_check.py`
-- `scripts/synth/stage1_elaborate.tcl`
-- `scripts/synth/stage1_dw_probe.tcl`
-- `scripts/env.example.sh`
-- `reports/stage_01/test_results.txt`
-- `reports/stage_01/lint_results.txt`
-- `reports/stage_01/synth_check.txt`
-- `reports/stage_01/vcs_rtl_sim.txt`
-- `reports/stage_01/dw_probe.txt`
-- `reports/stage_01/dw_probe_dc.log`
-- `reports/stage_01/docker_closure.md`
-- `reports/stage_01/summary.md`
+## Not Completed
+- Dynamic KV append and continuous token generation.
+- KV Cache Manager.
+- Multi-head attention.
+- QKV projection and output projection.
+- Full Transformer layer.
+- Voting.
+- P&R, STA, formal timing closure, area, power, frequency, or PPA.
 
-## Frozen interfaces and decisions
-- All implemented stream and arithmetic wrappers use `clk`, active-low `rst_n`, input ready/valid, output ready/valid, payload, metadata, and `last`.
-- Ready/valid transfer occurs only on `valid && ready`.
-- Payload, metadata, and `last` must remain stable while `valid=1` and `ready=0`.
-- Reset clears valid state for all implemented stream, FIFO, SRAM response, and arithmetic output pipelines.
-- `stream_reg` latency: 1 output register cycle after input acceptance when downstream is ready. Initiation interval: 1 without backpressure.
-- `skid_buffer` latency: registered output behavior. Accepted input appears after a clock edge; after a buffered stall release, the buffer may spend one cycle moving the skid entry to the output before accepting a new item. It preserves order and uses local state for `in_ready` so it cuts long ready paths.
-- `sync_fifo` latency: no empty fall-through; data written to an empty FIFO becomes readable on the next cycle. Same-cycle pop/push preserves order and allows full pop+push. Non-power-of-two depths are supported.
-- `sync_fifo` outputs `full`, `empty`, `almost_full`, and `occupancy`. `almost_full` is `occupancy >= ALMOST_FULL_THRESHOLD`.
-- `sram_1p_wrapper` read latency: explicit `READ_LATENCY=1`. It is synchronous read. Write requests do not emit a read response. Reset does not clear memory contents.
-- `sram_2p_wrapper` read latency: explicit `READ_LATENCY=1`. It is 1R1W. Same-cycle same-address read/write is read-first, returning the old value. Reset does not clear memory contents.
-- SRAM wrappers are behavioral macro-replacement boundaries only and must not be used for real SRAM area or timing claims.
-- Arithmetic wrappers currently support signed two's-complement integer/fixed-point helper behavior only.
-- `mul_unit`, `add_unit`, `mac_unit`, `compare_max`, and `round_sat` latency: 1 output register cycle after input acceptance when downstream is ready. Initiation interval: 1 without backpressure.
-- `round_sat` supports arithmetic right shift truncation and nearest-even fixed-point rounding before signed saturation/truncation. Nearest-even uses sign-extended magnitude for negative inputs. It is not an FP16 converter.
+## Top Interface
+`single_head_attention` is a first-version single-operation engine.
 
-## Verification performed
-- Host `python -m pytest tb\model tb\unit`: 26 passed.
-- Host `python scripts\sim\run_stage1_tests.py`: 26 tests passed, Python compile passed, RTL sim skipped because the host has no VCS.
-- Host `python scripts\lint\run_stage1_lint.py`: static RTL hygiene passed.
-- Docker `make stage0-test`: failed because container `pytest` is not installed.
-- Docker `make stage1-test`: failed because container Python is 3.6.9 and cannot parse repo files using `from __future__ import annotations`; the VCS RTL substep still passed.
-- Docker `make stage1-rtl-sim`: passed. VCS compile/run exit 0, pass marker present, assertion/TB error count 0.
-- Docker `make stage1-lint`: passed. Static hygiene passed; vlogan compile exit 0; no vlogan diagnostics; Verilator not found.
-- Docker `make stage1-synth`: passed. DC analyze/elaborate/link/check_design exit 0 for Stage 1 RTL tops.
-- Docker `bash scripts/sim/run_stage1_dw_probe.sh`: passed for the DesignWare VCS probe.
-- Docker DW DC probe: passed for non-conversion floating-point DesignWare instances.
+Load interface:
+- `load_valid/load_ready`
+- `load_kind`: `0=q`, `1=K`, `2=V`
+- `load_token`
+- `load_dim`
+- `load_data` FP16
 
-## Commands to reproduce
+Command:
+- `start_valid/start_ready`
+- `start_seq_len`
+- `start_meta`
+
+Output stream:
+- `output_valid/output_ready`
+- `output_base_dim`
+- `output_vector_fp32`
+- `output_lane_mask`
+- `output_status`
+- `output_invalid`
+- `output_meta`
+- `output_last`
+
+Done:
+- `done_valid/done_ready`
+- `done_status`
+- `done_invalid`
+- `done_meta`
+
+The output is tiled by output dimension. For `D_HEAD=16, PE_NUM=8`, two output
+tiles are emitted.
+
+## Supported Range
+- RTL VCS verified:
+  - `PE_NUM=8, D_HEAD=8, MAX_SEQ_LEN=32`
+  - `PE_NUM=8, D_HEAD=16, MAX_SEQ_LEN=32`
+- Python bit model tests cover:
+  - `d_head = 1, 7, 8, 9, 13, 16`
+  - `seq_len = 1, 2, 3, 7, 8, 15, 31, 32`
+- DC check includes:
+  - default `single_head_attention`
+  - `single_head_attention PE_NUM=8 D_HEAD=16 MAX_SEQ_LEN=32`
+  - `score_buffer DEPTH=4096`
+
+## Score Buffer
+- Module: `rtl/attention/score_buffer.sv`
+- Storage: FP32.
+- Write order: token index order; assertion checks `wr_addr == valid_count`.
+- Read order: controller reads token order for normalization.
+- `READ_LATENCY=1` is explicit.
+- Reset does not clear memory contents; it clears valid length, read count, and
+  peak occupancy.
+- Reads before write are assertion-checked.
+- A second instance stores probabilities so the unchanged Stage 2 PE core can
+  process multiple output dimension tiles for `D_HEAD > PE_NUM`.
+
+## Scale Constants
+`attention_score_scaler` uses `fp32_mac_wrapper` to compute:
+
+```text
+scaled = raw_score * scale + 0
+```
+
+Supported constants:
+
+| D_HEAD | scale FP32 |
+|---:|---|
+| 1 | `32'h3F800000` |
+| 7 | `32'h3EC1848F` |
+| 8 | `32'h3EB504F3` |
+| 9 | `32'h3EAAAAAB` |
+| 13 | `32'h3E8E00D5` |
+| 16 | `32'h3E800000` |
+| 128 | `32'h3DB504F3` |
+
+## Online Softmax
+`softmax_reduction` is serial and correctness-first.
+
+First score:
+
+```text
+m = score
+z = 1.0
+```
+
+Later scores:
+
+```text
+m_new = max(m_old, x)
+z_new = z_old * exp(m_old - m_new) + exp(x - m_new)
+```
+
+Subtraction is implemented as FP32 add with the second operand sign bit flipped,
+for finite/zero inputs only.
+
+## EXP And Reciprocal
+- `fp32_exp_wrapper` wraps `DW_fp_exp`.
+- Finite EXP inputs below `-20.0` (`32'hC1A00000`) clamp to `+0.0`.
+- Directed EXP vectors cover:
+  - `0`
+  - `-0.001`
+  - `-0.1`
+  - `-1`
+  - `-5`
+  - `-10`
+  - `-20`
+  - below clamp input `-21`
+- `fp32_recip_wrapper` computes `1.0 / x` through `DW_fp_div`.
+- SFU wrappers are verified by `tb/rtl/stage3/tb_fp32_exp_recip_wrappers.sv`.
+
+## Normalization
+`softmax_normalization` computes one reciprocal:
+
+```text
+inv_sum = 1 / exp_sum
+```
+
+Then for each token:
+
+```text
+numerator_i = exp(score_i - max_final)
+p_i = numerator_i * inv_sum + 0
+```
+
+Each probability carries token index and `last`; the controller writes it to the
+probability buffer in token order.
+
+## QK Scheduling
+For each token:
+- The controller sends `MODE_QK_INNER` tile transactions to
+  `reconfigurable_pe_core`.
+- `tile_first` is asserted on the first dimension tile.
+- `tile_last` is asserted on the final dimension tile.
+- The final tile uses the computed lane mask.
+- The next tile or token waits for real PE `in_ready`.
+- The raw score is consumed only when PE `out_valid && out_ready`.
+- No fixed cycle guess is used for PE service time.
+
+## SV Scheduling
+For each output dimension tile:
+- The probability buffer is rewound.
+- For every token, the controller reads `p_i`, aligns it with the same token's
+  `V_i` tile, and sends `MODE_SV_OUTER`.
+- `tile_first`/`in_clear` are asserted on the first token for that output tile.
+- `tile_last` is asserted on the final token for that output tile.
+- The accumulated output vector is consumed only on PE
+  `out_valid && out_ready`.
+
+This supports `D_HEAD > PE_NUM` without changing `reconfigurable_pe_core`, but
+it is not a throughput-optimized schedule.
+
+## Assertions
+Stage 3 RTL includes assertion/stability checks for:
+- no start while busy
+- score write count bounded by `seq_len`
+- score write order
+- no score read before written
+- no buffer overflow
+- no SV update before probability valid
+- score/probability token index alignment
+- output stable until ready
+- metadata stable
+- no unknown output when valid
+- load payload stable under backpressure
+- wrapper invalid input policy
+
+VCS runs with assertions enabled through `-assert svaext`.
+
+## Performance Counters
+The top exposes:
+- `perf_total_attention_cycles`
+- `perf_qk_cycles`
+- `perf_qk_pe_busy_cycles`
+- `perf_scale_cycles`
+- `perf_reduction_cycles`
+- `perf_reduction_finalize_cycles`
+- `perf_normalization_cycles`
+- `perf_sv_cycles`
+- `perf_pe_stall_cycles`
+- `perf_sfu_stall_cycles`
+- `perf_buffer_stall_cycles`
+- `perf_output_stall_cycles`
+- `perf_score_buffer_peak_occupancy`
+
+Measured RTL cycles:
+
+| D_HEAD | case | seq_len | total | qk | scale | reduction | reduction_finalize | normalization | sv | pe_stall | sfu_stall | buffer_stall | output_stall | score_peak |
+|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 8 | zero | 1 | 48 | 21 | 2 | 2 | 1 | 11 | 9 | 22 | 6 | 0 | 1 | 1 |
+| 8 | uniform | 4 | 176 | 84 | 8 | 41 | 13 | 41 | 21 | 82 | 36 | 0 | 0 | 4 |
+| 8 | onehot | 7 | 293 | 147 | 14 | 80 | 13 | 71 | 33 | 142 | 54 | 0 | 0 | 7 |
+| 8 | mixed | 8 | 332 | 168 | 16 | 93 | 13 | 81 | 37 | 162 | 60 | 0 | 0 | 8 |
+| 16 | zero | 1 | 77 | 41 | 2 | 2 | 1 | 11 | 19 | 44 | 6 | 0 | 1 | 1 |
+| 16 | uniform | 4 | 277 | 164 | 8 | 41 | 13 | 41 | 42 | 164 | 36 | 0 | 0 | 4 |
+| 16 | onehot | 7 | 466 | 287 | 14 | 80 | 13 | 71 | 66 | 284 | 54 | 0 | 0 | 7 |
+| 16 | mixed | 8 | 531 | 328 | 16 | 93 | 13 | 81 | 75 | 324 | 60 | 0 | 2 | 8 |
+
+These are RTL simulation counters only.
+
+## Reproduction
 Host:
 
 ```bash
-python -m pytest tb\model tb\unit
-python scripts\sim\run_stage1_tests.py
-python scripts\lint\run_stage1_lint.py
+python scripts/sim/run_stage2_tests.py
+python scripts/sim/run_stage3_tests.py
 ```
 
 Docker:
 
 ```bash
-docker exec nailong bash -lc 'cd /workspace/VEDA && make stage0-test'
-docker exec nailong bash -lc 'cd /workspace/VEDA && make stage1-test'
-docker exec nailong bash -lc 'cd /workspace/VEDA && make stage1-rtl-sim'
-docker exec nailong bash -lc 'cd /workspace/VEDA && make stage1-lint'
-docker exec nailong bash -lc 'cd /workspace/VEDA && make stage1-synth'
-docker exec nailong bash -lc 'cd /workspace/VEDA && bash scripts/sim/run_stage1_dw_probe.sh'
-docker exec nailong bash -lc 'cd /workspace/VEDA/build/stage1_dw_probe && dc_shell -f /workspace/VEDA/scripts/synth/stage1_dw_probe.tcl | tee /workspace/VEDA/reports/stage_01/dw_probe_dc.log'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage2-rtl-sim'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage2-lint'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage2-synth'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage3-rtl-sim'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage3-lint'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage3-synth'
 ```
 
-## EDA environment and limitations
-- Docker instructions used: `README_TOOL_USAGE.md`; container `nailong`; repository path `/workspace/VEDA`.
-- `vcs`: found, VCS-MX `O-2018.09-SP2-2_Full64` in compile/run logs.
-- `vlogan`: found, compile exit 0.
-- `verdi`: found, not used for noninteractive closure.
-- `dc_shell`: found, DC startup reported `L-2016.03-SP1`.
-- `pt_shell`: found, `M-2016.12-SP1`; not used because no target library exists.
-- `fc_shell`, `verilator`, `iverilog`, `gmake`, `pytest`, and container `python` were not found.
-- Container `python3` is `3.6.9`, which is too old for the current Python sources.
-- DesignWare simulation files and `dw_foundation.sldb` were visible in the installed Synopsys tree.
-- No license error was observed in the executed VCS/DC probes.
-- No PDK, standard-cell target library, SRAM macro, memory compiler output, layout database, P&R, DRC, LVS, or STA was used.
-- DC results are only analyze/elaborate/check_design checks. They are not PPA and cannot support area, power, frequency, WNS, or paper-metric claims.
+## Verification Results
+- Host Stage 3 Python: 17 tests passed; py_compile passed.
+- Docker Stage 3 RTL simulation: PASS.
+- Docker Stage 3 lint: PASS.
+- Docker Stage 3 DC analyze/elaborate/check_design: PASS.
+- Stage 2 host and Docker regressions remain PASS after Stage 3.
 
-## DesignWare floating-point status
-- `DW_fp_mult #(10, 5, 1)` for FP16 multiply: VCS PASS, DC PASS for finite normal probe cases.
-- `DW_fp_add #(23, 8, 1)` for FP32 add: VCS PASS, DC PASS for finite normal probe cases.
-- `DW_fp_mac #(23, 8, 1)` for FP32 MAC: VCS PASS, DC PASS for finite normal probe cases.
-- `DW_fp_exp #(23, 8, 1, 2)`: VCS PASS, DC PASS for `exp(0.0)`.
-- `DW_fp_div #(23, 8, 1, 0)`: VCS PASS, DC PASS for `4.0 / 2.0`.
-- `DW_fp_recip #(23, 8, 1, 0)`: VCS PASS, DC PASS for `1 / 2.0`.
-- `DW_fp_sqrt #(23, 8, 1)`: VCS PASS, DC PASS for `sqrt(4.0)`.
-- `DW_fp_invsqrt #(23, 8, 1)`: VCS PASS, DC PASS for `1/sqrt(4.0)`.
-- `DW_fp_ifp_conv` plus `DW_ifp_fp_conv` conversion paths compiled, but simple IEEE FP16/FP32 conversion expectations were not met in the probe. Do not treat the conversion path as confirmed.
+## Known Limitations
+- `D_HEAD` is an elaboration parameter, not a runtime input.
+- Probability buffering is a correctness-first schedule for `D_HEAD > PE_NUM`;
+  it does not hide normalization or SV latency.
+- Softmax reduction and normalization are serial.
+- Internal q/K/V memories are behavioral verification memories, not SRAM macro
+  bindings.
+- `score_buffer DEPTH=4096` is elaborated, but the full top was not elaborated
+  with `MAX_SEQ_LEN=4096` because that would instantiate large behavioral K/V
+  memories without real SRAM macros.
+- No PPA, timing, area, power, WNS, frequency, STA, P&R, DRC, or LVS conclusion
+  exists.
 
-## FP MAC candidate routes
-- Option A: FP16 operands -> FP16 `DW_fp_mult` product -> product converted to FP32 -> FP32 accumulation. This uses confirmed FP16 multiply but rounds product at FP16 precision and still needs a verified conversion boundary.
-- Option B: FP16 operands -> finite FP16-to-FP32 conversion -> FP32 multiply -> FP32 accumulation. This best matches the FP32-equivalent accumulation direction, but requires a verified converter and selected FP32 multiply/add or MAC wrapper.
-- Option C: FP16 operands -> finite FP16-to-FP32 conversion -> FP32 `DW_fp_mac` wrapper. This is executable in local probes, but fused/non-fused semantics and wrapper latency must be frozen.
+## Stage 4 Cautions
+- Preserve token-major K/V layout.
+- Add dynamic KV append through an explicit cache-manager interface; do not
+  silently change Stage 3 q/K/V load or output formats.
+- Keep probability/token index alignment explicit if adding overlap.
+- Continue to respect PE `in_ready/out_valid` and drain; do not assume PE II=1.
+- If Stage 4 changes K/V storage layout, PE interface, runtime `D_HEAD`, latency,
+  or softmax scheduling, document it in `PROJECT_STATE.md` before implementation
+  and get confirmation.
 
-Recommended `PROPOSED` route: finite-only FP16-to-FP32 conversion boundary plus FP32 `DW_fp_mac` or FP32 multiply/add inside a ready/valid wrapper. The currently probed DW conversion path is not sufficient to freeze conversion semantics.
-
-## Known limitations
-- Final FP MAC interface, fused/non-fused behavior, latency, initiation interval, rounding, saturation/clamp behavior, and NaN/Inf/denormal policy are not frozen.
-- Bit-accurate FP16/FP32 formal RTL wrappers are not implemented.
-- NaN, Inf, denormal, signed-zero, FP exception flags, FP saturation/clamp, and FP underflow behavior remain unsupported in committed Stage 1 arithmetic RTL.
-- The implemented arithmetic helpers support signed integer/fixed-point ranges only, as set by module parameters.
-- `round_sat` fixed-point nearest-even behavior is for signed integer magnitudes and is not IEEE-754 rounding.
-- No independent flush input is implemented on the Stage 1 primitives; reset clears in-flight valid state.
-- SRAM wrapper memory contents are not reset; upper layers must manage validity.
-- SRAM macro read latency and physical collision behavior remain unconfirmed for real macros.
-
-## Open issues
-- Confirm whether the FP MAC should use Option B or Option C.
-- Freeze fused versus non-fused MAC semantics.
-- Freeze FP MAC latency and ready/valid wrapper initiation interval.
-- Resolve finite FP16-to-FP32 and FP32-to-FP16 conversion implementation.
-- Confirm NaN/Inf/denormal/signed-zero behavior for first numeric RTL.
-- Provide real target libraries before any synthesis/STA/PPA claim.
-- Provide SRAM macro or memory compiler information before physical SRAM binding.
-
-## Requirements for Stage 2
-- Stage 2 can directly reuse `stream_reg`, `skid_buffer`, `sync_fifo`, `sram_1p_wrapper`, and `sram_2p_wrapper` for control/dataflow scaffolding.
-- Stage 2 can reuse signed integer helper arithmetic only for integer/fixed-point auxiliary paths, not final FP attention math.
-- Stage 2 must not start final PE, Softmax, or Attention numeric RTL until FP MAC interface, semantics, latency, and bit-accurate software models are selected and verified.
-- Stage 2 must preserve ready/valid stability, metadata alignment, reset-valid clearing, FIFO ordering, and SRAM validity-management rules from this handoff.
-- Stage 2 must continue to run RTL assertions in VCS or another real SystemVerilog simulator before claiming RTL verification complete.
+## Recommended Commit Message
+```text
+stage3: implement verified single-head generation attention
+```

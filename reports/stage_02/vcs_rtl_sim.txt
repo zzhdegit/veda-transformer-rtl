@@ -1,0 +1,24 @@
+Stage 2 VCS RTL simulation
+Build dir: build/stage2_rtl_sim
+vcs: FOUND
+vcs script version : O-2018.09
+DesignWare sim dir: detected
+
+fp32_add_wrapper result=PASS run_exit_code=0
+fp32_add_invalid result=PASS_EXPECTED_FAILURE run_exit_code=0 assertion_markers=1
+pe_lane result=PASS run_exit_code=0
+fp32_reduction_tree result=PASS run_exit_code=0
+reconfigurable_pe_core result=PASS run_exit_code=0
+
+Run markers:
+STAGE2_FP32_ADD_VECTORS count=30
+STAGE2_FP32_ADD_WRAPPER_PASS
+STAGE2_REDUCTION_VECTORS count=4
+STAGE2_REDUCTION_TREE_PASS
+STAGE2_PE_LANE_VECTORS count=6
+STAGE2_PE_LANE_PASS
+STAGE2_PE_CORE_VECTORS count=7
+STAGE2_PE_CORE_PERF total=100 busy=90 active_lane_cycles=42 available_lane_cycles=56 input_stall=67 output_stall=1 mode_switch=2 tile_count=7 operation_count=4 invalid_count=0
+STAGE2_RECONFIGURABLE_PE_CORE_PASS
+result=PASS
+Full logs: build/stage2_rtl_sim/*_compile.log and *_run.log

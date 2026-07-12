@@ -1,0 +1,26 @@
+Stage 3 VCS RTL simulation
+Build dir: build/stage3_rtl_sim
+vcs: FOUND
+vcs script version : O-2018.09
+DesignWare sim dir: detected
+
+fp32_exp_recip result=PASS run_exit_code=0
+single_head_attention_d8 result=PASS run_exit_code=0
+single_head_attention_d16 result=PASS run_exit_code=0
+
+Run markers:
+STAGE3_EXP_VECTORS count=8
+STAGE3_RECIP_VECTORS count=6
+STAGE3_FP32_EXP_RECIP_WRAPPERS_PASS
+STAGE3_ATTENTION_PERF D_HEAD=16 case=zero seq_len=1 total=77 qk=41 qk_busy=41 scale=2 reduction=2 reduction_finalize=1 normalization=11 sv=19 pe_stall=44 sfu_stall=6 buffer_stall=0 output_stall=1 score_peak=1
+STAGE3_ATTENTION_PERF D_HEAD=16 case=uniform seq_len=4 total=277 qk=164 qk_busy=164 scale=8 reduction=41 reduction_finalize=13 normalization=41 sv=42 pe_stall=164 sfu_stall=36 buffer_stall=0 output_stall=0 score_peak=4
+STAGE3_ATTENTION_PERF D_HEAD=16 case=onehot seq_len=7 total=466 qk=287 qk_busy=287 scale=14 reduction=80 reduction_finalize=13 normalization=71 sv=66 pe_stall=284 sfu_stall=54 buffer_stall=0 output_stall=0 score_peak=7
+STAGE3_ATTENTION_PERF D_HEAD=16 case=mixed seq_len=8 total=531 qk=328 qk_busy=328 scale=16 reduction=93 reduction_finalize=13 normalization=81 sv=75 pe_stall=324 sfu_stall=60 buffer_stall=0 output_stall=2 score_peak=8
+STAGE3_SINGLE_HEAD_ATTENTION_PASS D_HEAD=16
+STAGE3_ATTENTION_PERF D_HEAD=8 case=zero seq_len=1 total=48 qk=21 qk_busy=21 scale=2 reduction=2 reduction_finalize=1 normalization=11 sv=9 pe_stall=22 sfu_stall=6 buffer_stall=0 output_stall=1 score_peak=1
+STAGE3_ATTENTION_PERF D_HEAD=8 case=uniform seq_len=4 total=176 qk=84 qk_busy=84 scale=8 reduction=41 reduction_finalize=13 normalization=41 sv=21 pe_stall=82 sfu_stall=36 buffer_stall=0 output_stall=0 score_peak=4
+STAGE3_ATTENTION_PERF D_HEAD=8 case=onehot seq_len=7 total=293 qk=147 qk_busy=147 scale=14 reduction=80 reduction_finalize=13 normalization=71 sv=33 pe_stall=142 sfu_stall=54 buffer_stall=0 output_stall=0 score_peak=7
+STAGE3_ATTENTION_PERF D_HEAD=8 case=mixed seq_len=8 total=332 qk=168 qk_busy=168 scale=16 reduction=93 reduction_finalize=13 normalization=81 sv=37 pe_stall=162 sfu_stall=60 buffer_stall=0 output_stall=0 score_peak=8
+STAGE3_SINGLE_HEAD_ATTENTION_PASS D_HEAD=8
+result=PASS
+Full logs: build/stage3_rtl_sim/*_compile.log and *_run.log

@@ -1,0 +1,22 @@
+ 
+****************************************
+check_design summary:
+Version:     L-2016.03-SP1
+Date:        Sun Jul 12 12:37:13 2026
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Cells                                                               8
+    Cells do not drive (LINT-1)                                     8
+--------------------------------------------------------------------------------
+
+Warning: In design 'pe_perf_counter', cell 'C3731' does not drive any nets. (LINT-1)
+Warning: In design 'pe_perf_counter', cell 'C3733' does not drive any nets. (LINT-1)
+Warning: In design 'pe_perf_counter', cell 'C3735' does not drive any nets. (LINT-1)
+Warning: In design 'pe_perf_counter', cell 'C3737' does not drive any nets. (LINT-1)
+Warning: In design 'pe_perf_counter', cell 'C3739' does not drive any nets. (LINT-1)
+Warning: In design 'pe_perf_counter', cell 'C3741' does not drive any nets. (LINT-1)
+Warning: In design 'pe_perf_counter', cell 'C3743' does not drive any nets. (LINT-1)
+Warning: In design 'pe_perf_counter', cell 'C3745' does not drive any nets. (LINT-1)
+1

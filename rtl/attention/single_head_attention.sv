@@ -1,0 +1,110 @@
+`default_nettype none
+
+module single_head_attention #(
+    parameter int PE_NUM = 8,
+    parameter int D_HEAD = 8,
+    parameter int MAX_SEQ_LEN = 32,
+    parameter int META_W = 16,
+    parameter int COUNTER_W = 64,
+    parameter bit ASSERT_ON_INVALID = 1'b1,
+    localparam int SEQ_LEN_W = (MAX_SEQ_LEN <= 1) ? 1 : $clog2(MAX_SEQ_LEN + 1),
+    localparam int TOKEN_W = (MAX_SEQ_LEN <= 1) ? 1 : $clog2(MAX_SEQ_LEN),
+    localparam int D_ADDR_W = (D_HEAD <= 1) ? 1 : $clog2(D_HEAD)
+) (
+    input  logic                         clk,
+    input  logic                         rst_n,
+
+    input  logic                         load_valid,
+    output logic                         load_ready,
+    input  logic [1:0]                   load_kind,
+    input  logic [TOKEN_W-1:0]           load_token,
+    input  logic [D_ADDR_W-1:0]          load_dim,
+    input  logic [15:0]                  load_data,
+
+    input  logic                         start_valid,
+    output logic                         start_ready,
+    input  logic [SEQ_LEN_W-1:0]         start_seq_len,
+    input  logic [META_W-1:0]            start_meta,
+
+    output logic                         output_valid,
+    input  logic                         output_ready,
+    output logic [D_ADDR_W-1:0]          output_base_dim,
+    output logic [PE_NUM*32-1:0]         output_vector_fp32,
+    output logic [PE_NUM-1:0]            output_lane_mask,
+    output logic [7:0]                   output_status,
+    output logic                         output_invalid,
+    output logic [META_W-1:0]            output_meta,
+    output logic                         output_last,
+
+    output logic                         done_valid,
+    input  logic                         done_ready,
+    output logic [7:0]                   done_status,
+    output logic                         done_invalid,
+    output logic [META_W-1:0]            done_meta,
+
+    output logic [COUNTER_W-1:0]         perf_total_attention_cycles,
+    output logic [COUNTER_W-1:0]         perf_qk_cycles,
+    output logic [COUNTER_W-1:0]         perf_qk_pe_busy_cycles,
+    output logic [COUNTER_W-1:0]         perf_scale_cycles,
+    output logic [COUNTER_W-1:0]         perf_reduction_cycles,
+    output logic [COUNTER_W-1:0]         perf_reduction_finalize_cycles,
+    output logic [COUNTER_W-1:0]         perf_normalization_cycles,
+    output logic [COUNTER_W-1:0]         perf_sv_cycles,
+    output logic [COUNTER_W-1:0]         perf_pe_stall_cycles,
+    output logic [COUNTER_W-1:0]         perf_sfu_stall_cycles,
+    output logic [COUNTER_W-1:0]         perf_buffer_stall_cycles,
+    output logic [COUNTER_W-1:0]         perf_output_stall_cycles,
+    output logic [COUNTER_W-1:0]         perf_score_buffer_peak_occupancy
+);
+    single_head_attention_controller #(
+        .PE_NUM(PE_NUM),
+        .D_HEAD(D_HEAD),
+        .MAX_SEQ_LEN(MAX_SEQ_LEN),
+        .META_W(META_W),
+        .COUNTER_W(COUNTER_W),
+        .ASSERT_ON_INVALID(ASSERT_ON_INVALID)
+    ) u_controller (
+        .clk                              (clk),
+        .rst_n                            (rst_n),
+        .load_valid                       (load_valid),
+        .load_ready                       (load_ready),
+        .load_kind                        (load_kind),
+        .load_token                       (load_token),
+        .load_dim                         (load_dim),
+        .load_data                        (load_data),
+        .start_valid                      (start_valid),
+        .start_ready                      (start_ready),
+        .start_seq_len                    (start_seq_len),
+        .start_meta                       (start_meta),
+        .output_valid                     (output_valid),
+        .output_ready                     (output_ready),
+        .output_base_dim                  (output_base_dim),
+        .output_vector_fp32               (output_vector_fp32),
+        .output_lane_mask                 (output_lane_mask),
+        .output_status                    (output_status),
+        .output_invalid                   (output_invalid),
+        .output_meta                      (output_meta),
+        .output_last                      (output_last),
+        .done_valid                       (done_valid),
+        .done_ready                       (done_ready),
+        .done_status                      (done_status),
+        .done_invalid                     (done_invalid),
+        .done_meta                        (done_meta),
+        .perf_total_attention_cycles      (perf_total_attention_cycles),
+        .perf_qk_cycles                   (perf_qk_cycles),
+        .perf_qk_pe_busy_cycles           (perf_qk_pe_busy_cycles),
+        .perf_scale_cycles                (perf_scale_cycles),
+        .perf_reduction_cycles            (perf_reduction_cycles),
+        .perf_reduction_finalize_cycles   (perf_reduction_finalize_cycles),
+        .perf_normalization_cycles        (perf_normalization_cycles),
+        .perf_sv_cycles                   (perf_sv_cycles),
+        .perf_pe_stall_cycles             (perf_pe_stall_cycles),
+        .perf_sfu_stall_cycles            (perf_sfu_stall_cycles),
+        .perf_buffer_stall_cycles         (perf_buffer_stall_cycles),
+        .perf_output_stall_cycles         (perf_output_stall_cycles),
+        .perf_score_buffer_peak_occupancy (perf_score_buffer_peak_occupancy)
+    );
+endmodule
+
+`default_nettype wire
+

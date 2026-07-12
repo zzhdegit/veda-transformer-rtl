@@ -1,0 +1,147 @@
+ 
+****************************************
+check_design summary:
+Version:     L-2016.03-SP1
+Date:        Sun Jul 12 12:34:06 2026
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Cells                                                              66
+    Connected to power or ground (LINT-32)                         64
+    Nets connected to multiple pins on same cell (LINT-33)          2
+--------------------------------------------------------------------------------
+
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[31]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[30]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[29]' is connected to logic 1. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[28]' is connected to logic 1. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[27]' is connected to logic 1. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[26]' is connected to logic 1. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[25]' is connected to logic 1. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[24]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[23]' is connected to logic 1. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[22]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[21]' is connected to logic 1. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[20]' is connected to logic 1. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[19]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[18]' is connected to logic 1. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[17]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[16]' is connected to logic 1. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[15]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[14]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[13]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[12]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[11]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[10]' is connected to logic 1. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[9]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[8]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[7]' is connected to logic 1. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[6]' is connected to logic 1. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[5]' is connected to logic 1. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[4]' is connected to logic 1. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[3]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[2]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[1]' is connected to logic 1. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_b[0]' is connected to logic 1. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[31]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[30]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[29]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[28]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[27]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[26]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[25]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[24]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[23]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[22]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[21]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[20]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[19]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[18]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[17]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[16]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[15]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[14]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[13]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[12]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[11]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[10]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[9]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[8]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[7]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[6]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[5]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[4]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[3]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[2]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[1]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'in_c[0]' is connected to logic 0. 
+Warning: In design 'attention_score_scaler', the same net is connected to more than one pin on submodule 'u_scale_mac'. (LINT-33)
+   Net '*Logic0*' is connected to pins 'in_b[31]', 'in_b[30]'', 'in_b[24]', 'in_b[22]', 'in_b[19]', 'in_b[17]', 'in_b[15]', 'in_b[14]', 'in_b[13]', 'in_b[12]', 'in_b[11]', 'in_b[9]', 'in_b[8]', 'in_b[3]', 'in_b[2]', 'in_c[31]', 'in_c[30]', 'in_c[29]', 'in_c[28]', 'in_c[27]', 'in_c[26]', 'in_c[25]', 'in_c[24]', 'in_c[23]', 'in_c[22]', 'in_c[21]', 'in_c[20]', 'in_c[19]', 'in_c[18]', 'in_c[17]', 'in_c[16]', 'in_c[15]', 'in_c[14]', 'in_c[13]', 'in_c[12]', 'in_c[11]', 'in_c[10]', 'in_c[9]', 'in_c[8]', 'in_c[7]', 'in_c[6]', 'in_c[5]', 'in_c[4]', 'in_c[3]', 'in_c[2]', 'in_c[1]', 'in_c[0]'.
+Warning: In design 'attention_score_scaler', the same net is connected to more than one pin on submodule 'u_scale_mac'. (LINT-33)
+   Net '*Logic1*' is connected to pins 'in_b[29]', 'in_b[28]'', 'in_b[27]', 'in_b[26]', 'in_b[25]', 'in_b[23]', 'in_b[21]', 'in_b[20]', 'in_b[18]', 'in_b[16]', 'in_b[10]', 'in_b[7]', 'in_b[6]', 'in_b[5]', 'in_b[4]', 'in_b[1]', 'in_b[0]'.
+1

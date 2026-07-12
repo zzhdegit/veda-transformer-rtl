@@ -1,0 +1,13 @@
+Stage 3 synthesis/elaboration check
+This is analyze/elaborate/link/check_design only. It does not generate PPA.
+
+dc_shell: found
+DW_FOUNDATION_SLDB: found
+TECH_LIB_ROOT: not set
+$ dc_shell -f scripts/synth/stage3_elaborate.tcl
+dc_exit_code=0
+Target library root: not set
+DC log: reports/stage_03/dc_elaborate.log
+DC elaboration result: PASS
+Checked default D_HEAD=8 top, D_HEAD=16 top, and score_buffer DEPTH=4096.
+No area, power, WNS, frequency, or process timing conclusion is produced.

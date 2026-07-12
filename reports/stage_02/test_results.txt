@@ -1,0 +1,18 @@
+$ C:\Users\zzh\anaconda3\python.exe -m pytest tb\model\test_stage1b_fp.py tb\model\test_stage2_pe.py
+============================= test session starts =============================
+platform win32 -- Python 3.12.7, pytest-7.4.4, pluggy-1.0.0
+rootdir: D:\IC_Workspace\VEDA
+plugins: anyio-4.2.0
+collected 12 items
+
+tb\model\test_stage1b_fp.py ......                                       [ 50%]
+tb\model\test_stage2_pe.py ......                                        [100%]
+
+============================= 12 passed in 0.07s ==============================
+exit_code=0
+
+$ C:\Users\zzh\anaconda3\python.exe -m py_compile model\reference_attention.py model\arithmetic\arithmetic_reference.py model\arithmetic\fp16_fp32_reference.py model\arithmetic\fp32_add_reference.py model\arithmetic\fp32_mac_reference.py model\arithmetic\numeric_format.py model\arithmetic\__init__.py model\attention\single_head_cycle_model.py model\attention\single_head_reference.py model\attention\softmax_reference.py model\attention\__init__.py model\memory\fifo_reference.py model\memory\__init__.py model\pe\pe_core_reference.py model\pe\pe_lane_reference.py model\pe\reduction_tree_reference.py model\pe\__init__.py tb\model\test_reference_attention.py tb\model\test_stage1b_fp.py tb\model\test_stage1_arithmetic.py tb\model\test_stage1_memory.py tb\model\test_stage2_pe.py tb\model\test_stage3_attention.py tb\unit\test_stage1_rtl_static.py scripts\lint\run_stage1b_lint.py scripts\lint\run_stage1_lint.py scripts\lint\run_stage2_lint.py scripts\lint\run_stage3_lint.py scripts\sim\gen_stage1b_vectors.py scripts\sim\gen_stage2_vectors.py scripts\sim\gen_stage3_vectors.py scripts\sim\run_stage1b_tests.py scripts\sim\run_stage1_tests.py scripts\sim\run_stage1_vcs.py scripts\sim\run_stage2_tests.py scripts\sim\run_stage3_tests.py scripts\synth\run_stage1b_synth_check.py scripts\synth\run_stage1_synth_check.py scripts\synth\run_stage2_synth_check.py scripts\synth\run_stage3_synth_check.py
+
+exit_code=0
+
+Stage 2 RTL simulation: SKIPPED - vcs executable not found on host.
