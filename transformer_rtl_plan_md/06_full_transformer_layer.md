@@ -1,3 +1,12 @@
+# Stage 6 route note
+
+As of Stage 6A, the active Stage 6 scope is renamed to
+Projection-Integrated Multi-Head Attention. The full Transformer layer material
+below is retained as legacy planning context only. Norm, residual, FFN,
+activation, complete Transformer layer integration, SRAM macro binding, STA,
+P&R, and PPA are deferred to Stage 7 and Stage 8. The authoritative Stage 6
+specification is `docs/stage_06/spec.md`.
+
 # Stage 6：完整 Transformer Layer
 
 ## 1. 阶段目标
