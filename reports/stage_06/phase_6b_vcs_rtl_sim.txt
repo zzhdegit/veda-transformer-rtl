@@ -1,0 +1,14 @@
+Stage 6B VCS RTL simulation
+Build dir: build/stage6b_rtl_sim
+vcs: FOUND
+vcs script version : O-2018.09
+DesignWare sim dir: detected
+
+fp32_to_fp16 result=PASS run_exit_code=0
+shared_gemv_projection_core result=PASS run_exit_code=0
+
+Run markers:
+STAGE6B_FP32_TO_FP16_PASS cases=145
+STAGE6B_SHARED_GEMV_PASS cases=16 total_cycles=764 tile_cycles=35 pe_stall=361 output_stall=16
+result=PASS
+Full logs: build/stage6b_rtl_sim/*_compile.log and *_run.log
