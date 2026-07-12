@@ -11,3 +11,18 @@
 9. At the end of every stage, update `PROJECT_STATE.md`, `HANDOFF.md`, tests, and report summaries.
 10. `HANDOFF.md` must state what was completed, what was not completed, dependencies, reproduction steps, and next-stage cautions.
 11. Do not run destructive Git operations or overwrite user-owned files.
+
+## GitHub Remote Workflow
+
+- Public repository: https://github.com/zzhdegit/veda-transformer-rtl
+- Remote name: origin
+- Default branch: main
+- Machine-local details are recorded in ignored LOCAL_GITHUB.md.
+- Authentication uses Windows Git Credential Manager.
+- Run git status and git fetch origin before remote modifications.
+- Use fast-forward-only updates when possible.
+- Never request, print, export, persist, or commit authentication tokens.
+- Never place credentials in remote URLs.
+- Never force push without explicit user approval.
+- Never commit Synopsys DesignWare source, PDK, licenses, technology libraries,
+  SRAM macros, generated simulation files, waveforms, or EDA installation files.
