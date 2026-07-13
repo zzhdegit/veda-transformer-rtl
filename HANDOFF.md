@@ -2,13 +2,17 @@
 
 ## Stage
 
-Stage 6: Projection-Integrated Multi-Head Attention
+Stage 7A: Pre-Norm Transformer Layer Specification and Bit Model
 
 ## Status
 
-STAGE 6 PASS. Acceptance audit PASS.
+STAGE 7A PASS. Stage 7 RTL implementation in progress.
 
-projection-integrated multi-head attention correctness accepted.
+Pre-Norm Transformer layer specification and Python bit-model framework are
+frozen for implementation. Stage 7 RTL is not yet accepted.
+
+Stage 6 projection-integrated multi-head attention correctness remains accepted,
+and the Stage 6 acceptance audit is closed.
 
 throughput, physical memory, and timing pipeline provisional.
 
@@ -27,6 +31,13 @@ throughput, physical memory, and timing pipeline provisional.
   scenarios now interrupt Q, K, V, QKV stream, attention, concat quantization,
   W_O, final output stall, and final done stall, then verify clean one-token
   recovery after weight reload.
+- Stage 7A Pre-Norm Transformer layer contract frozen in
+  `docs/stage_07/spec.md`.
+- Stage 7A Python bit-model framework added for RMSNorm, residual add, ReLU,
+  FFN, full one-layer composition, and cycle estimates.
+- Stage 7A model tests added for RMSNorm numeric boundaries, residual/ReLU,
+  FFN layout, integrated Stage 6 MHA reuse, multi-token behavior, and cache-full
+  semantics through the Stage 7 wrapper.
 
 Final top:
 
@@ -61,6 +72,21 @@ Audit closure also updated:
 - `PROJECT_STATE.md`
 - `HANDOFF.md`
 
+Stage 7A additions:
+
+- `docs/stage_07/spec.md`
+- `model/transformer/rmsnorm_reference.py`
+- `model/transformer/residual_reference.py`
+- `model/transformer/relu_reference.py`
+- `model/transformer/ffn_reference.py`
+- `model/transformer/transformer_layer_reference.py`
+- `model/transformer/transformer_layer_cycle_model.py`
+- `tb/model/test_stage7_transformer_reference.py`
+- `scripts/sim/run_stage7a_tests.py`
+- `reports/stage_07/phase_7a_spec.md`
+- `reports/stage_07/phase_7a_test_results.txt`
+- `reports/stage_07/summary.md`
+
 ## Not Completed
 
 - RMSNorm, LayerNorm, residual paths.
@@ -69,6 +95,7 @@ Audit closure also updated:
 - SRAM macro binding or physical memory replacement.
 - Timing pipeline closure.
 - STA, P&R, formal PPA, area, power, frequency, WNS, or layout.
+- Stage 7 RTL modules, RTL simulation, lint/vlogan, and DC structural checks.
 
 ## Architecture Notes
 
@@ -125,6 +152,15 @@ state, exposes no X on valid/status outputs, accepts a clean token after reset,
 and does not duplicate the Stage 5 commit after recovery.
 
 ## Verification Results
+
+Stage 7A:
+
+- `python scripts/sim/run_stage7a_tests.py`: PASS
+- `docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7a-test'`: PASS
+
+Host `make stage7a-test` was not available because `make` is not installed on
+the Windows host. The underlying Python runner passed on host, and Docker make
+passed in the Linux verification environment.
 
 Host:
 
@@ -220,6 +256,8 @@ VCS runs compile assertions with `-assert svaext`.
 From `D:\IC_Workspace\VEDA`:
 
 ```bash
+python scripts/sim/run_stage7a_tests.py
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7a-test'
 python scripts/sim/run_stage5_tests.py
 python scripts/sim/run_stage6_tests.py
 docker exec nailong bash -lc 'cd /workspace/VEDA && make stage5-test stage5-rtl-sim stage5-lint stage5-synth stage6-test stage6-rtl-sim stage6-lint stage6-synth'
@@ -252,5 +290,8 @@ docker exec nailong bash -lc 'cd /workspace/VEDA && make stage5-rtl-sim && make 
 - Keep behavioral memories out of PPA claims.
 - Stage 6 does not complete a Transformer layer; Norm/Residual/FFN remain out of
   scope.
-- Before Stage 7 work, branch from the Stage 6 audit closure state and reread
-  the Stage 7 authoritative spec files.
+- Stage 7 implementation must follow `docs/stage_07/spec.md` rather than the
+  legacy full-layer planning text in `transformer_rtl_plan_md/06_full_transformer_layer.md`.
+- Stage 7 must not claim PASS until RTL simulation, lint/vlogan, and DC
+  structural checks are added and passing.
+- Stage 7 must preserve the frozen Stage 6 child interface and commit semantics.

@@ -2,13 +2,17 @@
 
 ## Current Stage
 
-- Stage: 6
-- Status: STAGE 6 PASS, ACCEPTANCE AUDIT PASS
-- Branch: `stage6-projection-mha`
+- Stage: 7A
+- Status: STAGE 7A PASS, STAGE 7 RTL IN PROGRESS
+- Branch: `stage7-prenorm-transformer-layer`
 - Last update: 2026-07-13
 
-projection-integrated multi-head attention correctness accepted. Stage 6
-acceptance audit reset-coverage conditions are closed.
+Stage 7A freezes the repository-owned Pre-Norm Transformer layer contract and
+adds the Stage 7 Python bit-model framework. Stage 7 RTL implementation is not
+yet accepted.
+
+Stage 6 projection-integrated multi-head attention correctness remains accepted.
+Stage 6 acceptance audit reset-coverage conditions are closed.
 
 throughput, physical memory, and timing pipeline provisional.
 
@@ -222,8 +226,75 @@ area, power, frequency, WNS, STA, process timing, or layout result is produced.
 - No complete Transformer layer is present; Norm/Residual/FFN are out of Stage 6
   scope.
 
+## Stage 7A Scope
+
+Stage 7 implements one decoder-style Pre-Norm Transformer layer around the
+accepted Stage 6 projection-integrated MHA top:
+
+```text
+n1 = RMSNorm(x)
+a  = MHA(n1)
+r1 = x + a
+n2 = RMSNorm(r1)
+h1 = W1(n2)
+h  = ReLU(h1)
+f  = W2(h)
+y  = r1 + f
+```
+
+Frozen Stage 7 relations and first implementation choices:
+
+- `D_MODEL = N_HEAD * D_HEAD`
+- `D_FFN = 4 * D_MODEL`
+- `D_MODEL` is power-of-two for RMSNorm mean scaling.
+- RMSNorm input and residual paths are FP32.
+- RMSNorm gamma, FFN weights, MHA input, and FFN activation storage are FP16.
+- RMSNorm sum of squares is dimension-order sequential fused MAC.
+- RMSNorm mean scale is an exact FP32 power-of-two constant.
+- `EPS_FP32 = 32'h3727_C5AC`.
+- RMSNorm apply order is `(x * inv_rms) * gamma`.
+- Stage 7 instantiates exactly one frozen Stage 6 MHA instance.
+- FFN is W1/ReLU/W2 without bias and uses output-row-major weights.
+- ReLU maps negative finite values, signed zeros, NaN, and Inf to `+0`; NaN/Inf
+  are invalid.
+
+Stage 7 does not implement LayerNorm, Post-Norm, GELU, SiLU, SwiGLU, bias,
+dropout, RoPE, embedding, LM head, tokenizer, multiple layers, SRAM macro
+binding, STA, P&R, formal PPA, area, power, frequency, or WNS closure.
+
+Stage 7A added:
+
+- `docs/stage_07/spec.md`
+- `model/transformer/rmsnorm_reference.py`
+- `model/transformer/residual_reference.py`
+- `model/transformer/relu_reference.py`
+- `model/transformer/ffn_reference.py`
+- `model/transformer/transformer_layer_reference.py`
+- `model/transformer/transformer_layer_cycle_model.py`
+- `tb/model/test_stage7_transformer_reference.py`
+- `scripts/sim/run_stage7a_tests.py`
+- `reports/stage_07/phase_7a_spec.md`
+- `reports/stage_07/phase_7a_test_results.txt`
+
+Stage 7A verification:
+
+```bash
+python scripts/sim/run_stage7a_tests.py
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7a-test'
+```
+
+Results:
+
+- Stage 7A model regression: PASS.
+- Stage 7 transformer reference tests plus Stage 6E model tests: PASS.
+- Python compile sweep: PASS.
+- Stage 7 no-stall cycle model examples: PASS.
+- Host `make stage7a-test` was not available because `make` is not installed on
+  the Windows host; the Docker `make stage7a-test` flow passed.
+
 ## Next Action
 
-Stage 6 is closed for projection-integrated MHA correctness and acceptance audit
-coverage. Start Stage 7 only from an explicit Stage 7 branch after rereading the
-Stage 7 authoritative spec files.
+Continue Stage 7 RTL implementation from the Stage 7A frozen spec. Add RMSNorm,
+residual, FFN/ReLU, and top-level Transformer layer RTL in scoped phases, with
+corresponding model, RTL simulation, lint/vlogan, DC structural checks, reports,
+and handoff updates before any Stage 7 PASS claim.

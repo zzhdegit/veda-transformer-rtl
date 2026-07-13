@@ -1,0 +1,31 @@
+Stage 7A Pre-Norm Transformer layer specification/model regression
+
+$ fallback-python-test-runner stage7a/stage6e model tests
+Fallback Python test runner: 8 tests
+PASS
+exit_code=0
+
+py_compile skipped Python 3.7+ files under Python 3.6:
+model/reference_attention.py
+model/arithmetic/arithmetic_reference.py
+model/arithmetic/numeric_format.py
+model/memory/fifo_reference.py
+tb/model/test_reference_attention.py
+tb/model/test_stage1_arithmetic.py
+tb/model/test_stage1_memory.py
+tb/unit/test_stage1_rtl_static.py
+
+$ /usr/bin/python3 -m py_compile model/arithmetic/fp16_fp32_reference.py model/arithmetic/fp32_add_reference.py model/arithmetic/fp32_mac_reference.py model/arithmetic/__init__.py model/attention/single_head_cycle_model.py model/attention/single_head_reference.py model/attention/softmax_reference.py model/attention/__init__.py model/cache/generation_reference.py model/cache/kv_cache_reference.py model/cache/multi_head_generation_reference.py model/cache/multi_head_kv_cache_reference.py model/cache/__init__.py model/memory/__init__.py model/pe/pe_core_reference.py model/pe/pe_lane_reference.py model/pe/reduction_tree_reference.py model/pe/__init__.py model/projection/fp32_fp16_reference.py model/projection/gemv_reference.py model/projection/projection_mha_cycle_model.py model/projection/projection_mha_reference.py model/projection/projection_reference.py model/projection/__init__.py model/transformer/ffn_reference.py model/transformer/relu_reference.py model/transformer/residual_reference.py model/transformer/rmsnorm_reference.py model/transformer/transformer_layer_cycle_model.py model/transformer/transformer_layer_reference.py model/transformer/__init__.py tb/model/test_stage1b_fp.py tb/model/test_stage2_pe.py tb/model/test_stage3_attention.py tb/model/test_stage4_generation.py tb/model/test_stage5_multihead_generation.py tb/model/test_stage6e_output_projection.py tb/model/test_stage6_projection.py tb/model/test_stage7_transformer_reference.py scripts/lint/run_stage1b_lint.py scripts/lint/run_stage1_lint.py scripts/lint/run_stage2_lint.py scripts/lint/run_stage3_lint.py scripts/lint/run_stage4_lint.py scripts/lint/run_stage5_lint.py scripts/lint/run_stage6b_lint.py scripts/lint/run_stage6c_lint.py scripts/lint/run_stage6d_lint.py scripts/lint/run_stage6e_lint.py scripts/lint/run_stage6_lint.py scripts/sim/gen_stage1b_vectors.py scripts/sim/gen_stage2_vectors.py scripts/sim/gen_stage3_vectors.py scripts/sim/gen_stage4_vectors.py scripts/sim/gen_stage5_vectors.py scripts/sim/gen_stage6b_vectors.py scripts/sim/gen_stage6c_vectors.py scripts/sim/gen_stage6d_vectors.py scripts/sim/gen_stage6e_vectors.py scripts/sim/run_stage1b_tests.py scripts/sim/run_stage1_tests.py scripts/sim/run_stage1_vcs.py scripts/sim/run_stage2_tests.py scripts/sim/run_stage3_tests.py scripts/sim/run_stage4_tests.py scripts/sim/run_stage5_tests.py scripts/sim/run_stage6a_tests.py scripts/sim/run_stage6b_tests.py scripts/sim/run_stage6c_tests.py scripts/sim/run_stage6d_tests.py scripts/sim/run_stage6e_tests.py scripts/sim/run_stage6_tests.py scripts/sim/run_stage7a_tests.py scripts/synth/run_stage1b_synth_check.py scripts/synth/run_stage1_synth_check.py scripts/synth/run_stage2_synth_check.py scripts/synth/run_stage3_synth_check.py scripts/synth/run_stage4_synth_check.py scripts/synth/run_stage5_synth_check.py scripts/synth/run_stage6b_synth_check.py scripts/synth/run_stage6c_synth_check.py scripts/synth/run_stage6d_synth_check.py scripts/synth/run_stage6e_synth_check.py scripts/synth/run_stage6_synth_check.py
+
+exit_code=0
+
+$ /usr/bin/python3 model/transformer/transformer_layer_cycle_model.py
+Stage 7 no-stall single-token cycle estimate
+total_layer_cycles = input_load + norm1 + MHA + residual1 + norm2 + FFN + residual2 + final_output + control_overhead
+H1D8 total=249 input=8 norm1_reduce=8 norm1_apply=8 mha=40 residual1=8 norm2_reduce=8 norm2_apply=8 ffn1=32 relu=32 act_quant=32 ffn2=32 residual2=8 final=1 overhead=24
+H2D8 total=666 input=16 norm1_reduce=16 norm1_apply=16 mha=144 residual1=16 norm2_reduce=16 norm2_apply=16 ffn1=128 relu=64 act_quant=64 ffn2=128 residual2=16 final=2 overhead=24
+H4D8 total=2076 input=32 norm1_reduce=32 norm1_apply=32 mha=544 residual1=32 norm2_reduce=32 norm2_apply=32 ffn1=512 relu=128 act_quant=128 ffn2=512 residual2=32 final=4 overhead=24
+H2D16 total=2076 input=32 norm1_reduce=32 norm1_apply=32 mha=544 residual1=32 norm2_reduce=32 norm2_apply=32 ffn1=512 relu=128 act_quant=128 ffn2=512 residual2=32 final=4 overhead=24
+exit_code=0
+
+Stage 7A Python/model result: PASS
