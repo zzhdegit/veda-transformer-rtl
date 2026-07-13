@@ -2,14 +2,15 @@
 
 ## Stage
 
-Stage 7A: Pre-Norm Transformer Layer Specification and Bit Model
+Stage 7B: RMSNorm and Residual Foundations
 
 ## Status
 
-STAGE 7A PASS. Stage 7 RTL implementation in progress.
+STAGE 7B PASS. Stage 7 RTL implementation in progress.
 
 Pre-Norm Transformer layer specification and Python bit-model framework are
-frozen for implementation. Stage 7 RTL is not yet accepted.
+frozen for implementation. RMSNorm and residual-add RTL foundations are added
+and verified. Full Stage 7 top-level Transformer layer RTL is not yet accepted.
 
 Stage 6 projection-integrated multi-head attention correctness remains accepted,
 and the Stage 6 acceptance audit is closed.
@@ -38,6 +39,15 @@ throughput, physical memory, and timing pipeline provisional.
 - Stage 7A model tests added for RMSNorm numeric boundaries, residual/ReLU,
   FFN layout, integrated Stage 6 MHA reuse, multi-token behavior, and cache-full
   semantics through the Stage 7 wrapper.
+- Stage 7B `fp32_sqrt_wrapper` added as the required RMSNorm square-root
+  arithmetic wrapper.
+- Stage 7B `rmsnorm_engine` added with serial dimension-order sum-square fused
+  MAC, exact power-of-two mean scaling, `EPS_FP32`, sqrt, reciprocal, frozen
+  `(x * inv_rms) * gamma` apply order, and FP32-to-FP16 output quantization.
+- Stage 7B `residual_add_engine` added with serial FP32 add-wrapper residual
+  output.
+- Stage 7B RTL testbench and scripts added for D_MODEL 8 and 16 RMSNorm and
+  residual bit checks with output backpressure.
 
 Final top:
 
@@ -87,15 +97,32 @@ Stage 7A additions:
 - `reports/stage_07/phase_7a_test_results.txt`
 - `reports/stage_07/summary.md`
 
+Stage 7B additions:
+
+- `rtl/arithmetic/fp32_sqrt_wrapper.sv`
+- `rtl/transformer/rmsnorm_engine.sv`
+- `rtl/transformer/residual_add_engine.sv`
+- `tb/rtl/stage7/tb_stage7b_rmsnorm_residual.sv`
+- `scripts/sim/gen_stage7b_vectors.py`
+- `scripts/sim/run_stage7b_vcs.sh`
+- `scripts/lint/run_stage7b_lint.py`
+- `scripts/synth/run_stage7b_synth_check.py`
+- `scripts/synth/stage7b_elaborate.tcl`
+- `reports/stage_07/phase_7b_vcs_rtl_sim.txt`
+- `reports/stage_07/phase_7b_lint_results.txt`
+- `reports/stage_07/phase_7b_synth_check.txt`
+
 ## Not Completed
 
-- RMSNorm, LayerNorm, residual paths.
+- LayerNorm.
 - FFN, GELU, SiLU, SwiGLU.
 - Complete Transformer layer.
 - SRAM macro binding or physical memory replacement.
 - Timing pipeline closure.
 - STA, P&R, formal PPA, area, power, frequency, WNS, or layout.
-- Stage 7 RTL modules, RTL simulation, lint/vlogan, and DC structural checks.
+- Stage 7 FFN/ReLU RTL modules.
+- Stage 7 top-level Transformer layer RTL simulation, lint/vlogan, and DC
+  structural checks.
 
 ## Architecture Notes
 
@@ -161,6 +188,21 @@ Stage 7A:
 Host `make stage7a-test` was not available because `make` is not installed on
 the Windows host. The underlying Python runner passed on host, and Docker make
 passed in the Linux verification environment.
+
+Stage 7B:
+
+- `docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7b-test'`: PASS
+- `docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7b-rtl-sim'`: PASS
+- `docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7b-lint'`: PASS
+- `docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7b-synth'`: PASS
+
+Stage 7B VCS configurations:
+
+- RMSNorm/residual D_MODEL=8
+- RMSNorm/residual D_MODEL=16
+
+Stage 7B DC structural checks include `fp32_sqrt_wrapper`, D_MODEL 8/16/128
+`rmsnorm_engine`, and D_MODEL 16/128 `residual_add_engine`.
 
 Host:
 
@@ -256,6 +298,10 @@ VCS runs compile assertions with `-assert svaext`.
 From `D:\IC_Workspace\VEDA`:
 
 ```bash
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7b-test'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7b-rtl-sim'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7b-lint'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7b-synth'
 python scripts/sim/run_stage7a_tests.py
 docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7a-test'
 python scripts/sim/run_stage5_tests.py
@@ -295,3 +341,7 @@ docker exec nailong bash -lc 'cd /workspace/VEDA && make stage5-rtl-sim && make 
 - Stage 7 must not claim PASS until RTL simulation, lint/vlogan, and DC
   structural checks are added and passing.
 - Stage 7 must preserve the frozen Stage 6 child interface and commit semantics.
+- RMSNorm finite DW status bits such as inexact are diagnostic status, not
+  `invalid`; invalid remains the hard error indicator.
+- The Stage 7B RMSNorm and residual engines are serial correctness engines, not
+  throughput-optimized final scheduling.

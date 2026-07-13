@@ -2,9 +2,10 @@
 
 ## Current Result
 
-Stage 7A PASS. The Pre-Norm Transformer layer specification and Python
-bit-model framework are frozen. Stage 7 RTL implementation is in progress and
-is not yet accepted.
+Stage 7B PASS. The Pre-Norm Transformer layer specification and Python
+bit-model framework are frozen, and RMSNorm/residual RTL foundations are
+verified. Full Stage 7 Transformer layer top integration is in progress and is
+not yet accepted.
 
 ## Frozen Structure
 
@@ -35,11 +36,27 @@ Stage 7 wraps exactly one frozen Stage 6 projection-integrated MHA instance.
 - `reports/stage_07/phase_7a_spec.md`
 - `reports/stage_07/phase_7a_test_results.txt`
 
+## Stage 7B Artifacts
+
+- `rtl/arithmetic/fp32_sqrt_wrapper.sv`
+- `rtl/transformer/rmsnorm_engine.sv`
+- `rtl/transformer/residual_add_engine.sv`
+- `tb/rtl/stage7/tb_stage7b_rmsnorm_residual.sv`
+- `scripts/sim/gen_stage7b_vectors.py`
+- `scripts/sim/run_stage7b_vcs.sh`
+- `scripts/lint/run_stage7b_lint.py`
+- `scripts/synth/run_stage7b_synth_check.py`
+- `scripts/synth/stage7b_elaborate.tcl`
+
 ## Verification
 
 ```bash
 python scripts/sim/run_stage7a_tests.py
 docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7a-test'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7b-test'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7b-rtl-sim'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7b-lint'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7b-synth'
 ```
 
 Results:
@@ -48,14 +65,15 @@ Results:
 - Stage 7 model tests plus Stage 6E output-projection model tests: PASS.
 - Python compile sweep: PASS.
 - Stage 7 no-stall cycle model examples: PASS.
+- Stage 7B RMSNorm/residual VCS simulations for D_MODEL 8 and 16: PASS.
+- Stage 7B lint/vlogan: PASS.
+- Stage 7B DC structural checks: PASS.
 
 Host `make stage7a-test` was not available because `make` is not installed on
 the Windows host. Docker `make stage7a-test` passed.
 
 ## Deferred
 
-- RMSNorm RTL.
-- Residual and layer buffer RTL.
 - FFN/ReLU RTL.
 - Full `transformer_layer` integration RTL.
 - VCS assertions, RTL simulation, lint/vlogan, and DC structural checks.

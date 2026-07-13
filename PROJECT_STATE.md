@@ -2,14 +2,15 @@
 
 ## Current Stage
 
-- Stage: 7A
-- Status: STAGE 7A PASS, STAGE 7 RTL IN PROGRESS
+- Stage: 7B
+- Status: STAGE 7B PASS, STAGE 7 RTL IN PROGRESS
 - Branch: `stage7-prenorm-transformer-layer`
 - Last update: 2026-07-13
 
 Stage 7A freezes the repository-owned Pre-Norm Transformer layer contract and
-adds the Stage 7 Python bit-model framework. Stage 7 RTL implementation is not
-yet accepted.
+adds the Stage 7 Python bit-model framework. Stage 7B adds the RMSNorm and
+residual-add RTL foundations. Full Stage 7 top-level Transformer layer
+integration is not yet accepted.
 
 Stage 6 projection-integrated multi-head attention correctness remains accepted.
 Stage 6 acceptance audit reset-coverage conditions are closed.
@@ -276,6 +277,20 @@ Stage 7A added:
 - `reports/stage_07/phase_7a_spec.md`
 - `reports/stage_07/phase_7a_test_results.txt`
 
+Stage 7B added:
+
+- `rtl/arithmetic/fp32_sqrt_wrapper.sv`
+- `rtl/transformer/rmsnorm_engine.sv`
+- `rtl/transformer/residual_add_engine.sv`
+- `tb/rtl/stage7/tb_stage7b_rmsnorm_residual.sv`
+- `scripts/sim/gen_stage7b_vectors.py`
+- `scripts/sim/run_stage7b_vcs.sh`
+- `scripts/lint/run_stage7b_lint.py`
+- `scripts/synth/run_stage7b_synth_check.py`
+- `scripts/synth/stage7b_elaborate.tcl`
+- Stage 7B Makefile targets: `stage7b-test`, `stage7b-rtl-sim`,
+  `stage7b-lint`, and `stage7b-synth`.
+
 Stage 7A verification:
 
 ```bash
@@ -292,9 +307,27 @@ Results:
 - Host `make stage7a-test` was not available because `make` is not installed on
   the Windows host; the Docker `make stage7a-test` flow passed.
 
+Stage 7B verification:
+
+```bash
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7b-test'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7b-rtl-sim'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7b-lint'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7b-synth'
+```
+
+Results:
+
+- Stage 7B vectors for D_MODEL 8 and 16: PASS.
+- Stage 7B RMSNorm/residual RTL VCS simulations for D_MODEL 8 and 16: PASS.
+- Stage 7B lint/vlogan: PASS with only DesignWare pragma-no-effect warnings.
+- Stage 7B DC analyze/elaborate/link/check_design: PASS for `fp32_sqrt_wrapper`,
+  `rmsnorm_engine`, and `residual_add_engine`, including D_MODEL 128 structural
+  elaboration.
+
 ## Next Action
 
-Continue Stage 7 RTL implementation from the Stage 7A frozen spec. Add RMSNorm,
-residual, FFN/ReLU, and top-level Transformer layer RTL in scoped phases, with
-corresponding model, RTL simulation, lint/vlogan, DC structural checks, reports,
-and handoff updates before any Stage 7 PASS claim.
+Continue Stage 7 RTL implementation from the Stage 7A frozen spec. Add FFN/ReLU
+RTL, then top-level Transformer layer integration around the frozen Stage 6 MHA,
+with corresponding model, RTL simulation, lint/vlogan, DC structural checks,
+reports, and handoff updates before any Stage 7 PASS claim.

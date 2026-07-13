@@ -1,0 +1,16 @@
+Stage 7B RMSNorm/residual RTL simulation
+Build dir: build/stage7b_rtl_sim
+vcs: FOUND
+vcs script version : O-2018.09
+DesignWare sim dir: detected
+
+rmsnorm_residual_d8 result=PASS run_exit_code=0
+rmsnorm_residual_d16 result=PASS run_exit_code=0
+
+Run markers:
+Command: /workspace/VEDA/build/stage7b_rtl_sim/rmsnorm_residual_d16_simv +STAGE7B_VECTOR_FILE=/workspace/VEDA/build/stage7b_rtl_sim/vectors/stage7b_h2_d8.mem -l /workspace/VEDA/build/stage7b_rtl_sim/rmsnorm_residual_d16_run.log
+STAGE7B_RMSNORM_RESIDUAL_PASS d_model=16
+Command: /workspace/VEDA/build/stage7b_rtl_sim/rmsnorm_residual_d8_simv +STAGE7B_VECTOR_FILE=/workspace/VEDA/build/stage7b_rtl_sim/vectors/stage7b_h1_d8.mem -l /workspace/VEDA/build/stage7b_rtl_sim/rmsnorm_residual_d8_run.log
+STAGE7B_RMSNORM_RESIDUAL_PASS d_model=8
+result=PASS
+Full logs: build/stage7b_rtl_sim/*_compile.log and *_run.log
