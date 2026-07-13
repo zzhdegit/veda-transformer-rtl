@@ -245,6 +245,12 @@ Stage 7A freezes the bit model and interface contract. Later RTL phases must
 add VCS assertion, vlogan lint, and DC analyze/elaborate/link/check_design
 coverage before being accepted.
 
+The Stage 7 acceptance baseline is recorded in
+`reports/stage_07/acceptance_audit.md`. Future changes that alter the frozen
+numeric order, FP16/FP32 boundaries, Stage 6 commit semantics, external
+ready/valid behavior, weight layout, or layer done semantics must update this
+spec and the bit model, then rerun the full Stage 5/6/7 regression set.
+
 Required model trace nodes:
 
 - `input_fp32`

@@ -5,12 +5,30 @@ vcs script version : O-2018.09
 DesignWare sim dir: detected
 
 layer_h1_d8 result=PASS run_exit_code=0
+layer_h1_d8_reset_audit result=PASS run_exit_code=0
 layer_h2_d8 result=PASS run_exit_code=0
 layer_h2_d8_two_token result=PASS run_exit_code=0
 layer_h4_d8 result=PASS run_exit_code=0
 layer_h2_d16 result=PASS run_exit_code=0
 
 Run markers:
+Command: /workspace/VEDA/build/stage7d_rtl_sim/layer_h1_d8_reset_audit_simv +STAGE7D_VECTOR_FILE=/workspace/VEDA/build/stage7d_rtl_sim/vectors/stage7d_h1_d8.mem +STAGE7D_RESET_AUDIT -l /workspace/VEDA/build/stage7d_rtl_sim/layer_h1_d8_reset_audit_run.log
+STAGE7D_RESET_SCENARIO_PASS input_load
+STAGE7D_RESET_SCENARIO_PASS rmsnorm1_reduction
+STAGE7D_RESET_SCENARIO_PASS rmsnorm1_apply
+STAGE7D_RESET_SCENARIO_PASS mha
+STAGE7D_RESET_SCENARIO_PASS residual1
+STAGE7D_RESET_SCENARIO_PASS rmsnorm2_reduction
+STAGE7D_RESET_SCENARIO_PASS rmsnorm2_apply
+STAGE7D_RESET_SCENARIO_PASS ffn1
+STAGE7D_RESET_SCENARIO_PASS relu
+STAGE7D_RESET_SCENARIO_PASS activation_quantization
+STAGE7D_RESET_SCENARIO_PASS ffn2
+STAGE7D_RESET_SCENARIO_PASS residual2
+STAGE7D_RESET_SCENARIO_PASS final_output_stall
+STAGE7D_RESET_SCENARIO_PASS layer_done_stall
+STAGE7D_RESET_AUDIT_PASS scenarios=14
+STAGE7D_TRANSFORMER_LAYER_PASS n_head=1 d_head=8 d_model=8 tokens=1
 Command: /workspace/VEDA/build/stage7d_rtl_sim/layer_h1_d8_simv +STAGE7D_VECTOR_FILE=/workspace/VEDA/build/stage7d_rtl_sim/vectors/stage7d_h1_d8.mem -l /workspace/VEDA/build/stage7d_rtl_sim/layer_h1_d8_run.log
 STAGE7D_TRANSFORMER_LAYER_PASS n_head=1 d_head=8 d_model=8 tokens=1
 Command: /workspace/VEDA/build/stage7d_rtl_sim/layer_h2_d16_simv +STAGE7D_VECTOR_FILE=/workspace/VEDA/build/stage7d_rtl_sim/vectors/stage7d_h2_d16.mem -l /workspace/VEDA/build/stage7d_rtl_sim/layer_h2_d16_run.log

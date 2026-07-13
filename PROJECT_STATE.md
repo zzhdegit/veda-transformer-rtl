@@ -3,7 +3,7 @@
 ## Current Stage
 
 - Stage: 7
-- Status: STAGE 7 PASS, PRE-NORM TRANSFORMER LAYER ACCEPTED
+- Status: STAGE 7 ACCEPTANCE AUDIT PASS, PRE-NORM TRANSFORMER LAYER ACCEPTED
 - Branch: `stage7-prenorm-transformer-layer`
 - Last update: 2026-07-13
 
@@ -12,6 +12,11 @@ adds the Stage 7 Python bit-model framework. Stage 7B adds the RMSNorm and
 residual-add RTL foundations. Stage 7C adds the FFN/ReLU RTL foundation. Stage
 7D adds the full Pre-Norm `transformer_layer` top around the frozen Stage 6
 projection-integrated MHA and is accepted.
+
+Stage 7 acceptance audit is recorded in
+`reports/stage_07/acceptance_audit.md`. The acceptance tag is
+`stage7-correctness-accepted`, pointing to the Stage 7 final functional commit,
+not the audit-document commit.
 
 Stage 6 projection-integrated multi-head attention correctness remains accepted.
 Stage 6 acceptance audit reset-coverage conditions are closed.
@@ -61,9 +66,9 @@ Frozen relations and layout:
 - FP32-to-FP16 policy is RNE, FTZ for FP32/FP16 subnormals, finite saturation on
   overflow, signed-zero preserving, and invalid for NaN/Inf.
 
-## RTL Structure
+## Stage 6 RTL Structure
 
-Final top:
+Stage 6 final top:
 
 - `rtl/attention/projection_integrated_mha.sv`
 
@@ -106,7 +111,7 @@ already committed and concat/W_O later reports invalid, the K/V commit is not
 rolled back; final done reports invalid/status and reset clears top transaction
 state.
 
-## Final Top Interface
+## Stage 6 Final Top Interface
 
 Weight load:
 
@@ -386,11 +391,18 @@ Results:
 - Stage 7D full `transformer_layer` RTL VCS simulations for H1/D8, H2/D8,
   H4/D8, and H2/D16 single-token vectors: PASS.
 - Stage 7D H2/D8 two-token full-layer VCS sequence test: PASS.
+- Stage 7D H1/D8 final-top directed reset audit: PASS for reset during input
+  load, RMSNorm1 reduction/apply, MHA, residual1, RMSNorm2 reduction/apply,
+  FFN1, ReLU, activation quantization, FFN2, residual2, final output stall, and
+  layer done stall, followed by clean recovery after weight reload.
 - Stage 7D lint/vlogan: PASS with only DesignWare pragma-no-effect warnings.
 - Stage 7D DC analyze/elaborate/link/check_design: PASS for
   `transformer_layer` H1/D8, H2/D8, H4/D8, and H2/D16.
 - Stage 7D top-level output and done ready/valid backpressure are covered by
   directed RTL simulation.
+- Unified Stage 7 make targets (`stage7-test`, `stage7-rtl-sim`,
+  `stage7-lint`, `stage7-synth`) are not present; Stage 7 acceptance uses the
+  Stage 7A/7B/7C/7D phase targets.
 
 ## Next Action
 

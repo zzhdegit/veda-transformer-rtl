@@ -6,7 +6,7 @@ Stage 7: Pre-Norm Transformer Layer
 
 ## Status
 
-STAGE 7 PASS. Pre-Norm Transformer layer RTL is accepted.
+STAGE 7 ACCEPTANCE AUDIT PASS. Pre-Norm Transformer layer RTL is accepted.
 
 Pre-Norm Transformer layer specification and Python bit-model framework are
 frozen. RMSNorm, residual-add, FFN/ReLU, and the full Stage 7 top-level
@@ -62,10 +62,21 @@ throughput, physical memory, and timing pipeline provisional.
 - Stage 7D RTL testbench and scripts added for H1/D8, H2/D8, H4/D8, H2/D16,
   plus an H2/D8 two-token sequence test that checks valid sequence length 1
   then 2 through the full wrapper.
+- Stage 7 acceptance audit added in `reports/stage_07/acceptance_audit.md`.
+- Stage 7D final-top directed reset audit added for H1/D8, covering reset
+  during input load, RMSNorm1 reduction/apply, MHA, residual1, RMSNorm2
+  reduction/apply, FFN1, ReLU, activation quantization, FFN2, residual2, final
+  output stall, and layer done stall, with clean recovery after weight reload.
+- Stage 7D final-top testbench now stresses active input/weight rejection,
+  final output backpressure, and final done backpressure.
 
-Final top:
+Stage 6 final top:
 
 - `rtl/attention/projection_integrated_mha.sv`
+
+Stage 7 final top:
+
+- `rtl/transformer/transformer_layer.sv`
 
 Stage 6E modules:
 
@@ -295,6 +306,7 @@ Stage 7D:
 Stage 7D VCS configurations:
 
 - Full `transformer_layer` H1/D8, D_MODEL=8, one token
+- Full `transformer_layer` H1/D8, D_MODEL=8, directed reset audit
 - Full `transformer_layer` H2/D8, D_MODEL=16, one token
 - Full `transformer_layer` H2/D8, D_MODEL=16, two tokens
 - Full `transformer_layer` H4/D8, D_MODEL=32, one token
@@ -303,6 +315,8 @@ Stage 7D VCS configurations:
 Stage 7D lint/vlogan passed with only DesignWare pragma-no-effect warnings.
 Stage 7D DC structural checks include `transformer_layer` H1/D8, H2/D8,
 H4/D8, and H2/D16.
+Unified Stage 7 make targets (`stage7-test`, `stage7-rtl-sim`, `stage7-lint`,
+and `stage7-synth`) are not present; use Stage 7A/7B/7C/7D phase targets.
 
 Host:
 
@@ -349,6 +363,12 @@ The H2/D8 Stage 6E vector includes deterministic dense WQ/WK/WV/WO weights with
 mixed signs, cancellation, powers-of-two values, and moderate magnitudes. All
 final tiled FP32 outputs are bit-exact against the bit model. High precision is
 used only for error statistics in the model tests and is not an RTL tolerance.
+
+Stage 7 dense complete-layer coverage currently exists in the Python bit model
+for H2/D8 with dense MHA weights, dense FFN weights, nonuniform gamma1/gamma2,
+mixed-sign hidden inputs, and a three-token sequence. Stage 7D final-top RTL
+vectors use directed identity/sparse MHA, directed/sparse FFN weights, gamma all
+ones, and mixed-sign hidden inputs.
 
 ## Assertions
 

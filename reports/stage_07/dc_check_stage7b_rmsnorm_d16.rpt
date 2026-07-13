@@ -1,8 +1,8 @@
-
+ 
 ****************************************
 check_design summary:
 Version:     L-2016.03-SP1
-Date:        Mon Jul 13 14:16:39 2026
+Date:        Mon Jul 13 16:35:48 2026
 ****************************************
 
                    Name                                            Total
@@ -45,105 +45,105 @@ Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', port 'input_
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', port 'input_meta[1]' is not connected to any nets. (LINT-28)
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', port 'input_meta[0]' is not connected to any nets. (LINT-28)
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_last' is connected to logic 0.
+   Pin 'in_last' is connected to logic 0. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[31]' is connected to logic 0.
+   Pin 'in_b[31]' is connected to logic 0. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[30]' is connected to logic 0.
+   Pin 'in_b[30]' is connected to logic 0. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[29]' is connected to logic 1.
+   Pin 'in_b[29]' is connected to logic 1. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[28]' is connected to logic 1.
+   Pin 'in_b[28]' is connected to logic 1. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[27]' is connected to logic 0.
+   Pin 'in_b[27]' is connected to logic 0. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[26]' is connected to logic 1.
+   Pin 'in_b[26]' is connected to logic 1. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[25]' is connected to logic 1.
+   Pin 'in_b[25]' is connected to logic 1. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[24]' is connected to logic 1.
+   Pin 'in_b[24]' is connected to logic 1. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[23]' is connected to logic 0.
+   Pin 'in_b[23]' is connected to logic 0. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[22]' is connected to logic 0.
+   Pin 'in_b[22]' is connected to logic 0. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[21]' is connected to logic 1.
+   Pin 'in_b[21]' is connected to logic 1. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[20]' is connected to logic 0.
+   Pin 'in_b[20]' is connected to logic 0. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[19]' is connected to logic 0.
+   Pin 'in_b[19]' is connected to logic 0. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[18]' is connected to logic 1.
+   Pin 'in_b[18]' is connected to logic 1. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[17]' is connected to logic 1.
+   Pin 'in_b[17]' is connected to logic 1. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[16]' is connected to logic 1.
+   Pin 'in_b[16]' is connected to logic 1. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[15]' is connected to logic 1.
+   Pin 'in_b[15]' is connected to logic 1. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[14]' is connected to logic 1.
+   Pin 'in_b[14]' is connected to logic 1. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[13]' is connected to logic 0.
+   Pin 'in_b[13]' is connected to logic 0. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[12]' is connected to logic 0.
+   Pin 'in_b[12]' is connected to logic 0. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[11]' is connected to logic 0.
+   Pin 'in_b[11]' is connected to logic 0. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[10]' is connected to logic 1.
+   Pin 'in_b[10]' is connected to logic 1. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[9]' is connected to logic 0.
+   Pin 'in_b[9]' is connected to logic 0. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[8]' is connected to logic 1.
+   Pin 'in_b[8]' is connected to logic 1. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[7]' is connected to logic 1.
+   Pin 'in_b[7]' is connected to logic 1. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[6]' is connected to logic 0.
+   Pin 'in_b[6]' is connected to logic 0. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[5]' is connected to logic 1.
+   Pin 'in_b[5]' is connected to logic 1. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[4]' is connected to logic 0.
+   Pin 'in_b[4]' is connected to logic 0. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[3]' is connected to logic 1.
+   Pin 'in_b[3]' is connected to logic 1. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[2]' is connected to logic 1.
+   Pin 'in_b[2]' is connected to logic 1. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[1]' is connected to logic 0.
+   Pin 'in_b[1]' is connected to logic 0. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[0]' is connected to logic 0.
+   Pin 'in_b[0]' is connected to logic 0. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_add_eps' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_last' is connected to logic 0.
+   Pin 'in_last' is connected to logic 0. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_sqrt' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_last' is connected to logic 0.
+   Pin 'in_last' is connected to logic 0. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_recip' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_last' is connected to logic 0.
+   Pin 'in_last' is connected to logic 0. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', a pin on submodule 'u_gamma_convert' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_last' is connected to logic 0.
+   Pin 'in_last' is connected to logic 0. 
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[12]' is connected to logic 0.
+   Pin 'in_data[12]' is connected to logic 0. 
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[11]' is connected to logic 0.
+   Pin 'in_data[11]' is connected to logic 0. 
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[10]' is connected to logic 0.
+   Pin 'in_data[10]' is connected to logic 0. 
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[9]' is connected to logic 0.
+   Pin 'in_data[9]' is connected to logic 0. 
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[8]' is connected to logic 0.
+   Pin 'in_data[8]' is connected to logic 0. 
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[7]' is connected to logic 0.
+   Pin 'in_data[7]' is connected to logic 0. 
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[6]' is connected to logic 0.
+   Pin 'in_data[6]' is connected to logic 0. 
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[5]' is connected to logic 0.
+   Pin 'in_data[5]' is connected to logic 0. 
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[4]' is connected to logic 0.
+   Pin 'in_data[4]' is connected to logic 0. 
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[3]' is connected to logic 0.
+   Pin 'in_data[3]' is connected to logic 0. 
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[2]' is connected to logic 0.
+   Pin 'in_data[2]' is connected to logic 0. 
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[1]' is connected to logic 0.
+   Pin 'in_data[1]' is connected to logic 0. 
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[0]' is connected to logic 0.
+   Pin 'in_data[0]' is connected to logic 0. 
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', the same net is connected to more than one pin on submodule 'u_add_eps'. (LINT-33)
    Net '*Logic0*' is connected to pins 'in_b[31]', 'in_b[30]'', 'in_b[27]', 'in_b[23]', 'in_b[22]', 'in_b[20]', 'in_b[19]', 'in_b[13]', 'in_b[12]', 'in_b[11]', 'in_b[9]', 'in_b[6]', 'in_b[4]', 'in_b[1]', 'in_b[0]', 'in_last'.
 Warning: In design 'rmsnorm_engine_D_MODEL16_META_W16_COUNTER_W64', the same net is connected to more than one pin on submodule 'u_add_eps'. (LINT-33)

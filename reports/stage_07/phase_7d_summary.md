@@ -32,7 +32,13 @@ Results:
   H2/D8 two-token.
 - Full `transformer_layer` VCS simulations: PASS for H1/D8, H2/D8, H4/D8,
   and H2/D16 single-token vectors.
+- Full `transformer_layer` H1/D8 directed reset audit: PASS for reset during
+  input load, RMSNorm1 reduction/apply, MHA, residual1, RMSNorm2
+  reduction/apply, FFN1, ReLU, activation quantization, FFN2, residual2, final
+  output stall, and layer done stall.
 - Full `transformer_layer` H2/D8 two-token VCS sequence test: PASS.
+- Final-top active input/weight rejection, final output backpressure, and final
+  done backpressure checks: PASS.
 - Stage 7D lint/vlogan: PASS with only DesignWare pragma-no-effect warnings.
 - DC analyze/elaborate/link/check_design: PASS for `transformer_layer` H1/D8,
   H2/D8, H4/D8, and H2/D16.

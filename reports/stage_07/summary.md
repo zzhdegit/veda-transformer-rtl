@@ -2,9 +2,13 @@
 
 ## Current Result
 
-Stage 7 PASS. The Pre-Norm Transformer layer specification, Python bit-model
-framework, RMSNorm/residual/FFN RTL foundations, and full Stage 7
-`transformer_layer` top integration are verified and accepted.
+Stage 7 acceptance audit PASS. The Pre-Norm Transformer layer specification,
+Python bit-model framework, RMSNorm/residual/FFN RTL foundations, and full
+Stage 7 `transformer_layer` top integration are verified and accepted.
+
+Final audit report:
+
+- `reports/stage_07/acceptance_audit.md`
 
 ## Frozen Structure
 
@@ -20,6 +24,10 @@ y  = r1 + f
 ```
 
 Stage 7 wraps exactly one frozen Stage 6 projection-integrated MHA instance.
+
+Final top:
+
+- `rtl/transformer/transformer_layer.sv`
 
 ## Stage 7A Artifacts
 
@@ -105,11 +113,27 @@ Results:
 - Stage 7D full `transformer_layer` VCS simulations for H1/D8, H2/D8,
   H4/D8, and H2/D16 single-token vectors: PASS.
 - Stage 7D H2/D8 two-token full-layer VCS sequence test: PASS.
+- Stage 7D H1/D8 directed reset audit covers reset during input load, RMSNorm1
+  reduction/apply, MHA, residual1, RMSNorm2 reduction/apply, FFN1, ReLU,
+  activation quantization, FFN2, residual2, final output stall, and layer done
+  stall: PASS.
+- Stage 7D final-top active input/weight rejection, final output backpressure,
+  and final done backpressure: PASS.
 - Stage 7D lint/vlogan: PASS with only DesignWare pragma-no-effect warnings.
 - Stage 7D DC structural checks for H1/D8, H2/D8, H4/D8, and H2/D16: PASS.
 
 Host `make stage7a-test` was not available because `make` is not installed on
 the Windows host. Docker `make stage7a-test` passed.
+
+Unified Stage 7 make targets (`stage7-test`, `stage7-rtl-sim`, `stage7-lint`,
+and `stage7-synth`) are not present. The accepted flow uses the Stage
+7A/7B/7C/7D phase targets.
+
+Dense complete-layer coverage exists in the Stage 7 Python bit model for H2/D8
+with dense MHA weights, dense FFN weights, nonuniform gamma1/gamma2, mixed-sign
+hidden inputs, and a three-token sequence. Stage 7D final-top RTL vectors use
+directed identity/sparse MHA, directed/sparse FFN weights, gamma all ones, and
+mixed-sign hidden inputs.
 
 ## Deferred
 

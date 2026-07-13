@@ -147,6 +147,8 @@ compile_and_run_layer() {
   local n_head=$2
   local d_head=$3
   local vector_file=$4
+  shift 4
+  local extra_args=("$@")
   local simv="$BUILD_DIR/${name}_simv"
   local compile_log="$BUILD_DIR/${name}_compile.log"
   local run_log="$BUILD_DIR/${name}_run.log"
@@ -166,7 +168,7 @@ compile_and_run_layer() {
     return "$compile_code"
   fi
 
-  timeout 1800s "$simv" "+STAGE7D_VECTOR_FILE=$vector_file" -l "$run_log"
+  timeout 1800s "$simv" "+STAGE7D_VECTOR_FILE=$vector_file" "${extra_args[@]}" -l "$run_log"
   local run_code=$?
   local log_errors=0
   if grep -E "(STAGE7D_.*FAIL|CHECK_FAIL|Fatal:|Error:|assert.*failed|unsupported .* assertion failed)" "$run_log" >/dev/null 2>&1; then
@@ -183,6 +185,7 @@ compile_and_run_layer() {
 failures=0
 
 compile_and_run_layer layer_h1_d8 1 8 "$VECTOR_DIR/stage7d_h1_d8.mem" || failures=$((failures + 1))
+compile_and_run_layer layer_h1_d8_reset_audit 1 8 "$VECTOR_DIR/stage7d_h1_d8.mem" +STAGE7D_RESET_AUDIT || failures=$((failures + 1))
 compile_and_run_layer layer_h2_d8 2 8 "$VECTOR_DIR/stage7d_h2_d8.mem" || failures=$((failures + 1))
 compile_and_run_layer layer_h2_d8_two_token 2 8 "$VECTOR_DIR/stage7d_h2_d8_two_token.mem" || failures=$((failures + 1))
 compile_and_run_layer layer_h4_d8 4 8 "$VECTOR_DIR/stage7d_h4_d8.mem" || failures=$((failures + 1))
