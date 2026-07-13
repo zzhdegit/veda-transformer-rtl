@@ -45,3 +45,20 @@ D:/IC_Workspace/VEDA_artifacts/
 `-- rtl_vectors/
 ```
 
+## ML-M2 Commands
+
+```bash
+make ml-m2-unit-test
+make ml-m2-data-test
+make ml-m2-tokenizer-test
+make ml-m2-smoke-test
+make ml-m2-export-test
+make ml-m2-trace-test
+make ml-m2-test
+```
+
+On hosts without `make`, run the underlying Python commands:
+
+```bash
+python scripts/ml/run_ml_m2_all_tests.py
+```

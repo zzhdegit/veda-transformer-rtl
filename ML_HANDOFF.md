@@ -8,24 +8,27 @@ Short id: ML-M2
 
 ## Status
 
-ML-M2 is beginning from Model Stage M1 commit
-`e3b2c14a6af10cccc95f47dfadaeec2d0fc923ad`.
+MODEL STAGE M2 PIPELINE PASS.
+
+FORMAL TRAINING PENDING because this environment has no CUDA GPU.
 
 ## Completed
 
 - Model Stage M1 selected the self-trained hardware-matched model as the
   primary deployment path for current RTL.
 - ML-M2A freezes the initial training/export contract.
+- ML-M2B adds dataset and tokenizer pipeline code.
+- ML-M2C implements the hardware-matched PyTorch causal LM.
+- ML-M2D closes deterministic CPU smoke training.
+- ML-M2E adds formal TinyStories workflow and records PENDING status.
+- ML-M2F adds FP16 export and hardware-aware traces.
+- ML-M2G adds acceptance audit, summary, and pipeline-ready tag.
 
 ## Not Completed
 
-- Dataset/tokenizer pipeline.
-- PyTorch architecture and unit tests.
-- CPU smoke training.
-- Formal TinyStories training.
-- FP16 export and trace generation.
-- Hardware-aware comparison.
-- ML-M2 acceptance audit.
+- Formal TinyStories training on 100000 examples.
+- Model Stage M3 co-simulation against real RTL.
+- Hardware Stage H8 legacy-vs-paper-array A/B integration.
 
 ## Dependencies
 
@@ -56,4 +59,5 @@ make ml-m2-test
 - Do not commit datasets, checkpoints, tokenizer caches, large traces, or model
   weights.
 - Do not start Model Stage M3 until ML-M2 is closed.
-
+- Model Stage M3 may begin after user approval, but formal training remains
+  pending unless GPU artifacts are produced.

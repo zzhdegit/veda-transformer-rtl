@@ -8,7 +8,7 @@
 - Branch: `ml/m2-hardware-matched-model`
 - Base commit: `e3b2c14a6af10cccc95f47dfadaeec2d0fc923ad`
 - Last update: 2026-07-13
-- Status: ML-M2A specification in progress
+- Status: MODEL STAGE M2 PIPELINE PASS, FORMAL TRAINING PENDING
 
 ## Dual-Track Ownership
 
@@ -32,3 +32,14 @@ MODEL STAGE M2 PIPELINE PASS
 FORMAL TRAINING PENDING
 ```
 
+## ML-M2 Pipeline Result
+
+The ML-M2 software pipeline is implemented and tested:
+
+- data/tokenizer pipeline;
+- one-layer hardware-matched PyTorch model;
+- CPU smoke training;
+- formal TinyStories workflow with PENDING status due no CUDA GPU;
+- FP16 export;
+- hardware-aware Stage 7 bit-model trace path;
+- acceptance audit and summary.
