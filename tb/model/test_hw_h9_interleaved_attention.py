@@ -97,3 +97,21 @@ def test_h9_cycle_model_has_required_overlaps_and_speedup():
         assert estimate.probability_fifo_peak_occupancy > 0
         assert estimate.array_utilization > 0.0
         assert estimate.sfu_utilization > 0.0
+
+
+def test_h9_cycle_model_matches_rtl_calibration_points():
+    staged_expected = {
+        8: {1: 91, 2: 187, 8: 691, 16: 1363, 32: 2707, 64: 5395},
+        16: {1: 165, 2: 330, 8: 1248, 16: 2472, 32: 4920, 64: 9816},
+        64: {1: 609, 2: 1188, 8: 4590, 16: 9126, 32: 18198, 64: 36342},
+    }
+    interleaved_expected = {
+        8: {1: 194, 2: 259, 8: 649, 16: 1169, 32: 2209, 64: 4289},
+        16: {1: 196, 2: 261, 8: 651, 16: 1171, 32: 2211, 64: 4291},
+        64: {1: 208, 2: 273, 8: 663, 16: 1183, 32: 2223, 64: 4303},
+    }
+    for d_head in (8, 16, 64):
+        for seq_len in (1, 2, 8, 16, 32, 64):
+            estimate = estimate_h9_interleaved_cycles(d_head, seq_len)
+            assert estimate.staged_h8_cycles == staged_expected[d_head][seq_len]
+            assert estimate.interleaved_cycles == interleaved_expected[d_head][seq_len]

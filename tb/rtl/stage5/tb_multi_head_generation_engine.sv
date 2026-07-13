@@ -13,11 +13,20 @@
 `define STAGE5_ATTENTION_PE_ARCH 0
 `endif
 
+`ifndef STAGE5_ATTENTION_SCHEDULE
+`define STAGE5_ATTENTION_SCHEDULE 0
+`endif
+
+`ifndef STAGE5_MAX_SEQ_LEN
+`define STAGE5_MAX_SEQ_LEN 8
+`endif
+
 module tb_multi_head_generation_engine;
     localparam int N_HEAD = `STAGE5_N_HEAD;
     localparam int PE_NUM = 8;
     localparam int D_HEAD = `STAGE5_D_HEAD;
-    localparam int MAX_SEQ_LEN = 8;
+    localparam int MAX_SEQ_LEN = `STAGE5_MAX_SEQ_LEN;
+    localparam int ATTENTION_SCHEDULE = `STAGE5_ATTENTION_SCHEDULE;
     localparam int META_W = 16;
     localparam int HEAD_W = (N_HEAD <= 1) ? 1 : $clog2(N_HEAD);
     localparam int TOKEN_W = (MAX_SEQ_LEN <= 1) ? 1 : $clog2(MAX_SEQ_LEN);
@@ -109,7 +118,8 @@ module tb_multi_head_generation_engine;
         .D_HEAD(D_HEAD),
         .MAX_SEQ_LEN(MAX_SEQ_LEN),
         .META_W(META_W),
-        .ATTENTION_PE_ARCH(`STAGE5_ATTENTION_PE_ARCH)
+        .ATTENTION_PE_ARCH(`STAGE5_ATTENTION_PE_ARCH),
+        .ATTENTION_SCHEDULE(ATTENTION_SCHEDULE)
     ) u_dut (
         .clk                            (clk),
         .rst_n                          (rst_n),
@@ -371,8 +381,8 @@ module tb_multi_head_generation_engine;
                     if (pre_done_meta !== current_meta) tb_fail("done metadata mismatch");
                     if (pre_done_seq_len !== SEQ_LEN_W'(current_seq_after)) tb_fail("done valid_seq_len mismatch");
                     if (current_valid_seq_len !== SEQ_LEN_W'(current_seq_after)) tb_fail("current valid_seq_len mismatch");
-                    $display("STAGE5_GENERATION_PERF arch=%0d N_HEAD=%0d D_HEAD=%0d step=%s seq_before=%0d seq_after=%0d total=%0d per_head_attention=%0d head_switch=%0d provisional_write=%0d commit=%0d cache_read=%0d cache_write=%0d cache_stall=%0d pe_stall=%0d sfu_stall=%0d output_stall=%0d peak_seq=%0d paper_active=%0d paper_inner=%0d paper_outer=%0d paper_tail=%0d paper_mode_switch=%0d",
-                             `STAGE5_ATTENTION_PE_ARCH, N_HEAD, D_HEAD, current_name, current_seq_before, current_seq_after,
+                    $display("STAGE5_GENERATION_PERF arch=%0d schedule=%0d N_HEAD=%0d D_HEAD=%0d MAX_SEQ_LEN=%0d step=%s seq_before=%0d seq_after=%0d total=%0d per_head_attention=%0d head_switch=%0d provisional_write=%0d commit=%0d cache_read=%0d cache_write=%0d cache_stall=%0d pe_stall=%0d sfu_stall=%0d output_stall=%0d peak_seq=%0d paper_active=%0d paper_inner=%0d paper_outer=%0d paper_tail=%0d paper_mode_switch=%0d",
+                             `STAGE5_ATTENTION_PE_ARCH, ATTENTION_SCHEDULE, N_HEAD, D_HEAD, MAX_SEQ_LEN, current_name, current_seq_before, current_seq_after,
                              perf_total_cycles, perf_per_head_attention_cycles, perf_head_switch_cycles,
                              perf_provisional_write_cycles, perf_commit_cycles,
                              perf_cache_read_cycles, perf_cache_write_cycles, perf_cache_stall_cycles,
@@ -480,7 +490,8 @@ module tb_multi_head_generation_engine;
         reset_during_attention();
         current_name = "none";
         parse_and_run_file();
-        $display("STAGE5_SHARED_MULTIHEAD_PASS N_HEAD=%0d D_HEAD=%0d", N_HEAD, D_HEAD);
+        $display("STAGE5_SHARED_MULTIHEAD_PASS arch=%0d schedule=%0d N_HEAD=%0d D_HEAD=%0d MAX_SEQ_LEN=%0d",
+                 `STAGE5_ATTENTION_PE_ARCH, ATTENTION_SCHEDULE, N_HEAD, D_HEAD, MAX_SEQ_LEN);
         $finish;
     end
 endmodule

@@ -17,6 +17,11 @@ module tb_stage7d_transformer_layer;
 `else
     localparam int ATTENTION_PE_ARCH = `STAGE7_ATTENTION_PE_ARCH;
 `endif
+`ifndef STAGE7_ATTENTION_SCHEDULE
+    localparam int ATTENTION_SCHEDULE = 0;
+`else
+    localparam int ATTENTION_SCHEDULE = `STAGE7_ATTENTION_SCHEDULE;
+`endif
     localparam int D_MODEL = N_HEAD * D_HEAD;
     localparam int D_FFN = 4 * D_MODEL;
     localparam int PE_NUM = 8;
@@ -118,7 +123,8 @@ module tb_stage7d_transformer_layer;
         .MAX_SEQ_LEN(MAX_SEQ_LEN),
         .META_W(META_W),
         .COUNTER_W(COUNTER_W),
-        .ATTENTION_PE_ARCH(ATTENTION_PE_ARCH)
+        .ATTENTION_PE_ARCH(ATTENTION_PE_ARCH),
+        .ATTENTION_SCHEDULE(ATTENTION_SCHEDULE)
     ) u_layer (
         .clk                                  (clk),
         .rst_n                                (rst_n),
@@ -401,8 +407,8 @@ module tb_stage7d_transformer_layer;
         for (int tok = 0; tok < token_count; tok++) begin
             run_layer(tok);
         end
-        $display("STAGE7D_TRANSFORMER_LAYER_PASS arch=%0d n_head=%0d d_head=%0d d_model=%0d tokens=%0d paper_active=%0d paper_inner=%0d paper_outer=%0d paper_tail=%0d paper_mode_switch=%0d",
-                 ATTENTION_PE_ARCH, N_HEAD, D_HEAD, D_MODEL, token_count,
+        $display("STAGE7D_TRANSFORMER_LAYER_PASS arch=%0d schedule=%0d n_head=%0d d_head=%0d d_model=%0d tokens=%0d paper_active=%0d paper_inner=%0d paper_outer=%0d paper_tail=%0d paper_mode_switch=%0d",
+                 ATTENTION_PE_ARCH, ATTENTION_SCHEDULE, N_HEAD, D_HEAD, D_MODEL, token_count,
                  perf_paper_array_active_cycles, perf_inner_mode_cycles,
                  perf_outer_mode_cycles, perf_tail_masked_pe_cycles,
                  perf_mode_switch_cycles);

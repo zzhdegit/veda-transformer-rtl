@@ -1,3 +1,4 @@
+import argparse
 import sys
 from pathlib import Path
 
@@ -8,7 +9,7 @@ from model.cache.multi_head_generation_reference import MultiHeadGenerationRefer
 
 
 PE_NUM = 8
-MAX_SEQ_LEN = 8
+DEFAULT_MAX_SEQ_LEN = 8
 FP16_ONE = 0x3C00
 FP16_TWO = 0x4000
 FP16_NEG_TWO = 0xC000
@@ -64,9 +65,9 @@ def tile_outputs(output, d_head):
     return tiles
 
 
-def generation_lines(n_head, d_head):
-    ref = MultiHeadGenerationReference(n_head=n_head, d_head=d_head, max_seq_len=MAX_SEQ_LEN, pe_num=PE_NUM)
-    tokens = token_stream(n_head, d_head, MAX_SEQ_LEN + 1)
+def generation_lines(n_head, d_head, max_seq_len):
+    ref = MultiHeadGenerationReference(n_head=n_head, d_head=d_head, max_seq_len=max_seq_len, pe_num=PE_NUM)
+    tokens = token_stream(n_head, d_head, max_seq_len + 1)
     lines = []
     for step, token in enumerate(tokens):
         trace = ref.run_token(token["q"], token["k"], token["v"], token["meta"])
@@ -112,15 +113,31 @@ def generation_lines(n_head, d_head):
     return lines
 
 
-def main():
-    if len(sys.argv) != 2:
-        raise SystemExit("usage: gen_stage5_vectors.py <output-dir>")
-    out_dir = Path(sys.argv[1])
-    configs = [(1, 8), (2, 8), (4, 8), (2, 16)]
+def parse_configs(text):
+    configs = []
+    for item in text.split(","):
+        item = item.strip()
+        if not item:
+            continue
+        head_text, d_text = item.lower().split("x")
+        configs.append((int(head_text), int(d_text)))
+    return configs
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description="Generate Stage 5 multi-head generation RTL vectors.")
+    parser.add_argument("output_dir")
+    parser.add_argument("--max-seq-len", type=int, default=DEFAULT_MAX_SEQ_LEN)
+    parser.add_argument("--configs", default="1x8,2x8,4x8,2x16")
+    args = parser.parse_args(argv)
+    if args.max_seq_len <= 0:
+        raise SystemExit("--max-seq-len must be positive")
+    out_dir = Path(args.output_dir)
+    configs = parse_configs(args.configs)
     for n_head, d_head in configs:
         name = "stage5_generation_h%d_d%d.mem" % (n_head, d_head)
-        write_lines(out_dir / name, generation_lines(n_head, d_head))
-        print("%s_steps=%d" % (name, MAX_SEQ_LEN + 1))
+        write_lines(out_dir / name, generation_lines(n_head, d_head, args.max_seq_len))
+        print("%s_steps=%d max_seq_len=%d" % (name, args.max_seq_len + 1, args.max_seq_len))
 
 
 if __name__ == "__main__":
