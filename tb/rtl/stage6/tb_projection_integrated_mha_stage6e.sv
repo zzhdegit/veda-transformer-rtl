@@ -20,6 +20,13 @@ module tb_projection_integrated_mha_stage6e;
     localparam int MODEL_W = (D_MODEL <= 1) ? 1 : $clog2(D_MODEL);
     localparam int SEQ_LEN_W = (MAX_SEQ_LEN <= 1) ? 1 : $clog2(MAX_SEQ_LEN + 1);
     localparam int MAX_OUTPUTS = (D_MODEL + PE_NUM - 1) / PE_NUM;
+    localparam logic [3:0] DUT_ST_LOAD_HIDDEN       = 4'd0;
+    localparam logic [3:0] DUT_ST_RUN_Q             = 4'd2;
+    localparam logic [3:0] DUT_ST_RUN_K             = 4'd4;
+    localparam logic [3:0] DUT_ST_RUN_V             = 4'd6;
+    localparam logic [3:0] DUT_ST_QKV_STREAM        = 4'd7;
+    localparam logic [3:0] DUT_ST_ATTENTION         = 4'd8;
+    localparam logic [3:0] DUT_ST_OUTPUT_PROJECTION = 4'd10;
 
     logic clk;
     logic rst_n;
@@ -76,6 +83,19 @@ module tb_projection_integrated_mha_stage6e;
     logic [PE_NUM-1:0] exp_mask [0:MAX_OUTPUTS-1];
     logic [PE_NUM*32-1:0] exp_vector [0:MAX_OUTPUTS-1];
     logic exp_last [0:MAX_OUTPUTS-1];
+    logic [15:0] reset_hidden [0:D_MODEL-1];
+    logic [MODEL_W-1:0] reset_exp_base [0:MAX_OUTPUTS-1];
+    logic [PE_NUM-1:0] reset_exp_mask [0:MAX_OUTPUTS-1];
+    logic [PE_NUM*32-1:0] reset_exp_vector [0:MAX_OUTPUTS-1];
+    logic reset_exp_last [0:MAX_OUTPUTS-1];
+    string reset_baseline_name;
+    logic [META_W-1:0] reset_baseline_meta;
+    int reset_baseline_seq_before;
+    int reset_baseline_seq_after;
+    bit reset_baseline_expect_invalid;
+    logic [7:0] reset_baseline_expect_status;
+    int reset_exp_count;
+    bit reset_baseline_valid;
     string current_name;
     logic [META_W-1:0] current_meta;
     int current_seq_before;
@@ -196,6 +216,299 @@ module tb_projection_integrated_mha_stage6e;
         end
     endtask
 
+    task automatic check_reset_cleared(input string scenario);
+        begin
+            #1;
+            if (output_valid !== 1'b0) tb_fail({scenario, " output_valid not cleared by reset"});
+            if (done_valid !== 1'b0) tb_fail({scenario, " done_valid not cleared by reset"});
+            if (u_dut.state_q !== DUT_ST_LOAD_HIDDEN) tb_fail({scenario, " active transaction not cleared"});
+            if (u_dut.expected_dim_q !== '0) tb_fail({scenario, " hidden dimension state not cleared"});
+            if (u_dut.stage5_done_seen_q !== 1'b0) tb_fail({scenario, " stage5 done state not cleared"});
+            if (u_dut.final_done_valid_q !== 1'b0) tb_fail({scenario, " final done state not cleared"});
+            if (u_dut.concat_loaded_mask !== '0) tb_fail({scenario, " concat buffer valid state not cleared"});
+            if (u_dut.q_complete || u_dut.k_complete || u_dut.v_complete || u_dut.qkv_all_complete) begin
+                tb_fail({scenario, " qkv buffer valid state not cleared"});
+            end
+            if (current_valid_seq_len !== '0) tb_fail({scenario, " cache valid_seq_len not cleared"});
+            if ($isunknown({output_valid, done_valid, token_ready, weight_ready, current_valid_seq_len})) begin
+                tb_fail({scenario, " reset-visible output contains X"});
+            end
+        end
+    endtask
+
+    task automatic pulse_mid_transaction_reset(input string scenario);
+        begin
+            @(negedge clk);
+            rst_n = 1'b0;
+            weight_valid = 1'b0;
+            weight_commit = 1'b0;
+            token_valid = 1'b0;
+            output_ready = 1'b0;
+            done_ready = 1'b0;
+            check_reset_cleared(scenario);
+            repeat (8) begin
+                @(posedge clk);
+                check_reset_cleared(scenario);
+            end
+            @(negedge clk);
+            rst_n = 1'b1;
+            repeat (2) @(posedge clk);
+            #1;
+            if (output_valid !== 1'b0) tb_fail({scenario, " output_valid set after reset release"});
+            if (done_valid !== 1'b0) tb_fail({scenario, " done_valid set after reset release"});
+            if (current_valid_seq_len !== '0) tb_fail({scenario, " cache valid_seq_len nonzero after reset release"});
+            if (token_ready !== 1'b1) tb_fail({scenario, " next token cannot start after reset release"});
+        end
+    endtask
+
+    task automatic save_reset_baseline;
+        begin
+            for (int idx = 0; idx < D_MODEL; idx++) begin
+                reset_hidden[idx] = current_hidden[idx];
+            end
+            reset_exp_count = exp_count;
+            reset_baseline_name = current_name;
+            reset_baseline_meta = current_meta;
+            reset_baseline_seq_before = current_seq_before;
+            reset_baseline_seq_after = current_seq_after;
+            reset_baseline_expect_invalid = current_expect_invalid;
+            reset_baseline_expect_status = current_expect_status;
+            for (int out_idx = 0; out_idx < MAX_OUTPUTS; out_idx++) begin
+                reset_exp_base[out_idx] = exp_base[out_idx];
+                reset_exp_mask[out_idx] = exp_mask[out_idx];
+                reset_exp_vector[out_idx] = exp_vector[out_idx];
+                reset_exp_last[out_idx] = exp_last[out_idx];
+            end
+            reset_baseline_valid = 1'b1;
+        end
+    endtask
+
+    task automatic restore_reset_baseline_step;
+        begin
+            current_name = reset_baseline_name;
+            current_meta = reset_baseline_meta;
+            current_seq_before = reset_baseline_seq_before;
+            current_seq_after = reset_baseline_seq_after;
+            current_expect_invalid = reset_baseline_expect_invalid;
+            current_expect_status = reset_baseline_expect_status;
+            exp_count = reset_exp_count;
+            for (int idx = 0; idx < D_MODEL; idx++) begin
+                current_hidden[idx] = reset_hidden[idx];
+            end
+            for (int out_idx = 0; out_idx < MAX_OUTPUTS; out_idx++) begin
+                exp_base[out_idx] = reset_exp_base[out_idx];
+                exp_mask[out_idx] = reset_exp_mask[out_idx];
+                exp_vector[out_idx] = reset_exp_vector[out_idx];
+                exp_last[out_idx] = reset_exp_last[out_idx];
+            end
+        end
+    endtask
+
+    task automatic setup_reset_recovery_step(input string scenario, input int scenario_id);
+        begin
+            current_name = {scenario, "_recovery"};
+            current_meta = META_W'(16'h7800 + scenario_id);
+            current_seq_before = 0;
+            current_seq_after = 1;
+            current_expect_invalid = 1'b0;
+            current_expect_status = 8'h00;
+            exp_count = reset_exp_count;
+            for (int idx = 0; idx < D_MODEL; idx++) begin
+                current_hidden[idx] = reset_hidden[idx];
+            end
+            for (int out_idx = 0; out_idx < MAX_OUTPUTS; out_idx++) begin
+                exp_base[out_idx] = reset_exp_base[out_idx];
+                exp_mask[out_idx] = reset_exp_mask[out_idx];
+                exp_vector[out_idx] = reset_exp_vector[out_idx];
+                exp_last[out_idx] = reset_exp_last[out_idx];
+            end
+        end
+    endtask
+
+    task automatic start_reset_interrupt_token(input string scenario, input int scenario_id);
+        begin
+            current_name = {scenario, "_interrupt"};
+            current_meta = META_W'(16'h7300 + scenario_id);
+            for (int idx = 0; idx < D_MODEL; idx++) begin
+                current_hidden[idx] = reset_hidden[idx];
+            end
+            output_ready = 1'b1;
+            done_ready = 1'b1;
+            drive_hidden();
+        end
+    endtask
+
+    task automatic wait_for_state(input logic [3:0] target_state, input string scenario);
+        int cycle;
+        begin
+            cycle = 0;
+            while (u_dut.state_q !== target_state) begin
+                @(negedge clk);
+                output_ready = 1'b1;
+                done_ready = 1'b1;
+                #1;
+                if (done_valid) tb_fail({scenario, " completed before reaching reset target"});
+                cycle++;
+                if (cycle > 6000000) tb_fail({scenario, " timed out waiting for reset target state"});
+            end
+            repeat (2) @(posedge clk);
+        end
+    endtask
+
+    task automatic wait_for_concat_activity(input string scenario);
+        int cycle;
+        begin
+            cycle = 0;
+            while (!(u_dut.concat_busy || u_dut.concat_write_valid)) begin
+                @(negedge clk);
+                output_ready = 1'b1;
+                done_ready = 1'b1;
+                #1;
+                if (done_valid) tb_fail({scenario, " completed before concat reset target"});
+                cycle++;
+                if (cycle > 6000000) tb_fail({scenario, " timed out waiting for concat activity"});
+            end
+            @(posedge clk);
+        end
+    endtask
+
+    task automatic wait_for_final_output_stall(input string scenario);
+        int cycle;
+        begin
+            cycle = 0;
+            output_ready = 1'b0;
+            done_ready = 1'b0;
+            while (!output_valid) begin
+                @(negedge clk);
+                output_ready = 1'b0;
+                done_ready = 1'b0;
+                #1;
+                if (done_valid) tb_fail({scenario, " done before stalled output"});
+                cycle++;
+                if (cycle > 6000000) tb_fail({scenario, " timed out waiting for stalled output"});
+            end
+            #1;
+            if (output_valid !== 1'b1) tb_fail({scenario, " output did not remain valid while stalled"});
+            if ($isunknown({output_base_dim, output_vector_fp32, output_lane_mask,
+                            output_status, output_invalid, output_meta, output_last})) begin
+                tb_fail({scenario, " stalled output contains X"});
+            end
+        end
+    endtask
+
+    task automatic wait_for_final_done_stall(input string scenario);
+        int cycle;
+        begin
+            cycle = 0;
+            output_ready = 1'b1;
+            done_ready = 1'b0;
+            while (!done_valid) begin
+                @(negedge clk);
+                output_ready = 1'b1;
+                done_ready = 1'b0;
+                #1;
+                cycle++;
+                if (cycle > 6000000) tb_fail({scenario, " timed out waiting for stalled done"});
+            end
+            #1;
+            if (done_valid !== 1'b1) tb_fail({scenario, " done did not remain valid while stalled"});
+            if ($isunknown({done_status, done_invalid, done_meta, done_valid_seq_len})) begin
+                tb_fail({scenario, " stalled done contains X"});
+            end
+        end
+    endtask
+
+    task automatic recover_after_reset(input string scenario, input int scenario_id);
+        begin
+            load_weights_to_dut();
+            #1;
+            if (u_dut.u_shared_projection_controller.matrix_complete !== 4'hf) begin
+                tb_fail({scenario, " recovery weights are not complete after reload"});
+            end
+            if (u_dut.u_shared_projection_controller.u_weight_buffer.data_q[0][0][0] !== weights[0][0][0]) begin
+                tb_fail({scenario, " recovery weight data mismatch after reload"});
+            end
+            if (u_dut.u_shared_projection_controller.u_weight_buffer.data_q[2][0][0] !== weights[2][0][0]) begin
+                tb_fail({scenario, " recovery V weight data mismatch after reload"});
+            end
+            if (u_dut.u_shared_projection_controller.u_weight_buffer.data_q[3][0][0] !== weights[3][0][0]) begin
+                tb_fail({scenario, " recovery WO weight data mismatch after reload"});
+            end
+            setup_reset_recovery_step(scenario, scenario_id);
+            run_current_step();
+            if (perf_generation_steps !== COUNTER_W'(1)) tb_fail({scenario, " duplicate or missing commit after reset recovery"});
+            if (current_valid_seq_len !== SEQ_LEN_W'(1)) tb_fail({scenario, " recovery valid_seq_len mismatch"});
+        end
+    endtask
+
+    task automatic run_reset_state_scenario(
+        input string scenario,
+        input int scenario_id,
+        input logic [3:0] target_state
+    );
+        begin
+            apply_reset();
+            load_weights_to_dut();
+            start_reset_interrupt_token(scenario, scenario_id);
+            wait_for_state(target_state, scenario);
+            pulse_mid_transaction_reset(scenario);
+            recover_after_reset(scenario, scenario_id);
+        end
+    endtask
+
+    task automatic run_reset_concat_scenario(input string scenario, input int scenario_id);
+        begin
+            apply_reset();
+            load_weights_to_dut();
+            start_reset_interrupt_token(scenario, scenario_id);
+            wait_for_concat_activity(scenario);
+            pulse_mid_transaction_reset(scenario);
+            recover_after_reset(scenario, scenario_id);
+        end
+    endtask
+
+    task automatic run_reset_final_output_scenario(input string scenario, input int scenario_id);
+        begin
+            apply_reset();
+            load_weights_to_dut();
+            start_reset_interrupt_token(scenario, scenario_id);
+            wait_for_final_output_stall(scenario);
+            pulse_mid_transaction_reset(scenario);
+            recover_after_reset(scenario, scenario_id);
+        end
+    endtask
+
+    task automatic run_reset_final_done_scenario(input string scenario, input int scenario_id);
+        begin
+            apply_reset();
+            load_weights_to_dut();
+            start_reset_interrupt_token(scenario, scenario_id);
+            wait_for_final_done_stall(scenario);
+            pulse_mid_transaction_reset(scenario);
+            recover_after_reset(scenario, scenario_id);
+        end
+    endtask
+
+    task automatic run_directed_reset_tests;
+        begin
+            if (!reset_baseline_valid) tb_fail("reset baseline was not captured");
+            apply_reset();
+            load_weights_to_dut();
+            restore_reset_baseline_step();
+            run_current_step();
+            run_reset_state_scenario("reset_during_q_projection", 1, DUT_ST_RUN_Q);
+            run_reset_state_scenario("reset_during_k_projection", 2, DUT_ST_RUN_K);
+            run_reset_state_scenario("reset_during_v_projection", 3, DUT_ST_RUN_V);
+            run_reset_state_scenario("reset_during_qkv_stream", 4, DUT_ST_QKV_STREAM);
+            run_reset_state_scenario("reset_during_attention", 5, DUT_ST_ATTENTION);
+            run_reset_concat_scenario("reset_during_concat_quantization", 6);
+            run_reset_state_scenario("reset_during_wo_projection", 7, DUT_ST_OUTPUT_PROJECTION);
+            run_reset_final_output_scenario("reset_during_final_output_stall", 8);
+            run_reset_final_done_scenario("reset_during_final_done_stall", 9);
+            $display("STAGE6E_DIRECTED_RESET_PASS N_HEAD=%0d D_HEAD=%0d scenarios=9", N_HEAD, D_HEAD);
+        end
+    endtask
+
     task automatic load_weights_to_dut;
         logic drive_valid;
         logic pre_fire;
@@ -234,6 +547,19 @@ module tb_projection_integrated_mha_stage6e;
                 @(posedge clk); #1;
                 weight_commit = 1'b0;
             end
+            #1;
+            if (u_dut.u_shared_projection_controller.matrix_complete !== 4'hf) begin
+                tb_fail("projection weight buffer incomplete after load");
+            end
+            if (u_dut.u_shared_projection_controller.u_weight_buffer.data_q[0][0][0] !== weights[0][0][0]) begin
+                tb_fail("projection weight buffer WQ sample mismatch after load");
+            end
+            if (u_dut.u_shared_projection_controller.u_weight_buffer.data_q[2][0][0] !== weights[2][0][0]) begin
+                tb_fail("projection weight buffer WV sample mismatch after load");
+            end
+            if (u_dut.u_shared_projection_controller.u_weight_buffer.data_q[3][0][0] !== weights[3][0][0]) begin
+                tb_fail("projection weight buffer WO sample mismatch after load");
+            end
         end
     endtask
 
@@ -262,6 +588,13 @@ module tb_projection_integrated_mha_stage6e;
                     wait_cycles++;
                     if (wait_cycles > 2000) tb_fail("hidden handshake timeout");
                 end
+            end
+            #1;
+            if (u_dut.u_shared_projection_controller.input_complete !== 1'b1) begin
+                tb_fail("hidden input buffer incomplete after load");
+            end
+            if (u_dut.u_shared_projection_controller.u_input_buffer.data_q[0] !== current_hidden[0]) begin
+                tb_fail("hidden input buffer data mismatch after load");
             end
         end
     endtask
@@ -424,6 +757,13 @@ module tb_projection_integrated_mha_stage6e;
                     exp_last[exp_count] = last[0];
                     exp_count++;
                 end else if (tag == "RUN") begin
+                    if (step_run_count == 0) begin
+                        save_reset_baseline();
+                        run_directed_reset_tests();
+                        apply_reset();
+                        load_weights_to_dut();
+                        restore_reset_baseline_step();
+                    end
                     run_current_step();
                     step_run_count++;
                 end else if (tag == "END") begin
@@ -440,6 +780,7 @@ module tb_projection_integrated_mha_stage6e;
     initial begin
         current_name = "none";
         step_run_count = 0;
+        reset_baseline_valid = 1'b0;
         apply_reset();
         parse_and_run_file();
         $display("STAGE6E_INTEGRATED_MHA_PASS N_HEAD=%0d D_HEAD=%0d generation_steps=%0d",

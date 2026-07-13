@@ -2,7 +2,7 @@
 
 ## Final Status
 
-STAGE 6 PASS.
+STAGE 6 PASS. Acceptance audit PASS.
 
 projection-integrated multi-head attention correctness accepted.
 
@@ -56,6 +56,9 @@ Reports:
 - Dense deterministic weights pass in H2/D8.
 - Multi-token, cache-full, output backpressure, done backpressure, metadata, and
   valid sequence length checks pass.
+- Final-top directed reset coverage passes for reset during Q, K, V, QKV
+  stream, attention, concat quantization, W_O, final output stall, and final
+  done stall, with clean one-token recovery after weight reload.
 - Stage 5 current-token causal semantics and all-head atomic commit are
   preserved.
 - Assertions execute under VCS.
@@ -66,10 +69,12 @@ Reports:
 
 Host:
 
+- `python scripts/sim/run_stage5_tests.py`: PASS
 - `python scripts/sim/run_stage6_tests.py`: PASS
 
 Docker:
 
+- `make stage5-test stage5-rtl-sim stage5-lint stage5-synth stage6-test stage6-rtl-sim stage6-lint stage6-synth`: PASS
 - `make stage6-test`: PASS
 - `make stage6-rtl-sim`: PASS
 - `make stage6-lint`: PASS

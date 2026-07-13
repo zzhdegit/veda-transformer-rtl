@@ -6,7 +6,7 @@ Stage 6: Projection-Integrated Multi-Head Attention
 
 ## Status
 
-STAGE 6 PASS.
+STAGE 6 PASS. Acceptance audit PASS.
 
 projection-integrated multi-head attention correctness accepted.
 
@@ -23,6 +23,10 @@ throughput, physical memory, and timing pipeline provisional.
   storage, W_O projection, and final top.
 - Stage 6F final unified commands, end-to-end verification, documentation, and
   closure.
+- Stage 6 acceptance audit reset-coverage closure: final-top directed reset
+  scenarios now interrupt Q, K, V, QKV stream, attention, concat quantization,
+  W_O, final output stall, and final done stall, then verify clean one-token
+  recovery after weight reload.
 
 Final top:
 
@@ -50,6 +54,12 @@ Model and test additions:
 - `scripts/synth/run_stage6e_synth_check.py`
 - `scripts/synth/run_stage6_synth_check.py`
 - `scripts/synth/stage6e_elaborate.tcl`
+
+Audit closure also updated:
+
+- `reports/stage_06/acceptance_audit.md`
+- `PROJECT_STATE.md`
+- `HANDOFF.md`
 
 ## Not Completed
 
@@ -110,6 +120,10 @@ reports invalid/status.
 Weight writes are blocked during an active token transaction. Reset clears top
 transaction state.
 
+Directed reset coverage verifies the final top clears reset-visible transaction
+state, exposes no X on valid/status outputs, accepts a clean token after reset,
+and does not duplicate the Stage 5 commit after recovery.
+
 ## Verification Results
 
 Host:
@@ -120,6 +134,8 @@ Host:
 - `python scripts/sim/run_stage6d_tests.py`: PASS
 - `python scripts/sim/run_stage6e_tests.py`: PASS
 - `python scripts/sim/run_stage6_tests.py`: PASS
+- `python scripts/sim/run_stage5_tests.py`: PASS; host VCS unavailable and
+  skipped by the script
 
 Docker:
 
@@ -142,6 +158,7 @@ Docker:
 - `make stage5-rtl-sim`: PASS
 - `make stage5-lint`: PASS
 - `make stage5-synth`: PASS
+- `make stage5-test stage5-rtl-sim stage5-lint stage5-synth stage6-test stage6-rtl-sim stage6-lint stage6-synth`: PASS
 
 Final top VCS configurations:
 
@@ -203,7 +220,14 @@ VCS runs compile assertions with `-assert svaext`.
 From `D:\IC_Workspace\VEDA`:
 
 ```bash
+python scripts/sim/run_stage5_tests.py
 python scripts/sim/run_stage6_tests.py
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage5-test stage5-rtl-sim stage5-lint stage5-synth stage6-test stage6-rtl-sim stage6-lint stage6-synth'
+```
+
+The narrower Stage 6 reproduction remains:
+
+```bash
 docker exec nailong bash -lc 'cd /workspace/VEDA && make stage6-test'
 docker exec nailong bash -lc 'cd /workspace/VEDA && make stage6-rtl-sim'
 docker exec nailong bash -lc 'cd /workspace/VEDA && make stage6-lint'
@@ -228,3 +252,5 @@ docker exec nailong bash -lc 'cd /workspace/VEDA && make stage5-rtl-sim && make 
 - Keep behavioral memories out of PPA claims.
 - Stage 6 does not complete a Transformer layer; Norm/Residual/FFN remain out of
   scope.
+- Before Stage 7 work, branch from the Stage 6 audit closure state and reread
+  the Stage 7 authoritative spec files.

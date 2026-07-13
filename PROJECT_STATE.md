@@ -3,11 +3,12 @@
 ## Current Stage
 
 - Stage: 6
-- Status: STAGE 6 PASS
+- Status: STAGE 6 PASS, ACCEPTANCE AUDIT PASS
 - Branch: `stage6-projection-mha`
 - Last update: 2026-07-13
 
-projection-integrated multi-head attention correctness accepted.
+projection-integrated multi-head attention correctness accepted. Stage 6
+acceptance audit reset-coverage conditions are closed.
 
 throughput, physical memory, and timing pipeline provisional.
 
@@ -199,6 +200,14 @@ Results:
 - Stage 6E DC analyze/elaborate/link/check_design: PASS
 - Stage 6B/6C/6D and Stage 5 regressions after Stage 6E: PASS
 - Final `stage6-*` unified commands: PASS
+- Stage 6E final top directed reset scenarios: PASS for H1/D8, H2/D8, H4/D8,
+  and H2/D16. Covered reset during Q, K, V, QKV stream, attention, concat
+  quantization, W_O, final output stall, and final done stall, followed by
+  clean one-token recovery after weight reload.
+- Host `python scripts/sim/run_stage5_tests.py`: PASS for 31 Python/model tests;
+  host VCS was unavailable and skipped by the script.
+- Docker audit closure bundle `make stage5-test stage5-rtl-sim stage5-lint
+  stage5-synth stage6-test stage6-rtl-sim stage6-lint stage6-synth`: PASS.
 
 DC checks are structural analyze/elaborate/link/check_design only. No formal
 area, power, frequency, WNS, STA, process timing, or layout result is produced.
@@ -215,5 +224,6 @@ area, power, frequency, WNS, STA, process timing, or layout result is produced.
 
 ## Next Action
 
-Stage 6 is closed for projection-integrated MHA correctness. Do not start Stage
-7 work in this thread.
+Stage 6 is closed for projection-integrated MHA correctness and acceptance audit
+coverage. Start Stage 7 only from an explicit Stage 7 branch after rereading the
+Stage 7 authoritative spec files.

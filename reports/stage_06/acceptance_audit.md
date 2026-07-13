@@ -2,22 +2,20 @@
 
 ## 1. Audit Result
 
-- Result: CONDITIONAL PASS
+- Result: PASS
 - Audit date: 2026-07-13
 - Branch: `stage6-projection-mha`
 - Final accepted commit: `c59ac45cd7bd59fbddaf486ea655b1d753342be9`
 - Acceptance tag: `stage6-correctness-accepted`
 - Tag target: `c59ac45cd7bd59fbddaf486ea655b1d753342be9`
-- Remote sync: local `stage6-projection-mha` and `origin/stage6-projection-mha`
-  matched before this audit report was added.
+- Remote sync: local `stage6-projection-mha` fetched before audit closure.
 
-The functional, regression, tag, and restricted-file checks passed. The result
-is conditional because the workspace had one pre-existing untracked file,
-`transformer_rtl_plan_md/LATE_STAGE_REAL_MODEL_VALIDATION_PLAN.md`, so the
-working tree was not completely clean. That file was not modified or staged by
-this audit. Current final-top reset coverage is also limited to reset at test
-start plus RTL reset assertions; directed reset-during-each-phase vectors were
-not present in the accepted Stage 6E final-top testbench.
+The functional, regression, tag, restricted-file, and final-top directed reset
+checks passed. The pre-existing local plan file,
+`transformer_rtl_plan_md/LATE_STAGE_REAL_MODEL_VALIDATION_PLAN.md`, is excluded
+through `.git/info/exclude` and was not modified or staged by this audit. The
+previous reset-during-phase coverage gap is closed by Stage 6E directed reset
+scenarios in the final-top RTL testbench.
 
 ## 2. Accepted Functional Boundary
 
@@ -55,7 +53,7 @@ throughput, physical memory, and timing pipeline provisional
 | Stage 6 tag | `stage6-correctness-accepted` exists locally and remotely |
 | Stage 6 tag target | `c59ac45cd7bd59fbddaf486ea655b1d753342be9` |
 | Stage 5 tag target | `stage5-correctness-accepted` peels to `c350c47c067e224285956d8a1bcd4a469abda672`; not moved |
-| Worktree | Tracked files clean before this report; one untracked local plan file remained |
+| Worktree | Local plan file excluded through `.git/info/exclude`; audit closure changes are test/report/doc only |
 
 ## 4. Restricted File Audit
 
@@ -77,6 +75,8 @@ Tracked path scan results:
 | Command | Result | Notes |
 | --- | --- | --- |
 | `python scripts/sim/run_stage6_tests.py` | PASS | Host Python 3.12; 6A-6D report 16 tests each, 6E reports 18 tests; vector generation, py_compile, and cycle model passed |
+| `python scripts/sim/run_stage5_tests.py` | PASS | Host Python 3.12; 31 tests passed; host VCS unavailable and skipped by script |
+| `docker exec nailong ... make stage5-test` | PASS | Docker fallback runner plus Stage 5 VCS script; VCS found in container |
 | `docker exec nailong ... make stage6-test` | PASS | Docker fallback runner; 6A-6D 16 tests each, 6E 18 tests |
 | `docker exec nailong ... make stage6-rtl-sim` | PASS | Stage 6B/6C/6D/6E VCS passed; final top configs H1/D8, H2/D8, H4/D8, H2/D16 |
 | `docker exec nailong ... make stage6-lint` | PASS | Static hygiene passed; vlogan diagnostics: none |
@@ -84,6 +84,7 @@ Tracked path scan results:
 | `docker exec nailong ... make stage5-rtl-sim` | PASS | Cache manager plus H1/D8, H2/D8, H4/D8, H2/D16 multi-head generation passed |
 | `docker exec nailong ... make stage5-lint` | PASS | vlogan diagnostics: none |
 | `docker exec nailong ... make stage5-synth` | PASS | DC analyze/elaborate/link/check_design passed |
+| `docker exec nailong ... make stage5-test stage5-rtl-sim stage5-lint stage5-synth stage6-test stage6-rtl-sim stage6-lint stage6-synth` | PASS | Full audit closure bundle rerun in Docker on 2026-07-13 |
 
 Assertions are compiled in VCS through the existing `-assert svaext` flows.
 Stage 6 lint reported `vlogan_diagnostics: none`. DC checks are structural only
@@ -117,10 +118,10 @@ independent PE or floating multiply-add array.
 
 | Config | Directed weights | Dense deterministic WQ/WK/WV/WO | Multi token | Cache full | Backpressure | Reset |
 | --- | --- | --- | --- | --- | --- | --- |
-| H1/D8 | WQ/WK broadcast-column, WV identity, dense WO | No | Yes, MAX_SEQ_LEN+1 | Yes | Output and done | Initial reset only |
-| H2/D8 | Dense deterministic WQ/WK/WV/WO | Yes | Yes, MAX_SEQ_LEN+1 | Yes | Output and done | Initial reset only |
-| H4/D8 | WQ/WK broadcast-column, WV identity, dense WO | No | Yes, MAX_SEQ_LEN+1 | Yes | Output and done | Initial reset only |
-| H2/D16 | WQ/WK broadcast-column, WV identity, dense WO | No | Yes, MAX_SEQ_LEN+1 | Yes | Output and done | Initial reset only |
+| H1/D8 | WQ/WK broadcast-column, WV identity, dense WO | No | Yes, MAX_SEQ_LEN+1 | Yes | Output and done | Initial plus 9 directed mid-transaction scenarios |
+| H2/D8 | Dense deterministic WQ/WK/WV/WO | Yes | Yes, MAX_SEQ_LEN+1 | Yes | Output and done | Initial plus 9 directed mid-transaction scenarios |
+| H4/D8 | WQ/WK broadcast-column, WV identity, dense WO | No | Yes, MAX_SEQ_LEN+1 | Yes | Output and done | Initial plus 9 directed mid-transaction scenarios |
+| H2/D16 | WQ/WK broadcast-column, WV identity, dense WO | No | Yes, MAX_SEQ_LEN+1 | Yes | Output and done | Initial plus 9 directed mid-transaction scenarios |
 
 Coverage notes:
 
@@ -136,8 +137,11 @@ Coverage notes:
 - High-precision output projection is diagnostic only. It is used for error
   statistics such as max absolute error, MAE, RMSE, relative L2, and cosine
   similarity in model tests; it is not used as an RTL tolerance.
-- Reset-during-Q/K/V/QKV-stream/attention/concat/W_O/final-output-stall remains
-  a documented coverage gap for this accepted Stage 6 test set.
+- Reset-during-Q/K/V/QKV-stream/attention/concat/W_O/final-output-stall and
+  reset while final done is stalled are covered by the final-top Stage 6E VCS
+  testbench for H1/D8, H2/D8, H4/D8, and H2/D16. Each reset scenario verifies
+  reset-visible state clears, no X is exposed on valid/status outputs, recovery
+  can reload weights and run one clean token, and no duplicate commit occurs.
 
 ## 8. Cycle Baseline
 
@@ -247,9 +251,10 @@ Freeze rules:
 
 ## 10. Acceptance Decision
 
-Stage 6 is accepted for projection-integrated MHA correctness with the
-conditional audit notes above. The accepted tag remains on the final Stage 6
-correctness commit, not on this audit report.
+Stage 6 is accepted for projection-integrated MHA correctness. The previous
+conditional reset-coverage note is closed by directed final-top reset tests and
+the audit closure regression bundle above. The accepted correctness tag remains
+on the original final Stage 6 correctness commit.
 
 Do not infer that a complete Transformer layer is finished, and do not treat the
 behavioral memories or cycle counters as physical implementation, timing, area,
