@@ -1,0 +1,10 @@
+model_id,rtl_compatibility,simulation_scale,availability,architecture_clarity,license_clarity,kv_eviction_value,veda_closeness,tool_support,total,rationale
+HuggingFaceTB/SmolLM2-135M,11,15,10,10,10,9,8,5,78,"Small Llama-style model; RMSNorm and no bias match, but RoPE, SwiGLU and GQA require RTL changes."
+Qwen/Qwen3-0.6B,10,10,10,10,10,10,9,5,74,"Newer Qwen small model; no attention bias in config and useful GQA ratio, but still needs RoPE/SwiGLU/GQA."
+Qwen/Qwen2.5-0.5B,8,11,10,10,10,10,9,5,73,"Strong small eviction-research candidate; Qwen2 uses GQA, RoPE, SwiGLU and attention bias."
+TinyLlama/TinyLlama-1.1B-intermediate-step-1431k-3T,9,5,10,9,10,10,10,5,68,"Closest small public Llama-like baseline to VEDA, but large for RTL and uses GQA/SwiGLU/RoPE."
+EleutherAI/pythia-70m-deduped,8,17,10,8,10,5,4,5,67,"Small and open; GPT-NeoX parallel residual, GELU and partial RoPE differ from RTL."
+facebook/opt-125m,16,13,8,9,4,5,5,5,65,"ReLU, Pre-LN, MHA, 4D FFN; but LayerNorm, learned positions and bias require hardware or wrapper changes."
+distilgpt2,7,13,10,9,10,4,3,5,61,Very well supported but old GPT-2 LayerNorm/GELU/bias/learned-position stack.
+roneneldan/TinyStories-1M,9,20,8,8,2,3,3,4,57,"Smallest trained checkpoint; architecture uses GPT-Neo LayerNorm, GELU and local attention."
+meta-llama/Llama-2-7b-hf,9,0,2,9,3,10,10,5,48,"VEDA reference family, but gated and too large for complete RTL simulation."
