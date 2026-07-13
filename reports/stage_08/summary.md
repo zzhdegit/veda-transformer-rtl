@@ -31,9 +31,10 @@ Projection WQ/WK/WV/WO and FFN W1/W2 remain on the legacy PE path.
 - Stage 8A: `1aed1c4 stage8a: freeze paper structured pe array specification`
 - Stage 8B: `6077ef3 stage8b: add bit accurate 8x8x2 pe array model`
 - Stage 8C: `cc241d8 stage8c: implement paper structured 8x8x2 pe array`
+- Stage 8D: `dff24b2 stage8d: map attention inner and outer products to paper array`
 
-Stage 8D/final closeout commits are recorded by Git history after this report
-is committed.
+The final closeout commit records top-level documentation and final regression
+status.
 
 ## Evidence And Decisions
 
@@ -57,6 +58,10 @@ Host:
 
 Docker:
 
+- `make stage8-test`: PASS
+- `make stage8-rtl-sim`: PASS
+- `make stage8-lint`: PASS
+- `make stage8-synth`: PASS
 - `make stage8d-test`: PASS
 - `make stage8d-rtl-sim`: PASS
 - `make stage8d-lint`: PASS
@@ -68,6 +73,12 @@ Previously completed Stage 8C:
 - `make stage8c-rtl-sim`: PASS
 - `make stage8c-lint`: PASS
 - `make stage8c-synth`: PASS
+
+Legacy regressions:
+
+- Stage 7A/7B/7C/7D: PASS.
+- Stage 6: PASS.
+- Stage 5: PASS.
 
 ## Known Limitations
 

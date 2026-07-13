@@ -45,6 +45,26 @@ def main():
         + list((ROOT / "tb").rglob("*.py"))
         + list((ROOT / "scripts").rglob("*.py"))
     )
+    skipped_compile = []
+    if sys.version_info < (3, 7):
+        filtered = []
+        for path in compile_paths:
+            text = path.read_text(encoding="utf-8", errors="ignore")
+            if any(
+                line.strip() == "from __future__ import annotations"
+                for line in text.splitlines()
+            ):
+                skipped_compile.append(str(path.relative_to(ROOT)))
+            else:
+                filtered.append(path)
+        compile_paths = filtered
+    if skipped_compile:
+        lines.append(
+            "py_compile skipped Python 3.7+ files under Python %s.%s:"
+            % sys.version_info[:2]
+        )
+        lines.extend(skipped_compile)
+        lines.append("")
     cmd = [sys.executable, "-m", "py_compile"] + [str(path.relative_to(ROOT)) for path in compile_paths]
     code, output = run(cmd)
     lines.append("$ " + " ".join(cmd))

@@ -2,27 +2,30 @@
 
 ## Current Stage
 
-- Stage: 7
-- Status: STAGE 7 PASS, PRE-NORM TRANSFORMER LAYER ACCEPTED
-- Branch: `stage7-prenorm-transformer-layer`
+- Stage: 8
+- Status: STAGE 8 PASS, PAPER-STRUCTURED 8x8x2 PE ARRAY ATTENTION MAPPING ACCEPTED
+- Branch: `stage8-paper-pe-array`
 - Last update: 2026-07-13
 
-Stage 7A freezes the repository-owned Pre-Norm Transformer layer contract and
-adds the Stage 7 Python bit-model framework. Stage 7B adds the RMSNorm and
-residual-add RTL foundations. Stage 7C adds the FFN/ReLU RTL foundation. Stage
-7D adds the full Pre-Norm `transformer_layer` top around the frozen Stage 6
-projection-integrated MHA and is accepted.
+Stage 8 implements a Paper-Structured 8x8x2 reconfigurable PE Array and maps
+the current Attention QK and sV paths onto it. The independent array, Python
+bit-accurate model, RTL hierarchy, Attention adapter, A/B architecture
+selection, counters, and reports are added and verified.
 
 Stage 6 projection-integrated multi-head attention correctness remains accepted.
 Stage 6 acceptance audit reset-coverage conditions are closed.
 
-throughput, physical memory, and timing pipeline provisional.
+Stage 7 Pre-Norm Transformer layer correctness remains accepted at tag
+`stage7-correctness-accepted`.
 
-Stage 6 implements projection-integrated multi-head attention only. Stage 7 now
-implements the accepted single Pre-Norm Transformer layer around that Stage 6
-child. LayerNorm, Post-Norm, GELU, SiLU, SwiGLU, bias, dropout, RoPE, embedding,
-LM head, tokenizer, multiple layers, SRAM macro binding, STA, layout, and PPA
-remain out of scope.
+Throughput, physical memory, and timing pipeline remain provisional.
+
+Stage 8 changes only Attention PE organization for QK and sV. Projection
+WQ/WK/WV/WO and FFN W1/W2 remain on the legacy `reconfigurable_pe_core` paths.
+Stage 8 does not implement SFU-PE interleaving, global array sharing, KV cache
+eviction, LayerNorm, Post-Norm, GELU, SiLU, SwiGLU, bias, dropout, RoPE,
+embedding, LM head, tokenizer, multiple layers, SRAM macro binding, STA,
+layout, or PPA.
 
 ## Accepted Stage 6 Scope
 
@@ -230,6 +233,90 @@ area, power, frequency, WNS, STA, process timing, or layout result is produced.
 - Stage 6 alone remains projection-integrated MHA only; the complete single
   Pre-Norm Transformer layer is the Stage 7 top.
 
+## Stage 8 Scope
+
+Stage 8 replaces only the Stage 5/6 Attention PE path used for:
+
+```text
+Q x K^T
+P x V
+```
+
+The new array is paper-structured but uses the repository-frozen arithmetic
+contract:
+
+- 8 rows x 8 columns x 2 groups = 128 physical PE cells.
+- Type-A and Type-B cells are instantiated explicitly in the hierarchy.
+- FP16 operands expand exactly to FP32.
+- Products, partial sums, local accumulators, and outputs remain FP32 at the
+  same boundaries used by Stage 5/6/7.
+- QK uses `MODE_INNER_PRODUCT`.
+- sV uses `MODE_OUTER_PRODUCT`.
+- Softmax remains the existing staged serial SFU path between QK and sV.
+- K/V cache layout, current-token semantics, all-head atomic commit, and
+  cache-full behavior are unchanged.
+
+Architecture selection:
+
+- `ATTENTION_PE_ARCH=0`: legacy `reconfigurable_pe_core` Attention PE path.
+- `ATTENTION_PE_ARCH=1`: paper array Attention adapter path.
+
+Only the selected generate branch is instantiated in a given elaboration.
+
+Stage 8 added:
+
+- `docs/stage_08/paper_evidence.md`
+- `docs/stage_08/spec.md`
+- `docs/stage_08/mapping.md`
+- `docs/stage_08/legacy_comparison.md`
+- `model/pe_array/`
+- `model/attention/paper_attention_reference.py`
+- `model/attention/paper_attention_cycle_model.py`
+- `rtl/pe/paper/`
+- `rtl/attention/paper/paper_attention_adapter.sv`
+- Stage 8 model and RTL testbenches under `tb/model/` and `tb/rtl/stage8/`
+- Stage 8 simulation, lint, and synthesis scripts.
+- Stage 8 Makefile targets `stage8-test`, `stage8-rtl-sim`, `stage8-lint`,
+  and `stage8-synth`.
+
+Stage 8 verification:
+
+```bash
+python scripts/sim/run_stage8_tests.py
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage8-test'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage8-rtl-sim'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage8-lint'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage8-synth'
+```
+
+Results:
+
+- Paper evidence/spec checks: PASS.
+- Stage 8 bit-accurate 8x8x2 PE array model tests: PASS.
+- Independent array RTL VCS tests for PE cell, group, inner mode, outer mode,
+  mode switch, reset, and backpressure: PASS.
+- Attention paper-path RTL VCS tests for H1/D8, H2/D8, H4/D8, and H2/D16:
+  PASS.
+- Full `transformer_layer` RTL VCS tests with `ATTENTION_PE_ARCH=1` for H1/D8,
+  H2/D8, H2/D8 two-token, H4/D8, and H2/D16: PASS.
+- Stage 8 lint/vlogan: PASS with only accepted DesignWare pragma-no-effect
+  warnings.
+- Stage 8 DC analyze/elaborate/link/check_design structural checks: PASS for
+  legacy and paper configurations; hierarchy reports count 128
+  `paper_pe_cell` instances in paper-path tops.
+- Stage 5/6/7 regressions after Stage 8 changes: PASS.
+
+Stage 8 known limitations:
+
+- The Stage 8D adapter is correctness-first and maps current `PE_NUM=8` tiles
+  into the low paper-array lanes; it does not exploit full 128-cell throughput.
+- Dense Attention RTL coverage is provided through the paper Attention tests;
+  full-layer vectors continue to use the existing Stage 7 wrapper coverage.
+- Full-layer RTL does not expose every internal PE partial-sum node.
+- DC is structural only and is not an area, power, timing, or frequency result.
+- SFU-PE interleaving, global array sharing, physical SRAM replacement, cache
+  eviction, and PPA remain future work.
+
 ## Stage 7A Scope
 
 Stage 7 implements one decoder-style Pre-Norm Transformer layer around the
@@ -394,8 +481,9 @@ Results:
 
 ## Next Action
 
-Stage 7 is accepted. Next work should enter Stage 8 physical implementation and
-signoff planning only after preserving the Stage 7 numeric/interface contract.
-Do not claim SRAM macro binding, STA, P&R, area, power, frequency, WNS, or PPA
-until a future stage adds the required technology libraries, memory macros,
-constraints, layout, and reports.
+Stage 8 is accepted for the paper-structured 8x8x2 PE array and Attention QK/sV
+mapping correctness boundary. A future independent optimization stage may
+investigate SFU-PE interleaving or broader array sharing, but must preserve the
+Stage 5/6/7 numeric and interface contracts. Do not claim SRAM macro binding,
+STA, P&R, area, power, frequency, WNS, or PPA until a future stage adds the
+required technology libraries, memory macros, constraints, layout, and reports.
