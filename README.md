@@ -4,21 +4,25 @@ This repository is for a Transformer RTL accelerator based on the VEDA dataflow 
 
 ## Current Stage
 
-Hardware Stage H9 checkpoint: Full-Array Attention Mapping and SFU-PE
+Hardware Stage H9 closure checkpoint: Full-Array Attention Mapping and SFU-PE
 Element-Serial Interleaving.
 
 Status: HW-H9 IN PROGRESS, NOT ACCEPTED.
 
 The repository now contains a Hardware Stage H9 checkpoint for paper-native
 Attention mapping, bounded score/probability stream buffers, and single-head
-SFU/PE interleaving smoke coverage. The accepted hardware baseline remains
-Hardware Stage H8 / Stage 8: paper-structured 8x8x2 PE array correctness and
-Attention QK/sV mapping correctness.
+SFU/PE interleaving smoke coverage. It also contains a matched single-head RTL
+A/B baseline for `PAPER_ARRAY+STAGED` versus `PAPER_ARRAY+INTERLEAVED`; the
+matched RTL data shows H9 interleaved faster than paper staged at seq16 and
+seq32 for D_HEAD=8, 16, and 64. The accepted hardware baseline remains Hardware
+Stage H8 / Stage 8: paper-structured 8x8x2 PE array correctness and Attention
+QK/sV mapping correctness.
 
 Hardware Stage H9 is not accepted yet. Multi-head/full-layer H9 RTL coverage,
 exhaustive reset/random-backpressure/cache-full coverage, long-sequence H9
-coverage, and the final cycle acceptance criterion remain open. Global array
-sharing, physical memory, timing closure, and PPA remain provisional.
+coverage, broad assertion execution evidence, and exact cycle-model-to-RTL
+calibration remain open. Global array sharing, physical memory, timing closure,
+and PPA remain provisional.
 
 Authoritative current inputs are:
 
@@ -85,6 +89,13 @@ Stage 8 replaces only the Attention QK and sV PE path. Projection WQ/WK/WV/WO
 and FFN W1/W2 still use the legacy PE path. The Stage 7 Pre-Norm Transformer
 math, FP16/FP32 boundaries, RMSNorm, Residual, FFN, Softmax, KV cache layout,
 and commit semantics are unchanged.
+
+The Hardware Stage H9 RTL A/B baseline is reported in:
+
+```bash
+reports/hw_h9/matched_rtl_ab_baseline.md
+reports/hw_h9/cycle_model_calibration.md
+```
 
 The cycle model can be run directly:
 

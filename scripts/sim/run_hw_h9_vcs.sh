@@ -93,6 +93,11 @@ COMMON_RTL=(
   "$ROOT_DIR/rtl/attention/attention_score_scaler.sv"
   "$ROOT_DIR/rtl/attention/softmax_reduction.sv"
   "$ROOT_DIR/rtl/attention/softmax_normalization.sv"
+  "$ROOT_DIR/rtl/memory/sram_2p_wrapper.sv"
+  "$ROOT_DIR/rtl/attention/score_buffer.sv"
+  "$ROOT_DIR/rtl/attention/paper/paper_attention_adapter.sv"
+  "$ROOT_DIR/rtl/attention/single_head_attention_controller.sv"
+  "$ROOT_DIR/rtl/attention/single_head_attention.sv"
 )
 
 failures=0
@@ -145,6 +150,44 @@ compile_and_run "probability_fifo" "tb_h9_probability_fifo" "$ROOT_DIR/tb/rtl/hw
 compile_and_run "single_head_d8" "tb_h9_single_head" "$ROOT_DIR/tb/rtl/hw_h9/tb_h9_single_head.sv" +define+HW_H9_D_HEAD=8
 compile_and_run "single_head_d16" "tb_h9_single_head" "$ROOT_DIR/tb/rtl/hw_h9/tb_h9_single_head.sv" +define+HW_H9_D_HEAD=16
 compile_and_run "single_head_d64" "tb_h9_single_head" "$ROOT_DIR/tb/rtl/hw_h9/tb_h9_single_head.sv" +define+HW_H9_D_HEAD=64
+
+for d_head in 8 16 64; do
+  for seq_len in 1 2 8 16 32 64; do
+    compile_and_run "matched_ab_staged_d${d_head}_s${seq_len}" \
+      "tb_h9_matched_ab_single_head" \
+      "$ROOT_DIR/tb/rtl/hw_h9/tb_h9_matched_ab_single_head.sv" \
+      +define+HW_H9_D_HEAD=${d_head} \
+      +define+HW_H9_SEQ_LEN=${seq_len} \
+      +define+HW_H9_SCHEDULE=0
+    compile_and_run "matched_ab_interleaved_d${d_head}_s${seq_len}" \
+      "tb_h9_matched_ab_single_head" \
+      "$ROOT_DIR/tb/rtl/hw_h9/tb_h9_matched_ab_single_head.sv" \
+      +define+HW_H9_D_HEAD=${d_head} \
+      +define+HW_H9_SEQ_LEN=${seq_len} \
+      +define+HW_H9_SCHEDULE=1 \
+      +define+HW_H9_INTERLEAVED
+  done
+done
+
+for d_head in 8 16 64; do
+  for seq_len in 16 32; do
+    compile_and_run "matched_ab_staged_bp_d${d_head}_s${seq_len}" \
+      "tb_h9_matched_ab_single_head" \
+      "$ROOT_DIR/tb/rtl/hw_h9/tb_h9_matched_ab_single_head.sv" \
+      +define+HW_H9_D_HEAD=${d_head} \
+      +define+HW_H9_SEQ_LEN=${seq_len} \
+      +define+HW_H9_SCHEDULE=0 \
+      +define+HW_H9_DETERMINISTIC_BP
+    compile_and_run "matched_ab_interleaved_bp_d${d_head}_s${seq_len}" \
+      "tb_h9_matched_ab_single_head" \
+      "$ROOT_DIR/tb/rtl/hw_h9/tb_h9_matched_ab_single_head.sv" \
+      +define+HW_H9_D_HEAD=${d_head} \
+      +define+HW_H9_SEQ_LEN=${seq_len} \
+      +define+HW_H9_SCHEDULE=1 \
+      +define+HW_H9_INTERLEAVED \
+      +define+HW_H9_DETERMINISTIC_BP
+  done
+done
 
 if [ "$failures" -eq 0 ]; then
   echo "result=PASS" >> "$SUMMARY"

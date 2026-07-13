@@ -19,7 +19,7 @@ exit_code=0
 
 $ bash /workspace/VEDA/scripts/sim/run_stage5_vcs.sh
                          Chronologic VCS (TM)
-      Version O-2018.09-SP2-2_Full64 -- Mon Jul 13 21:19:30 2026
+      Version O-2018.09-SP2-2_Full64 -- Mon Jul 13 23:09:31 2026
                Copyright (c) 1991-2018 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -36,28 +36,28 @@ Starting vcs inline pass...
 1 module and 0 UDP read.
 recompiling module tb_multi_head_kv_cache_manager
 make[1]: Entering directory '/workspace/VEDA/build/stage5_rtl_sim/multi_head_kv_cache_manager_csrc'
-make[1]: Warning: File 'filelist.hsopt.llvm2_0.objs' has modification time 0.34 s in the future
+make[1]: Warning: File 'filelist.hsopt.llvm2_0.objs' has modification time 0.063 s in the future
 make[1]: warning:  Clock skew detected.  Your build may be incomplete.
 make[1]: Leaving directory '/workspace/VEDA/build/stage5_rtl_sim/multi_head_kv_cache_manager_csrc'
 make[1]: Entering directory '/workspace/VEDA/build/stage5_rtl_sim/multi_head_kv_cache_manager_csrc'
 rm -f _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
 if [ -x /workspace/VEDA/build/stage5_rtl_sim/multi_head_kv_cache_manager_simv ]; then chmod -x /workspace/VEDA/build/stage5_rtl_sim/multi_head_kv_cache_manager_simv; fi
-g++  -o /workspace/VEDA/build/stage5_rtl_sim/multi_head_kv_cache_manager_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/multi_head_kv_cache_manager_simv.daidir/ -Wl,-rpath=./multi_head_kv_cache_manager_simv.daidir/ -Wl,-rpath='$ORIGIN'/multi_head_kv_cache_manager_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _585840_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../multi_head_kv_cache_manager_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl 
+g++  -o /workspace/VEDA/build/stage5_rtl_sim/multi_head_kv_cache_manager_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/multi_head_kv_cache_manager_simv.daidir/ -Wl,-rpath=./multi_head_kv_cache_manager_simv.daidir/ -Wl,-rpath='$ORIGIN'/multi_head_kv_cache_manager_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _839173_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../multi_head_kv_cache_manager_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl
 /workspace/VEDA/build/stage5_rtl_sim/multi_head_kv_cache_manager_simv up to date
 make[1]: Leaving directory '/workspace/VEDA/build/stage5_rtl_sim/multi_head_kv_cache_manager_csrc'
-CPU time: .285 seconds to compile + .179 seconds to elab + .187 seconds to link
+CPU time: .279 seconds to compile + .170 seconds to elab + .186 seconds to link
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 13 21:19 2026
+Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 13 23:09 2026
 STAGE5_KV_CACHE_MANAGER_PASS read_cycles=8 write_cycles=17 stall_cycles=4 peak_seq=1
 $finish called from file "/workspace/VEDA/tb/rtl/stage5/tb_multi_head_kv_cache_manager.sv", line 266.
 $finish at simulation time               560000
-           V C S   S i m u l a t i o n   R e p o r t 
+           V C S   S i m u l a t i o n   R e p o r t
 Time: 560000 ps
-CPU Time:      0.100 seconds;       Data structure size:   0.0Mb
-Mon Jul 13 21:19:41 2026
+CPU Time:      0.110 seconds;       Data structure size:   0.0Mb
+Mon Jul 13 23:09:41 2026
                          Chronologic VCS (TM)
-      Version O-2018.09-SP2-2_Full64 -- Mon Jul 13 21:19:43 2026
+      Version O-2018.09-SP2-2_Full64 -- Mon Jul 13 23:09:43 2026
                Copyright (c) 1991-2018 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -141,13 +141,13 @@ make[1]: Leaving directory '/workspace/VEDA/build/stage5_rtl_sim/multi_head_gene
 make[1]: Entering directory '/workspace/VEDA/build/stage5_rtl_sim/multi_head_generation_h1_d8_csrc'
 rm -f _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
 if [ -x /workspace/VEDA/build/stage5_rtl_sim/multi_head_generation_h1_d8_simv ]; then chmod -x /workspace/VEDA/build/stage5_rtl_sim/multi_head_generation_h1_d8_simv; fi
-g++  -o /workspace/VEDA/build/stage5_rtl_sim/multi_head_generation_h1_d8_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/multi_head_generation_h1_d8_simv.daidir/ -Wl,-rpath=./multi_head_generation_h1_d8_simv.daidir/ -Wl,-rpath='$ORIGIN'/multi_head_generation_h1_d8_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _587378_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../multi_head_generation_h1_d8_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl 
+g++  -o /workspace/VEDA/build/stage5_rtl_sim/multi_head_generation_h1_d8_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/multi_head_generation_h1_d8_simv.daidir/ -Wl,-rpath=./multi_head_generation_h1_d8_simv.daidir/ -Wl,-rpath='$ORIGIN'/multi_head_generation_h1_d8_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _840711_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../multi_head_generation_h1_d8_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl
 /workspace/VEDA/build/stage5_rtl_sim/multi_head_generation_h1_d8_simv up to date
 make[1]: Leaving directory '/workspace/VEDA/build/stage5_rtl_sim/multi_head_generation_h1_d8_csrc'
-CPU time: 4.023 seconds to compile + .274 seconds to elab + .278 seconds to link
+CPU time: 4.027 seconds to compile + .278 seconds to elab + .277 seconds to link
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 13 21:19 2026
+Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 13 23:09 2026
 STAGE5_GENERATION_PERF arch=0 N_HEAD=1 D_HEAD=8 step=step0 seq_before=0 seq_after=1 total=106 per_head_attention=88 head_switch=0 provisional_write=8 commit=1 cache_read=16 cache_write=8 cache_stall=0 pe_stall=22 sfu_stall=6 output_stall=0 peak_seq=1 paper_active=0 paper_inner=0 paper_outer=0 paper_tail=0 paper_mode_switch=0
 STAGE5_GENERATION_PERF arch=0 N_HEAD=1 D_HEAD=8 step=step1 seq_before=1 seq_after=2 total=296 per_head_attention=259 head_switch=0 provisional_write=16 commit=2 cache_read=48 cache_write=16 cache_stall=0 pe_stall=64 sfu_stall=30 output_stall=0 peak_seq=2 paper_active=0 paper_inner=0 paper_outer=0 paper_tail=0 paper_mode_switch=0
 STAGE5_GENERATION_PERF arch=0 N_HEAD=1 D_HEAD=8 step=step2 seq_before=2 seq_after=3 total=557 per_head_attention=502 head_switch=0 provisional_write=24 commit=3 cache_read=96 cache_write=24 cache_stall=0 pe_stall=126 sfu_stall=60 output_stall=1 peak_seq=3 paper_active=0 paper_inner=0 paper_outer=0 paper_tail=0 paper_mode_switch=0
@@ -160,12 +160,12 @@ STAGE5_GENERATION_PERF arch=0 N_HEAD=1 D_HEAD=8 step=step8 seq_before=8 seq_afte
 STAGE5_SHARED_MULTIHEAD_PASS N_HEAD=1 D_HEAD=8
 $finish called from file "/workspace/VEDA/tb/rtl/stage5/tb_multi_head_generation_engine.sv", line 484.
 $finish at simulation time             31476000
-           V C S   S i m u l a t i o n   R e p o r t 
+           V C S   S i m u l a t i o n   R e p o r t
 Time: 31476000 ps
-CPU Time:      0.120 seconds;       Data structure size:   0.4Mb
-Mon Jul 13 21:19:59 2026
+CPU Time:      0.150 seconds;       Data structure size:   0.4Mb
+Mon Jul 13 23:10:00 2026
                          Chronologic VCS (TM)
-      Version O-2018.09-SP2-2_Full64 -- Mon Jul 13 21:20:01 2026
+      Version O-2018.09-SP2-2_Full64 -- Mon Jul 13 23:10:02 2026
                Copyright (c) 1991-2018 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -249,13 +249,13 @@ make[1]: Leaving directory '/workspace/VEDA/build/stage5_rtl_sim/multi_head_gene
 make[1]: Entering directory '/workspace/VEDA/build/stage5_rtl_sim/multi_head_generation_h2_d8_csrc'
 rm -f _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
 if [ -x /workspace/VEDA/build/stage5_rtl_sim/multi_head_generation_h2_d8_simv ]; then chmod -x /workspace/VEDA/build/stage5_rtl_sim/multi_head_generation_h2_d8_simv; fi
-g++  -o /workspace/VEDA/build/stage5_rtl_sim/multi_head_generation_h2_d8_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/multi_head_generation_h2_d8_simv.daidir/ -Wl,-rpath=./multi_head_generation_h2_d8_simv.daidir/ -Wl,-rpath='$ORIGIN'/multi_head_generation_h2_d8_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _588916_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../multi_head_generation_h2_d8_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl 
+g++  -o /workspace/VEDA/build/stage5_rtl_sim/multi_head_generation_h2_d8_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/multi_head_generation_h2_d8_simv.daidir/ -Wl,-rpath=./multi_head_generation_h2_d8_simv.daidir/ -Wl,-rpath='$ORIGIN'/multi_head_generation_h2_d8_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _842249_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../multi_head_generation_h2_d8_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl
 /workspace/VEDA/build/stage5_rtl_sim/multi_head_generation_h2_d8_simv up to date
 make[1]: Leaving directory '/workspace/VEDA/build/stage5_rtl_sim/multi_head_generation_h2_d8_csrc'
-CPU time: 4.125 seconds to compile + .282 seconds to elab + .287 seconds to link
+CPU time: 4.028 seconds to compile + .276 seconds to elab + .278 seconds to link
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 13 21:20 2026
+Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 13 23:10 2026
 STAGE5_GENERATION_PERF arch=0 N_HEAD=2 D_HEAD=8 step=step0 seq_before=0 seq_after=1 total=212 per_head_attention=176 head_switch=1 provisional_write=16 commit=1 cache_read=32 cache_write=16 cache_stall=0 pe_stall=44 sfu_stall=12 output_stall=0 peak_seq=1 paper_active=0 paper_inner=0 paper_outer=0 paper_tail=0 paper_mode_switch=0
 STAGE5_GENERATION_PERF arch=0 N_HEAD=2 D_HEAD=8 step=step1 seq_before=1 seq_after=2 total=589 per_head_attention=518 head_switch=2 provisional_write=32 commit=2 cache_read=96 cache_write=32 cache_stall=0 pe_stall=128 sfu_stall=60 output_stall=0 peak_seq=2 paper_active=0 paper_inner=0 paper_outer=0 paper_tail=0 paper_mode_switch=0
 STAGE5_GENERATION_PERF arch=0 N_HEAD=2 D_HEAD=8 step=step2 seq_before=2 seq_after=3 total=1109 per_head_attention=1002 head_switch=3 provisional_write=48 commit=3 cache_read=192 cache_write=48 cache_stall=0 pe_stall=252 sfu_stall=120 output_stall=0 peak_seq=3 paper_active=0 paper_inner=0 paper_outer=0 paper_tail=0 paper_mode_switch=0
@@ -268,12 +268,12 @@ STAGE5_GENERATION_PERF arch=0 N_HEAD=2 D_HEAD=8 step=step8 seq_before=8 seq_afte
 STAGE5_SHARED_MULTIHEAD_PASS N_HEAD=2 D_HEAD=8
 $finish called from file "/workspace/VEDA/tb/rtl/stage5/tb_multi_head_generation_engine.sv", line 484.
 $finish at simulation time             62006000
-           V C S   S i m u l a t i o n   R e p o r t 
+           V C S   S i m u l a t i o n   R e p o r t
 Time: 62006000 ps
-CPU Time:      0.140 seconds;       Data structure size:   0.4Mb
-Mon Jul 13 21:20:18 2026
+CPU Time:      0.120 seconds;       Data structure size:   0.4Mb
+Mon Jul 13 23:10:18 2026
                          Chronologic VCS (TM)
-      Version O-2018.09-SP2-2_Full64 -- Mon Jul 13 21:20:20 2026
+      Version O-2018.09-SP2-2_Full64 -- Mon Jul 13 23:10:19 2026
                Copyright (c) 1991-2018 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -357,13 +357,13 @@ make[1]: Leaving directory '/workspace/VEDA/build/stage5_rtl_sim/multi_head_gene
 make[1]: Entering directory '/workspace/VEDA/build/stage5_rtl_sim/multi_head_generation_h4_d8_csrc'
 rm -f _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
 if [ -x /workspace/VEDA/build/stage5_rtl_sim/multi_head_generation_h4_d8_simv ]; then chmod -x /workspace/VEDA/build/stage5_rtl_sim/multi_head_generation_h4_d8_simv; fi
-g++  -o /workspace/VEDA/build/stage5_rtl_sim/multi_head_generation_h4_d8_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/multi_head_generation_h4_d8_simv.daidir/ -Wl,-rpath=./multi_head_generation_h4_d8_simv.daidir/ -Wl,-rpath='$ORIGIN'/multi_head_generation_h4_d8_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _590454_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../multi_head_generation_h4_d8_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl 
+g++  -o /workspace/VEDA/build/stage5_rtl_sim/multi_head_generation_h4_d8_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/multi_head_generation_h4_d8_simv.daidir/ -Wl,-rpath=./multi_head_generation_h4_d8_simv.daidir/ -Wl,-rpath='$ORIGIN'/multi_head_generation_h4_d8_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _843787_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../multi_head_generation_h4_d8_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl
 /workspace/VEDA/build/stage5_rtl_sim/multi_head_generation_h4_d8_simv up to date
 make[1]: Leaving directory '/workspace/VEDA/build/stage5_rtl_sim/multi_head_generation_h4_d8_csrc'
-CPU time: 4.196 seconds to compile + .290 seconds to elab + .289 seconds to link
+CPU time: 4.010 seconds to compile + .275 seconds to elab + .280 seconds to link
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 13 21:20 2026
+Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 13 23:10 2026
 STAGE5_GENERATION_PERF arch=0 N_HEAD=4 D_HEAD=8 step=step0 seq_before=0 seq_after=1 total=425 per_head_attention=356 head_switch=3 provisional_write=32 commit=1 cache_read=64 cache_write=32 cache_stall=0 pe_stall=88 sfu_stall=24 output_stall=4 peak_seq=1 paper_active=0 paper_inner=0 paper_outer=0 paper_tail=0 paper_mode_switch=0
 STAGE5_GENERATION_PERF arch=0 N_HEAD=4 D_HEAD=8 step=step1 seq_before=1 seq_after=2 total=1180 per_head_attention=1042 head_switch=6 provisional_write=64 commit=2 cache_read=192 cache_write=64 cache_stall=0 pe_stall=256 sfu_stall=120 output_stall=6 peak_seq=2 paper_active=0 paper_inner=0 paper_outer=0 paper_tail=0 paper_mode_switch=0
 STAGE5_GENERATION_PERF arch=0 N_HEAD=4 D_HEAD=8 step=step2 seq_before=2 seq_after=3 total=2218 per_head_attention=2011 head_switch=9 provisional_write=96 commit=3 cache_read=384 cache_write=96 cache_stall=0 pe_stall=504 sfu_stall=240 output_stall=7 peak_seq=3 paper_active=0 paper_inner=0 paper_outer=0 paper_tail=0 paper_mode_switch=0
@@ -376,12 +376,12 @@ STAGE5_GENERATION_PERF arch=0 N_HEAD=4 D_HEAD=8 step=step8 seq_before=8 seq_afte
 STAGE5_SHARED_MULTIHEAD_PASS N_HEAD=4 D_HEAD=8
 $finish called from file "/workspace/VEDA/tb/rtl/stage5/tb_multi_head_generation_engine.sv", line 484.
 $finish at simulation time            123206000
-           V C S   S i m u l a t i o n   R e p o r t 
+           V C S   S i m u l a t i o n   R e p o r t
 Time: 123206000 ps
 CPU Time:      0.130 seconds;       Data structure size:   0.4Mb
-Mon Jul 13 21:20:36 2026
+Mon Jul 13 23:10:36 2026
                          Chronologic VCS (TM)
-      Version O-2018.09-SP2-2_Full64 -- Mon Jul 13 21:20:38 2026
+      Version O-2018.09-SP2-2_Full64 -- Mon Jul 13 23:10:38 2026
                Copyright (c) 1991-2018 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -465,13 +465,13 @@ make[1]: Leaving directory '/workspace/VEDA/build/stage5_rtl_sim/multi_head_gene
 make[1]: Entering directory '/workspace/VEDA/build/stage5_rtl_sim/multi_head_generation_h2_d16_csrc'
 rm -f _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
 if [ -x /workspace/VEDA/build/stage5_rtl_sim/multi_head_generation_h2_d16_simv ]; then chmod -x /workspace/VEDA/build/stage5_rtl_sim/multi_head_generation_h2_d16_simv; fi
-g++  -o /workspace/VEDA/build/stage5_rtl_sim/multi_head_generation_h2_d16_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/multi_head_generation_h2_d16_simv.daidir/ -Wl,-rpath=./multi_head_generation_h2_d16_simv.daidir/ -Wl,-rpath='$ORIGIN'/multi_head_generation_h2_d16_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _591992_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../multi_head_generation_h2_d16_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl 
+g++  -o /workspace/VEDA/build/stage5_rtl_sim/multi_head_generation_h2_d16_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/multi_head_generation_h2_d16_simv.daidir/ -Wl,-rpath=./multi_head_generation_h2_d16_simv.daidir/ -Wl,-rpath='$ORIGIN'/multi_head_generation_h2_d16_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _845325_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../multi_head_generation_h2_d16_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl
 /workspace/VEDA/build/stage5_rtl_sim/multi_head_generation_h2_d16_simv up to date
 make[1]: Leaving directory '/workspace/VEDA/build/stage5_rtl_sim/multi_head_generation_h2_d16_csrc'
-CPU time: 4.140 seconds to compile + .287 seconds to elab + .285 seconds to link
+CPU time: 4.072 seconds to compile + .282 seconds to elab + .281 seconds to link
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 13 21:20 2026
+Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 13 23:10 2026
 STAGE5_GENERATION_PERF arch=0 N_HEAD=2 D_HEAD=16 step=step0 seq_before=0 seq_after=1 total=385 per_head_attention=318 head_switch=1 provisional_write=32 commit=1 cache_read=64 cache_write=32 cache_stall=0 pe_stall=88 sfu_stall=12 output_stall=4 peak_seq=1 paper_active=0 paper_inner=0 paper_outer=0 paper_tail=0 paper_mode_switch=0
 STAGE5_GENERATION_PERF arch=0 N_HEAD=2 D_HEAD=16 step=step1 seq_before=1 seq_after=2 total=1045 per_head_attention=911 head_switch=2 provisional_write=64 commit=2 cache_read=192 cache_write=64 cache_stall=0 pe_stall=256 sfu_stall=60 output_stall=5 peak_seq=2 paper_active=0 paper_inner=0 paper_outer=0 paper_tail=0 paper_mode_switch=0
 STAGE5_GENERATION_PERF arch=0 N_HEAD=2 D_HEAD=16 step=step2 seq_before=2 seq_after=3 total=1960 per_head_attention=1759 head_switch=3 provisional_write=96 commit=3 cache_read=384 cache_write=96 cache_stall=0 pe_stall=504 sfu_stall=120 output_stall=7 peak_seq=3 paper_active=0 paper_inner=0 paper_outer=0 paper_tail=0 paper_mode_switch=0
@@ -484,10 +484,10 @@ STAGE5_GENERATION_PERF arch=0 N_HEAD=2 D_HEAD=16 step=step8 seq_before=8 seq_aft
 STAGE5_SHARED_MULTIHEAD_PASS N_HEAD=2 D_HEAD=16
 $finish called from file "/workspace/VEDA/tb/rtl/stage5/tb_multi_head_generation_engine.sv", line 484.
 $finish at simulation time            110276000
-           V C S   S i m u l a t i o n   R e p o r t 
+           V C S   S i m u l a t i o n   R e p o r t
 Time: 110276000 ps
-CPU Time:      0.150 seconds;       Data structure size:   0.4Mb
-Mon Jul 13 21:20:54 2026
+CPU Time:      0.130 seconds;       Data structure size:   0.4Mb
+Mon Jul 13 23:10:53 2026
 Stage 5 VCS RTL simulation
 Build dir: build/stage5_rtl_sim
 vcs: FOUND

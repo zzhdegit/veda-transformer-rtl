@@ -2,7 +2,7 @@
 
 ## Stage
 
-Hardware Stage H9 checkpoint: Full-Array Attention Mapping and SFU-PE
+Hardware Stage H9 closure checkpoint: Full-Array Attention Mapping and SFU-PE
 Element-Serial Interleaving
 
 ## Status
@@ -11,15 +11,19 @@ HW-H9 IN PROGRESS, NOT ACCEPTED.
 
 Hardware Stage H9 has a checkpoint implementation and verification package for
 paper-native Attention mapping plus SFU/PE stream interleaving infrastructure.
-The checkpoint passes H9 model tests, H9 RTL single-head smoke simulations,
-H9 lint/vlogan, H9 DC structural checks, and Stage 5/6/7/8 regressions.
+The checkpoint passes H9 model tests, H9 RTL single-head smoke simulations, a
+matched single-head paper staged versus paper interleaved RTL A/B baseline,
+H9 lint/vlogan, H9 DC structural checks, and Stage 5/6/7/8 regressions from the
+prior H9 checkpoint.
 
 Hardware Stage H9 is not accepted because the full HW-H9 exit conditions are
 not closed. Missing items include multi-head and full-layer interleaved RTL
 coverage, the requested exhaustive reset/random-backpressure/cache-full and long
-sequence H9 coverage, and the acceptance criterion that interleaved total cycles
-beat the H8 staged paper baseline. Do not write `HARDWARE STAGE H9 PASS`, do
-not create an H9 accepted tag, and do not enter Hardware Stage H10 yet.
+sequence H9 coverage, broad assertion execution evidence, and exact
+cycle-model-to-RTL calibration. The matched single-head RTL A/B baseline now
+shows H9 interleaved faster than paper staged at seq16 and seq32 for D_HEAD=8,
+16, and 64. Do not write `HARDWARE STAGE H9 PASS`, do not create an H9 accepted
+tag, and do not enter Hardware Stage H10 yet.
 
 Stage 8 remains the accepted baseline. Paper-structured 8x8x2 PE array RTL and
 Attention QK/sV mapping are accepted.
@@ -434,6 +438,12 @@ H9 RTL simulation coverage completed:
 - Single-head smoke counters show `qk_sfu_overlap=135`,
   `sfu_sv_overlap=66`, `group0=408`, and `group1=408` for each D_HEAD smoke
   run.
+- Matched RTL A/B single-head `PAPER_ARRAY+STAGED` versus
+  `PAPER_ARRAY+INTERLEAVED`: PASS for D_HEAD=8, 16, and 64, seq 1/2/8/16/32/64,
+  with identical top, input data, DesignWare latency, and output/done ready
+  environment.
+- Matched deterministic output/done backpressure subset: PASS for D_HEAD=8, 16,
+  and 64 at seq16 and seq32.
 
 H9 lint/vlogan passed with only accepted DesignWare pragma-no-effect warnings.
 H9 DC structural checks passed for legacy staged, paper staged, and paper
@@ -441,10 +451,15 @@ interleaved architecture/schedule selections. The H9 hierarchy reports count
 128 `paper_pe_cell` occurrences in checked paper interleaved tops. DC results
 remain analyze/elaborate/link/check_design only; no PPA is claimed.
 
-H9 model cycle comparison currently reports H9 interleaving faster than the
-full-array non-interleaved H9 structural model, but slower than the H8 staged
-paper baseline for seq 1/2/8/16/32. Therefore HW-H9 final performance
-acceptance is still open.
+The earlier structural H8/H9 cycle-model comparison was not apples-to-apples for
+performance acceptance. The matched RTL A/B baseline is now the controlling
+single-head performance evidence:
+
+- D_HEAD=8 seq16/32: 1363/2707 staged versus 1169/2209 interleaved.
+- D_HEAD=16 seq16/32: 2472/4920 staged versus 1171/2211 interleaved.
+- D_HEAD=64 seq16/32: 9126/18198 staged versus 1183/2223 interleaved.
+
+The cycle model still needs exact calibration to matched RTL counter intervals.
 
 Stage 8:
 
@@ -668,8 +683,9 @@ docker exec nailong bash -lc 'cd /workspace/VEDA && make stage5-rtl-sim && make 
 
 - Hardware Stage H9 is not accepted. Continue H9 only; do not begin Hardware
   Stage H10 yet.
-- The H9 checkpoint proves bounded-buffer single-head overlap smoke coverage,
-  not full multi-head/full-layer H9 acceptance.
+- The H9 checkpoint proves bounded-buffer single-head overlap smoke coverage and
+  matched single-head RTL performance, not full multi-head/full-layer H9
+  acceptance.
 - Do not claim H9 paper-exact SFU arithmetic. The checkpoint preserves the
   existing repository softmax arithmetic and marks missing paper details as
   repository design decisions.

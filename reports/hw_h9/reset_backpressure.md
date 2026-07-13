@@ -14,6 +14,19 @@ RTL checkpoint coverage:
 - Score buffer ready/valid stall stability: PASS.
 - Probability FIFO ready/valid stall stability: PASS.
 - Single-head output-ready smoke path: PASS for D_HEAD=8, 16, and 64.
+- Matched single-head deterministic output/done backpressure subset: PASS for
+  D_HEAD=8, 16, and 64 at seq16 and seq32.
+
+Matched deterministic subset:
+
+| D_HEAD | Seq | Paper staged RTL | Paper interleaved RTL | H9 output stalls |
+|---:|---:|---:|---:|---:|
+| 8 | 16 | 1363 | 1170 | 1 |
+| 8 | 32 | 2708 | 2209 | 0 |
+| 16 | 16 | 2472 | 1172 | 1 |
+| 16 | 32 | 4920 | 2213 | 2 |
+| 64 | 16 | 9131 | 1187 | 4 |
+| 64 | 32 | 18200 | 2225 | 2 |
 
 Open acceptance coverage:
 

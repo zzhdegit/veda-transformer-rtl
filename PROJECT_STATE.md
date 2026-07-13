@@ -2,7 +2,7 @@
 
 ## Current Stage
 
-- Stage: Hardware Stage H9 checkpoint
+- Stage: Hardware Stage H9 closure checkpoint
 - Status: HW-H9 IN PROGRESS, NOT ACCEPTED
 - Branch: `hw/h9-sfu-pe-interleaving`
 - Last update: 2026-07-13
@@ -11,14 +11,17 @@ Hardware Stage H9 adds a checkpoint implementation of paper Attention
 full-array native mapping and SFU/PE element-serial interleaving infrastructure.
 The checkpoint includes H9 Python reference/cycle models, bounded score and
 probability stream buffers, an interleaved paper single-head RTL schedule path,
+matched paper staged versus paper interleaved single-head RTL A/B baselines,
 H9 Make targets, H9 reports, lint/vlogan, and DC structural checks.
 
 Hardware Stage H9 is not accepted yet. The checkpoint does not close the full
 HW-H9 exit criteria because multi-head and full-layer interleaved RTL
 verification, exhaustive reset/random-backpressure coverage, all requested long
-sequence/cache-full H9 cases, and the requirement that interleaved total cycles
-beat the H8 staged baseline remain open. Do not write `HARDWARE STAGE H9 PASS`
-or create an H9 accepted tag until those items are closed.
+sequence/cache-full H9 cases, broad assertion execution evidence, and exact
+cycle-model-to-RTL calibration remain open. The matched single-head RTL A/B
+baseline now shows H9 interleaved faster than paper staged at seq16 and seq32
+for D_HEAD=8, 16, and 64. Do not write `HARDWARE STAGE H9 PASS` or create an
+H9 accepted tag until all remaining HW-H9 exit conditions are closed.
 
 Stage 8 remains the accepted hardware baseline:
 
@@ -504,9 +507,9 @@ Continue Hardware Stage H9 only after closing the open acceptance items recorded
 in `reports/hw_h9/acceptance_audit.md`. The next work is to broaden the
 interleaved RTL verification from the single-head checkpoint into the required
 multi-head and full-layer configurations, add the missing reset/random
-backpressure/cache-full/long-sequence coverage, and resolve the cycle criterion
-against the H8 staged baseline without changing the frozen Stage 5/6/7 numeric
-and transaction contracts.
+backpressure/cache-full/long-sequence coverage, and calibrate the cycle model
+against the matched RTL counter intervals without changing the frozen Stage
+5/6/7 numeric and transaction contracts.
 
 Do not enter Hardware Stage H10, write `HARDWARE STAGE H9 PASS`, or create an
 H9 accepted tag until all HW-H9 exit conditions are closed. Do not claim SRAM
