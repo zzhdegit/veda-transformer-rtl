@@ -71,6 +71,28 @@ __pycache__/
 .venv/
 venv/
 
+# ML artifacts
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.bin
+*.npy
+*.npz
+checkpoints/
+datasets/
+.cache/
+wandb/
+runs/
+tensorboard/
+tokenizer_cache/
+hf_cache/
+large_traces/
+*.trace.json
+*.trace.jsonl
+*.weights.hex
+build/ml_m2_artifacts/
+
 # OS and editors
 .DS_Store
 Thumbs.db
