@@ -5,6 +5,10 @@
 `define STAGE3_D_HEAD 8
 `endif
 
+`ifndef STAGE3_ATTENTION_PE_ARCH
+`define STAGE3_ATTENTION_PE_ARCH 0
+`endif
+
 module tb_single_head_attention;
     localparam int PE_NUM = 8;
     localparam int D_HEAD = `STAGE3_D_HEAD;
@@ -55,6 +59,16 @@ module tb_single_head_attention;
     logic [63:0] perf_buffer_stall_cycles;
     logic [63:0] perf_output_stall_cycles;
     logic [63:0] perf_score_buffer_peak_occupancy;
+    logic [63:0] perf_paper_array_active_cycles;
+    logic [63:0] perf_paper_array_idle_cycles;
+    logic [63:0] perf_inner_mode_cycles;
+    logic [63:0] perf_outer_mode_cycles;
+    logic [63:0] perf_group0_active_cycles;
+    logic [63:0] perf_group1_active_cycles;
+    logic [63:0] perf_tail_masked_pe_cycles;
+    logic [63:0] perf_mode_switch_cycles;
+    logic [63:0] perf_array_input_stall_cycles;
+    logic [63:0] perf_array_output_stall_cycles;
 
     int current_seq_len;
     logic [META_W-1:0] current_meta;
@@ -75,7 +89,8 @@ module tb_single_head_attention;
         .PE_NUM(PE_NUM),
         .D_HEAD(D_HEAD),
         .MAX_SEQ_LEN(MAX_SEQ_LEN),
-        .META_W(META_W)
+        .META_W(META_W),
+        .ATTENTION_PE_ARCH(`STAGE3_ATTENTION_PE_ARCH)
     ) u_dut (
         .clk                              (clk),
         .rst_n                            (rst_n),
@@ -115,7 +130,17 @@ module tb_single_head_attention;
         .perf_sfu_stall_cycles            (perf_sfu_stall_cycles),
         .perf_buffer_stall_cycles         (perf_buffer_stall_cycles),
         .perf_output_stall_cycles         (perf_output_stall_cycles),
-        .perf_score_buffer_peak_occupancy (perf_score_buffer_peak_occupancy)
+        .perf_score_buffer_peak_occupancy (perf_score_buffer_peak_occupancy),
+        .perf_paper_array_active_cycles   (perf_paper_array_active_cycles),
+        .perf_paper_array_idle_cycles     (perf_paper_array_idle_cycles),
+        .perf_inner_mode_cycles           (perf_inner_mode_cycles),
+        .perf_outer_mode_cycles           (perf_outer_mode_cycles),
+        .perf_group0_active_cycles        (perf_group0_active_cycles),
+        .perf_group1_active_cycles        (perf_group1_active_cycles),
+        .perf_tail_masked_pe_cycles       (perf_tail_masked_pe_cycles),
+        .perf_mode_switch_cycles          (perf_mode_switch_cycles),
+        .perf_array_input_stall_cycles    (perf_array_input_stall_cycles),
+        .perf_array_output_stall_cycles   (perf_array_output_stall_cycles)
     );
 
     task automatic tb_fail(input string message);
@@ -235,13 +260,16 @@ module tb_single_head_attention;
                     if (done_invalid) tb_fail("unexpected done invalid");
                     if (^done_status === 1'bx) tb_fail("unknown done status");
                     if (done_meta !== current_meta) tb_fail("done metadata mismatch");
-                    $display("STAGE3_ATTENTION_PERF D_HEAD=%0d case=%s seq_len=%0d total=%0d qk=%0d qk_busy=%0d scale=%0d reduction=%0d reduction_finalize=%0d normalization=%0d sv=%0d pe_stall=%0d sfu_stall=%0d buffer_stall=%0d output_stall=%0d score_peak=%0d",
-                             D_HEAD, current_name, current_seq_len,
+                    $display("STAGE3_ATTENTION_PERF arch=%0d D_HEAD=%0d case=%s seq_len=%0d total=%0d qk=%0d qk_busy=%0d scale=%0d reduction=%0d reduction_finalize=%0d normalization=%0d sv=%0d pe_stall=%0d sfu_stall=%0d buffer_stall=%0d output_stall=%0d score_peak=%0d paper_active=%0d paper_inner=%0d paper_outer=%0d paper_tail=%0d paper_mode_switch=%0d paper_out_stall=%0d",
+                             `STAGE3_ATTENTION_PE_ARCH, D_HEAD, current_name, current_seq_len,
                              perf_total_attention_cycles, perf_qk_cycles, perf_qk_pe_busy_cycles,
                              perf_scale_cycles, perf_reduction_cycles, perf_reduction_finalize_cycles,
                              perf_normalization_cycles, perf_sv_cycles, perf_pe_stall_cycles,
                              perf_sfu_stall_cycles, perf_buffer_stall_cycles, perf_output_stall_cycles,
-                             perf_score_buffer_peak_occupancy);
+                             perf_score_buffer_peak_occupancy, perf_paper_array_active_cycles,
+                             perf_inner_mode_cycles, perf_outer_mode_cycles,
+                             perf_tail_masked_pe_cycles, perf_mode_switch_cycles,
+                             perf_array_output_stall_cycles);
                     done_ready = 1'b0;
                     output_ready = 1'b0;
                     done_seen = 1'b1;

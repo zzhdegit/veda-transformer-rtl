@@ -9,6 +9,10 @@
 `define STAGE5_D_HEAD 8
 `endif
 
+`ifndef STAGE5_ATTENTION_PE_ARCH
+`define STAGE5_ATTENTION_PE_ARCH 0
+`endif
+
 module tb_multi_head_generation_engine;
     localparam int N_HEAD = `STAGE5_N_HEAD;
     localparam int PE_NUM = 8;
@@ -66,6 +70,16 @@ module tb_multi_head_generation_engine;
     logic [63:0] perf_pe_stall_cycles;
     logic [63:0] perf_sfu_stall_cycles;
     logic [63:0] perf_output_stall_cycles;
+    logic [63:0] perf_paper_array_active_cycles;
+    logic [63:0] perf_paper_array_idle_cycles;
+    logic [63:0] perf_inner_mode_cycles;
+    logic [63:0] perf_outer_mode_cycles;
+    logic [63:0] perf_group0_active_cycles;
+    logic [63:0] perf_group1_active_cycles;
+    logic [63:0] perf_tail_masked_pe_cycles;
+    logic [63:0] perf_mode_switch_cycles;
+    logic [63:0] perf_array_input_stall_cycles;
+    logic [63:0] perf_array_output_stall_cycles;
     logic [SEQ_LEN_W-1:0] perf_peak_valid_seq_len;
 
     string current_name;
@@ -94,7 +108,8 @@ module tb_multi_head_generation_engine;
         .PE_NUM(PE_NUM),
         .D_HEAD(D_HEAD),
         .MAX_SEQ_LEN(MAX_SEQ_LEN),
-        .META_W(META_W)
+        .META_W(META_W),
+        .ATTENTION_PE_ARCH(`STAGE5_ATTENTION_PE_ARCH)
     ) u_dut (
         .clk                            (clk),
         .rst_n                          (rst_n),
@@ -139,6 +154,16 @@ module tb_multi_head_generation_engine;
         .perf_pe_stall_cycles           (perf_pe_stall_cycles),
         .perf_sfu_stall_cycles          (perf_sfu_stall_cycles),
         .perf_output_stall_cycles       (perf_output_stall_cycles),
+        .perf_paper_array_active_cycles (perf_paper_array_active_cycles),
+        .perf_paper_array_idle_cycles   (perf_paper_array_idle_cycles),
+        .perf_inner_mode_cycles         (perf_inner_mode_cycles),
+        .perf_outer_mode_cycles         (perf_outer_mode_cycles),
+        .perf_group0_active_cycles      (perf_group0_active_cycles),
+        .perf_group1_active_cycles      (perf_group1_active_cycles),
+        .perf_tail_masked_pe_cycles     (perf_tail_masked_pe_cycles),
+        .perf_mode_switch_cycles        (perf_mode_switch_cycles),
+        .perf_array_input_stall_cycles  (perf_array_input_stall_cycles),
+        .perf_array_output_stall_cycles (perf_array_output_stall_cycles),
         .perf_peak_valid_seq_len        (perf_peak_valid_seq_len)
     );
 
@@ -346,13 +371,15 @@ module tb_multi_head_generation_engine;
                     if (pre_done_meta !== current_meta) tb_fail("done metadata mismatch");
                     if (pre_done_seq_len !== SEQ_LEN_W'(current_seq_after)) tb_fail("done valid_seq_len mismatch");
                     if (current_valid_seq_len !== SEQ_LEN_W'(current_seq_after)) tb_fail("current valid_seq_len mismatch");
-                    $display("STAGE5_GENERATION_PERF N_HEAD=%0d D_HEAD=%0d step=%s seq_before=%0d seq_after=%0d total=%0d per_head_attention=%0d head_switch=%0d provisional_write=%0d commit=%0d cache_read=%0d cache_write=%0d cache_stall=%0d pe_stall=%0d sfu_stall=%0d output_stall=%0d peak_seq=%0d",
-                             N_HEAD, D_HEAD, current_name, current_seq_before, current_seq_after,
+                    $display("STAGE5_GENERATION_PERF arch=%0d N_HEAD=%0d D_HEAD=%0d step=%s seq_before=%0d seq_after=%0d total=%0d per_head_attention=%0d head_switch=%0d provisional_write=%0d commit=%0d cache_read=%0d cache_write=%0d cache_stall=%0d pe_stall=%0d sfu_stall=%0d output_stall=%0d peak_seq=%0d paper_active=%0d paper_inner=%0d paper_outer=%0d paper_tail=%0d paper_mode_switch=%0d",
+                             `STAGE5_ATTENTION_PE_ARCH, N_HEAD, D_HEAD, current_name, current_seq_before, current_seq_after,
                              perf_total_cycles, perf_per_head_attention_cycles, perf_head_switch_cycles,
                              perf_provisional_write_cycles, perf_commit_cycles,
                              perf_cache_read_cycles, perf_cache_write_cycles, perf_cache_stall_cycles,
                              perf_pe_stall_cycles, perf_sfu_stall_cycles, perf_output_stall_cycles,
-                             perf_peak_valid_seq_len);
+                             perf_peak_valid_seq_len, perf_paper_array_active_cycles,
+                             perf_inner_mode_cycles, perf_outer_mode_cycles,
+                             perf_tail_masked_pe_cycles, perf_mode_switch_cycles);
                     done_seen = 1'b1;
                     done_ready = 1'b0;
                     output_ready = 1'b0;

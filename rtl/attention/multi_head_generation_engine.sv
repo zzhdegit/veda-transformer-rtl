@@ -7,6 +7,7 @@ module multi_head_generation_engine #(
     parameter int MAX_SEQ_LEN = 32,
     parameter int META_W = 16,
     parameter int COUNTER_W = 64,
+    parameter int ATTENTION_PE_ARCH = 0,
     parameter bit ASSERT_ON_INVALID = 1'b1,
     localparam int HEAD_W = (N_HEAD <= 1) ? 1 : $clog2(N_HEAD),
     localparam int TOKEN_W = (MAX_SEQ_LEN <= 1) ? 1 : $clog2(MAX_SEQ_LEN),
@@ -60,6 +61,16 @@ module multi_head_generation_engine #(
     output logic [COUNTER_W-1:0]         perf_pe_stall_cycles,
     output logic [COUNTER_W-1:0]         perf_sfu_stall_cycles,
     output logic [COUNTER_W-1:0]         perf_output_stall_cycles,
+    output logic [COUNTER_W-1:0]         perf_paper_array_active_cycles,
+    output logic [COUNTER_W-1:0]         perf_paper_array_idle_cycles,
+    output logic [COUNTER_W-1:0]         perf_inner_mode_cycles,
+    output logic [COUNTER_W-1:0]         perf_outer_mode_cycles,
+    output logic [COUNTER_W-1:0]         perf_group0_active_cycles,
+    output logic [COUNTER_W-1:0]         perf_group1_active_cycles,
+    output logic [COUNTER_W-1:0]         perf_tail_masked_pe_cycles,
+    output logic [COUNTER_W-1:0]         perf_mode_switch_cycles,
+    output logic [COUNTER_W-1:0]         perf_array_input_stall_cycles,
+    output logic [COUNTER_W-1:0]         perf_array_output_stall_cycles,
     output logic [SEQ_LEN_W-1:0]         perf_peak_valid_seq_len
 );
     logic cache_rd_valid;
@@ -137,6 +148,16 @@ module multi_head_generation_engine #(
     logic [COUNTER_W-1:0] sha_perf_buffer_stall_cycles;
     logic [COUNTER_W-1:0] sha_perf_output_stall_cycles;
     logic [COUNTER_W-1:0] sha_perf_score_buffer_peak_occupancy;
+    logic [COUNTER_W-1:0] sha_perf_paper_array_active_cycles;
+    logic [COUNTER_W-1:0] sha_perf_paper_array_idle_cycles;
+    logic [COUNTER_W-1:0] sha_perf_inner_mode_cycles;
+    logic [COUNTER_W-1:0] sha_perf_outer_mode_cycles;
+    logic [COUNTER_W-1:0] sha_perf_group0_active_cycles;
+    logic [COUNTER_W-1:0] sha_perf_group1_active_cycles;
+    logic [COUNTER_W-1:0] sha_perf_tail_masked_pe_cycles;
+    logic [COUNTER_W-1:0] sha_perf_mode_switch_cycles;
+    logic [COUNTER_W-1:0] sha_perf_array_input_stall_cycles;
+    logic [COUNTER_W-1:0] sha_perf_array_output_stall_cycles;
 
     multi_head_kv_cache_manager #(
         .N_HEAD(N_HEAD),
@@ -194,6 +215,7 @@ module multi_head_generation_engine #(
         .MAX_SEQ_LEN(MAX_SEQ_LEN),
         .META_W(META_W),
         .COUNTER_W(COUNTER_W),
+        .ATTENTION_PE_ARCH(ATTENTION_PE_ARCH),
         .ASSERT_ON_INVALID(ASSERT_ON_INVALID)
     ) u_shared_single_head_attention (
         .clk                              (clk),
@@ -234,8 +256,29 @@ module multi_head_generation_engine #(
         .perf_sfu_stall_cycles            (sha_perf_sfu_stall_cycles),
         .perf_buffer_stall_cycles         (sha_perf_buffer_stall_cycles),
         .perf_output_stall_cycles         (sha_perf_output_stall_cycles),
-        .perf_score_buffer_peak_occupancy (sha_perf_score_buffer_peak_occupancy)
+        .perf_score_buffer_peak_occupancy (sha_perf_score_buffer_peak_occupancy),
+        .perf_paper_array_active_cycles   (sha_perf_paper_array_active_cycles),
+        .perf_paper_array_idle_cycles     (sha_perf_paper_array_idle_cycles),
+        .perf_inner_mode_cycles           (sha_perf_inner_mode_cycles),
+        .perf_outer_mode_cycles           (sha_perf_outer_mode_cycles),
+        .perf_group0_active_cycles        (sha_perf_group0_active_cycles),
+        .perf_group1_active_cycles        (sha_perf_group1_active_cycles),
+        .perf_tail_masked_pe_cycles       (sha_perf_tail_masked_pe_cycles),
+        .perf_mode_switch_cycles          (sha_perf_mode_switch_cycles),
+        .perf_array_input_stall_cycles    (sha_perf_array_input_stall_cycles),
+        .perf_array_output_stall_cycles   (sha_perf_array_output_stall_cycles)
     );
+
+    assign perf_paper_array_active_cycles = sha_perf_paper_array_active_cycles;
+    assign perf_paper_array_idle_cycles = sha_perf_paper_array_idle_cycles;
+    assign perf_inner_mode_cycles = sha_perf_inner_mode_cycles;
+    assign perf_outer_mode_cycles = sha_perf_outer_mode_cycles;
+    assign perf_group0_active_cycles = sha_perf_group0_active_cycles;
+    assign perf_group1_active_cycles = sha_perf_group1_active_cycles;
+    assign perf_tail_masked_pe_cycles = sha_perf_tail_masked_pe_cycles;
+    assign perf_mode_switch_cycles = sha_perf_mode_switch_cycles;
+    assign perf_array_input_stall_cycles = sha_perf_array_input_stall_cycles;
+    assign perf_array_output_stall_cycles = sha_perf_array_output_stall_cycles;
 
     multi_head_generation_controller #(
         .N_HEAD(N_HEAD),

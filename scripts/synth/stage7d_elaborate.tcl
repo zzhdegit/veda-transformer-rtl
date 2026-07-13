@@ -27,6 +27,12 @@ set rtl_files [list \
     [file join $root "rtl/pe/pe_lane.sv"] \
     [file join $root "rtl/pe/fp32_reduction_tree.sv"] \
     [file join $root "rtl/pe/reconfigurable_pe_core.sv"] \
+    [file join $root "rtl/pe/paper/paper_pe_cell.sv"] \
+    [file join $root "rtl/pe/paper/paper_l1_reduction.sv"] \
+    [file join $root "rtl/pe/paper/paper_l2_reduction.sv"] \
+    [file join $root "rtl/pe/paper/paper_pe_group.sv"] \
+    [file join $root "rtl/pe/paper/paper_array_8x8x2.sv"] \
+    [file join $root "rtl/attention/paper/paper_attention_adapter.sv"] \
     [file join $root "rtl/attention/attention_score_scaler.sv"] \
     [file join $root "rtl/attention/score_buffer.sv"] \
     [file join $root "rtl/attention/softmax_reduction.sv"] \

@@ -7,6 +7,7 @@ module projection_integrated_mha #(
     parameter int MAX_SEQ_LEN = 8,
     parameter int META_W = 16,
     parameter int COUNTER_W = 64,
+    parameter int ATTENTION_PE_ARCH = 0,
     parameter bit ASSERT_ON_INVALID = 1'b1,
     localparam int D_MODEL = N_HEAD * D_HEAD,
     localparam int HEAD_W = (N_HEAD <= 1) ? 1 : $clog2(N_HEAD),
@@ -67,6 +68,16 @@ module projection_integrated_mha #(
     output logic [COUNTER_W-1:0]         perf_weight_stall_cycles,
     output logic [COUNTER_W-1:0]         perf_buffer_stall_cycles,
     output logic [COUNTER_W-1:0]         perf_output_stall_cycles,
+    output logic [COUNTER_W-1:0]         perf_paper_array_active_cycles,
+    output logic [COUNTER_W-1:0]         perf_paper_array_idle_cycles,
+    output logic [COUNTER_W-1:0]         perf_inner_mode_cycles,
+    output logic [COUNTER_W-1:0]         perf_outer_mode_cycles,
+    output logic [COUNTER_W-1:0]         perf_group0_active_cycles,
+    output logic [COUNTER_W-1:0]         perf_group1_active_cycles,
+    output logic [COUNTER_W-1:0]         perf_tail_masked_pe_cycles,
+    output logic [COUNTER_W-1:0]         perf_mode_switch_cycles,
+    output logic [COUNTER_W-1:0]         perf_array_input_stall_cycles,
+    output logic [COUNTER_W-1:0]         perf_array_output_stall_cycles,
     output logic [SEQ_LEN_W-1:0]         perf_peak_valid_seq_len
 );
     localparam logic [1:0] KIND_Q  = 2'd0;
@@ -203,6 +214,16 @@ module projection_integrated_mha #(
     logic [COUNTER_W-1:0] stage5_pe_stall_cycles;
     logic [COUNTER_W-1:0] stage5_sfu_stall_cycles;
     logic [COUNTER_W-1:0] stage5_output_stall_cycles;
+    logic [COUNTER_W-1:0] stage5_paper_array_active_cycles;
+    logic [COUNTER_W-1:0] stage5_paper_array_idle_cycles;
+    logic [COUNTER_W-1:0] stage5_inner_mode_cycles;
+    logic [COUNTER_W-1:0] stage5_outer_mode_cycles;
+    logic [COUNTER_W-1:0] stage5_group0_active_cycles;
+    logic [COUNTER_W-1:0] stage5_group1_active_cycles;
+    logic [COUNTER_W-1:0] stage5_tail_masked_pe_cycles;
+    logic [COUNTER_W-1:0] stage5_mode_switch_cycles;
+    logic [COUNTER_W-1:0] stage5_array_input_stall_cycles;
+    logic [COUNTER_W-1:0] stage5_array_output_stall_cycles;
 
     logic concat_clear;
     logic concat_input_ready;
@@ -340,6 +361,16 @@ module projection_integrated_mha #(
     assign perf_output_stall_cycles =
         proj_perf_output_stall_cycles + stage5_output_stall_cycles +
         concat_perf_stall_cycles + wo_perf_output_stall_cycles;
+    assign perf_paper_array_active_cycles = stage5_paper_array_active_cycles;
+    assign perf_paper_array_idle_cycles = stage5_paper_array_idle_cycles;
+    assign perf_inner_mode_cycles = stage5_inner_mode_cycles;
+    assign perf_outer_mode_cycles = stage5_outer_mode_cycles;
+    assign perf_group0_active_cycles = stage5_group0_active_cycles;
+    assign perf_group1_active_cycles = stage5_group1_active_cycles;
+    assign perf_tail_masked_pe_cycles = stage5_tail_masked_pe_cycles;
+    assign perf_mode_switch_cycles = stage5_mode_switch_cycles;
+    assign perf_array_input_stall_cycles = stage5_array_input_stall_cycles;
+    assign perf_array_output_stall_cycles = stage5_array_output_stall_cycles;
 
     projection_controller #(
         .D_MODEL(D_MODEL),
@@ -447,6 +478,7 @@ module projection_integrated_mha #(
         .MAX_SEQ_LEN(MAX_SEQ_LEN),
         .META_W(META_W),
         .COUNTER_W(COUNTER_W),
+        .ATTENTION_PE_ARCH(ATTENTION_PE_ARCH),
         .ASSERT_ON_INVALID(ASSERT_ON_INVALID)
     ) u_multi_head_generation_engine (
         .clk                            (clk),
@@ -492,6 +524,16 @@ module projection_integrated_mha #(
         .perf_pe_stall_cycles           (stage5_pe_stall_cycles),
         .perf_sfu_stall_cycles          (stage5_sfu_stall_cycles),
         .perf_output_stall_cycles       (stage5_output_stall_cycles),
+        .perf_paper_array_active_cycles (stage5_paper_array_active_cycles),
+        .perf_paper_array_idle_cycles   (stage5_paper_array_idle_cycles),
+        .perf_inner_mode_cycles         (stage5_inner_mode_cycles),
+        .perf_outer_mode_cycles         (stage5_outer_mode_cycles),
+        .perf_group0_active_cycles      (stage5_group0_active_cycles),
+        .perf_group1_active_cycles      (stage5_group1_active_cycles),
+        .perf_tail_masked_pe_cycles     (stage5_tail_masked_pe_cycles),
+        .perf_mode_switch_cycles        (stage5_mode_switch_cycles),
+        .perf_array_input_stall_cycles  (stage5_array_input_stall_cycles),
+        .perf_array_output_stall_cycles (stage5_array_output_stall_cycles),
         .perf_peak_valid_seq_len        (perf_peak_valid_seq_len)
     );
 

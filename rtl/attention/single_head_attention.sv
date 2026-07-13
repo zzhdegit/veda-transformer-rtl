@@ -6,6 +6,7 @@ module single_head_attention #(
     parameter int MAX_SEQ_LEN = 32,
     parameter int META_W = 16,
     parameter int COUNTER_W = 64,
+    parameter int ATTENTION_PE_ARCH = 0,
     parameter bit ASSERT_ON_INVALID = 1'b1,
     localparam int SEQ_LEN_W = (MAX_SEQ_LEN <= 1) ? 1 : $clog2(MAX_SEQ_LEN + 1),
     localparam int TOKEN_W = (MAX_SEQ_LEN <= 1) ? 1 : $clog2(MAX_SEQ_LEN),
@@ -54,7 +55,17 @@ module single_head_attention #(
     output logic [COUNTER_W-1:0]         perf_sfu_stall_cycles,
     output logic [COUNTER_W-1:0]         perf_buffer_stall_cycles,
     output logic [COUNTER_W-1:0]         perf_output_stall_cycles,
-    output logic [COUNTER_W-1:0]         perf_score_buffer_peak_occupancy
+    output logic [COUNTER_W-1:0]         perf_score_buffer_peak_occupancy,
+    output logic [COUNTER_W-1:0]         perf_paper_array_active_cycles,
+    output logic [COUNTER_W-1:0]         perf_paper_array_idle_cycles,
+    output logic [COUNTER_W-1:0]         perf_inner_mode_cycles,
+    output logic [COUNTER_W-1:0]         perf_outer_mode_cycles,
+    output logic [COUNTER_W-1:0]         perf_group0_active_cycles,
+    output logic [COUNTER_W-1:0]         perf_group1_active_cycles,
+    output logic [COUNTER_W-1:0]         perf_tail_masked_pe_cycles,
+    output logic [COUNTER_W-1:0]         perf_mode_switch_cycles,
+    output logic [COUNTER_W-1:0]         perf_array_input_stall_cycles,
+    output logic [COUNTER_W-1:0]         perf_array_output_stall_cycles
 );
     single_head_attention_controller #(
         .PE_NUM(PE_NUM),
@@ -62,6 +73,7 @@ module single_head_attention #(
         .MAX_SEQ_LEN(MAX_SEQ_LEN),
         .META_W(META_W),
         .COUNTER_W(COUNTER_W),
+        .ATTENTION_PE_ARCH(ATTENTION_PE_ARCH),
         .ASSERT_ON_INVALID(ASSERT_ON_INVALID)
     ) u_controller (
         .clk                              (clk),
@@ -102,9 +114,18 @@ module single_head_attention #(
         .perf_sfu_stall_cycles            (perf_sfu_stall_cycles),
         .perf_buffer_stall_cycles         (perf_buffer_stall_cycles),
         .perf_output_stall_cycles         (perf_output_stall_cycles),
-        .perf_score_buffer_peak_occupancy (perf_score_buffer_peak_occupancy)
+        .perf_score_buffer_peak_occupancy (perf_score_buffer_peak_occupancy),
+        .perf_paper_array_active_cycles   (perf_paper_array_active_cycles),
+        .perf_paper_array_idle_cycles     (perf_paper_array_idle_cycles),
+        .perf_inner_mode_cycles           (perf_inner_mode_cycles),
+        .perf_outer_mode_cycles           (perf_outer_mode_cycles),
+        .perf_group0_active_cycles        (perf_group0_active_cycles),
+        .perf_group1_active_cycles        (perf_group1_active_cycles),
+        .perf_tail_masked_pe_cycles       (perf_tail_masked_pe_cycles),
+        .perf_mode_switch_cycles          (perf_mode_switch_cycles),
+        .perf_array_input_stall_cycles    (perf_array_input_stall_cycles),
+        .perf_array_output_stall_cycles   (perf_array_output_stall_cycles)
     );
 endmodule
 
 `default_nettype wire
-

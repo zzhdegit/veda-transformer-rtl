@@ -6,6 +6,7 @@ module single_head_attention_controller #(
     parameter int MAX_SEQ_LEN = 32,
     parameter int META_W = 16,
     parameter int COUNTER_W = 64,
+    parameter int ATTENTION_PE_ARCH = 0,
     parameter bit ASSERT_ON_INVALID = 1'b1,
     localparam int LANE_COUNT_W = $clog2(PE_NUM + 1),
     localparam int SEQ_LEN_W = (MAX_SEQ_LEN <= 1) ? 1 : $clog2(MAX_SEQ_LEN + 1),
@@ -58,8 +59,21 @@ module single_head_attention_controller #(
     output logic [COUNTER_W-1:0]         perf_sfu_stall_cycles,
     output logic [COUNTER_W-1:0]         perf_buffer_stall_cycles,
     output logic [COUNTER_W-1:0]         perf_output_stall_cycles,
-    output logic [COUNTER_W-1:0]         perf_score_buffer_peak_occupancy
+    output logic [COUNTER_W-1:0]         perf_score_buffer_peak_occupancy,
+    output logic [COUNTER_W-1:0]         perf_paper_array_active_cycles,
+    output logic [COUNTER_W-1:0]         perf_paper_array_idle_cycles,
+    output logic [COUNTER_W-1:0]         perf_inner_mode_cycles,
+    output logic [COUNTER_W-1:0]         perf_outer_mode_cycles,
+    output logic [COUNTER_W-1:0]         perf_group0_active_cycles,
+    output logic [COUNTER_W-1:0]         perf_group1_active_cycles,
+    output logic [COUNTER_W-1:0]         perf_tail_masked_pe_cycles,
+    output logic [COUNTER_W-1:0]         perf_mode_switch_cycles,
+    output logic [COUNTER_W-1:0]         perf_array_input_stall_cycles,
+    output logic [COUNTER_W-1:0]         perf_array_output_stall_cycles
 );
+    localparam int LEGACY_PE = 0;
+    localparam int PAPER_ARRAY = 1;
+
     localparam logic [1:0] LOAD_Q = 2'd0;
     localparam logic [1:0] LOAD_K = 2'd1;
     localparam logic [1:0] LOAD_V = 2'd2;
@@ -315,49 +329,143 @@ module single_head_attention_controller #(
         (qk_token_q == (seq_len_q - SEQ_LEN_W'(1)));
     assign pe_out_ready = (state_q == ST_QK_WAIT_RESULT) || (state_q == ST_SV_WAIT_RESULT);
 
-    reconfigurable_pe_core #(
-        .PE_NUM(PE_NUM),
-        .META_W(META_W),
-        .COUNTER_W(COUNTER_W),
-        .ASSERT_ON_INVALID(ASSERT_ON_INVALID)
-    ) u_pe_core (
-        .clk                         (clk),
-        .rst_n                       (rst_n),
-        .in_valid                    (pe_in_valid),
-        .in_ready                    (pe_in_ready),
-        .in_mode                     (pe_in_mode),
-        .in_clear                    (pe_in_clear),
-        .in_tile_first               (pe_in_tile_first),
-        .in_tile_last                (pe_in_tile_last),
-        .in_use_explicit_mask        (1'b1),
-        .in_active_lanes             ('0),
-        .in_lane_mask                (pe_in_lane_mask),
-        .in_scalar_fp32              (pe_in_scalar_fp32),
-        .in_vector_a_fp16            (pe_in_vector_a_fp16),
-        .in_vector_b_fp16            (pe_in_vector_b_fp16),
-        .in_meta                     (meta_q),
-        .in_last                     (pe_in_last),
-        .out_valid                   (pe_out_valid),
-        .out_ready                   (pe_out_ready),
-        .out_mode                    (pe_out_mode),
-        .out_scalar_fp32             (pe_out_scalar_fp32),
-        .out_vector_fp32             (pe_out_vector_fp32),
-        .out_lane_mask               (pe_out_lane_mask),
-        .out_status                  (pe_out_status),
-        .out_invalid                 (pe_out_invalid),
-        .out_meta                    (pe_out_meta),
-        .out_last                    (pe_out_last),
-        .perf_total_cycles           (),
-        .perf_busy_cycles            (),
-        .perf_active_lane_cycles     (),
-        .perf_available_lane_cycles  (),
-        .perf_input_stall_cycles     (),
-        .perf_output_stall_cycles    (),
-        .perf_mode_switch_cycles     (),
-        .perf_tile_count             (),
-        .perf_operation_count        (),
-        .perf_invalid_count          ()
-    );
+    generate
+        if (ATTENTION_PE_ARCH == LEGACY_PE) begin : g_legacy_attention_pe
+            reconfigurable_pe_core #(
+                .PE_NUM(PE_NUM),
+                .META_W(META_W),
+                .COUNTER_W(COUNTER_W),
+                .ASSERT_ON_INVALID(ASSERT_ON_INVALID)
+            ) u_pe_core (
+                .clk                         (clk),
+                .rst_n                       (rst_n),
+                .in_valid                    (pe_in_valid),
+                .in_ready                    (pe_in_ready),
+                .in_mode                     (pe_in_mode),
+                .in_clear                    (pe_in_clear),
+                .in_tile_first               (pe_in_tile_first),
+                .in_tile_last                (pe_in_tile_last),
+                .in_use_explicit_mask        (1'b1),
+                .in_active_lanes             ('0),
+                .in_lane_mask                (pe_in_lane_mask),
+                .in_scalar_fp32              (pe_in_scalar_fp32),
+                .in_vector_a_fp16            (pe_in_vector_a_fp16),
+                .in_vector_b_fp16            (pe_in_vector_b_fp16),
+                .in_meta                     (meta_q),
+                .in_last                     (pe_in_last),
+                .out_valid                   (pe_out_valid),
+                .out_ready                   (pe_out_ready),
+                .out_mode                    (pe_out_mode),
+                .out_scalar_fp32             (pe_out_scalar_fp32),
+                .out_vector_fp32             (pe_out_vector_fp32),
+                .out_lane_mask               (pe_out_lane_mask),
+                .out_status                  (pe_out_status),
+                .out_invalid                 (pe_out_invalid),
+                .out_meta                    (pe_out_meta),
+                .out_last                    (pe_out_last),
+                .perf_total_cycles           (),
+                .perf_busy_cycles            (),
+                .perf_active_lane_cycles     (),
+                .perf_available_lane_cycles  (),
+                .perf_input_stall_cycles     (),
+                .perf_output_stall_cycles    (),
+                .perf_mode_switch_cycles     (),
+                .perf_tile_count             (),
+                .perf_operation_count        (),
+                .perf_invalid_count          ()
+            );
+
+            assign perf_paper_array_active_cycles = '0;
+            assign perf_paper_array_idle_cycles = '0;
+            assign perf_inner_mode_cycles = '0;
+            assign perf_outer_mode_cycles = '0;
+            assign perf_group0_active_cycles = '0;
+            assign perf_group1_active_cycles = '0;
+            assign perf_tail_masked_pe_cycles = '0;
+            assign perf_mode_switch_cycles = '0;
+            assign perf_array_input_stall_cycles = '0;
+            assign perf_array_output_stall_cycles = '0;
+        end else if (ATTENTION_PE_ARCH == PAPER_ARRAY) begin : g_paper_attention_pe
+            paper_attention_adapter #(
+                .PE_NUM(PE_NUM),
+                .META_W(META_W),
+                .COUNTER_W(COUNTER_W),
+                .ASSERT_ON_INVALID(ASSERT_ON_INVALID)
+            ) u_paper_attention_adapter (
+                .clk                              (clk),
+                .rst_n                            (rst_n),
+                .in_valid                         (pe_in_valid),
+                .in_ready                         (pe_in_ready),
+                .in_mode                          (pe_in_mode),
+                .in_clear                         (pe_in_clear),
+                .in_tile_first                    (pe_in_tile_first),
+                .in_tile_last                     (pe_in_tile_last),
+                .in_use_explicit_mask             (1'b1),
+                .in_active_lanes                  ('0),
+                .in_lane_mask                     (pe_in_lane_mask),
+                .in_scalar_fp32                   (pe_in_scalar_fp32),
+                .in_vector_a_fp16                 (pe_in_vector_a_fp16),
+                .in_vector_b_fp16                 (pe_in_vector_b_fp16),
+                .in_meta                          (meta_q),
+                .in_last                          (pe_in_last),
+                .out_valid                        (pe_out_valid),
+                .out_ready                        (pe_out_ready),
+                .out_mode                         (pe_out_mode),
+                .out_scalar_fp32                  (pe_out_scalar_fp32),
+                .out_vector_fp32                  (pe_out_vector_fp32),
+                .out_lane_mask                    (pe_out_lane_mask),
+                .out_status                       (pe_out_status),
+                .out_invalid                      (pe_out_invalid),
+                .out_meta                         (pe_out_meta),
+                .out_last                         (pe_out_last),
+                .perf_total_cycles                (),
+                .perf_busy_cycles                 (),
+                .perf_active_lane_cycles          (),
+                .perf_available_lane_cycles       (),
+                .perf_input_stall_cycles          (),
+                .perf_output_stall_cycles         (),
+                .perf_mode_switch_cycles          (perf_mode_switch_cycles),
+                .perf_tile_count                  (),
+                .perf_operation_count             (),
+                .perf_invalid_count               (),
+                .perf_paper_array_active_cycles   (perf_paper_array_active_cycles),
+                .perf_paper_array_idle_cycles     (perf_paper_array_idle_cycles),
+                .perf_inner_mode_cycles           (perf_inner_mode_cycles),
+                .perf_outer_mode_cycles           (perf_outer_mode_cycles),
+                .perf_group0_active_cycles        (perf_group0_active_cycles),
+                .perf_group1_active_cycles        (perf_group1_active_cycles),
+                .perf_tail_masked_pe_cycles       (perf_tail_masked_pe_cycles),
+                .perf_array_input_stall_cycles    (perf_array_input_stall_cycles),
+                .perf_array_output_stall_cycles   (perf_array_output_stall_cycles)
+            );
+        end else begin : g_invalid_attention_pe_arch
+`ifndef SYNTHESIS
+            initial begin
+                $fatal(1, "single_head_attention_controller unsupported ATTENTION_PE_ARCH");
+            end
+`endif
+            assign pe_in_ready = 1'b0;
+            assign pe_out_valid = 1'b0;
+            assign pe_out_mode = 2'd0;
+            assign pe_out_scalar_fp32 = 32'd0;
+            assign pe_out_vector_fp32 = '0;
+            assign pe_out_lane_mask = '0;
+            assign pe_out_status = 8'hFF;
+            assign pe_out_invalid = 1'b1;
+            assign pe_out_meta = '0;
+            assign pe_out_last = 1'b0;
+            assign perf_paper_array_active_cycles = '0;
+            assign perf_paper_array_idle_cycles = '0;
+            assign perf_inner_mode_cycles = '0;
+            assign perf_outer_mode_cycles = '0;
+            assign perf_group0_active_cycles = '0;
+            assign perf_group1_active_cycles = '0;
+            assign perf_tail_masked_pe_cycles = '0;
+            assign perf_mode_switch_cycles = '0;
+            assign perf_array_input_stall_cycles = '0;
+            assign perf_array_output_stall_cycles = '0;
+        end
+    endgenerate
 
     assign scaler_in_valid = (state_q == ST_SCALE_SEND);
     assign scaler_out_ready = (state_q == ST_SCALE_WAIT);
@@ -873,4 +981,3 @@ module single_head_attention_controller #(
 endmodule
 
 `default_nettype wire
-

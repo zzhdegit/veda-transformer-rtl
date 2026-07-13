@@ -12,6 +12,11 @@ module tb_stage7d_transformer_layer;
 `else
     localparam int D_HEAD = `STAGE7_D_HEAD;
 `endif
+`ifndef STAGE7_ATTENTION_PE_ARCH
+    localparam int ATTENTION_PE_ARCH = 0;
+`else
+    localparam int ATTENTION_PE_ARCH = `STAGE7_ATTENTION_PE_ARCH;
+`endif
     localparam int D_MODEL = N_HEAD * D_HEAD;
     localparam int D_FFN = 4 * D_MODEL;
     localparam int PE_NUM = 8;
@@ -80,6 +85,16 @@ module tb_stage7d_transformer_layer;
     logic [COUNTER_W-1:0] perf_buffer_stall_cycles;
     logic [COUNTER_W-1:0] perf_output_stall_cycles;
     logic [SEQ_LEN_W-1:0] perf_peak_valid_seq_len;
+    logic [COUNTER_W-1:0] perf_paper_array_active_cycles;
+    logic [COUNTER_W-1:0] perf_paper_array_idle_cycles;
+    logic [COUNTER_W-1:0] perf_inner_mode_cycles;
+    logic [COUNTER_W-1:0] perf_outer_mode_cycles;
+    logic [COUNTER_W-1:0] perf_group0_active_cycles;
+    logic [COUNTER_W-1:0] perf_group1_active_cycles;
+    logic [COUNTER_W-1:0] perf_tail_masked_pe_cycles;
+    logic [COUNTER_W-1:0] perf_mode_switch_cycles;
+    logic [COUNTER_W-1:0] perf_array_input_stall_cycles;
+    logic [COUNTER_W-1:0] perf_array_output_stall_cycles;
 
     int weight_count;
     int weight_kind_vec [0:MAX_WEIGHT_LINES-1];
@@ -102,7 +117,8 @@ module tb_stage7d_transformer_layer;
         .PE_NUM(PE_NUM),
         .MAX_SEQ_LEN(MAX_SEQ_LEN),
         .META_W(META_W),
-        .COUNTER_W(COUNTER_W)
+        .COUNTER_W(COUNTER_W),
+        .ATTENTION_PE_ARCH(ATTENTION_PE_ARCH)
     ) u_layer (
         .clk                                  (clk),
         .rst_n                                (rst_n),
@@ -157,7 +173,17 @@ module tb_stage7d_transformer_layer;
         .perf_weight_stall_cycles             (perf_weight_stall_cycles),
         .perf_buffer_stall_cycles             (perf_buffer_stall_cycles),
         .perf_output_stall_cycles             (perf_output_stall_cycles),
-        .perf_peak_valid_seq_len              (perf_peak_valid_seq_len)
+        .perf_peak_valid_seq_len              (perf_peak_valid_seq_len),
+        .perf_paper_array_active_cycles       (perf_paper_array_active_cycles),
+        .perf_paper_array_idle_cycles         (perf_paper_array_idle_cycles),
+        .perf_inner_mode_cycles               (perf_inner_mode_cycles),
+        .perf_outer_mode_cycles               (perf_outer_mode_cycles),
+        .perf_group0_active_cycles            (perf_group0_active_cycles),
+        .perf_group1_active_cycles            (perf_group1_active_cycles),
+        .perf_tail_masked_pe_cycles           (perf_tail_masked_pe_cycles),
+        .perf_mode_switch_cycles              (perf_mode_switch_cycles),
+        .perf_array_input_stall_cycles        (perf_array_input_stall_cycles),
+        .perf_array_output_stall_cycles       (perf_array_output_stall_cycles)
     );
 
     task automatic tb_fail(input string message);
@@ -375,8 +401,11 @@ module tb_stage7d_transformer_layer;
         for (int tok = 0; tok < token_count; tok++) begin
             run_layer(tok);
         end
-        $display("STAGE7D_TRANSFORMER_LAYER_PASS n_head=%0d d_head=%0d d_model=%0d tokens=%0d",
-                 N_HEAD, D_HEAD, D_MODEL, token_count);
+        $display("STAGE7D_TRANSFORMER_LAYER_PASS arch=%0d n_head=%0d d_head=%0d d_model=%0d tokens=%0d paper_active=%0d paper_inner=%0d paper_outer=%0d paper_tail=%0d paper_mode_switch=%0d",
+                 ATTENTION_PE_ARCH, N_HEAD, D_HEAD, D_MODEL, token_count,
+                 perf_paper_array_active_cycles, perf_inner_mode_cycles,
+                 perf_outer_mode_cycles, perf_tail_masked_pe_cycles,
+                 perf_mode_switch_cycles);
         $finish;
     end
 endmodule

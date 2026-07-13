@@ -58,7 +58,7 @@ group scheduling details, so this repository freezes the following rule:
 
 ## PE Types
 
-Type-A and Type-B are assigned per row in each group:
+Type-A and Type-B are assigned per column in each group:
 
 - Type-A: columns 0, 2, 4, and 6, corresponding to paper PEs 1, 3, 5, and 7.
 - Type-B: columns 1, 3, 5, and 7, corresponding to paper PEs 2, 4, 6, and 8.

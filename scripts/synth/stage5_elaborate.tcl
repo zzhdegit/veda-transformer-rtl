@@ -38,6 +38,12 @@ set rtl_files [list \
   "$root_dir/rtl/pe/pe_lane.sv" \
   "$root_dir/rtl/pe/fp32_reduction_tree.sv" \
   "$root_dir/rtl/pe/reconfigurable_pe_core.sv" \
+  "$root_dir/rtl/pe/paper/paper_pe_cell.sv" \
+  "$root_dir/rtl/pe/paper/paper_l1_reduction.sv" \
+  "$root_dir/rtl/pe/paper/paper_l2_reduction.sv" \
+  "$root_dir/rtl/pe/paper/paper_pe_group.sv" \
+  "$root_dir/rtl/pe/paper/paper_array_8x8x2.sv" \
+  "$root_dir/rtl/attention/paper/paper_attention_adapter.sv" \
   "$root_dir/rtl/attention/attention_score_scaler.sv" \
   "$root_dir/rtl/attention/score_buffer.sv" \
   "$root_dir/rtl/attention/softmax_reduction.sv" \

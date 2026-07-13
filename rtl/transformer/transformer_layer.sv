@@ -7,6 +7,7 @@ module transformer_layer #(
     parameter int MAX_SEQ_LEN = 8,
     parameter int META_W = 16,
     parameter int COUNTER_W = 64,
+    parameter int ATTENTION_PE_ARCH = 0,
     parameter bit ASSERT_ON_INVALID = 1'b1,
     localparam int D_MODEL = N_HEAD * D_HEAD,
     localparam int D_FFN = 4 * D_MODEL,
@@ -74,6 +75,16 @@ module transformer_layer #(
     output logic [COUNTER_W-1:0]         perf_weight_stall_cycles,
     output logic [COUNTER_W-1:0]         perf_buffer_stall_cycles,
     output logic [COUNTER_W-1:0]         perf_output_stall_cycles,
+    output logic [COUNTER_W-1:0]         perf_paper_array_active_cycles,
+    output logic [COUNTER_W-1:0]         perf_paper_array_idle_cycles,
+    output logic [COUNTER_W-1:0]         perf_inner_mode_cycles,
+    output logic [COUNTER_W-1:0]         perf_outer_mode_cycles,
+    output logic [COUNTER_W-1:0]         perf_group0_active_cycles,
+    output logic [COUNTER_W-1:0]         perf_group1_active_cycles,
+    output logic [COUNTER_W-1:0]         perf_tail_masked_pe_cycles,
+    output logic [COUNTER_W-1:0]         perf_mode_switch_cycles,
+    output logic [COUNTER_W-1:0]         perf_array_input_stall_cycles,
+    output logic [COUNTER_W-1:0]         perf_array_output_stall_cycles,
     output logic [SEQ_LEN_W-1:0]         perf_peak_valid_seq_len
 );
     localparam logic [2:0] KIND_WQ = 3'd0;
@@ -235,6 +246,16 @@ module transformer_layer #(
     logic [COUNTER_W-1:0] stage6_perf_weight_stall_cycles;
     logic [COUNTER_W-1:0] stage6_perf_buffer_stall_cycles;
     logic [COUNTER_W-1:0] stage6_perf_output_stall_cycles;
+    logic [COUNTER_W-1:0] stage6_perf_paper_array_active_cycles;
+    logic [COUNTER_W-1:0] stage6_perf_paper_array_idle_cycles;
+    logic [COUNTER_W-1:0] stage6_perf_inner_mode_cycles;
+    logic [COUNTER_W-1:0] stage6_perf_outer_mode_cycles;
+    logic [COUNTER_W-1:0] stage6_perf_group0_active_cycles;
+    logic [COUNTER_W-1:0] stage6_perf_group1_active_cycles;
+    logic [COUNTER_W-1:0] stage6_perf_tail_masked_pe_cycles;
+    logic [COUNTER_W-1:0] stage6_perf_mode_switch_cycles;
+    logic [COUNTER_W-1:0] stage6_perf_array_input_stall_cycles;
+    logic [COUNTER_W-1:0] stage6_perf_array_output_stall_cycles;
     logic [SEQ_LEN_W-1:0] stage6_perf_peak_valid_seq_len;
 
     logic res1_input_valid;
@@ -410,6 +431,16 @@ module transformer_layer #(
     assign perf_output_stall_cycles = stage6_perf_output_stall_cycles + norm1_output_stall_cycles +
                                       norm2_output_stall_cycles + res1_output_stall_cycles +
                                       res2_output_stall_cycles + ffn_output_stall_cycles;
+    assign perf_paper_array_active_cycles = stage6_perf_paper_array_active_cycles;
+    assign perf_paper_array_idle_cycles = stage6_perf_paper_array_idle_cycles;
+    assign perf_inner_mode_cycles = stage6_perf_inner_mode_cycles;
+    assign perf_outer_mode_cycles = stage6_perf_outer_mode_cycles;
+    assign perf_group0_active_cycles = stage6_perf_group0_active_cycles;
+    assign perf_group1_active_cycles = stage6_perf_group1_active_cycles;
+    assign perf_tail_masked_pe_cycles = stage6_perf_tail_masked_pe_cycles;
+    assign perf_mode_switch_cycles = stage6_perf_mode_switch_cycles;
+    assign perf_array_input_stall_cycles = stage6_perf_array_input_stall_cycles;
+    assign perf_array_output_stall_cycles = stage6_perf_array_output_stall_cycles;
 
     always_comb begin
         final_tile_vector_work = '0;
@@ -493,6 +524,7 @@ module transformer_layer #(
         .MAX_SEQ_LEN(MAX_SEQ_LEN),
         .META_W(META_W),
         .COUNTER_W(COUNTER_W),
+        .ATTENTION_PE_ARCH(ATTENTION_PE_ARCH),
         .ASSERT_ON_INVALID(ASSERT_ON_INVALID)
     ) u_mha (
         .clk                                  (clk),
@@ -542,6 +574,16 @@ module transformer_layer #(
         .perf_weight_stall_cycles             (stage6_perf_weight_stall_cycles),
         .perf_buffer_stall_cycles             (stage6_perf_buffer_stall_cycles),
         .perf_output_stall_cycles             (stage6_perf_output_stall_cycles),
+        .perf_paper_array_active_cycles       (stage6_perf_paper_array_active_cycles),
+        .perf_paper_array_idle_cycles         (stage6_perf_paper_array_idle_cycles),
+        .perf_inner_mode_cycles               (stage6_perf_inner_mode_cycles),
+        .perf_outer_mode_cycles               (stage6_perf_outer_mode_cycles),
+        .perf_group0_active_cycles            (stage6_perf_group0_active_cycles),
+        .perf_group1_active_cycles            (stage6_perf_group1_active_cycles),
+        .perf_tail_masked_pe_cycles           (stage6_perf_tail_masked_pe_cycles),
+        .perf_mode_switch_cycles              (stage6_perf_mode_switch_cycles),
+        .perf_array_input_stall_cycles        (stage6_perf_array_input_stall_cycles),
+        .perf_array_output_stall_cycles       (stage6_perf_array_output_stall_cycles),
         .perf_peak_valid_seq_len              (stage6_perf_peak_valid_seq_len)
     );
 

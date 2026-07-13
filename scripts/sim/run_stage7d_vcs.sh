@@ -109,6 +109,12 @@ PE_RTL=(
   "$ROOT_DIR/rtl/pe/pe_lane.sv"
   "$ROOT_DIR/rtl/pe/fp32_reduction_tree.sv"
   "$ROOT_DIR/rtl/pe/reconfigurable_pe_core.sv"
+  "$ROOT_DIR/rtl/pe/paper/paper_pe_cell.sv"
+  "$ROOT_DIR/rtl/pe/paper/paper_l1_reduction.sv"
+  "$ROOT_DIR/rtl/pe/paper/paper_l2_reduction.sv"
+  "$ROOT_DIR/rtl/pe/paper/paper_pe_group.sv"
+  "$ROOT_DIR/rtl/pe/paper/paper_array_8x8x2.sv"
+  "$ROOT_DIR/rtl/attention/paper/paper_attention_adapter.sv"
 )
 
 ATTN_RTL=(

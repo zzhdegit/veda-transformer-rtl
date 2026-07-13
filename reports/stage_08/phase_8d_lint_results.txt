@@ -1,0 +1,7 @@
+Static Stage 8D RTL hygiene: PASS
+$ vlogan -full64 -sverilog -work work <DW sim files> <stage8d RTL files>
+vlogan_log=build/stage8d_vlogan_lint/vlogan.log
+vlogan_exit_code=0
+vlogan_diagnostics:
+Warning-[PHNE] Pragma has no Effect
+Warning-[PHNE] Pragma has no Effect
