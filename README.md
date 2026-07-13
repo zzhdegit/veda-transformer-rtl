@@ -111,6 +111,16 @@ directories are not stored in this repository. Later synthesis and physical
 implementation stages must receive those paths through local environment
 variables.
 
+## Dual-Track Development
+
+Hardware and model work are tracked separately after Model Stage M1.
+
+- Hardware state remains in `PROJECT_STATE.md` and `HANDOFF.md`.
+- Model state is tracked in `ML_PROJECT_STATE.md` and `ML_HANDOFF.md`.
+- Model Stage M2 uses `ml/`, `scripts/ml/`, `docs/ml/`, and
+  `reports/ml_m2/`.
+- Hardware Stage H8 remains isolated from ML-M2.
+
 ## Next Step
 
 Stage 7 is closed for single-layer Pre-Norm Transformer correctness. Future
