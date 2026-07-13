@@ -1,0 +1,54 @@
+Stage 6D VCS RTL simulation
+Build dir: build/stage6d_rtl_sim
+vcs: FOUND
+vcs script version : O-2018.09
+DesignWare sim dir: detected
+
+projected_h1_d8 result=PASS run_exit_code=0
+projected_h2_d8 result=PASS run_exit_code=0
+projected_h4_d8 result=PASS run_exit_code=0
+projected_h2_d16 result=PASS run_exit_code=0
+
+Run markers:
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=1 D_HEAD=8 step=step0 seq_before=0 seq_after=1 q=186 k=186 v=186 qkv_quant=48 attention=88 total=664 pe_stall=22 sfu_stall=6 weight_stall=0 buffer_stall=0 output_stall=0 peak_seq=1
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=1 D_HEAD=8 step=step1 seq_before=1 seq_after=2 q=372 k=372 v=372 qkv_quant=96 attention=259 total=1411 pe_stall=64 sfu_stall=30 weight_stall=0 buffer_stall=0 output_stall=0 peak_seq=2
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=1 D_HEAD=8 step=step2 seq_before=2 seq_after=3 q=558 k=558 v=558 qkv_quant=144 attention=501 total=2229 pe_stall=126 sfu_stall=60 weight_stall=0 buffer_stall=0 output_stall=0 peak_seq=3
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=1 D_HEAD=8 step=step3 seq_before=3 seq_after=4 q=744 k=744 v=744 qkv_quant=192 attention=814 total=3118 pe_stall=208 sfu_stall=96 weight_stall=0 buffer_stall=0 output_stall=0 peak_seq=4
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=1 D_HEAD=8 step=step4 seq_before=4 seq_after=5 q=930 k=930 v=930 qkv_quant=240 attention=1199 total=4079 pe_stall=310 sfu_stall=138 weight_stall=0 buffer_stall=0 output_stall=1 peak_seq=5
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=1 D_HEAD=8 step=step5 seq_before=5 seq_after=6 q=1116 k=1116 v=1116 qkv_quant=288 attention=1654 total=5110 pe_stall=432 sfu_stall=186 weight_stall=0 buffer_stall=0 output_stall=1 peak_seq=6
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=1 D_HEAD=8 step=step6 seq_before=6 seq_after=7 q=1302 k=1302 v=1302 qkv_quant=336 attention=2180 total=6212 pe_stall=574 sfu_stall=240 weight_stall=0 buffer_stall=0 output_stall=1 peak_seq=7
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=1 D_HEAD=8 step=step7 seq_before=7 seq_after=8 q=1488 k=1488 v=1488 qkv_quant=384 attention=2777 total=7386 pe_stall=736 sfu_stall=300 weight_stall=0 buffer_stall=0 output_stall=1 peak_seq=8
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=1 D_HEAD=8 step=step8 seq_before=8 seq_after=8 q=1674 k=1674 v=1674 qkv_quant=432 attention=2777 total=7953 pe_stall=736 sfu_stall=300 weight_stall=0 buffer_stall=0 output_stall=1 peak_seq=8
+STAGE6D_PROJECTED_MHA_PASS N_HEAD=1 D_HEAD=8 generation_steps=8
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=2 D_HEAD=16 step=step0 seq_before=0 seq_after=1 q=2658 k=2658 v=2658 qkv_quant=192 attention=315 total=8356 pe_stall=5560 sfu_stall=12 weight_stall=0 buffer_stall=0 output_stall=1 peak_seq=1
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=2 D_HEAD=16 step=step1 seq_before=1 seq_after=2 q=5316 k=5316 v=5316 qkv_quant=384 attention=908 total=16990 pe_stall=11200 sfu_stall=60 weight_stall=0 buffer_stall=0 output_stall=2 peak_seq=2
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=2 D_HEAD=16 step=step2 seq_before=2 seq_after=3 q=7974 k=7974 v=7974 qkv_quant=576 attention=1756 total=25879 pe_stall=16920 sfu_stall=120 weight_stall=0 buffer_stall=0 output_stall=4 peak_seq=3
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=2 D_HEAD=16 step=step3 seq_before=3 seq_after=4 q=10632 k=10632 v=10632 qkv_quant=768 attention=2858 total=35022 pe_stall=22720 sfu_stall=192 weight_stall=0 buffer_stall=0 output_stall=6 peak_seq=4
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=2 D_HEAD=16 step=step4 seq_before=4 seq_after=5 q=13290 k=13290 v=13290 qkv_quant=960 attention=4213 total=44418 pe_stall=28600 sfu_stall=276 weight_stall=0 buffer_stall=0 output_stall=7 peak_seq=5
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=2 D_HEAD=16 step=step5 seq_before=5 seq_after=6 q=15948 k=15948 v=15948 qkv_quant=1152 attention=5823 total=54069 pe_stall=34560 sfu_stall=372 weight_stall=0 buffer_stall=0 output_stall=9 peak_seq=6
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=2 D_HEAD=16 step=step6 seq_before=6 seq_after=7 q=18606 k=18606 v=18606 qkv_quant=1344 attention=7686 total=63973 pe_stall=40600 sfu_stall=480 weight_stall=0 buffer_stall=0 output_stall=10 peak_seq=7
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=2 D_HEAD=16 step=step7 seq_before=7 seq_after=8 q=21264 k=21264 v=21264 qkv_quant=1536 attention=9803 total=74131 pe_stall=46720 sfu_stall=600 weight_stall=0 buffer_stall=0 output_stall=11 peak_seq=8
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=2 D_HEAD=16 step=step8 seq_before=8 seq_after=8 q=23922 k=23922 v=23922 qkv_quant=1728 attention=9803 total=82138 pe_stall=52192 sfu_stall=600 weight_stall=0 buffer_stall=0 output_stall=11 peak_seq=8
+STAGE6D_PROJECTED_MHA_PASS N_HEAD=2 D_HEAD=16 generation_steps=8
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=2 D_HEAD=8 step=step0 seq_before=0 seq_after=1 q=690 k=690 v=690 qkv_quant=96 attention=176 total=2281 pe_stall=956 sfu_stall=12 weight_stall=0 buffer_stall=0 output_stall=0 peak_seq=1
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=2 D_HEAD=8 step=step1 seq_before=1 seq_after=2 q=1380 k=1380 v=1380 qkv_quant=192 attention=519 total=4729 pe_stall=1952 sfu_stall=60 weight_stall=0 buffer_stall=0 output_stall=1 peak_seq=2
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=2 D_HEAD=8 step=step2 seq_before=2 seq_after=3 q=2070 k=2070 v=2070 qkv_quant=288 attention=1003 total=7318 pe_stall=2988 sfu_stall=120 weight_stall=0 buffer_stall=0 output_stall=1 peak_seq=3
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=2 D_HEAD=8 step=step3 seq_before=3 seq_after=4 q=2760 k=2760 v=2760 qkv_quant=384 attention=1629 total=10049 pe_stall=4064 sfu_stall=192 weight_stall=0 buffer_stall=0 output_stall=1 peak_seq=4
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=2 D_HEAD=8 step=step4 seq_before=4 seq_after=5 q=3450 k=3450 v=3450 qkv_quant=480 attention=2397 total=12922 pe_stall=5180 sfu_stall=276 weight_stall=0 buffer_stall=0 output_stall=1 peak_seq=5
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=2 D_HEAD=8 step=step5 seq_before=5 seq_after=6 q=4140 k=4140 v=4140 qkv_quant=576 attention=3308 total=15938 pe_stall=6336 sfu_stall=372 weight_stall=0 buffer_stall=0 output_stall=2 peak_seq=6
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=2 D_HEAD=8 step=step6 seq_before=6 seq_after=7 q=4830 k=4830 v=4830 qkv_quant=672 attention=4361 total=19096 pe_stall=7532 sfu_stall=480 weight_stall=0 buffer_stall=0 output_stall=3 peak_seq=7
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=2 D_HEAD=8 step=step7 seq_before=7 seq_after=8 q=5520 k=5520 v=5520 qkv_quant=768 attention=5555 total=22395 pe_stall=8768 sfu_stall=600 weight_stall=0 buffer_stall=0 output_stall=3 peak_seq=8
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=2 D_HEAD=8 step=step8 seq_before=8 seq_after=8 q=6210 k=6210 v=6210 qkv_quant=864 attention=5555 total=24482 pe_stall=9680 sfu_stall=600 weight_stall=0 buffer_stall=0 output_stall=3 peak_seq=8
+STAGE6D_PROJECTED_MHA_PASS N_HEAD=2 D_HEAD=8 generation_steps=8
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=4 D_HEAD=8 step=step0 seq_before=0 seq_after=1 q=2658 k=2658 v=2658 qkv_quant=192 attention=353 total=8396 pe_stall=5560 sfu_stall=24 weight_stall=0 buffer_stall=0 output_stall=1 peak_seq=1
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=4 D_HEAD=8 step=step1 seq_before=1 seq_after=2 q=5316 k=5316 v=5316 qkv_quant=384 attention=1038 total=17124 pe_stall=11200 sfu_stall=120 weight_stall=0 buffer_stall=0 output_stall=2 peak_seq=2
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=4 D_HEAD=8 step=step2 seq_before=2 seq_after=3 q=7974 k=7974 v=7974 qkv_quant=576 attention=2007 total=26136 pe_stall=16920 sfu_stall=240 weight_stall=0 buffer_stall=0 output_stall=3 peak_seq=3
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=4 D_HEAD=8 step=step3 seq_before=3 seq_after=4 q=10632 k=10632 v=10632 qkv_quant=768 attention=3260 total=35432 pe_stall=22720 sfu_stall=384 weight_stall=0 buffer_stall=0 output_stall=4 peak_seq=4
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=4 D_HEAD=8 step=step4 seq_before=4 seq_after=5 q=13290 k=13290 v=13290 qkv_quant=960 attention=4796 total=45011 pe_stall=28600 sfu_stall=552 weight_stall=0 buffer_stall=0 output_stall=4 peak_seq=5
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=4 D_HEAD=8 step=step5 seq_before=5 seq_after=6 q=15948 k=15948 v=15948 qkv_quant=1152 attention=6617 total=54875 pe_stall=34560 sfu_stall=744 weight_stall=0 buffer_stall=0 output_stall=5 peak_seq=6
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=4 D_HEAD=8 step=step6 seq_before=6 seq_after=7 q=18606 k=18606 v=18606 qkv_quant=1344 attention=8722 total=65023 pe_stall=40600 sfu_stall=960 weight_stall=0 buffer_stall=0 output_stall=6 peak_seq=7
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=4 D_HEAD=8 step=step7 seq_before=7 seq_after=8 q=21264 k=21264 v=21264 qkv_quant=1536 attention=11113 total=75458 pe_stall=46720 sfu_stall=1200 weight_stall=0 buffer_stall=0 output_stall=9 peak_seq=8
+STAGE6D_PROJECTED_MHA_PERF N_HEAD=4 D_HEAD=8 step=step8 seq_before=8 seq_after=8 q=23922 k=23922 v=23922 qkv_quant=1728 attention=11113 total=83465 pe_stall=52192 sfu_stall=1200 weight_stall=0 buffer_stall=0 output_stall=9 peak_seq=8
+STAGE6D_PROJECTED_MHA_PASS N_HEAD=4 D_HEAD=8 generation_steps=8
+result=PASS
+Full logs: build/stage6d_rtl_sim/*_compile.log and *_run.log
