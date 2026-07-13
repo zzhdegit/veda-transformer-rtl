@@ -67,5 +67,13 @@ rtl_fixture_len_8_sha256=3fcc87439e3bb3866f60fdb750774b486d8491501c3ff1646a2db6f
 rtl_fixture_len_16_sha256=ccddcb25197936864fa1d2da69a1bd0da7be4372e7922a8f01d417fe4cfbcd12
 ```
 
+## Interactive Evaluation Artifacts
+
+```text
+generation_config=D:/IC_Workspace/VEDA_artifacts/ml_m2/formal/interactive_traces/generation_config.json
+inspect_trace=D:/IC_Workspace/VEDA_artifacts/ml_m2/formal/interactive_traces/inspect_e286222c229e.json
+prompt_suite_results=D:/IC_Workspace/VEDA_artifacts/ml_m2/formal/interactive_traces/prompt_suite_results.json
+```
+
 No dataset, checkpoint, tokenizer cache, weight export, or large trace artifact
 is committed to Git.

@@ -61,6 +61,7 @@ make ml-m2-formal-data
 make ml-m2-formal-train
 make ml-m2-formal-eval
 make ml-m2-formal-export
+make ml-m2-interactive-test
 ```
 
 On hosts without `make`, run the underlying Python commands:
@@ -72,3 +73,12 @@ python scripts/ml/run_ml_m2_all_tests.py
 ML-M2 Formal artifacts are stored outside Git under
 `D:/IC_Workspace/VEDA_artifacts/ml_m2/formal` on the development machine used
 for the accepted formal run.
+
+Post-acceptance interactive helpers:
+
+```bash
+python scripts/ml/run_ml_m2_chat.py --artifact-root D:/IC_Workspace/VEDA_artifacts/ml_m2/formal
+python scripts/ml/run_ml_m2_next_token.py --artifact-root D:/IC_Workspace/VEDA_artifacts/ml_m2/formal --prompt "Once upon a time"
+python scripts/ml/run_ml_m2_inspect.py --artifact-root D:/IC_Workspace/VEDA_artifacts/ml_m2/formal --prompt "Once upon a time"
+python scripts/ml/run_ml_m2_prompt_suite.py --artifact-root D:/IC_Workspace/VEDA_artifacts/ml_m2/formal
+```

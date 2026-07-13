@@ -36,6 +36,7 @@ PY_COMPILE_FILES = [
     "ml/training/numeric_audit.py",
     "ml/inference/generate.py",
     "ml/inference/incremental_decode.py",
+    "ml/inference/interactive.py",
     "ml/inference/prompt_suite.py",
     "ml/export/export_manifest.py",
     "ml/export/export_rtl_streams.py",
@@ -64,6 +65,11 @@ PY_COMPILE_FILES = [
     "scripts/ml/run_ml_m2_formal_train.py",
     "scripts/ml/run_ml_m2_formal_eval.py",
     "scripts/ml/run_ml_m2_formal_export.py",
+    "scripts/ml/run_ml_m2_chat.py",
+    "scripts/ml/run_ml_m2_next_token.py",
+    "scripts/ml/run_ml_m2_inspect.py",
+    "scripts/ml/run_ml_m2_prompt_suite.py",
+    "scripts/ml/run_ml_m2_interactive_tests.py",
 ]
 
 
@@ -80,6 +86,7 @@ def main() -> int:
         [sys.executable, "scripts/ml/run_ml_m2_smoke_test.py"],
         [sys.executable, "scripts/ml/run_ml_m2_export_trace_tests.py"],
         [sys.executable, "-m", "pytest", "ml/tests/test_training_numerics.py"],
+        [sys.executable, "scripts/ml/run_ml_m2_interactive_tests.py"],
     ]
     for cmd in commands:
         code = run(cmd)
