@@ -2,16 +2,15 @@
 
 ## Stage
 
-Stage 7C: FFN/ReLU Foundation
+Stage 7: Pre-Norm Transformer Layer
 
 ## Status
 
-STAGE 7C PASS. Stage 7 RTL implementation in progress.
+STAGE 7 PASS. Pre-Norm Transformer layer RTL is accepted.
 
 Pre-Norm Transformer layer specification and Python bit-model framework are
-frozen for implementation. RMSNorm, residual-add, and FFN/ReLU RTL foundations
-are added and verified. Full Stage 7 top-level Transformer layer RTL is not yet
-accepted.
+frozen. RMSNorm, residual-add, FFN/ReLU, and the full Stage 7 top-level
+`transformer_layer` RTL are added and verified.
 
 Stage 6 projection-integrated multi-head attention correctness remains accepted,
 and the Stage 6 acceptance audit is closed.
@@ -54,6 +53,15 @@ throughput, physical memory, and timing pipeline provisional.
   and final FP32 W2 outputs.
 - Stage 7C RTL testbench and scripts added for D_MODEL 8 and 16 FFN checks with
   output backpressure.
+- Stage 7D `transformer_layer` added around exactly one frozen Stage 6
+  `projection_integrated_mha` child, two `rmsnorm_engine` instances, two
+  `residual_add_engine` instances, and one `ffn_engine` instance.
+- Stage 7D top integrates the frozen Pre-Norm order:
+  RMSNorm1, MHA, residual1, RMSNorm2, FFN/ReLU, residual2, final tiled FP32
+  output, and layer done.
+- Stage 7D RTL testbench and scripts added for H1/D8, H2/D8, H4/D8, H2/D16,
+  plus an H2/D8 two-token sequence test that checks valid sequence length 1
+  then 2 through the full wrapper.
 
 Final top:
 
@@ -131,16 +139,28 @@ Stage 7C additions:
 - `reports/stage_07/phase_7c_lint_results.txt`
 - `reports/stage_07/phase_7c_synth_check.txt`
 
+Stage 7D additions:
+
+- `rtl/transformer/transformer_layer.sv`
+- `tb/rtl/stage7/tb_stage7d_transformer_layer.sv`
+- `scripts/sim/gen_stage7d_vectors.py`
+- `scripts/sim/run_stage7d_vcs.sh`
+- `scripts/lint/run_stage7d_lint.py`
+- `scripts/synth/run_stage7d_synth_check.py`
+- `scripts/synth/stage7d_elaborate.tcl`
+- `reports/stage_07/phase_7d_summary.md`
+- `reports/stage_07/phase_7d_vcs_rtl_sim.txt`
+- `reports/stage_07/phase_7d_lint_results.txt`
+- `reports/stage_07/phase_7d_synth_check.txt`
+
 ## Not Completed
 
 - LayerNorm.
-- FFN, GELU, SiLU, SwiGLU.
-- Complete Transformer layer.
+- Post-Norm, GELU, SiLU, SwiGLU, bias, dropout, RoPE, embedding, LM head,
+  tokenizer, and multiple layers.
 - SRAM macro binding or physical memory replacement.
 - Timing pipeline closure.
 - STA, P&R, formal PPA, area, power, frequency, WNS, or layout.
-- Stage 7 top-level Transformer layer RTL simulation, lint/vlogan, and DC
-  structural checks.
 
 ## Architecture Notes
 
@@ -170,9 +190,18 @@ output[o] = sum(i = 0..D_MODEL-1) concat_fp16[i] * W_O[o][i]
 with output-row-major `W_O[output_index][input_index]`, no bias, and the Stage 2
 balanced reduction/tile accumulation order.
 
+Stage 7 final top is `rtl/transformer/transformer_layer.sv`. It instantiates
+exactly one frozen `projection_integrated_mha` child, two `rmsnorm_engine`
+instances, two `residual_add_engine` instances, and one `ffn_engine` instance.
+The FFN engine retains exactly one `reconfigurable_pe_core` for W1 and W2.
+
+Stage 7 external weight kinds are WQ, WK, WV, WO, NORM1_GAMMA, NORM2_GAMMA,
+FFN_W1, and FFN_W2. WQ/WK/WV/WO route to the Stage 6 child; gamma and FFN
+weights route to the Stage 7 engines.
+
 ## Transaction Semantics
 
-Successful token order:
+Successful Stage 6 token order:
 
 ```text
 QKV projection
@@ -195,6 +224,26 @@ transaction state.
 Directed reset coverage verifies the final top clears reset-visible transaction
 state, exposes no X on valid/status outputs, accepts a clean token after reset,
 and does not duplicate the Stage 5 commit after recovery.
+
+Successful Stage 7 token order:
+
+```text
+input load
+-> RMSNorm1
+-> Stage 6 MHA
+-> residual1
+-> RMSNorm2
+-> FFN1
+-> ReLU and activation quantization
+-> FFN2
+-> residual2
+-> final FP32 output
+-> layer done
+-> next token may start
+```
+
+Stage 6 `done_valid` is internal MHA done. Stage 7 layer `done_valid` is emitted
+only after residual2 output and final tiled FP32 output complete.
 
 ## Verification Results
 
@@ -235,6 +284,25 @@ Stage 7C VCS configurations:
 - FFN/ReLU D_MODEL=16, D_FFN=64
 
 Stage 7C DC structural checks include D_MODEL 8/16 `ffn_engine`.
+
+Stage 7D:
+
+- `docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7d-test'`: PASS
+- `docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7d-rtl-sim'`: PASS
+- `docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7d-lint'`: PASS
+- `docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7d-synth'`: PASS
+
+Stage 7D VCS configurations:
+
+- Full `transformer_layer` H1/D8, D_MODEL=8, one token
+- Full `transformer_layer` H2/D8, D_MODEL=16, one token
+- Full `transformer_layer` H2/D8, D_MODEL=16, two tokens
+- Full `transformer_layer` H4/D8, D_MODEL=32, one token
+- Full `transformer_layer` H2/D16, D_MODEL=32, one token
+
+Stage 7D lint/vlogan passed with only DesignWare pragma-no-effect warnings.
+Stage 7D DC structural checks include `transformer_layer` H1/D8, H2/D8,
+H4/D8, and H2/D16.
 
 Host:
 
@@ -330,6 +398,10 @@ VCS runs compile assertions with `-assert svaext`.
 From `D:\IC_Workspace\VEDA`:
 
 ```bash
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7d-test'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7d-rtl-sim'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7d-lint'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7d-synth'
 docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7c-test'
 docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7c-rtl-sim'
 docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7c-lint'
@@ -370,16 +442,20 @@ docker exec nailong bash -lc 'cd /workspace/VEDA && make stage5-rtl-sim && make 
 - Do not duplicate the shared projection PE datapath unless an accepted future
   spec explicitly changes the resource-sharing rule.
 - Keep behavioral memories out of PPA claims.
-- Stage 6 does not complete a Transformer layer; Norm/Residual/FFN remain out of
-  scope.
-- Stage 7 implementation must follow `docs/stage_07/spec.md` rather than the
-  legacy full-layer planning text in `transformer_rtl_plan_md/06_full_transformer_layer.md`.
-- Stage 7 must not claim PASS until RTL simulation, lint/vlogan, and DC
-  structural checks are added and passing.
-- Stage 7 must preserve the frozen Stage 6 child interface and commit semantics.
+- Stage 6 alone does not complete a Transformer layer; the accepted complete
+  single-layer top is Stage 7 `transformer_layer`.
+- Future work must preserve `docs/stage_07/spec.md` and must not switch to the
+  legacy full-layer planning text in
+  `transformer_rtl_plan_md/06_full_transformer_layer.md`.
+- Future changes must preserve the frozen Stage 6 child interface and commit
+  semantics inside Stage 7.
 - RMSNorm finite DW status bits such as inexact are diagnostic status, not
   `invalid`; invalid remains the hard error indicator.
-- The Stage 7B/7C engines are serial correctness engines, not
+- The Stage 7B/7C/7D engines are serial correctness engines, not
   throughput-optimized final scheduling.
-- Stage 7C weight completeness currently follows the external commit markers;
-  the full top must drive commits only after complete W1/W2 loads.
+- Stage 7D simulation uses Stage 6-style separate projection matrix commit
+  pulses for WQ/WK/WV/WO, while Stage 7 RMSNorm/FFN foundation engines complete
+  on their existing external commit markers.
+- Stage 8 must not claim SRAM macro binding, STA, P&R, area, power, frequency,
+  WNS, or PPA until technology libraries, memory macros, constraints, layout,
+  and reports are present.

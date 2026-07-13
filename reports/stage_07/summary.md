@@ -2,10 +2,9 @@
 
 ## Current Result
 
-Stage 7C PASS. The Pre-Norm Transformer layer specification and Python
-bit-model framework are frozen, and RMSNorm/residual/FFN RTL foundations are
-verified. Full Stage 7 Transformer layer top integration is in progress and is
-not yet accepted.
+Stage 7 PASS. The Pre-Norm Transformer layer specification, Python bit-model
+framework, RMSNorm/residual/FFN RTL foundations, and full Stage 7
+`transformer_layer` top integration are verified and accepted.
 
 ## Frozen Structure
 
@@ -58,6 +57,20 @@ Stage 7 wraps exactly one frozen Stage 6 projection-integrated MHA instance.
 - `scripts/synth/run_stage7c_synth_check.py`
 - `scripts/synth/stage7c_elaborate.tcl`
 
+## Stage 7D Artifacts
+
+- `rtl/transformer/transformer_layer.sv`
+- `tb/rtl/stage7/tb_stage7d_transformer_layer.sv`
+- `scripts/sim/gen_stage7d_vectors.py`
+- `scripts/sim/run_stage7d_vcs.sh`
+- `scripts/lint/run_stage7d_lint.py`
+- `scripts/synth/run_stage7d_synth_check.py`
+- `scripts/synth/stage7d_elaborate.tcl`
+- `reports/stage_07/phase_7d_summary.md`
+- `reports/stage_07/phase_7d_vcs_rtl_sim.txt`
+- `reports/stage_07/phase_7d_lint_results.txt`
+- `reports/stage_07/phase_7d_synth_check.txt`
+
 ## Verification
 
 ```bash
@@ -71,6 +84,10 @@ docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7c-test'
 docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7c-rtl-sim'
 docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7c-lint'
 docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7c-synth'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7d-test'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7d-rtl-sim'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7d-lint'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7d-synth'
 ```
 
 Results:
@@ -85,12 +102,17 @@ Results:
 - Stage 7C FFN/ReLU VCS simulations for D_MODEL 8 and 16: PASS.
 - Stage 7C lint/vlogan: PASS.
 - Stage 7C DC structural checks: PASS.
+- Stage 7D full `transformer_layer` VCS simulations for H1/D8, H2/D8,
+  H4/D8, and H2/D16 single-token vectors: PASS.
+- Stage 7D H2/D8 two-token full-layer VCS sequence test: PASS.
+- Stage 7D lint/vlogan: PASS with only DesignWare pragma-no-effect warnings.
+- Stage 7D DC structural checks for H1/D8, H2/D8, H4/D8, and H2/D16: PASS.
 
 Host `make stage7a-test` was not available because `make` is not installed on
 the Windows host. Docker `make stage7a-test` passed.
 
 ## Deferred
 
-- Full `transformer_layer` integration RTL.
-- VCS assertions, RTL simulation, lint/vlogan, and DC structural checks.
+- LayerNorm, Post-Norm, GELU, SiLU, SwiGLU, bias, dropout, RoPE, embedding,
+  LM head, tokenizer, and multiple layers.
 - SRAM macro binding, STA, layout, and PPA.

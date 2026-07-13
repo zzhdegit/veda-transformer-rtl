@@ -2,24 +2,27 @@
 
 ## Current Stage
 
-- Stage: 7C
-- Status: STAGE 7C PASS, STAGE 7 RTL IN PROGRESS
+- Stage: 7
+- Status: STAGE 7 PASS, PRE-NORM TRANSFORMER LAYER ACCEPTED
 - Branch: `stage7-prenorm-transformer-layer`
 - Last update: 2026-07-13
 
 Stage 7A freezes the repository-owned Pre-Norm Transformer layer contract and
 adds the Stage 7 Python bit-model framework. Stage 7B adds the RMSNorm and
-residual-add RTL foundations. Stage 7C adds the FFN/ReLU RTL foundation. Full
-Stage 7 top-level Transformer layer integration is not yet accepted.
+residual-add RTL foundations. Stage 7C adds the FFN/ReLU RTL foundation. Stage
+7D adds the full Pre-Norm `transformer_layer` top around the frozen Stage 6
+projection-integrated MHA and is accepted.
 
 Stage 6 projection-integrated multi-head attention correctness remains accepted.
 Stage 6 acceptance audit reset-coverage conditions are closed.
 
 throughput, physical memory, and timing pipeline provisional.
 
-Stage 6 implements projection-integrated multi-head attention only. It does not
-implement RMSNorm, LayerNorm, residual paths, FFN, activation functions, full
-Transformer layer integration, SRAM macro binding, STA, layout, or PPA.
+Stage 6 implements projection-integrated multi-head attention only. Stage 7 now
+implements the accepted single Pre-Norm Transformer layer around that Stage 6
+child. LayerNorm, Post-Norm, GELU, SiLU, SwiGLU, bias, dropout, RoPE, embedding,
+LM head, tokenizer, multiple layers, SRAM macro binding, STA, layout, and PPA
+remain out of scope.
 
 ## Accepted Stage 6 Scope
 
@@ -224,8 +227,8 @@ area, power, frequency, WNS, STA, process timing, or layout result is produced.
   correctness closure and are not SRAM macros.
 - D_MODEL=128 DC coverage is address/control/component elaboration, not a
   physical full-memory implementation claim.
-- No complete Transformer layer is present; Norm/Residual/FFN are out of Stage 6
-  scope.
+- Stage 6 alone remains projection-integrated MHA only; the complete single
+  Pre-Norm Transformer layer is the Stage 7 top.
 
 ## Stage 7A Scope
 
@@ -303,6 +306,19 @@ Stage 7C added:
 - Stage 7C Makefile targets: `stage7c-test`, `stage7c-rtl-sim`,
   `stage7c-lint`, and `stage7c-synth`.
 
+Stage 7D added:
+
+- `rtl/transformer/transformer_layer.sv`
+- `tb/rtl/stage7/tb_stage7d_transformer_layer.sv`
+- `scripts/sim/gen_stage7d_vectors.py`
+- `scripts/sim/run_stage7d_vcs.sh`
+- `scripts/lint/run_stage7d_lint.py`
+- `scripts/synth/run_stage7d_synth_check.py`
+- `scripts/synth/stage7d_elaborate.tcl`
+- `reports/stage_07/phase_7d_summary.md`
+- Stage 7D Makefile targets: `stage7d-test`, `stage7d-rtl-sim`,
+  `stage7d-lint`, and `stage7d-synth`.
+
 Stage 7A verification:
 
 ```bash
@@ -354,10 +370,32 @@ Results:
 - Stage 7C DC analyze/elaborate/link/check_design: PASS for `ffn_engine`
   D_MODEL 8 and 16.
 
+Stage 7D verification:
+
+```bash
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7d-test'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7d-rtl-sim'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7d-lint'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7d-synth'
+```
+
+Results:
+
+- Stage 7D vectors for H1/D8, H2/D8, H4/D8, H2/D16, and H2/D8 two-token:
+  PASS.
+- Stage 7D full `transformer_layer` RTL VCS simulations for H1/D8, H2/D8,
+  H4/D8, and H2/D16 single-token vectors: PASS.
+- Stage 7D H2/D8 two-token full-layer VCS sequence test: PASS.
+- Stage 7D lint/vlogan: PASS with only DesignWare pragma-no-effect warnings.
+- Stage 7D DC analyze/elaborate/link/check_design: PASS for
+  `transformer_layer` H1/D8, H2/D8, H4/D8, and H2/D16.
+- Stage 7D top-level output and done ready/valid backpressure are covered by
+  directed RTL simulation.
+
 ## Next Action
 
-Continue Stage 7 RTL implementation from the Stage 7A frozen spec. Add
-top-level Transformer layer integration around the frozen Stage 6 MHA, using the
-Stage 7B RMSNorm/residual foundations and Stage 7C FFN foundation, with
-corresponding model, RTL simulation, lint/vlogan, DC structural checks, reports,
-and handoff updates before any Stage 7 PASS claim.
+Stage 7 is accepted. Next work should enter Stage 8 physical implementation and
+signoff planning only after preserving the Stage 7 numeric/interface contract.
+Do not claim SRAM macro binding, STA, P&R, area, power, frequency, WNS, or PPA
+until a future stage adds the required technology libraries, memory macros,
+constraints, layout, and reports.
