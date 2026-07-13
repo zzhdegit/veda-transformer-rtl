@@ -1,0 +1,16 @@
+Stage 7C FFN/ReLU RTL simulation
+Build dir: build/stage7c_rtl_sim
+vcs: FOUND
+vcs script version : O-2018.09
+DesignWare sim dir: detected
+
+ffn_d8 result=PASS run_exit_code=0
+ffn_d16 result=PASS run_exit_code=0
+
+Run markers:
+Command: /workspace/VEDA/build/stage7c_rtl_sim/ffn_d16_simv +STAGE7C_VECTOR_FILE=/workspace/VEDA/build/stage7c_rtl_sim/vectors/stage7c_d16.mem -l /workspace/VEDA/build/stage7c_rtl_sim/ffn_d16_run.log
+STAGE7C_FFN_ENGINE_PASS d_model=16 d_ffn=64
+Command: /workspace/VEDA/build/stage7c_rtl_sim/ffn_d8_simv +STAGE7C_VECTOR_FILE=/workspace/VEDA/build/stage7c_rtl_sim/vectors/stage7c_d8.mem -l /workspace/VEDA/build/stage7c_rtl_sim/ffn_d8_run.log
+STAGE7C_FFN_ENGINE_PASS d_model=8 d_ffn=32
+result=PASS
+Full logs: build/stage7c_rtl_sim/*_compile.log and *_run.log

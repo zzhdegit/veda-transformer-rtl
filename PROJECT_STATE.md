@@ -2,15 +2,15 @@
 
 ## Current Stage
 
-- Stage: 7B
-- Status: STAGE 7B PASS, STAGE 7 RTL IN PROGRESS
+- Stage: 7C
+- Status: STAGE 7C PASS, STAGE 7 RTL IN PROGRESS
 - Branch: `stage7-prenorm-transformer-layer`
 - Last update: 2026-07-13
 
 Stage 7A freezes the repository-owned Pre-Norm Transformer layer contract and
 adds the Stage 7 Python bit-model framework. Stage 7B adds the RMSNorm and
-residual-add RTL foundations. Full Stage 7 top-level Transformer layer
-integration is not yet accepted.
+residual-add RTL foundations. Stage 7C adds the FFN/ReLU RTL foundation. Full
+Stage 7 top-level Transformer layer integration is not yet accepted.
 
 Stage 6 projection-integrated multi-head attention correctness remains accepted.
 Stage 6 acceptance audit reset-coverage conditions are closed.
@@ -291,6 +291,18 @@ Stage 7B added:
 - Stage 7B Makefile targets: `stage7b-test`, `stage7b-rtl-sim`,
   `stage7b-lint`, and `stage7b-synth`.
 
+Stage 7C added:
+
+- `rtl/transformer/ffn_engine.sv`
+- `tb/rtl/stage7/tb_stage7c_ffn_engine.sv`
+- `scripts/sim/gen_stage7c_vectors.py`
+- `scripts/sim/run_stage7c_vcs.sh`
+- `scripts/lint/run_stage7c_lint.py`
+- `scripts/synth/run_stage7c_synth_check.py`
+- `scripts/synth/stage7c_elaborate.tcl`
+- Stage 7C Makefile targets: `stage7c-test`, `stage7c-rtl-sim`,
+  `stage7c-lint`, and `stage7c-synth`.
+
 Stage 7A verification:
 
 ```bash
@@ -325,9 +337,27 @@ Results:
   `rmsnorm_engine`, and `residual_add_engine`, including D_MODEL 128 structural
   elaboration.
 
+Stage 7C verification:
+
+```bash
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7c-test'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7c-rtl-sim'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7c-lint'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7c-synth'
+```
+
+Results:
+
+- Stage 7C vectors for D_MODEL 8 and 16: PASS.
+- Stage 7C FFN/ReLU RTL VCS simulations for D_MODEL 8 and 16: PASS.
+- Stage 7C lint/vlogan: PASS with no diagnostics.
+- Stage 7C DC analyze/elaborate/link/check_design: PASS for `ffn_engine`
+  D_MODEL 8 and 16.
+
 ## Next Action
 
-Continue Stage 7 RTL implementation from the Stage 7A frozen spec. Add FFN/ReLU
-RTL, then top-level Transformer layer integration around the frozen Stage 6 MHA,
-with corresponding model, RTL simulation, lint/vlogan, DC structural checks,
-reports, and handoff updates before any Stage 7 PASS claim.
+Continue Stage 7 RTL implementation from the Stage 7A frozen spec. Add
+top-level Transformer layer integration around the frozen Stage 6 MHA, using the
+Stage 7B RMSNorm/residual foundations and Stage 7C FFN foundation, with
+corresponding model, RTL simulation, lint/vlogan, DC structural checks, reports,
+and handoff updates before any Stage 7 PASS claim.

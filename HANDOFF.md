@@ -2,15 +2,16 @@
 
 ## Stage
 
-Stage 7B: RMSNorm and Residual Foundations
+Stage 7C: FFN/ReLU Foundation
 
 ## Status
 
-STAGE 7B PASS. Stage 7 RTL implementation in progress.
+STAGE 7C PASS. Stage 7 RTL implementation in progress.
 
 Pre-Norm Transformer layer specification and Python bit-model framework are
-frozen for implementation. RMSNorm and residual-add RTL foundations are added
-and verified. Full Stage 7 top-level Transformer layer RTL is not yet accepted.
+frozen for implementation. RMSNorm, residual-add, and FFN/ReLU RTL foundations
+are added and verified. Full Stage 7 top-level Transformer layer RTL is not yet
+accepted.
 
 Stage 6 projection-integrated multi-head attention correctness remains accepted,
 and the Stage 6 acceptance audit is closed.
@@ -48,6 +49,11 @@ throughput, physical memory, and timing pipeline provisional.
   output.
 - Stage 7B RTL testbench and scripts added for D_MODEL 8 and 16 RMSNorm and
   residual bit checks with output backpressure.
+- Stage 7C `ffn_engine` added with one shared `reconfigurable_pe_core` for W1
+  and W2, ReLU clamp/invalid handling, FP32-to-FP16 activation quantization,
+  and final FP32 W2 outputs.
+- Stage 7C RTL testbench and scripts added for D_MODEL 8 and 16 FFN checks with
+  output backpressure.
 
 Final top:
 
@@ -112,6 +118,19 @@ Stage 7B additions:
 - `reports/stage_07/phase_7b_lint_results.txt`
 - `reports/stage_07/phase_7b_synth_check.txt`
 
+Stage 7C additions:
+
+- `rtl/transformer/ffn_engine.sv`
+- `tb/rtl/stage7/tb_stage7c_ffn_engine.sv`
+- `scripts/sim/gen_stage7c_vectors.py`
+- `scripts/sim/run_stage7c_vcs.sh`
+- `scripts/lint/run_stage7c_lint.py`
+- `scripts/synth/run_stage7c_synth_check.py`
+- `scripts/synth/stage7c_elaborate.tcl`
+- `reports/stage_07/phase_7c_vcs_rtl_sim.txt`
+- `reports/stage_07/phase_7c_lint_results.txt`
+- `reports/stage_07/phase_7c_synth_check.txt`
+
 ## Not Completed
 
 - LayerNorm.
@@ -120,7 +139,6 @@ Stage 7B additions:
 - SRAM macro binding or physical memory replacement.
 - Timing pipeline closure.
 - STA, P&R, formal PPA, area, power, frequency, WNS, or layout.
-- Stage 7 FFN/ReLU RTL modules.
 - Stage 7 top-level Transformer layer RTL simulation, lint/vlogan, and DC
   structural checks.
 
@@ -203,6 +221,20 @@ Stage 7B VCS configurations:
 
 Stage 7B DC structural checks include `fp32_sqrt_wrapper`, D_MODEL 8/16/128
 `rmsnorm_engine`, and D_MODEL 16/128 `residual_add_engine`.
+
+Stage 7C:
+
+- `docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7c-test'`: PASS
+- `docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7c-rtl-sim'`: PASS
+- `docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7c-lint'`: PASS
+- `docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7c-synth'`: PASS
+
+Stage 7C VCS configurations:
+
+- FFN/ReLU D_MODEL=8, D_FFN=32
+- FFN/ReLU D_MODEL=16, D_FFN=64
+
+Stage 7C DC structural checks include D_MODEL 8/16 `ffn_engine`.
 
 Host:
 
@@ -298,6 +330,10 @@ VCS runs compile assertions with `-assert svaext`.
 From `D:\IC_Workspace\VEDA`:
 
 ```bash
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7c-test'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7c-rtl-sim'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7c-lint'
+docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7c-synth'
 docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7b-test'
 docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7b-rtl-sim'
 docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7b-lint'
@@ -343,5 +379,7 @@ docker exec nailong bash -lc 'cd /workspace/VEDA && make stage5-rtl-sim && make 
 - Stage 7 must preserve the frozen Stage 6 child interface and commit semantics.
 - RMSNorm finite DW status bits such as inexact are diagnostic status, not
   `invalid`; invalid remains the hard error indicator.
-- The Stage 7B RMSNorm and residual engines are serial correctness engines, not
+- The Stage 7B/7C engines are serial correctness engines, not
   throughput-optimized final scheduling.
+- Stage 7C weight completeness currently follows the external commit markers;
+  the full top must drive commits only after complete W1/W2 loads.
