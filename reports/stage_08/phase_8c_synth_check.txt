@@ -1,0 +1,12 @@
+Stage 8C synthesis/elaboration check
+This is analyze/elaborate/link/check_design only. It does not generate PPA.
+
+dc_shell: found
+DW_FOUNDATION_SLDB: found
+TECH_LIB_ROOT: not set
+$ dc_shell -f scripts/synth/stage8c_elaborate.tcl
+dc_exit_code=0
+DC log: reports/stage_08/phase_8c_dc_elaborate.log
+DC elaboration result: PASS
+Checked paper_array_8x8x2 hierarchy and check_design.
+No area, power, WNS, frequency, or process timing conclusion is produced.

@@ -1,0 +1,12 @@
+Stage 8C independent paper array RTL simulation
+Build dir: build/stage8c_rtl_sim
+vcs: FOUND
+vcs script version : O-2018.09
+DesignWare sim dir: detected
+
+paper_array result=PASS run_exit_code=0 assertion_markers=0
+
+Run markers:
+STAGE8C_PAPER_ARRAY_PASS active=55 inner=55 outer=0 group0=36 group1=36 tail=127 mode_switch=1 output_stall=3
+result=PASS
+Full logs: build/stage8c_rtl_sim/*_compile.log and *_run.log

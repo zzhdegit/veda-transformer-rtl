@@ -1,0 +1,5 @@
+Static Stage 8C RTL hygiene: PASS
+$ vlogan -full64 -sverilog -work work <DW sim files> <stage8c RTL files>
+vlogan_log=build/stage8c_vlogan_lint/vlogan.log
+vlogan_exit_code=0
+vlogan_diagnostics: none
