@@ -1,0 +1,1257 @@
+ 
+****************************************
+Report : hierarchy
+Design : single_head_attention_PE_NUM8_D_HEAD8_MAX_SEQ_LEN8_META_W16_COUNTER_W64_ATTENTION_PE_ARCH1_ATTENTION_SCHEDULE1
+Version: L-2016.03-SP1
+Date   : Mon Jul 13 20:47:27 2026
+****************************************
+
+Information: This design contains unmapped logic. (RPT-7)
+
+single_head_attention_PE_NUM8_D_HEAD8_MAX_SEQ_LEN8_META_W16_COUNTER_W64_ATTENTION_PE_ARCH1_ATTENTION_SCHEDULE1
+    paper_interleaved_attention_datapath_8_8_8_16_64_1
+        GTECH_AND2                                               gtech
+        GTECH_BUF                                                gtech
+        GTECH_NOT                                                gtech
+        GTECH_OR2                                                gtech
+        GTECH_OR5                                                gtech
+        GTECH_XOR2                                               gtech
+        attention_score_scaler_8_16_1
+            fp32_mac_wrapper_16_1
+                GTECH_AND2                                       gtech
+                GTECH_BUF                                        gtech
+                GTECH_NOT                                        gtech
+                GTECH_OR2                                        gtech
+                stream_reg_DATA_W41_META_W16
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+        paper_array_8x8x2_16_64_1
+            GTECH_AND2                                           gtech
+            GTECH_BUF                                            gtech
+            GTECH_NOT                                            gtech
+            GTECH_OR2                                            gtech
+            paper_l2_reduction_16_1
+                paper_l1_reduction_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp32_add_wrapper_16_1
+                        GTECH_AND2                               gtech
+                        GTECH_BUF                                gtech
+                        GTECH_NOT                                gtech
+                        GTECH_OR2                                gtech
+                        stream_reg_DATA_W41_META_W16
+                            ...
+            paper_pe_group_0_16_64_1
+                GTECH_AND2                                       gtech
+                GTECH_BUF                                        gtech
+                GTECH_NOT                                        gtech
+                GTECH_OR2                                        gtech
+                paper_l1_reduction_16_1
+                    ...
+                paper_l2_reduction_16_1
+                    ...
+                paper_pe_cell_0_0_0_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        GTECH_AND2                               gtech
+                        GTECH_BUF                                gtech
+                        GTECH_NOT                                gtech
+                        GTECH_OR2                                gtech
+                        stream_reg_DATA_W34_META_W16
+                            GTECH_NOT                            gtech
+                            GTECH_OR2                            gtech
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_0_1_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_0_2_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_0_3_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_0_4_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_0_5_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_0_6_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_0_7_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_1_0_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_1_1_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_1_2_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_1_3_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_1_4_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_1_5_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_1_6_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_1_7_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_2_0_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_2_1_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_2_2_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_2_3_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_2_4_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_2_5_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_2_6_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_2_7_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_3_0_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_3_1_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_3_2_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_3_3_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_3_4_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_3_5_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_3_6_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_3_7_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_4_0_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_4_1_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_4_2_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_4_3_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_4_4_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_4_5_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_4_6_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_4_7_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_5_0_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_5_1_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_5_2_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_5_3_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_5_4_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_5_5_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_5_6_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_5_7_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_6_0_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_6_1_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_6_2_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_6_3_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_6_4_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_6_5_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_6_6_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_6_7_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_7_0_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_7_1_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_7_2_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_7_3_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_7_4_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_7_5_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_7_6_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_0_7_7_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+            paper_pe_group_1_16_64_1
+                GTECH_AND2                                       gtech
+                GTECH_BUF                                        gtech
+                GTECH_NOT                                        gtech
+                GTECH_OR2                                        gtech
+                paper_l1_reduction_16_1
+                    ...
+                paper_l2_reduction_16_1
+                    ...
+                paper_pe_cell_1_0_0_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_0_1_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_0_2_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_0_3_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_0_4_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_0_5_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_0_6_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_0_7_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_1_0_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_1_1_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_1_2_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_1_3_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_1_4_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_1_5_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_1_6_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_1_7_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_2_0_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_2_1_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_2_2_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_2_3_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_2_4_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_2_5_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_2_6_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_2_7_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_3_0_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_3_1_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_3_2_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_3_3_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_3_4_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_3_5_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_3_6_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_3_7_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_4_0_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_4_1_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_4_2_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_4_3_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_4_4_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_4_5_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_4_6_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_4_7_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_5_0_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_5_1_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_5_2_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_5_3_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_5_4_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_5_5_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_5_6_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_5_7_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_6_0_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_6_1_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_6_2_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_6_3_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_6_4_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_6_5_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_6_6_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_6_7_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_7_0_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_7_1_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_7_2_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_7_3_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_7_4_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_7_5_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_7_6_0_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+                paper_pe_cell_1_7_7_1_16_1
+                    GTECH_AND2                                   gtech
+                    GTECH_BUF                                    gtech
+                    GTECH_NOT                                    gtech
+                    GTECH_OR2                                    gtech
+                    fp16_to_fp32_16_1
+                        ...
+                    fp32_mac_wrapper_16_1
+                        ...
+        softmax_normalization_16_3_1
+            GTECH_AND2                                           gtech
+            GTECH_BUF                                            gtech
+            GTECH_NOT                                            gtech
+            GTECH_OR2                                            gtech
+            fp32_add_wrapper_16_1
+                ...
+            fp32_exp_wrapper_16_1
+                GTECH_AND2                                       gtech
+                GTECH_BUF                                        gtech
+                GTECH_NOT                                        gtech
+                GTECH_OR2                                        gtech
+                stream_reg_DATA_W41_META_W16
+                    ...
+            fp32_mac_wrapper_16_1
+                ...
+            fp32_recip_wrapper_16_1
+                GTECH_AND2                                       gtech
+                GTECH_BUF                                        gtech
+                GTECH_NOT                                        gtech
+                GTECH_OR2                                        gtech
+                stream_reg_DATA_W41_META_W16
+                    ...
+        softmax_reduction_16_1
+            GTECH_AND2                                           gtech
+            GTECH_BUF                                            gtech
+            GTECH_NOT                                            gtech
+            GTECH_OR2                                            gtech
+            GTECH_XOR2                                           gtech
+            fp32_add_wrapper_16_1
+                ...
+            fp32_exp_wrapper_16_1
+                ...
+            fp32_mac_wrapper_16_1
+                ...
+1

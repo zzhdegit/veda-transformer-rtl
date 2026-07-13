@@ -95,3 +95,44 @@ def tile_bases(length, tile_width=PE_CELLS):
         yield base
         base += tile_width
 
+
+def h9_native_cell_for_dim(dim):
+    """Map one logical head dimension to a physical H9 paper-array cell.
+
+    H8 used low, contiguous lanes. HW-H9 deliberately interleaves dimensions
+    across groups first, then rows, then columns so small heads exercise the
+    hierarchy instead of only the lowest PE cells.
+    """
+    if dim < 0 or dim >= PE_CELLS:
+        raise ValueError("H9 native mapping supports one 128-cell tile")
+    group = dim % ARRAY_GROUPS
+    local = dim // ARRAY_GROUPS
+    row = local % ARRAY_ROWS
+    column = local // ARRAY_ROWS
+    if column >= ARRAY_COLS:
+        raise ValueError("H9 native column out of range")
+    return group, row, column
+
+
+def h9_native_cell_index_for_dim(dim):
+    group, row, column = h9_native_cell_for_dim(dim)
+    return cell_linear_index(group, row, column)
+
+
+def h9_native_active_mask(vector_length):
+    if vector_length < 0 or vector_length > PE_CELLS:
+        raise ValueError("H9 native mask supports vector lengths 0..128")
+    mask = 0
+    for dim in range(vector_length):
+        mask |= 1 << h9_native_cell_index_for_dim(dim)
+    return mask
+
+
+def h9_native_group_mask(vector_length):
+    mask = h9_native_active_mask(vector_length)
+    group_mask = 0
+    for group in range(ARRAY_GROUPS):
+        group_bits = (mask >> (group * GROUP_CELLS)) & ((1 << GROUP_CELLS) - 1)
+        if group_bits:
+            group_mask |= 1 << group
+    return group_mask

@@ -33,6 +33,8 @@ module attention_score_scaler #(
                 9:   scale_constant = 32'h3EAA_AAAB;
                 13:  scale_constant = 32'h3E8E_00D5;
                 16:  scale_constant = 32'h3E80_0000;
+                32:  scale_constant = 32'h3E35_04F3;
+                64:  scale_constant = 32'h3E00_0000;
                 128: scale_constant = 32'h3DB5_04F3;
                 default: scale_constant = 32'h0000_0000;
             endcase
@@ -72,4 +74,3 @@ module attention_score_scaler #(
 endmodule
 
 `default_nettype wire
-

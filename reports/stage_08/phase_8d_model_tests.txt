@@ -1,18 +1,25 @@
-$ fallback-python-test-runner stage8d paper attention tests
-Fallback Python test runner: 3 tests
-PASS
+$ C:\Users\zzh\anaconda3\python.exe -m pytest tb\model\test_stage8_paper_attention.py
+============================= test session starts =============================
+platform win32 -- Python 3.12.7, pytest-7.4.4, pluggy-1.0.0
+rootdir: D:\IC_Workspace\VEDA
+plugins: anyio-4.2.0
+collected 3 items
+
+tb\model\test_stage8_paper_attention.py ...                              [100%]
+
+============================== 3 passed in 0.09s ==============================
 exit_code=0
 
-$ /usr/bin/python3 -m py_compile model/attention/paper_attention_reference.py model/attention/paper_attention_cycle_model.py tb/model/test_stage8_paper_attention.py
+$ C:\Users\zzh\anaconda3\python.exe -m py_compile model\attention\paper_attention_reference.py model\attention\paper_attention_cycle_model.py tb\model\test_stage8_paper_attention.py
 
 exit_code=0
 
-$ /usr/bin/python3 model/attention/paper_attention_reference.py
+$ C:\Users\zzh\anaconda3\python.exe model/attention/paper_attention_reference.py
 paper_attention_output_bit_exact=True
 paper_attention_output_metrics={'max_abs_error': 0.0, 'mae': 0.0, 'rmse': 0.0, 'relative_l2': 0.0, 'cosine_similarity': 1.0, 'max_ulp': 0, 'argmax_match': True}
 exit_code=0
 
-$ /usr/bin/python3 model/attention/paper_attention_cycle_model.py
+$ C:\Users\zzh\anaconda3\python.exe model/attention/paper_attention_cycle_model.py
 paper_attention d_head=8 seq_len=1 qk=10 softmax=6 sv=3 total=20
 paper_attention d_head=8 seq_len=8 qk=80 softmax=20 sv=17 total=118
 paper_attention d_head=16 seq_len=1 qk=10 softmax=6 sv=3 total=20

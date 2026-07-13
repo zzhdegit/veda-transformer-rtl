@@ -32,6 +32,7 @@ set rtl_files [list \
     [file join $root "rtl/pe/paper/paper_pe_group.sv"] \
     [file join $root "rtl/pe/paper/paper_array_8x8x2.sv"] \
     [file join $root "rtl/attention/paper/paper_attention_adapter.sv"] \
+    [file join $root "rtl/attention/paper/interleaved/paper_interleaved_attention_datapath.sv"] \
     [file join $root "rtl/attention/attention_score_scaler.sv"] \
     [file join $root "rtl/attention/score_buffer.sv"] \
     [file join $root "rtl/attention/softmax_reduction.sv"] \

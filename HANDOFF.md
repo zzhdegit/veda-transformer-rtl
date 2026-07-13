@@ -2,12 +2,27 @@
 
 ## Stage
 
-Stage 8: Paper-Structured 8x8x2 Reconfigurable PE Array
+Hardware Stage H9 checkpoint: Full-Array Attention Mapping and SFU-PE
+Element-Serial Interleaving
 
 ## Status
 
-STAGE 8 PASS. Paper-structured 8x8x2 PE array RTL and Attention QK/sV mapping
-are accepted.
+HW-H9 IN PROGRESS, NOT ACCEPTED.
+
+Hardware Stage H9 has a checkpoint implementation and verification package for
+paper-native Attention mapping plus SFU/PE stream interleaving infrastructure.
+The checkpoint passes H9 model tests, H9 RTL single-head smoke simulations,
+H9 lint/vlogan, H9 DC structural checks, and Stage 5/6/7/8 regressions.
+
+Hardware Stage H9 is not accepted because the full HW-H9 exit conditions are
+not closed. Missing items include multi-head and full-layer interleaved RTL
+coverage, the requested exhaustive reset/random-backpressure/cache-full and long
+sequence H9 coverage, and the acceptance criterion that interleaved total cycles
+beat the H8 staged paper baseline. Do not write `HARDWARE STAGE H9 PASS`, do
+not create an H9 accepted tag, and do not enter Hardware Stage H10 yet.
+
+Stage 8 remains the accepted baseline. Paper-structured 8x8x2 PE array RTL and
+Attention QK/sV mapping are accepted.
 
 The Stage 8 implementation adds a repository bit-accurate paper-array model,
 an explicit 8 row x 8 column x 2 group RTL hierarchy with 128 PE cells, and a
@@ -209,6 +224,36 @@ Stage 8 additions:
 - `scripts/synth/stage8d_elaborate.tcl`
 - `reports/stage_08/`
 
+Hardware Stage H9 checkpoint additions:
+
+- `docs/hw_h9/paper_schedule_evidence.md`
+- `docs/hw_h9/spec.md`
+- `docs/hw_h9/stream_protocol.md`
+- `docs/hw_h9/full_array_mapping.md`
+- `docs/hw_h9/softmax_schedule.md`
+- `docs/hw_h9/verification_plan.md`
+- `model/attention/paper_interleaved_attention_reference.py`
+- `model/attention/paper_interleaved_softmax_reference.py`
+- `model/attention/paper_interleaved_cycle_model.py`
+- `model/attention/paper_interleaved_compare_h8.py`
+- H9 native mapping helpers in `model/pe_array/paper_array_mapping.py`
+- H9 D_HEAD scale constants in `model/attention/single_head_reference.py`
+  and `rtl/attention/attention_score_scaler.sv`
+- `rtl/attention/paper/interleaved/`
+- `ATTENTION_SCHEDULE` selection propagated through single-head, multi-head,
+  projection-integrated MHA, and transformer-layer tops.
+- `tb/model/test_hw_h9_interleaved_attention.py`
+- `tb/rtl/hw_h9/`
+- `scripts/sim/run_hw_h9_tests.py`
+- `scripts/sim/run_hw_h9_vcs.sh`
+- `scripts/lint/run_hw_h9_lint.py`
+- `scripts/synth/run_hw_h9_synth_check.py`
+- `scripts/synth/hw_h9_elaborate.tcl`
+- Make targets `hw-h9-test`, `hw-h9-model-test`, `hw-h9-buffer-test`,
+  `hw-h9-overlap-test`, `hw-h9-ab-compare`, `hw-h9-rtl-sim`,
+  `hw-h9-lint`, and `hw-h9-synth`.
+- `reports/hw_h9/`
+
 ## Not Completed
 
 - LayerNorm.
@@ -217,7 +262,12 @@ Stage 8 additions:
 - SRAM macro binding or physical memory replacement.
 - Timing pipeline closure.
 - STA, P&R, formal PPA, area, power, frequency, WNS, or layout.
-- SFU-PE interleaving or QK/SFU/sV overlap.
+- Full Hardware Stage H9 acceptance.
+- H9 multi-head interleaved RTL testbench.
+- H9 full-layer interleaved RTL testbench.
+- Exhaustive H9 reset, random backpressure, cache-full extra-token, and
+  long-sequence RTL coverage.
+- H9 accepted tag.
 - KV cache eviction.
 - Global array sharing across Projection, Attention, and FFN.
 - Paper-exact arithmetic claims beyond the evidence in
@@ -284,6 +334,31 @@ QK complete
 The legacy path remains selectable with `ATTENTION_PE_ARCH=0`. A given
 elaboration instantiates only the selected generate branch.
 
+Hardware Stage H9 checkpoint keeps the Stage 8 staged paper path available and
+adds `ATTENTION_SCHEDULE`:
+
+```text
+ATTENTION_SCHEDULE=0: staged schedule
+ATTENTION_SCHEDULE=1: interleaved paper schedule
+```
+
+Legal checkpoint combinations are legacy staged, paper staged, and paper
+interleaved. Legacy interleaved is rejected. The H9 native dimension mapping is:
+
+```text
+group  = dimension % 2
+local  = dimension / 2
+row    = local % 8
+column = local / 8
+cell   = group * 64 + row * 8 + column
+```
+
+D_HEAD=8 uses both groups and multiple rows; D_HEAD=16 uses both groups and
+all rows; D_HEAD=64 uses both groups, all rows, and multiple columns; D_HEAD=128
+is structurally covered by the model. The interleaved checkpoint uses bounded
+score/probability stream buffers and preserves the existing repository softmax
+arithmetic rather than claiming a paper-exact bit-level SFU.
+
 ## Transaction Semantics
 
 Successful Stage 6 token order:
@@ -342,6 +417,34 @@ pre-commit abort behavior, post-commit invalid reporting, metadata propagation,
 and valid sequence length semantics are unchanged.
 
 ## Verification Results
+
+Hardware Stage H9 checkpoint:
+
+- `python scripts/sim/run_hw_h9_tests.py`: PASS.
+- `docker exec -w /workspace/VEDA nailong make hw-h9-test`: PASS.
+- `docker exec -w /workspace/VEDA nailong make hw-h9-rtl-sim`: PASS.
+- `docker exec -w /workspace/VEDA nailong make hw-h9-lint`: PASS.
+- `docker exec -w /workspace/VEDA nailong make hw-h9-synth`: PASS.
+
+H9 RTL simulation coverage completed:
+
+- `tb_h9_score_buffer`: PASS.
+- `tb_h9_probability_fifo`: PASS.
+- `tb_h9_single_head` D_HEAD=8, 16, and 64: PASS.
+- Single-head smoke counters show `qk_sfu_overlap=135`,
+  `sfu_sv_overlap=66`, `group0=408`, and `group1=408` for each D_HEAD smoke
+  run.
+
+H9 lint/vlogan passed with only accepted DesignWare pragma-no-effect warnings.
+H9 DC structural checks passed for legacy staged, paper staged, and paper
+interleaved architecture/schedule selections. The H9 hierarchy reports count
+128 `paper_pe_cell` occurrences in checked paper interleaved tops. DC results
+remain analyze/elaborate/link/check_design only; no PPA is claimed.
+
+H9 model cycle comparison currently reports H9 interleaving faster than the
+full-array non-interleaved H9 structural model, but slower than the H8 staged
+paper baseline for seq 1/2/8/16/32. Therefore HW-H9 final performance
+acceptance is still open.
 
 Stage 8:
 
@@ -519,6 +622,10 @@ docker exec nailong bash -lc 'cd /workspace/VEDA && make stage8-test'
 docker exec nailong bash -lc 'cd /workspace/VEDA && make stage8-rtl-sim'
 docker exec nailong bash -lc 'cd /workspace/VEDA && make stage8-lint'
 docker exec nailong bash -lc 'cd /workspace/VEDA && make stage8-synth'
+docker exec -w /workspace/VEDA nailong make hw-h9-test
+docker exec -w /workspace/VEDA nailong make hw-h9-rtl-sim
+docker exec -w /workspace/VEDA nailong make hw-h9-lint
+docker exec -w /workspace/VEDA nailong make hw-h9-synth
 docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7d-test'
 docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7d-rtl-sim'
 docker exec nailong bash -lc 'cd /workspace/VEDA && make stage7d-lint'
@@ -559,9 +666,18 @@ docker exec nailong bash -lc 'cd /workspace/VEDA && make stage5-rtl-sim && make 
 
 ## Next-Stage Cautions
 
-- Stage 8 is closed for paper-structured array and Attention QK/sV mapping
-  correctness. A later independent stage may start SFU-PE interleaving work,
-  but Stage 8 did not start it.
+- Hardware Stage H9 is not accepted. Continue H9 only; do not begin Hardware
+  Stage H10 yet.
+- The H9 checkpoint proves bounded-buffer single-head overlap smoke coverage,
+  not full multi-head/full-layer H9 acceptance.
+- Do not claim H9 paper-exact SFU arithmetic. The checkpoint preserves the
+  existing repository softmax arithmetic and marks missing paper details as
+  repository design decisions.
+- Do not claim QK and sV use the same paper array concurrently. The checkpoint
+  only permits QK/SFU overlap and SFU/sV overlap after the safe inner-to-outer
+  mode switch.
+- Stage 8 remains closed for paper-structured array and Attention QK/sV mapping
+  correctness.
 - Preserve Stage 5 all-head atomic commit and current-token causal semantics.
 - Do not duplicate the shared projection PE datapath unless an accepted future
   spec explicitly changes the resource-sharing rule.

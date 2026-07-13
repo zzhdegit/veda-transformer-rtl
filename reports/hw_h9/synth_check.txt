@@ -1,0 +1,24 @@
+Hardware Stage H9 synthesis/elaboration check
+This is analyze/elaborate/link/check_design plus hierarchy count only. It does not generate PPA.
+
+dc_shell: found
+DW_FOUNDATION_SLDB: found
+TECH_LIB_ROOT: not set
+$ dc_shell -f scripts/synth/hw_h9_elaborate.tcl
+dc_exit_code=0
+DC log: reports/hw_h9/dc_elaborate.log
+DC elaboration result: PASS
+Tolerated DC diagnostics:
+UID-109 base-design alias messages after parameterized elaboration; dc_exit_code was 0 and reports were generated.
+Error: Can't find design 'single_head_attention'. (UID-109)
+Error: Can't find design 'single_head_attention'. (UID-109)
+Error: Can't find design 'single_head_attention'. (UID-109)
+Error: Can't find design 'single_head_attention'. (UID-109)
+Error: Can't find design 'multi_head_generation_engine'. (UID-109)
+Error: Can't find design 'transformer_layer'. (UID-109)
+dc_hierarchy_hw_h9_single_head_d8_interleaved.rpt paper_pe_cell_occurrences=128
+dc_hierarchy_hw_h9_single_head_d64_interleaved.rpt paper_pe_cell_occurrences=128
+dc_hierarchy_hw_h9_transformer_h2_d8_interleaved.rpt paper_pe_cell_occurrences=128
+Checked legacy staged, paper staged, and paper interleaved architecture/schedule selections.
+No area, power, WNS, frequency, or process timing conclusion is produced.
+result=PASS

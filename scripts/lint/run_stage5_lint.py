@@ -28,6 +28,7 @@ RTL_FILES = [
     ROOT / "rtl/pe/paper/paper_pe_group.sv",
     ROOT / "rtl/pe/paper/paper_array_8x8x2.sv",
     ROOT / "rtl/attention/paper/paper_attention_adapter.sv",
+    ROOT / "rtl/attention/paper/interleaved/paper_interleaved_attention_datapath.sv",
     ROOT / "rtl/attention/attention_score_scaler.sv",
     ROOT / "rtl/attention/score_buffer.sv",
     ROOT / "rtl/attention/softmax_reduction.sv",

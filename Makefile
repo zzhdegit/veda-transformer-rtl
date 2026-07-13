@@ -1,6 +1,6 @@
 PYTHON ?= $(shell if command -v python >/dev/null 2>&1; then echo python; else echo python3; fi)
 
-.PHONY: stage0-test stage1-test stage1-rtl-sim stage1-lint stage1-synth stage1-sta stage1b-test stage1b-rtl-sim stage1b-lint stage1b-synth stage2-test stage2-rtl-sim stage2-lint stage2-synth stage3-test stage3-rtl-sim stage3-lint stage3-synth stage4-test stage4-rtl-sim stage4-lint stage4-synth stage4p1-test stage4p1-rtl-sim stage4p1-lint stage4p1-synth stage5-test stage5-rtl-sim stage5-lint stage5-synth stage6a-test stage6b-test stage6b-rtl-sim stage6b-lint stage6b-synth stage6c-test stage6c-rtl-sim stage6c-lint stage6c-synth stage6d-test stage6d-rtl-sim stage6d-lint stage6d-synth stage6e-test stage6e-rtl-sim stage6e-lint stage6e-synth stage6-test stage6-rtl-sim stage6-lint stage6-synth stage7a-test stage7b-test stage7b-rtl-sim stage7b-lint stage7b-synth stage7c-test stage7c-rtl-sim stage7c-lint stage7c-synth stage7d-test stage7d-rtl-sim stage7d-lint stage7d-synth stage8a-test stage8b-test stage8c-test stage8c-rtl-sim stage8c-lint stage8c-synth stage8d-test stage8d-rtl-sim stage8d-lint stage8d-synth stage8-test stage8-rtl-sim stage8-lint stage8-synth
+.PHONY: stage0-test stage1-test stage1-rtl-sim stage1-lint stage1-synth stage1-sta stage1b-test stage1b-rtl-sim stage1b-lint stage1b-synth stage2-test stage2-rtl-sim stage2-lint stage2-synth stage3-test stage3-rtl-sim stage3-lint stage3-synth stage4-test stage4-rtl-sim stage4-lint stage4-synth stage4p1-test stage4p1-rtl-sim stage4p1-lint stage4p1-synth stage5-test stage5-rtl-sim stage5-lint stage5-synth stage6a-test stage6b-test stage6b-rtl-sim stage6b-lint stage6b-synth stage6c-test stage6c-rtl-sim stage6c-lint stage6c-synth stage6d-test stage6d-rtl-sim stage6d-lint stage6d-synth stage6e-test stage6e-rtl-sim stage6e-lint stage6e-synth stage6-test stage6-rtl-sim stage6-lint stage6-synth stage7a-test stage7b-test stage7b-rtl-sim stage7b-lint stage7b-synth stage7c-test stage7c-rtl-sim stage7c-lint stage7c-synth stage7d-test stage7d-rtl-sim stage7d-lint stage7d-synth stage8a-test stage8b-test stage8c-test stage8c-rtl-sim stage8c-lint stage8c-synth stage8d-test stage8d-rtl-sim stage8d-lint stage8d-synth stage8-test stage8-rtl-sim stage8-lint stage8-synth hw-h9-test hw-h9-model-test hw-h9-buffer-test hw-h9-overlap-test hw-h9-ab-compare hw-h9-rtl-sim hw-h9-lint hw-h9-synth
 
 stage0-test:
 	$(PYTHON) -m pytest tb/model/test_reference_attention.py
@@ -243,3 +243,28 @@ stage8-lint:
 stage8-synth:
 	$(PYTHON) scripts/synth/run_stage8c_synth_check.py
 	$(PYTHON) scripts/synth/run_stage8d_synth_check.py
+
+hw-h9-model-test:
+	$(PYTHON) -m pytest tb/model/test_hw_h9_interleaved_attention.py
+
+hw-h9-buffer-test:
+	bash scripts/sim/run_hw_h9_vcs.sh
+
+hw-h9-overlap-test:
+	bash scripts/sim/run_hw_h9_vcs.sh
+
+hw-h9-ab-compare:
+	$(PYTHON) model/attention/paper_interleaved_cycle_model.py
+	$(PYTHON) model/attention/paper_interleaved_compare_h8.py
+
+hw-h9-test:
+	$(PYTHON) scripts/sim/run_hw_h9_tests.py
+
+hw-h9-rtl-sim:
+	bash scripts/sim/run_hw_h9_vcs.sh
+
+hw-h9-lint:
+	$(PYTHON) scripts/lint/run_hw_h9_lint.py
+
+hw-h9-synth:
+	$(PYTHON) scripts/synth/run_hw_h9_synth_check.py

@@ -109,6 +109,7 @@ RTL_FILES=(
   "$ROOT_DIR/rtl/pe/paper/paper_pe_group.sv"
   "$ROOT_DIR/rtl/pe/paper/paper_array_8x8x2.sv"
   "$ROOT_DIR/rtl/attention/paper/paper_attention_adapter.sv"
+  "$ROOT_DIR/rtl/attention/paper/interleaved/paper_interleaved_attention_datapath.sv"
   "$ROOT_DIR/rtl/attention/attention_score_scaler.sv"
   "$ROOT_DIR/rtl/attention/score_buffer.sv"
   "$ROOT_DIR/rtl/attention/softmax_reduction.sv"

@@ -8,6 +8,7 @@ module projection_integrated_mha #(
     parameter int META_W = 16,
     parameter int COUNTER_W = 64,
     parameter int ATTENTION_PE_ARCH = 0,
+    parameter int ATTENTION_SCHEDULE = 0,
     parameter bit ASSERT_ON_INVALID = 1'b1,
     localparam int D_MODEL = N_HEAD * D_HEAD,
     localparam int HEAD_W = (N_HEAD <= 1) ? 1 : $clog2(N_HEAD),
@@ -479,6 +480,7 @@ module projection_integrated_mha #(
         .META_W(META_W),
         .COUNTER_W(COUNTER_W),
         .ATTENTION_PE_ARCH(ATTENTION_PE_ARCH),
+        .ATTENTION_SCHEDULE(ATTENTION_SCHEDULE),
         .ASSERT_ON_INVALID(ASSERT_ON_INVALID)
     ) u_multi_head_generation_engine (
         .clk                            (clk),

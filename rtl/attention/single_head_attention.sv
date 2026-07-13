@@ -7,6 +7,7 @@ module single_head_attention #(
     parameter int META_W = 16,
     parameter int COUNTER_W = 64,
     parameter int ATTENTION_PE_ARCH = 0,
+    parameter int ATTENTION_SCHEDULE = 0,
     parameter bit ASSERT_ON_INVALID = 1'b1,
     localparam int SEQ_LEN_W = (MAX_SEQ_LEN <= 1) ? 1 : $clog2(MAX_SEQ_LEN + 1),
     localparam int TOKEN_W = (MAX_SEQ_LEN <= 1) ? 1 : $clog2(MAX_SEQ_LEN),
@@ -67,65 +68,206 @@ module single_head_attention #(
     output logic [COUNTER_W-1:0]         perf_array_input_stall_cycles,
     output logic [COUNTER_W-1:0]         perf_array_output_stall_cycles
 );
-    single_head_attention_controller #(
-        .PE_NUM(PE_NUM),
-        .D_HEAD(D_HEAD),
-        .MAX_SEQ_LEN(MAX_SEQ_LEN),
-        .META_W(META_W),
-        .COUNTER_W(COUNTER_W),
-        .ATTENTION_PE_ARCH(ATTENTION_PE_ARCH),
-        .ASSERT_ON_INVALID(ASSERT_ON_INVALID)
-    ) u_controller (
-        .clk                              (clk),
-        .rst_n                            (rst_n),
-        .load_valid                       (load_valid),
-        .load_ready                       (load_ready),
-        .load_kind                        (load_kind),
-        .load_token                       (load_token),
-        .load_dim                         (load_dim),
-        .load_data                        (load_data),
-        .start_valid                      (start_valid),
-        .start_ready                      (start_ready),
-        .start_seq_len                    (start_seq_len),
-        .start_meta                       (start_meta),
-        .output_valid                     (output_valid),
-        .output_ready                     (output_ready),
-        .output_base_dim                  (output_base_dim),
-        .output_vector_fp32               (output_vector_fp32),
-        .output_lane_mask                 (output_lane_mask),
-        .output_status                    (output_status),
-        .output_invalid                   (output_invalid),
-        .output_meta                      (output_meta),
-        .output_last                      (output_last),
-        .done_valid                       (done_valid),
-        .done_ready                       (done_ready),
-        .done_status                      (done_status),
-        .done_invalid                     (done_invalid),
-        .done_meta                        (done_meta),
-        .perf_total_attention_cycles      (perf_total_attention_cycles),
-        .perf_qk_cycles                   (perf_qk_cycles),
-        .perf_qk_pe_busy_cycles           (perf_qk_pe_busy_cycles),
-        .perf_scale_cycles                (perf_scale_cycles),
-        .perf_reduction_cycles            (perf_reduction_cycles),
-        .perf_reduction_finalize_cycles   (perf_reduction_finalize_cycles),
-        .perf_normalization_cycles        (perf_normalization_cycles),
-        .perf_sv_cycles                   (perf_sv_cycles),
-        .perf_pe_stall_cycles             (perf_pe_stall_cycles),
-        .perf_sfu_stall_cycles            (perf_sfu_stall_cycles),
-        .perf_buffer_stall_cycles         (perf_buffer_stall_cycles),
-        .perf_output_stall_cycles         (perf_output_stall_cycles),
-        .perf_score_buffer_peak_occupancy (perf_score_buffer_peak_occupancy),
-        .perf_paper_array_active_cycles   (perf_paper_array_active_cycles),
-        .perf_paper_array_idle_cycles     (perf_paper_array_idle_cycles),
-        .perf_inner_mode_cycles           (perf_inner_mode_cycles),
-        .perf_outer_mode_cycles           (perf_outer_mode_cycles),
-        .perf_group0_active_cycles        (perf_group0_active_cycles),
-        .perf_group1_active_cycles        (perf_group1_active_cycles),
-        .perf_tail_masked_pe_cycles       (perf_tail_masked_pe_cycles),
-        .perf_mode_switch_cycles          (perf_mode_switch_cycles),
-        .perf_array_input_stall_cycles    (perf_array_input_stall_cycles),
-        .perf_array_output_stall_cycles   (perf_array_output_stall_cycles)
-    );
+    localparam int LEGACY_PE = 0;
+    localparam int PAPER_ARRAY = 1;
+    localparam int SCHEDULE_STAGED = 0;
+    localparam int SCHEDULE_INTERLEAVED = 1;
+
+    logic [COUNTER_W-1:0] unused_h9_qk_sfu_overlap_cycles;
+    logic [COUNTER_W-1:0] unused_h9_qk_only_cycles;
+    logic [COUNTER_W-1:0] unused_h9_sfu_during_qk_cycles;
+    logic [COUNTER_W-1:0] unused_h9_score_fifo_full_stall_cycles;
+    logic [COUNTER_W-1:0] unused_h9_score_fifo_empty_cycles;
+    logic [COUNTER_W-1:0] unused_h9_score_fifo_peak_occupancy;
+    logic [COUNTER_W-1:0] unused_h9_sfu_sv_overlap_cycles;
+    logic [COUNTER_W-1:0] unused_h9_sfu_only_cycles;
+    logic [COUNTER_W-1:0] unused_h9_sv_only_cycles;
+    logic [COUNTER_W-1:0] unused_h9_probability_fifo_full_stall_cycles;
+    logic [COUNTER_W-1:0] unused_h9_probability_fifo_empty_stall_cycles;
+    logic [COUNTER_W-1:0] unused_h9_probability_fifo_peak_occupancy;
+    logic [COUNTER_W-1:0] unused_h9_inner_to_outer_switch_cycles;
+    logic [COUNTER_W-1:0] unused_h9_pipeline_bubble_cycles;
+
+    generate
+        if (ATTENTION_SCHEDULE == SCHEDULE_STAGED) begin : g_staged_schedule
+            single_head_attention_controller #(
+                .PE_NUM(PE_NUM),
+                .D_HEAD(D_HEAD),
+                .MAX_SEQ_LEN(MAX_SEQ_LEN),
+                .META_W(META_W),
+                .COUNTER_W(COUNTER_W),
+                .ATTENTION_PE_ARCH(ATTENTION_PE_ARCH),
+                .ASSERT_ON_INVALID(ASSERT_ON_INVALID)
+            ) u_controller (
+                .clk                              (clk),
+                .rst_n                            (rst_n),
+                .load_valid                       (load_valid),
+                .load_ready                       (load_ready),
+                .load_kind                        (load_kind),
+                .load_token                       (load_token),
+                .load_dim                         (load_dim),
+                .load_data                        (load_data),
+                .start_valid                      (start_valid),
+                .start_ready                      (start_ready),
+                .start_seq_len                    (start_seq_len),
+                .start_meta                       (start_meta),
+                .output_valid                     (output_valid),
+                .output_ready                     (output_ready),
+                .output_base_dim                  (output_base_dim),
+                .output_vector_fp32               (output_vector_fp32),
+                .output_lane_mask                 (output_lane_mask),
+                .output_status                    (output_status),
+                .output_invalid                   (output_invalid),
+                .output_meta                      (output_meta),
+                .output_last                      (output_last),
+                .done_valid                       (done_valid),
+                .done_ready                       (done_ready),
+                .done_status                      (done_status),
+                .done_invalid                     (done_invalid),
+                .done_meta                        (done_meta),
+                .perf_total_attention_cycles      (perf_total_attention_cycles),
+                .perf_qk_cycles                   (perf_qk_cycles),
+                .perf_qk_pe_busy_cycles           (perf_qk_pe_busy_cycles),
+                .perf_scale_cycles                (perf_scale_cycles),
+                .perf_reduction_cycles            (perf_reduction_cycles),
+                .perf_reduction_finalize_cycles   (perf_reduction_finalize_cycles),
+                .perf_normalization_cycles        (perf_normalization_cycles),
+                .perf_sv_cycles                   (perf_sv_cycles),
+                .perf_pe_stall_cycles             (perf_pe_stall_cycles),
+                .perf_sfu_stall_cycles            (perf_sfu_stall_cycles),
+                .perf_buffer_stall_cycles         (perf_buffer_stall_cycles),
+                .perf_output_stall_cycles         (perf_output_stall_cycles),
+                .perf_score_buffer_peak_occupancy (perf_score_buffer_peak_occupancy),
+                .perf_paper_array_active_cycles   (perf_paper_array_active_cycles),
+                .perf_paper_array_idle_cycles     (perf_paper_array_idle_cycles),
+                .perf_inner_mode_cycles           (perf_inner_mode_cycles),
+                .perf_outer_mode_cycles           (perf_outer_mode_cycles),
+                .perf_group0_active_cycles        (perf_group0_active_cycles),
+                .perf_group1_active_cycles        (perf_group1_active_cycles),
+                .perf_tail_masked_pe_cycles       (perf_tail_masked_pe_cycles),
+                .perf_mode_switch_cycles          (perf_mode_switch_cycles),
+                .perf_array_input_stall_cycles    (perf_array_input_stall_cycles),
+                .perf_array_output_stall_cycles   (perf_array_output_stall_cycles)
+            );
+        end else if ((ATTENTION_SCHEDULE == SCHEDULE_INTERLEAVED) &&
+                     (ATTENTION_PE_ARCH == PAPER_ARRAY)) begin : g_interleaved_schedule
+            paper_interleaved_attention_datapath #(
+                .PE_NUM(PE_NUM),
+                .D_HEAD(D_HEAD),
+                .MAX_SEQ_LEN(MAX_SEQ_LEN),
+                .META_W(META_W),
+                .COUNTER_W(COUNTER_W),
+                .ASSERT_ON_INVALID(ASSERT_ON_INVALID)
+            ) u_interleaved_datapath (
+                .clk                                      (clk),
+                .rst_n                                    (rst_n),
+                .load_valid                               (load_valid),
+                .load_ready                               (load_ready),
+                .load_kind                                (load_kind),
+                .load_token                               (load_token),
+                .load_dim                                 (load_dim),
+                .load_data                                (load_data),
+                .start_valid                              (start_valid),
+                .start_ready                              (start_ready),
+                .start_seq_len                            (start_seq_len),
+                .start_meta                               (start_meta),
+                .output_valid                             (output_valid),
+                .output_ready                             (output_ready),
+                .output_base_dim                          (output_base_dim),
+                .output_vector_fp32                       (output_vector_fp32),
+                .output_lane_mask                         (output_lane_mask),
+                .output_status                            (output_status),
+                .output_invalid                           (output_invalid),
+                .output_meta                              (output_meta),
+                .output_last                              (output_last),
+                .done_valid                               (done_valid),
+                .done_ready                               (done_ready),
+                .done_status                              (done_status),
+                .done_invalid                             (done_invalid),
+                .done_meta                                (done_meta),
+                .perf_total_attention_cycles              (perf_total_attention_cycles),
+                .perf_qk_cycles                           (perf_qk_cycles),
+                .perf_qk_pe_busy_cycles                   (perf_qk_pe_busy_cycles),
+                .perf_scale_cycles                        (perf_scale_cycles),
+                .perf_reduction_cycles                    (perf_reduction_cycles),
+                .perf_reduction_finalize_cycles           (perf_reduction_finalize_cycles),
+                .perf_normalization_cycles                (perf_normalization_cycles),
+                .perf_sv_cycles                           (perf_sv_cycles),
+                .perf_pe_stall_cycles                     (perf_pe_stall_cycles),
+                .perf_sfu_stall_cycles                    (perf_sfu_stall_cycles),
+                .perf_buffer_stall_cycles                 (perf_buffer_stall_cycles),
+                .perf_output_stall_cycles                 (perf_output_stall_cycles),
+                .perf_score_buffer_peak_occupancy         (perf_score_buffer_peak_occupancy),
+                .perf_paper_array_active_cycles           (perf_paper_array_active_cycles),
+                .perf_paper_array_idle_cycles             (perf_paper_array_idle_cycles),
+                .perf_inner_mode_cycles                   (perf_inner_mode_cycles),
+                .perf_outer_mode_cycles                   (perf_outer_mode_cycles),
+                .perf_group0_active_cycles                (perf_group0_active_cycles),
+                .perf_group1_active_cycles                (perf_group1_active_cycles),
+                .perf_tail_masked_pe_cycles               (perf_tail_masked_pe_cycles),
+                .perf_mode_switch_cycles                  (perf_mode_switch_cycles),
+                .perf_array_input_stall_cycles            (perf_array_input_stall_cycles),
+                .perf_array_output_stall_cycles           (perf_array_output_stall_cycles),
+                .perf_qk_sfu_overlap_cycles               (unused_h9_qk_sfu_overlap_cycles),
+                .perf_qk_only_cycles                      (unused_h9_qk_only_cycles),
+                .perf_sfu_during_qk_cycles                (unused_h9_sfu_during_qk_cycles),
+                .perf_score_fifo_full_stall_cycles        (unused_h9_score_fifo_full_stall_cycles),
+                .perf_score_fifo_empty_cycles             (unused_h9_score_fifo_empty_cycles),
+                .perf_score_fifo_peak_occupancy           (unused_h9_score_fifo_peak_occupancy),
+                .perf_sfu_sv_overlap_cycles               (unused_h9_sfu_sv_overlap_cycles),
+                .perf_sfu_only_cycles                     (unused_h9_sfu_only_cycles),
+                .perf_sv_only_cycles                      (unused_h9_sv_only_cycles),
+                .perf_probability_fifo_full_stall_cycles  (unused_h9_probability_fifo_full_stall_cycles),
+                .perf_probability_fifo_empty_stall_cycles (unused_h9_probability_fifo_empty_stall_cycles),
+                .perf_probability_fifo_peak_occupancy     (unused_h9_probability_fifo_peak_occupancy),
+                .perf_inner_to_outer_switch_cycles        (unused_h9_inner_to_outer_switch_cycles),
+                .perf_pipeline_bubble_cycles              (unused_h9_pipeline_bubble_cycles)
+            );
+        end else begin : g_invalid_schedule
+`ifndef SYNTHESIS
+            initial begin
+                $fatal(1, "single_head_attention unsupported ATTENTION_PE_ARCH/ATTENTION_SCHEDULE combination");
+            end
+`endif
+            assign load_ready = 1'b0;
+            assign start_ready = 1'b0;
+            assign output_valid = 1'b0;
+            assign output_base_dim = '0;
+            assign output_vector_fp32 = '0;
+            assign output_lane_mask = '0;
+            assign output_status = 8'hFF;
+            assign output_invalid = 1'b1;
+            assign output_meta = '0;
+            assign output_last = 1'b0;
+            assign done_valid = 1'b0;
+            assign done_status = 8'hFF;
+            assign done_invalid = 1'b1;
+            assign done_meta = '0;
+            assign perf_total_attention_cycles = '0;
+            assign perf_qk_cycles = '0;
+            assign perf_qk_pe_busy_cycles = '0;
+            assign perf_scale_cycles = '0;
+            assign perf_reduction_cycles = '0;
+            assign perf_reduction_finalize_cycles = '0;
+            assign perf_normalization_cycles = '0;
+            assign perf_sv_cycles = '0;
+            assign perf_pe_stall_cycles = '0;
+            assign perf_sfu_stall_cycles = '0;
+            assign perf_buffer_stall_cycles = '0;
+            assign perf_output_stall_cycles = '0;
+            assign perf_score_buffer_peak_occupancy = '0;
+            assign perf_paper_array_active_cycles = '0;
+            assign perf_paper_array_idle_cycles = '0;
+            assign perf_inner_mode_cycles = '0;
+            assign perf_outer_mode_cycles = '0;
+            assign perf_group0_active_cycles = '0;
+            assign perf_group1_active_cycles = '0;
+            assign perf_tail_masked_pe_cycles = '0;
+            assign perf_mode_switch_cycles = '0;
+            assign perf_array_input_stall_cycles = '0;
+            assign perf_array_output_stall_cycles = '0;
+        end
+    endgenerate
 endmodule
 
 `default_nettype wire

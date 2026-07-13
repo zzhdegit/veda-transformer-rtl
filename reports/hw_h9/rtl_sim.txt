@@ -1,0 +1,17 @@
+Hardware Stage H9 RTL simulation
+Build dir: build/hw_h9_rtl_sim
+vcs: FOUND
+vcs script version : O-2018.09
+DesignWare sim dir: detected
+
+score_buffer result=PASS run_exit_code=0 assertion_markers=0
+HW_H9_SCORE_BUFFER_PASS peak=2 empty_stall=0
+probability_fifo result=PASS run_exit_code=0 assertion_markers=0
+HW_H9_PROBABILITY_FIFO_PASS peak=2 empty_stall=0
+single_head_d8 result=PASS run_exit_code=0 assertion_markers=0
+HW_H9_SINGLE_HEAD_PASS D_HEAD=8 outputs=1 qk_sfu_overlap=135 sfu_sv_overlap=66 group0=408 group1=408 total=649
+single_head_d16 result=PASS run_exit_code=0 assertion_markers=0
+HW_H9_SINGLE_HEAD_PASS D_HEAD=16 outputs=2 qk_sfu_overlap=135 sfu_sv_overlap=66 group0=408 group1=408 total=651
+single_head_d64 result=PASS run_exit_code=0 assertion_markers=0
+HW_H9_SINGLE_HEAD_PASS D_HEAD=64 outputs=8 qk_sfu_overlap=135 sfu_sv_overlap=66 group0=408 group1=408 total=663
+result=PASS
