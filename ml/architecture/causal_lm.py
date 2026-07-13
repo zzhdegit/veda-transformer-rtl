@@ -17,13 +17,27 @@ class HardwareMatchedCausalLM(nn.Module):
         super().__init__()
         config.validate()
         self.config = config
-        self.token_embedding = nn.Embedding(config.vocab_size, config.d_model)
+        self.token_embedding = nn.Embedding(config.vocab_size, config.d_model, padding_idx=config.pad_token_id)
         self.position_embedding = nn.Embedding(config.context_length, config.d_model)
         self.layers = nn.ModuleList([TransformerLayer(config)])
         self.final_norm = RMSNorm(config.d_model, config.rms_norm_eps)
         self.lm_head = nn.Linear(config.d_model, config.vocab_size, bias=False)
+        self._init_weights()
         if config.tie_word_embeddings:
             self.lm_head.weight = self.token_embedding.weight
+
+    def _init_weights(self) -> None:
+        std = float(self.config.initializer_range)
+        for module in self.modules():
+            if isinstance(module, nn.Linear):
+                nn.init.normal_(module.weight, mean=0.0, std=std)
+            elif isinstance(module, nn.Embedding):
+                nn.init.normal_(module.weight, mean=0.0, std=std)
+                if module.padding_idx is not None:
+                    with torch.no_grad():
+                        module.weight[module.padding_idx].zero_()
+            elif isinstance(module, RMSNorm):
+                nn.init.ones_(module.weight)
 
     def _position_ids(self, batch_size: int, seq_len: int, start_pos: int, device) -> torch.Tensor:
         if start_pos + seq_len > self.config.context_length:
@@ -95,4 +109,3 @@ class HardwareMatchedCausalLM(nn.Module):
             if eos_token_id is not None and bool((next_token == eos_token_id).all()):
                 break
         return generated
-

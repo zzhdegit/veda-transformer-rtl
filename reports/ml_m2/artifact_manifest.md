@@ -1,33 +1,71 @@
 # ML-M2 Artifact Manifest
 
-## Smoke Artifacts
-
-Artifacts are local and ignored by Git:
+Artifacts below are local, ignored by Git, and stored under:
 
 ```text
-build/ml_m2_artifacts/smoke/checkpoints/ml_m2_smoke_last.pt
-sha256=f8aad2cd9cb4cc68f48fb532ea0689677ede660fbb62c8b2d3d69fa1717c561f
-build/ml_m2_artifacts/smoke/tokenizer/tokenizer.json
-build/ml_m2_artifacts/smoke/generation_samples.json
-build/ml_m2_artifacts/smoke/smoke_summary.json
+VEDA_ML_DATA_ROOT=D:/IC_Workspace/VEDA_artifacts/datasets
+VEDA_ML_ARTIFACT_ROOT=D:/IC_Workspace/VEDA_artifacts/ml_m2
+VEDA_HF_CACHE=D:/IC_Workspace/VEDA_artifacts/hf_cache
 ```
 
-## Export And Trace Artifacts
-
-Artifacts are local and ignored by Git:
+## Formal Data
 
 ```text
-build/ml_m2_artifacts/export/export_manifest.json
-build/ml_m2_artifacts/export/*.hex
-build/ml_m2_artifacts/export/*.npy
+train_subset=D:/IC_Workspace/VEDA_artifacts/datasets/tinystories_ml_m2/TinyStories-train-prefix-100000.txt
+train_subset_sha256=01934a1632de6710b02575df70ece049065ac860f0a65589b30e3ce1fb3c00fe
+validation_subset=D:/IC_Workspace/VEDA_artifacts/datasets/tinystories_ml_m2/TinyStories-valid-prefix-10000.txt
+validation_subset_sha256=1934d296eecc3e3a24438046245280065b5f63df0c09bcbef4e695f864f91308
+formal_data_manifest=D:/IC_Workspace/VEDA_artifacts/ml_m2/formal/data/formal_data_manifest.json
+formal_data_manifest_sha256=92342632fb4cc13ecd8577d8d7b93e152472e238603502245cc26556c6fa1be9
+packed_train=D:/IC_Workspace/VEDA_artifacts/ml_m2/formal/data/packed_train.pt
+packed_train_sha256=a0d58c17394835990d3e50c91a362fd63394be644d02992446d391c23716407e
+packed_validation=D:/IC_Workspace/VEDA_artifacts/ml_m2/formal/data/packed_validation.pt
+packed_validation_sha256=79c4682d47cf6fc47ab58b4163e0be7f46c4aed00745993fd4a7133ec1449fa0
+```
+
+## Tokenizer
+
+```text
+tokenizer=D:/IC_Workspace/VEDA_artifacts/ml_m2/formal/tokenizer/tokenizer.json
+tokenizer_sha256=72c4100b9c923f8fc89ea563cdf18743742b87ad7cda6732606b61f50f290a1a
+tokenizer_manifest=D:/IC_Workspace/VEDA_artifacts/ml_m2/formal/tokenizer/tokenizer_manifest.json
+vocab_size=2048
+special_tokens=PAD:0 BOS:1 EOS:2 UNK:3
+```
+
+## Formal Checkpoints
+
+```text
+best_checkpoint=D:/IC_Workspace/VEDA_artifacts/ml_m2/formal/checkpoints/ml_m2_formal_best.pt
+best_checkpoint_sha256=cfaae278aa7fccd903b3b65041bce1b4dd91410ce3cdeacfb50e5b2b6ca933c8
+last_checkpoint=D:/IC_Workspace/VEDA_artifacts/ml_m2/formal/checkpoints/ml_m2_formal_last.pt
+last_checkpoint_sha256=968ee2d583493a816b860b05568f91c6a4ff948e0ffce82a597c151eb927fb2a
+metrics=D:/IC_Workspace/VEDA_artifacts/ml_m2/formal/training/formal_training_metrics.json
+generation_samples=D:/IC_Workspace/VEDA_artifacts/ml_m2/formal/training/generation_samples.json
+```
+
+## FP16 Export
+
+```text
+export_dir=D:/IC_Workspace/VEDA_artifacts/ml_m2/formal/exports/fp16_best
+export_manifest=D:/IC_Workspace/VEDA_artifacts/ml_m2/formal/exports/fp16_best/export_manifest.json
+export_manifest_sha256=5cdff9e7332daa2aea0d452478286ad9a43cd1e0bed33493fa2e8770885708c4
 exported_tensor_count=12
-build/ml_m2_artifacts/traces/smoke_trace_manifest.json
-trace_node_count=35
+exported_tensors=token_embedding,position_embedding,final_norm_gamma,lm_head,norm1_gamma,wq,wk,wv,wo,norm2_gamma,w1,w2
 ```
 
-## Formal Artifacts
+## Formal Traces
 
 ```text
-status=PENDING
-reason=CUDA GPU is not available in this environment.
+trace_len_1_sha256=aa538e34cb4384658bbedac6e2c5d7a494f629b924efb90ad0a0fc02551c4967
+trace_len_2_sha256=3b60cfa0a27fe8929b4598eb6ffc2cb2cfe1b051798f118fef1de51e8a3cefa8
+trace_len_8_sha256=0c67cd0725b6d074d0a421b60a78433b4fe147d15d4a7fa8c8e1d5b3d10a42eb
+trace_len_16_sha256=7b02dd549f5cc61c679149635d066f1ee24a7ff2c2f2d843782e29ad2ae45c7b
+rtl_fixture_len_1_sha256=31cdbef5f8568aa1ad1ca3139ddb13327a3636b15574298fee5c6b953218c951
+rtl_fixture_len_2_sha256=af405b8797584874a0dc4198e14b3de76b558c4990182eeee9d90d8e8baaac62
+rtl_fixture_len_8_sha256=3fcc87439e3bb3866f60fdb750774b486d8491501c3ff1646a2db6f9ccc75d4a
+rtl_fixture_len_16_sha256=ccddcb25197936864fa1d2da69a1bd0da7be4372e7922a8f01d417fe4cfbcd12
 ```
+
+No dataset, checkpoint, tokenizer cache, weight export, or large trace artifact
+is committed to Git.

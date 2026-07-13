@@ -1,0 +1,183 @@
+{
+  "single_batch_overfit": {
+    "checkpoint_manifest": {
+      "metrics": {
+        "final_loss": 0.41808220744132996,
+        "top1": 0.921875
+      },
+      "path": "D:\\IC_Workspace\\VEDA_artifacts\\ml_m2\\numeric_audit\\single_batch_overfit.pt",
+      "sha256": "ecdcb025bdb14d09eea4d06d3bc5438c57d1517eb4d0f56ead286ab472401263",
+      "step": 13
+    },
+    "elapsed_seconds": 0.08616950002033263,
+    "final_loss": 0.41808220744132996,
+    "initial_loss": 4.178725242614746,
+    "reload_max_abs_diff": 0.0,
+    "steps": 13,
+    "top1": 0.921875
+  },
+  "untrained_vocab_2048": {
+    "initialization": {
+      "logits_shape": [
+        8,
+        32,
+        2048
+      ],
+      "stats": [
+        {
+          "max_abs": 0.08784545958042145,
+          "mean": 8.706756489118561e-05,
+          "std": 0.020007403567433357,
+          "tensor": "token_embedding.weight"
+        },
+        {
+          "max_abs": 0.07098179310560226,
+          "mean": 0.000535025610588491,
+          "std": 0.019545016810297966,
+          "tensor": "position_embedding.weight"
+        },
+        {
+          "max_abs": 0.079953633248806,
+          "mean": 0.00025276895030401647,
+          "std": 0.020019402727484703,
+          "tensor": "layers.0.attn.wq.weight"
+        },
+        {
+          "max_abs": 0.08206998556852341,
+          "mean": -8.142090518958867e-05,
+          "std": 0.02022702805697918,
+          "tensor": "layers.0.attn.wk.weight"
+        },
+        {
+          "max_abs": 0.08628732711076736,
+          "mean": -7.426642696373165e-06,
+          "std": 0.01988312043249607,
+          "tensor": "layers.0.attn.wv.weight"
+        },
+        {
+          "max_abs": 0.06766339391469955,
+          "mean": 0.0007459728512912989,
+          "std": 0.019794927909970284,
+          "tensor": "layers.0.attn.wo.weight"
+        },
+        {
+          "max_abs": 0.08553000539541245,
+          "mean": -0.00020148101611994207,
+          "std": 0.020057156682014465,
+          "tensor": "layers.0.ffn.w1.weight"
+        },
+        {
+          "max_abs": 0.08438482135534286,
+          "mean": -4.306835035094991e-05,
+          "std": 0.019925182685256004,
+          "tensor": "layers.0.ffn.w2.weight"
+        },
+        {
+          "max_abs": 1.0,
+          "mean": 1.0,
+          "std": 0.0,
+          "tensor": "final_norm.weight"
+        },
+        {
+          "max_abs": 0.11111759394407272,
+          "mean": 0.0007276120595633984,
+          "std": 0.02787891961634159,
+          "tensor": "layer_input"
+        },
+        {
+          "max_abs": 1.1361933946609497,
+          "mean": 0.0014313597930595279,
+          "std": 0.15936815738677979,
+          "tensor": "logits"
+        }
+      ]
+    },
+    "log_vocab": 7.6246189861593985,
+    "loss": 7.611394882202148,
+    "passes_2x_log_vocab": true,
+    "ratio_to_log_vocab": 0.9982656046182432,
+    "vocab_size": 2048
+  },
+  "untrained_vocab_256": {
+    "initialization": {
+      "logits_shape": [
+        8,
+        32,
+        256
+      ],
+      "stats": [
+        {
+          "max_abs": 0.07416658103466034,
+          "mean": 0.00024545748601667583,
+          "std": 0.019673392176628113,
+          "tensor": "token_embedding.weight"
+        },
+        {
+          "max_abs": 0.062201425433158875,
+          "mean": 0.000935374409891665,
+          "std": 0.019816158339381218,
+          "tensor": "position_embedding.weight"
+        },
+        {
+          "max_abs": 0.07234479486942291,
+          "mean": -0.00033141521271318197,
+          "std": 0.019818821921944618,
+          "tensor": "layers.0.attn.wq.weight"
+        },
+        {
+          "max_abs": 0.0685683935880661,
+          "mean": -0.0002044300636043772,
+          "std": 0.020016303285956383,
+          "tensor": "layers.0.attn.wk.weight"
+        },
+        {
+          "max_abs": 0.07361013442277908,
+          "mean": -1.5649624401703477e-05,
+          "std": 0.01993662677705288,
+          "tensor": "layers.0.attn.wv.weight"
+        },
+        {
+          "max_abs": 0.10008671879768372,
+          "mean": -0.00010825273784575984,
+          "std": 0.02031347155570984,
+          "tensor": "layers.0.attn.wo.weight"
+        },
+        {
+          "max_abs": 0.07297710329294205,
+          "mean": 0.00017963095160666853,
+          "std": 0.01987604610621929,
+          "tensor": "layers.0.ffn.w1.weight"
+        },
+        {
+          "max_abs": 0.09012550860643387,
+          "mean": 0.00025143008679151535,
+          "std": 0.020074250176548958,
+          "tensor": "layers.0.ffn.w2.weight"
+        },
+        {
+          "max_abs": 1.0,
+          "mean": 1.0,
+          "std": 0.0,
+          "tensor": "final_norm.weight"
+        },
+        {
+          "max_abs": 0.12147265672683716,
+          "mean": 0.0012382736895233393,
+          "std": 0.028119904920458794,
+          "tensor": "layer_input"
+        },
+        {
+          "max_abs": 1.0001708269119263,
+          "mean": 0.01036795973777771,
+          "std": 0.1601332277059555,
+          "tensor": "logits"
+        }
+      ]
+    },
+    "log_vocab": 5.545177444479562,
+    "loss": 5.566272735595703,
+    "passes_2x_log_vocab": true,
+    "ratio_to_log_vocab": 1.0038042589849208,
+    "vocab_size": 256
+  }
+}

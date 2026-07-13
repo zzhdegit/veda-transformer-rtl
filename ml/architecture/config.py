@@ -22,6 +22,7 @@ class HardwareMatchedConfig:
     bias: bool = False
     dropout: float = 0.0
     tie_word_embeddings: bool = True
+    initializer_range: float = 0.02
     pad_token_id: int = 0
     bos_token_id: int = 1
     eos_token_id: int = 2
@@ -62,4 +63,3 @@ class HardwareMatchedConfig:
     @classmethod
     def load(cls, path: str | Path) -> "HardwareMatchedConfig":
         return cls.from_json_dict(json.loads(Path(path).read_text(encoding="utf-8")))
-

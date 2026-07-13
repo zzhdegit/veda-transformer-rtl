@@ -1,27 +1,13 @@
 {
-  "artifact_root": "build\\ml_m2_artifacts",
-  "cuda_available": false,
-  "cuda_device_count": 0,
-  "cuda_device_name": "",
-  "data_root": "build\\ml_m2_artifacts\\datasets",
-  "environment": {
-    "access_date": "2026-07-13",
-    "cuda_available": "False",
-    "cuda_device_count": "0",
-    "cuda_device_name": "",
-    "current_date": "2026-07-13",
-    "python_hash_seed": "",
-    "torch_version": "2.11.0+cpu",
-    "veda_hf_cache": "",
-    "veda_ml_artifact_root": "build\\ml_m2_artifacts",
-    "veda_ml_data_root": "build\\ml_m2_artifacts\\datasets"
-  },
-  "formal_training_status": "PENDING",
-  "pending_reason": "CUDA GPU is not available in this environment.",
-  "reproduction_command": "python -m ml.training.train --mode formal --config ml/configs/ml_m2_formal.json --output-dir %VEDA_ML_ARTIFACT_ROOT%/formal",
-  "required_dataset_files": [
-    "build\\ml_m2_artifacts\\datasets\\TinyStories-train.txt",
-    "build\\ml_m2_artifacts\\datasets\\TinyStories-valid.txt"
-  ],
-  "stage": "ML-M2E"
+  "best_checkpoint": "D:/IC_Workspace/VEDA_artifacts/ml_m2/formal/checkpoints/ml_m2_formal_best.pt",
+  "best_checkpoint_sha256": "cfaae278aa7fccd903b3b65041bce1b4dd91410ce3cdeacfb50e5b2b6ca933c8",
+  "best_validation_loss": 3.300639416490282,
+  "cuda_available": true,
+  "cuda_device_name": "NVIDIA GeForce RTX 5080",
+  "formal_training_status": "COMPLETE",
+  "perplexity": 27.129980732808296,
+  "stage": "ML-M2E",
+  "steps": 891,
+  "train_stories": 100000,
+  "validation_stories": 10000
 }

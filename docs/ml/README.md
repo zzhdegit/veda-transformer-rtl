@@ -55,6 +55,12 @@ make ml-m2-smoke-test
 make ml-m2-export-test
 make ml-m2-trace-test
 make ml-m2-test
+make ml-m2-gpu-check
+make ml-m2-numeric-audit
+make ml-m2-formal-data
+make ml-m2-formal-train
+make ml-m2-formal-eval
+make ml-m2-formal-export
 ```
 
 On hosts without `make`, run the underlying Python commands:
@@ -62,3 +68,7 @@ On hosts without `make`, run the underlying Python commands:
 ```bash
 python scripts/ml/run_ml_m2_all_tests.py
 ```
+
+ML-M2 Formal artifacts are stored outside Git under
+`D:/IC_Workspace/VEDA_artifacts/ml_m2/formal` on the development machine used
+for the accepted formal run.

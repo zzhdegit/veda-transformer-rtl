@@ -14,6 +14,7 @@ def tensor_error_metrics(a: torch.Tensor, b: torch.Tensor) -> dict[str, float]:
     return {
         "max_abs_error": float(diff.max().item()) if diff.numel() else 0.0,
         "mean_abs_error": float(diff.mean().item()) if diff.numel() else 0.0,
+        "rmse": float(torch.sqrt(torch.mean((a - b) ** 2)).item()) if diff.numel() else 0.0,
         "cosine_similarity": cosine,
     }
 
@@ -32,4 +33,3 @@ def logits_agreement(fp32_logits: torch.Tensor, test_logits: torch.Tensor, k: in
         "top5_overlap": float(sum(overlap) / len(overlap)) if overlap else 1.0,
         "first_differing_token": int(diff_positions[0].item()) if diff_positions.numel() else -1,
     }
-

@@ -31,6 +31,12 @@ def test_sequence_builder_packs_next_token_labels():
     assert batch.labels == [[10, 11, 12, 2]]
 
 
+def test_sequence_builder_masks_pad_labels():
+    batch = build_lm_sequences([1, 10, 2], context_length=4, pad_id=0)
+    assert batch.input_ids == [[1, 10, 2, 0]]
+    assert batch.labels == [[10, 2, -100, -100]]
+
+
 def test_deterministic_split_keeps_test_prompts_out_of_train():
     items = [f"doc{i}" for i in range(10)]
     train, val, test = deterministic_split(items, validation_fraction=0.2, test_count=3)
@@ -60,3 +66,15 @@ def test_tokenizer_save_load_manifest_and_validation(tmp_path: Path):
     result = validate_tokenizer(tmp_path / "tokenizer.json")
     assert result["vocab_size"] == manifest.vocab_size
 
+
+def test_tokenizer_special_tokens_id_range_and_stats():
+    tokenizer = SimpleBPETokenizer.train([fixture_text()], vocab_size=256)
+    assert tokenizer.pad_id == 0
+    assert tokenizer.bos_id == 1
+    assert tokenizer.eos_id == 2
+    assert tokenizer.unk_id == 3
+    encoded = tokenizer.encode("Mia found a blue shell.", add_bos=True, add_eos=True)
+    assert all(0 <= token_id < len(tokenizer.vocab) for token_id in encoded)
+    stats = tokenizer.stats(["Mia found a blue shell."])
+    assert stats.total_tokens == len(encoded)
+    assert stats.unk_tokens == 0

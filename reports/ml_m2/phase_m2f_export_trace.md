@@ -2,8 +2,8 @@
 
 ## Result
 
-ML-M2F adds FP16 export, manifest validation, hardware-aware Stage 7 bit-model
-execution, trace export, and small RTL fixture generation.
+Formal FP16 export and hardware-aware traces completed from the formal best
+TinyStories checkpoint.
 
 ## Exported Tensor Count
 
@@ -22,8 +22,10 @@ The export path emits 12 tensors:
 - W1;
 - W2.
 
-All tensors are exported as FP16 `.npy` and `.hex` files in the artifact
-directory. Large exports are ignored by Git.
+```text
+export_dir=D:/IC_Workspace/VEDA_artifacts/ml_m2/formal/exports/fp16_best
+export_manifest_sha256=5cdff9e7332daa2aea0d452478286ad9a43cd1e0bed33493fa2e8770885708c4
+```
 
 ## Layout
 
@@ -41,40 +43,57 @@ The hardware-aware layer imports the accepted repository bit model:
 - `model.arithmetic.fp16_fp32_reference`
 
 It simulates token-by-token Stage 7 behavior with FP16 hidden/weights, FP32
-accumulation/residuals, FP16 Q/K/V and concat boundaries, and append-only KV
-cache.
+accumulation/residuals, FP16 Q/K/V and concat boundaries, ReLU FP16 activation
+boundary, and append-only KV cache.
 
 ## Trace Coverage
 
-Trace manifests include model-level, layer-level, and cache-level metadata with
-shape, dtype, checksum, stage, token index, and layer index.
-
-Recorded smoke artifact run:
+Formal traces cover prompt lengths 1, 2, 8, and 16. Each trace has 40 nodes and
+includes:
 
 ```text
-exported_tensors=12
-trace_node_count=35
-trace_valid_seq_len=2
-trace_path=build/ml_m2_artifacts/traces/smoke_trace_manifest.json
+token_ids
+position_ids
+token_embedding
+position_embedding
+layer_input
+rmsnorm1_input/output
+Q/K/V projection FP32
+Q/K/V FP16
+score
+scaled score
+softmax probability
+per-head output
+concat FP32/FP16
+WO
+residual1
+rmsnorm2
+W1
+ReLU
+activation FP16
+W2
+residual2
+layer_output
+final_norm
+logits
+top-k
+next_token
+K/V cache final snapshot
+K/V cache history after each token
+valid_seq_len
 ```
 
-PyTorch vs hardware-aware smoke logits:
+## Error Summary
 
 ```text
-max_abs_error=0.0028839111328125
-mean_abs_error=0.0006555751897394657
-top1_agreement=1.0
-top5_overlap=1.0
-first_differing_token=-1
+max_pytorch_vs_fp16_weight_logit_error=0.0012482404708862305
+max_pytorch_vs_hardware_aware_logit_error=0.0021828413009643555
+max_layer_output_error=0.0002460405230522156
+max_k_cache_error=0.0009813308715820312
+max_v_cache_error=0.0004578828811645508
+top1_agreement=1.0 for all traced prompt lengths
+top5_overlap=1.0 for all traced prompt lengths
+first_differing_token=-1 for all traced prompt lengths
 ```
 
-## Tests
-
-Tests cover:
-
-- Linear export direction;
-- FP16 export manifest and SHA256 validation;
-- hardware-aware model execution;
-- PyTorch vs hardware-aware metric generation;
-- trace manifest node coverage;
-- small RTL fixture manifest generation.
+ML-M2F did not run real RTL co-simulation.

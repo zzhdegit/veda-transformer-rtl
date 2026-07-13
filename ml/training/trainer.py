@@ -30,6 +30,7 @@ class TrainingMetrics:
     elapsed_seconds: float
     device: str
     no_nan_inf: bool
+    grad_norm: float = 0.0
 
 
 def make_dataset(batch: SequenceBatch) -> TensorDataset:
@@ -75,6 +76,7 @@ def train_for_steps(
     initial_loss = None
     final_loss = None
     no_nan_inf = True
+    last_grad_norm = 0.0
     start = time.perf_counter()
     model.train()
     for step in range(steps):
@@ -94,7 +96,8 @@ def train_for_steps(
         if initial_loss is None:
             initial_loss = float(loss.detach().cpu())
         loss.backward()
-        torch.nn.utils.clip_grad_norm_(model.parameters(), grad_clip_norm)
+        grad_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), grad_clip_norm)
+        last_grad_norm = float(grad_norm.detach().cpu()) if hasattr(grad_norm, "detach") else float(grad_norm)
         optimizer.step()
         scheduler.step()
         final_loss = float(loss.detach().cpu())
@@ -114,6 +117,6 @@ def train_for_steps(
         elapsed_seconds=elapsed,
         device=str(torch_device),
         no_nan_inf=no_nan_inf,
+        grad_norm=last_grad_norm,
     )
     return model.cpu(), metrics
-

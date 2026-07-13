@@ -47,9 +47,9 @@ def build_lm_sequences(
             continue
         if len(window) < need:
             window = window + [pad_id] * (need - len(window))
+        label_window = [token if token != pad_id else -100 for token in window[1:]]
         inputs.append(window[:-1])
-        labels.append(window[1:])
+        labels.append(label_window)
         if start + need >= len(ids):
             break
     return SequenceBatch(inputs, labels)
-

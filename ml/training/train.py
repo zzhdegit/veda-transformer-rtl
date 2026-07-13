@@ -9,6 +9,7 @@ from pathlib import Path
 
 from ml.architecture.config import HardwareMatchedConfig
 from ml.data.dataset_manifest import artifact_root
+from ml.training.formal_train import FormalTrainingConfig, run_formal_training
 from ml.training.smoke import run_smoke_training
 
 
@@ -32,7 +33,19 @@ def main() -> None:
 
     data = load_stage_config(args.config)
     if args.mode == "formal":
-        raise SystemExit("formal TinyStories training workflow is defined in ML-M2E and requires a GPU artifact setup")
+        training = data.get("training", {})
+        cfg = FormalTrainingConfig(
+            batch_size=int(training.get("batch_size", 512)),
+            epochs=int(training.get("epochs", 3)),
+            validation_interval=int(training.get("eval_interval", 100)),
+            learning_rate=float(training.get("learning_rate", 3.0e-4)),
+            weight_decay=float(training.get("weight_decay", 0.1)),
+            grad_clip_norm=float(training.get("grad_clip_norm", 1.0)),
+            seed=int(training.get("seed", 20260713)),
+        )
+        result = run_formal_training(args.output_dir, cfg)
+        print(json.dumps(result, indent=2, sort_keys=True))
+        return
     result = run_smoke_training(Path(args.output_dir), data)
     metrics = asdict(result["metrics"])
     print(json.dumps(metrics, indent=2, sort_keys=True))
@@ -42,4 +55,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

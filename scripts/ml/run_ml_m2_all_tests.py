@@ -12,6 +12,7 @@ PY_COMPILE_FILES = [
     "ml/data/tiny_shakespeare_loader.py",
     "ml/data/sequence_builder.py",
     "ml/data/dataset_hash.py",
+    "ml/data/formal_data.py",
     "ml/tokenizer/train_bpe.py",
     "ml/tokenizer/load_tokenizer.py",
     "ml/tokenizer/validate_tokenizer.py",
@@ -31,6 +32,8 @@ PY_COMPILE_FILES = [
     "ml/training/train.py",
     "ml/training/smoke.py",
     "ml/training/formal.py",
+    "ml/training/formal_train.py",
+    "ml/training/numeric_audit.py",
     "ml/inference/generate.py",
     "ml/inference/incremental_decode.py",
     "ml/inference/prompt_suite.py",
@@ -40,6 +43,7 @@ PY_COMPILE_FILES = [
     "ml/export/validate_export.py",
     "ml/export/export_checkpoint.py",
     "ml/export/export_trace.py",
+    "ml/export/formal_export.py",
     "ml/cosim/fp16_policy.py",
     "ml/cosim/hardware_aware_layer.py",
     "ml/cosim/hardware_aware_model.py",
@@ -54,6 +58,12 @@ PY_COMPILE_FILES = [
     "scripts/ml/run_ml_m2_unit_tests.py",
     "scripts/ml/run_ml_m2_smoke_test.py",
     "scripts/ml/run_ml_m2_export_trace_tests.py",
+    "scripts/ml/run_ml_m2_gpu_check.py",
+    "scripts/ml/run_ml_m2_numeric_audit.py",
+    "scripts/ml/run_ml_m2_formal_data.py",
+    "scripts/ml/run_ml_m2_formal_train.py",
+    "scripts/ml/run_ml_m2_formal_eval.py",
+    "scripts/ml/run_ml_m2_formal_export.py",
 ]
 
 
@@ -69,6 +79,7 @@ def main() -> int:
         [sys.executable, "scripts/ml/run_ml_m2_unit_tests.py"],
         [sys.executable, "scripts/ml/run_ml_m2_smoke_test.py"],
         [sys.executable, "scripts/ml/run_ml_m2_export_trace_tests.py"],
+        [sys.executable, "-m", "pytest", "ml/tests/test_training_numerics.py"],
     ]
     for cmd in commands:
         code = run(cmd)
@@ -79,4 +90,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

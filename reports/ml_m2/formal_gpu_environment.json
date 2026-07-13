@@ -1,0 +1,20 @@
+{
+  "bf16_supported": true,
+  "cuda_available": true,
+  "cuda_smoke": {
+    "bf16_matmul": true,
+    "peak_allocated_bytes": 23855616,
+    "status": "ok"
+  },
+  "device_capability": [
+    12,
+    0
+  ],
+  "device_count": 1,
+  "device_name": "NVIDIA GeForce RTX 5080",
+  "nvidia_smi_query": "NVIDIA GeForce RTX 5080, 576.88, 16303 MiB, 4301 MiB, 12.0",
+  "platform": "Windows-10-10.0.26100-SP0",
+  "python": "3.10.19 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 16:41:31) [MSC v.1929 64 bit (AMD64)]",
+  "torch": "2.10.0.dev20251204+cu128",
+  "torch_cuda_runtime": "12.8"
+}

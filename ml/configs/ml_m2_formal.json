@@ -18,13 +18,19 @@
   "training": {
     "seed": 20260713,
     "dtype": "bf16_if_cuda_supported_else_fp32",
-    "batch_size": 64,
-    "learning_rate": 0.001,
-    "weight_decay": 0.01,
+    "batch_size": 512,
+    "learning_rate": 0.0003,
+    "minimum_lr": 0.00003,
+    "betas": [0.9, 0.95],
+    "eps": 1e-8,
+    "weight_decay": 0.1,
     "grad_clip_norm": 1.0,
-    "max_steps": 2000,
+    "epochs": 3,
+    "maximum_epochs": 5,
+    "warmup_fraction": 0.02,
+    "schedule": "cosine",
     "eval_interval": 100,
-    "save_interval": 500,
+    "save_interval": 250,
     "subset_examples": 100000
   },
   "dataset": {
@@ -36,4 +42,3 @@
     "revision": "main"
   }
 }
-

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
@@ -26,6 +27,8 @@ class SimpleBPETokenizer:
         self.vocab = dict(vocab)
         self.id_to_token = {idx: token for token, idx in self.vocab.items()}
         self.merges = list(merges)
+        self._merge_ranks = {pair: rank for rank, pair in enumerate(self.merges)}
+        self._piece_cache: dict[str, list[str]] = {}
         self.special_tokens = list(special_tokens or SPECIAL_TOKENS)
         self.pad_id = self.vocab["<pad>"]
         self.bos_id = self.vocab["<bos>"]
@@ -36,8 +39,12 @@ class SimpleBPETokenizer:
     def train(cls, texts: list[str], vocab_size: int = 2048, min_pair_frequency: int = 2) -> "SimpleBPETokenizer":
         if vocab_size < len(SPECIAL_TOKENS) + 1:
             raise ValueError("vocab_size too small")
-        words = [list(text) for text in texts if text]
-        chars = sorted({ch for word in words for ch in word})
+        words_counter: Counter[tuple[str, ...]] = Counter()
+        for text in texts:
+            for piece in re.findall(r"\S+|\s+", text):
+                if piece:
+                    words_counter[tuple(piece)] += 1
+        chars = sorted({ch for word in words_counter for ch in word})
         vocab: dict[str, int] = {tok: idx for idx, tok in enumerate(SPECIAL_TOKENS)}
         for ch in chars:
             if ch not in vocab and len(vocab) < vocab_size:
@@ -46,8 +53,9 @@ class SimpleBPETokenizer:
 
         while len(vocab) < vocab_size:
             pair_counts: Counter[tuple[str, str]] = Counter()
-            for word in words:
-                pair_counts.update(zip(word, word[1:]))
+            for word, freq in words_counter.items():
+                for pair in zip(word, word[1:]):
+                    pair_counts[pair] += freq
             if not pair_counts:
                 break
             best_pair, best_count = min(
@@ -61,7 +69,10 @@ class SimpleBPETokenizer:
                 break
             vocab[merged] = len(vocab)
             merges.append(best_pair)
-            words = [cls._merge_word(word, best_pair, merged) for word in words]
+            new_counter: Counter[tuple[str, ...]] = Counter()
+            for word, freq in words_counter.items():
+                new_counter[tuple(cls._merge_word(list(word), best_pair, merged))] += freq
+            words_counter = new_counter
         return cls(vocab, merges, SPECIAL_TOKENS)
 
     @staticmethod
@@ -77,11 +88,29 @@ class SimpleBPETokenizer:
                 idx += 1
         return out
 
-    def tokenize(self, text: str) -> list[str]:
-        pieces = list(text)
-        for left, right in self.merges:
-            pieces = self._merge_word(pieces, (left, right), left + right)
+    def _tokenize_piece(self, piece: str) -> list[str]:
+        cached = self._piece_cache.get(piece)
+        if cached is not None:
+            return list(cached)
+        if piece in self.vocab:
+            self._piece_cache[piece] = [piece]
+            return [piece]
+        pieces = list(piece)
+        while len(pieces) > 1:
+            pairs = list(zip(pieces, pieces[1:]))
+            ranked = [(self._merge_ranks[pair], pair) for pair in pairs if pair in self._merge_ranks]
+            if not ranked:
+                break
+            _, best = min(ranked, key=lambda item: item[0])
+            pieces = self._merge_word(pieces, best, best[0] + best[1])
+        self._piece_cache[piece] = list(pieces)
         return pieces
+
+    def tokenize(self, text: str) -> list[str]:
+        tokens: list[str] = []
+        for piece in re.findall(r"\S+|\s+", text):
+            tokens.extend(self._tokenize_piece(piece))
+        return tokens
 
     def encode(self, text: str, add_bos: bool = False, add_eos: bool = False) -> list[int]:
         ids: list[int] = []
@@ -151,4 +180,3 @@ class SimpleBPETokenizer:
 
 def load_tokenizer(path: str | Path) -> SimpleBPETokenizer:
     return SimpleBPETokenizer.load(path)
-

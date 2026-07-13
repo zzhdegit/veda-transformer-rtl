@@ -17,6 +17,8 @@ class HardwareAwareLayerResult:
     traces: list
     k_cache: list
     v_cache: list
+    k_cache_history: list
+    v_cache_history: list
 
 
 def _weights_from_model(model) -> tuple[dict[int, list], list[int], list[int], list, list]:
@@ -60,16 +62,22 @@ def run_hardware_aware_layer(model, layer_inputs: torch.Tensor, pe_num: int = 8)
     ref = build_transformer_layer_reference(model, max_seq_len=model.config.context_length, pe_num=pe_num)
     outputs = []
     traces = []
+    k_history = []
+    v_history = []
     for token_index, hidden in enumerate(layer_inputs.detach().cpu().float()):
         hidden_fp16 = [float_to_fp16_bits(float(value)) for value in hidden.tolist()]
         trace = ref.run_token(hidden_fp16, meta=token_index)
         outputs.append([fp32_bits_to_float(value) for value in trace.final_fp32])
         traces.append(trace)
+        k_snapshot, v_snapshot = ref.mha.stage5.cache.snapshot()
+        k_history.append(k_snapshot)
+        v_history.append(v_snapshot)
     k_cache, v_cache = ref.mha.stage5.cache.snapshot()
     return HardwareAwareLayerResult(
         layer_output=torch.tensor(outputs, dtype=torch.float32),
         traces=traces,
         k_cache=k_cache,
         v_cache=v_cache,
+        k_cache_history=k_history,
+        v_cache_history=v_history,
     )
-

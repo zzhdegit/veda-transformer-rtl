@@ -27,6 +27,7 @@ def run_hardware_aware_model(model, input_ids: torch.Tensor) -> dict:
         "layer_output": layer_output,
         "k_cache": layer_result.k_cache,
         "v_cache": layer_result.v_cache,
+        "k_cache_history": layer_result.k_cache_history,
+        "v_cache_history": layer_result.v_cache_history,
         "traces": layer_result.traces,
     }
-

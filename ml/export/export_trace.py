@@ -58,6 +58,9 @@ def export_trace(model, input_ids: torch.Tensor, output_path: str | Path) -> dic
         tensor_record("layer_output", trace["layer_output"], "model", layer_index=0),
         tensor_record("final_norm", trace["final_norm"], "model"),
         tensor_record("logits", trace["logits"], "model"),
+        tensor_record("top_k_values", trace["top_k"]["values"], "model"),
+        tensor_record("top_k_indices", trace["top_k"]["indices"], "model"),
+        tensor_record("next_token", trace["next_token"], "model"),
         tensor_record("hardware_layer_output", hw["layer_output"], "hardware_aware", layer_index=0),
     ]
     layer_trace = trace["layer_0"]
@@ -115,6 +118,8 @@ def export_trace(model, input_ids: torch.Tensor, output_path: str | Path) -> dic
             int_record("activation_fp16", activation_fp16, "hardware_aware", layer_index=0),
             int_record("k_cache_after_token", hw["k_cache"], "cache", layer_index=0),
             int_record("v_cache_after_token", hw["v_cache"], "cache", layer_index=0),
+            int_record("k_cache_history_after_each_token", hw["k_cache_history"], "cache", layer_index=0),
+            int_record("v_cache_history_after_each_token", hw["v_cache_history"], "cache", layer_index=0),
         ]
     )
     cache_records = {
