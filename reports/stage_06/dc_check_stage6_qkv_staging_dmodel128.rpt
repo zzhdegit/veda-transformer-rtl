@@ -1,0 +1,21 @@
+ 
+****************************************
+check_design summary:
+Version:     L-2016.03-SP1
+Date:        Mon Jul 13 12:12:39 2026
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Inputs/Outputs                                                      7
+    Feedthrough (LINT-29)                                           7
+--------------------------------------------------------------------------------
+
+Warning: In design 'qkv_staging_buffer_N_HEAD8_D_HEAD16', input port 'read_index[6]' is connected directly to output port 'read_head[2]'. (LINT-29)
+Warning: In design 'qkv_staging_buffer_N_HEAD8_D_HEAD16', input port 'read_index[5]' is connected directly to output port 'read_head[1]'. (LINT-29)
+Warning: In design 'qkv_staging_buffer_N_HEAD8_D_HEAD16', input port 'read_index[4]' is connected directly to output port 'read_head[0]'. (LINT-29)
+Warning: In design 'qkv_staging_buffer_N_HEAD8_D_HEAD16', input port 'read_index[3]' is connected directly to output port 'read_dim[3]'. (LINT-29)
+Warning: In design 'qkv_staging_buffer_N_HEAD8_D_HEAD16', input port 'read_index[2]' is connected directly to output port 'read_dim[2]'. (LINT-29)
+Warning: In design 'qkv_staging_buffer_N_HEAD8_D_HEAD16', input port 'read_index[1]' is connected directly to output port 'read_dim[1]'. (LINT-29)
+Warning: In design 'qkv_staging_buffer_N_HEAD8_D_HEAD16', input port 'read_index[0]' is connected directly to output port 'read_dim[0]'. (LINT-29)
+1

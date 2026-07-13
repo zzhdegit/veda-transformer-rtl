@@ -1,0 +1,27 @@
+ 
+****************************************
+check_design summary:
+Version:     L-2016.03-SP1
+Date:        Mon Jul 13 12:12:40 2026
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Cells                                                               9
+    Cells do not drive (LINT-1)                                     9
+
+Nets                                                                1
+    Unloaded nets (LINT-2)                                          1
+--------------------------------------------------------------------------------
+
+Warning: In design 'head_concat_quantizer_N_HEAD8_D_HEAD16_PE_NUM8_META_W16_COUNTER_W64', cell 'C3585' does not drive any nets. (LINT-1)
+Warning: In design 'head_concat_quantizer_N_HEAD8_D_HEAD16_PE_NUM8_META_W16_COUNTER_W64', cell 'C3637' does not drive any nets. (LINT-1)
+Warning: In design 'head_concat_quantizer_N_HEAD8_D_HEAD16_PE_NUM8_META_W16_COUNTER_W64', cell 'C3638' does not drive any nets. (LINT-1)
+Warning: In design 'head_concat_quantizer_N_HEAD8_D_HEAD16_PE_NUM8_META_W16_COUNTER_W64', cell 'C3649' does not drive any nets. (LINT-1)
+Warning: In design 'head_concat_quantizer_N_HEAD8_D_HEAD16_PE_NUM8_META_W16_COUNTER_W64', cell 'C3650' does not drive any nets. (LINT-1)
+Warning: In design 'head_concat_quantizer_N_HEAD8_D_HEAD16_PE_NUM8_META_W16_COUNTER_W64', cell 'C3655' does not drive any nets. (LINT-1)
+Warning: In design 'head_concat_quantizer_N_HEAD8_D_HEAD16_PE_NUM8_META_W16_COUNTER_W64', cell 'C3657' does not drive any nets. (LINT-1)
+Warning: In design 'head_concat_quantizer_N_HEAD8_D_HEAD16_PE_NUM8_META_W16_COUNTER_W64', cell 'C3664' does not drive any nets. (LINT-1)
+Warning: In design 'head_concat_quantizer_N_HEAD8_D_HEAD16_PE_NUM8_META_W16_COUNTER_W64', cell 'C3668' does not drive any nets. (LINT-1)
+Warning: In design 'head_concat_quantizer_N_HEAD8_D_HEAD16_PE_NUM8_META_W16_COUNTER_W64', net 'quant_out_last' driven by pin 'u_concat_quantizer/out_last' has no loads. (LINT-2)
+1

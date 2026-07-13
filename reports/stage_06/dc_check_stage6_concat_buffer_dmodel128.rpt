@@ -1,0 +1,15 @@
+ 
+****************************************
+check_design summary:
+Version:     L-2016.03-SP1
+Date:        Mon Jul 13 12:12:40 2026
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Inputs/Outputs                                                      1
+    Constant outputs (LINT-52)                                      1
+--------------------------------------------------------------------------------
+
+Warning: In design 'concat_fp16_buffer_D_MODEL128', output port 'write_ready' is connected directly to 'logic 1'. (LINT-52)
+1

@@ -12,7 +12,11 @@ ProjectionMhaStepTrace = namedtuple(
         "meta",
         "qkv",
         "attention",
+        "head_output_fp32",
+        "concat_fp32",
+        "concat_fp16",
         "output_projection",
+        "wo_output_fp32",
         "final_output_fp32",
         "status",
         "invalid",
@@ -36,16 +40,28 @@ class ProjectionMhaReference(object):
         qkv = qkv_projection(hidden_fp16, self.weights, self.n_head, self.d_head, self.pe_num)
         attention = self.stage5.run_token(qkv.q_heads, qkv.k_heads, qkv.v_heads, meta)
         if attention.invalid:
+            head_output = []
+            concat_fp32 = []
+            concat_fp16 = []
             output = None
+            wo_output = []
             final_output = []
         else:
+            head_output = attention.outputs
             output = output_projection(attention.outputs, self.weights[WO], self.n_head, self.d_head, self.pe_num)
-            final_output = output.output_fp32
+            concat_fp32 = output.concat_fp32
+            concat_fp16 = output.concat_fp16
+            wo_output = output.output_fp32
+            final_output = wo_output
         return ProjectionMhaStepTrace(
             meta=meta,
             qkv=qkv,
             attention=attention,
+            head_output_fp32=head_output,
+            concat_fp32=concat_fp32,
+            concat_fp16=concat_fp16,
             output_projection=output,
+            wo_output_fp32=wo_output,
             final_output_fp32=final_output,
             status=attention.status,
             invalid=attention.invalid,

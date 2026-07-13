@@ -1,0 +1,17 @@
+ 
+****************************************
+check_design summary:
+Version:     L-2016.03-SP1
+Date:        Mon Jul 13 12:12:36 2026
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Inputs/Outputs                                                      2
+    Unconnected ports (LINT-28)                                     1
+    Constant outputs (LINT-52)                                      1
+--------------------------------------------------------------------------------
+
+Warning: In design 'projection_input_buffer_D_MODEL128', port 'load_last' is not connected to any nets. (LINT-28)
+Warning: In design 'projection_input_buffer_D_MODEL128', output port 'load_ready' is connected directly to 'logic 1'. (LINT-52)
+1

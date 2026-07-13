@@ -97,8 +97,10 @@ Projection boundaries:
 - Q/K/V raw projection results: FP32;
 - Q/K/V sent into Stage 5: FP16 after explicit FP32-to-FP16 conversion;
 - Stage 5 per-head outputs: FP32;
-- head concat buffer: FP32;
-- concat sent into `W_O` GEMV: FP16 after explicit FP32-to-FP16 conversion;
+- logical head concat comparison tensor: FP32;
+- RTL head concat storage: FP16 only, written by streaming FP32-to-FP16
+  conversion as each Stage 5 head output element arrives;
+- concat sent into `W_O` GEMV: the FP16 concat buffer contents;
 - final Stage 6 output: FP32.
 
 FP32-to-FP16 conversion policy:
@@ -135,14 +137,50 @@ Concat address:
 concat_index = head * D_HEAD + dim
 ```
 
+For tiled Stage 5 output this is equivalently:
+
+```text
+concat_index = output_head * D_HEAD + output_base_dim + lane_index
+```
+
 The concat order is:
 
 ```text
 [head_0, head_1, ..., head_(N_HEAD-1)]
 ```
 
-`W_O` quantization order is exactly `concat_index = 0..D_MODEL-1`. `W_O` then
-uses the same output-row-major GEMV layout and the same Stage 2 reduction order.
+The bit model keeps both the logical FP32 concat tensor and the quantized FP16
+concat tensor for node-by-node comparison. RTL does not store a complete FP32
+concat buffer. It may quantize each active lane as it arrives and write the
+FP16 result to `concat_fp16[concat_index]`. This streaming implementation must
+be bit-exact equivalent to forming the full logical FP32 concat tensor and then
+quantizing each element in concat-index order.
+
+`W_O` computes:
+
+```text
+output[o] = sum(i = 0..D_MODEL-1) concat_fp16[i] * W_O[o][i]
+```
+
+`W_O` uses output-row-major weight layout and the same Stage 2 reduction order.
+No bias is present in Stage 6.
+
+## Shared Projection Datapath
+
+Q, K, V, and W_O all use one shared projection datapath:
+
+- `projection_input_buffer`
+- `projection_weight_buffer`
+- `shared_gemv_projection_core`
+- `reconfigurable_pe_core`
+
+The final top `projection_integrated_mha` directly arbitrates ownership of this
+single `projection_controller`. `qkv_projection_engine` remains available for
+Stage 6C/6D regressions, but the final Stage 6 top does not instantiate it and
+does not instantiate another PE through an output projection engine.
+
+The Stage 5 attention datapath is unchanged from the accepted Stage 5
+architecture.
 
 ## Transaction Semantics
 
@@ -159,6 +197,77 @@ Stage 6 output projection runs after Stage 5 has committed K/V. If legal finite
 inputs are used, output projection invalid must not occur. If output projection
 does report invalid in the first implementation, Stage 6 reports invalid but
 does not roll back already committed Stage 5 K/V.
+
+Final Stage 6 token ordering is:
+
+1. hidden-state dimensions load;
+2. Q projection;
+3. K projection;
+4. V projection;
+5. Q/K/V quantized stream into Stage 5;
+6. Stage 5 attention;
+7. Stage 5 all-head atomic K/V commit;
+8. streamed head concat quantization into the FP16 concat buffer;
+9. W_O output projection through the shared projection GEMV;
+10. final FP32 output stream;
+11. `done_valid`;
+12. only after final done handshake may the next hidden-state token begin.
+
+The implementation distinguishes `attention_done`, cache commit completion via
+Stage 5 done, `concat_complete`, `output_projection_done`, and final top done.
+
+If QKV projection or Stage 5 attention fails before commit, `valid_seq_len`
+does not increase, Stage 5 abort semantics are preserved, and W_O does not
+start. If Stage 5 has already committed and a later concat/W_O error occurs,
+the K/V commit is not rolled back; final done reports invalid/status, and the
+next token still waits for final done or reset.
+
+Active token transactions block weight writes and block the next hidden-state
+token. Weight loading is allowed only while no hidden token transaction is
+active.
+
+## Final Top Interface
+
+`rtl/attention/projection_integrated_mha.sv` is the final Stage 6 top. Its
+external interface includes:
+
+- clock/reset: `clk`, `rst_n`;
+- weight load: `weight_valid`, `weight_ready`, `weight_kind`,
+  `weight_output_index`, `weight_input_index`, `weight_data_fp16`,
+  `weight_last`, `weight_commit`;
+- hidden input: `token_valid`, `token_ready`, `token_dim`,
+  `token_hidden_fp16`, `token_last_dim`, `token_meta`;
+- final tiled output: `output_valid`, `output_ready`, `output_base_dim`,
+  `output_vector_fp32`, `output_lane_mask`, `output_status`,
+  `output_invalid`, `output_meta`, `output_last`;
+- final done/state: `done_valid`, `done_ready`, `done_status`,
+  `done_invalid`, `done_meta`, `done_valid_seq_len`,
+  `current_valid_seq_len`;
+- performance counters listed in the Stage 6 summary and handoff.
+
+`weight_kind` encodes `WQ`, `WK`, `WV`, and `WO`.
+
+## Performance Counters
+
+Counters are cumulative from reset unless a testbench records deltas:
+
+- `perf_generation_steps`: successful Stage 5 commits; cache-full does not
+  increment it;
+- `perf_total_cycles`: top transaction-active or final-done-valid cycles;
+- `perf_q_projection_cycles`, `perf_k_projection_cycles`,
+  `perf_v_projection_cycles`: Q/K/V phase residency cycles;
+- `perf_qkv_quantization_cycles`: Q/K/V FP32-to-FP16 output fire cycles;
+- `perf_attention_cycles`: Stage 5 per-head attention cycles as reported by
+  Stage 5;
+- `perf_concat_quantization_cycles`: concat quantizer busy/start cycles;
+- `perf_output_projection_cycles`: W_O controller active/start cycles;
+- `perf_projection_pe_stall_cycles`: shared projection PE stall cycles;
+- `perf_attention_pe_stall_cycles`: Stage 5 attention PE stall cycles;
+- `perf_sfu_stall_cycles`: Stage 5 SFU stall cycles;
+- `perf_weight_stall_cycles`: projection input/weight backpressure cycles;
+- `perf_buffer_stall_cycles`: Stage 5 cache/buffer stall cycles;
+- `perf_output_stall_cycles`: final output backpressure cycles;
+- `perf_peak_valid_seq_len`: largest committed sequence length observed.
 
 ## First Implementation Limits
 
