@@ -2,43 +2,82 @@
 
 Status: not accepted.
 
-Closed checkpoint items:
+## Closed Items
 
 - Fixed workspace stayed at `D:/IC_Workspace/VEDA`.
-- Branch `hw/h9-sfu-pe-interleaving` was created and pushed.
-- H8 baseline was confirmed PASS before H9 work.
-- Paper schedule evidence and repository design decisions were documented.
-- H9 native full-array mapping model covers D_HEAD=8, 16, 64, and 128
-  structure.
+- Branch stayed at `hw/h9-sfu-pe-interleaving`.
+- H8 baseline remains the accepted hardware baseline.
+- Paper schedule evidence and repository design decisions are documented.
+- H9 native full-array mapping model covers D_HEAD=8, 16, 64, and 128.
+- Bounded score buffer and probability FIFO RTL modules exist.
 - H9 Python model tests pass.
-- H9 RTL score buffer and probability FIFO tests pass.
-- H9 interleaved paper single-head RTL smoke tests pass for D_HEAD=8, 16, and
-  64.
-- H9 RTL smoke counters show nonzero QK-SFU overlap and SFU-sV overlap.
-- Matched RTL A/B baseline passes for single-head `PAPER_ARRAY+STAGED` versus
-  `PAPER_ARRAY+INTERLEAVED` using the same RTL top, inputs, DesignWare
-  latencies, and output/done ready environment.
+- H9 vs H8 host bit-model comparison remains bit-exact for D_HEAD=8, 16, 64,
+  and 128.
+- Matched single-head RTL A/B evidence exists for paper staged versus paper
+  interleaved using the same top, inputs, wrappers, and ready environment.
 - Matched RTL seq16 and seq32 performance objective is met for D_HEAD=8, 16,
-  and 64.
-- Deterministic output/done backpressure subset passes for D_HEAD=8, 16, and
-  64 at seq16 and seq32.
-- H9 lint/vlogan passes.
-- H9 DC analyze/elaborate/link/check_design passes; no PPA is claimed.
-- Stage 5/6/7/8 regressions pass after the H9 checkpoint changes.
+  and 64 in the existing A/B report.
+- Performance attribution is corrected: the gain is native full-array mapping
+  plus interleaving, not pure interleaving.
+- `model/attention/paper_interleaved_cycle_model.py` is calibrated to the
+  matched RTL counter interval for D_HEAD=8, 16, and 64 at seq 1, 2, 8, 16,
+  32, and 64.
+- Stage5 and Stage7D testbenches now expose `ATTENTION_SCHEDULE`, allowing
+  `PAPER_ARRAY+INTERLEAVED` multi-head and full-layer runs.
+- `scripts/sim/gen_stage5_vectors.py` now supports configurable
+  `--max-seq-len` and config lists for H9 long-sequence/cache-full coverage.
+- `scripts/sim/run_hw_h9_vcs.sh` now includes H9 multi-head, H9 full-layer,
+  H9 long-sequence/cache-full, and assertion-enabled VCS entries.
+- H9 Make targets include cycle calibration, multi-head, full-layer, reset,
+  backpressure, cache-full, and assertion aliases.
+- Host `python scripts/sim/run_hw_h9_tests.py` passes in this closure turn.
+- Static H9 hygiene lint passes in this closure turn.
 
-Open items blocking Hardware Stage H9 PASS:
+## Current Tool-blocked Results
 
-- Multi-head interleaved RTL testbench is not implemented.
-- Full-layer interleaved RTL testbench is not implemented.
-- Required H9 sequence set 1/2/3/7/8/9/15/16/31/32/MAX_SEQ_LEN and
-  cache-full extra-token coverage is incomplete.
-- Exhaustive H9 reset interrupt matrix is incomplete.
-- Deterministic and random H9 backpressure matrix is incomplete.
-- Random seeds have not been saved for broad H9 backpressure/deadlock testing.
-- H9 RTL is not yet proven against the H9 bit model across all required
-  configurations.
-- The structural H9 cycle model is not calibrated to reproduce the matched RTL
-  counter intervals exactly.
+The current execution environment does not provide the RTL/EDA tools required
+for final acceptance:
+
+```text
+reports/hw_h9/rtl_sim_current_env.txt:
+vcs: NOT FOUND
+result=FAIL
+
+reports/hw_h9/lint_results_current_env.txt:
+VCS/vlogan lint compile: SKIPPED - vlogan executable not found.
+result=PASS
+
+reports/hw_h9/synth_check_current_env.txt:
+dc_shell: not found
+DW_FOUNDATION_SLDB: not found
+DC elaboration: SKIPPED - dc_shell not found.
+result=FAIL
+```
+
+## Open Items Blocking Hardware Stage H9 PASS
+
+- Newly added H9 multi-head interleaved RTL runs have not executed because VCS
+  is unavailable.
+- Newly added H9 full-layer interleaved RTL runs have not executed because VCS
+  is unavailable.
+- Full sequence/cache-full H9 RTL coverage is wired but not executed.
+- Full reset interrupt matrix is still incomplete and not executed.
+- Broad deterministic/random backpressure matrix with at least 20 seeds is not
+  implemented or executed.
+- Assertion execution matrix is documented, but the current environment cannot
+  compile/run the assertions.
+- DC structural check cannot be rerun in this environment.
+- Stage5/6/7/8 full RTL regressions cannot be rerun in this environment.
 - No H9 accepted tag has been created.
 
-Do not write `HARDWARE STAGE H9 PASS` until all HW-H9 exit conditions are closed.
+## Decision
+
+Do not write `HARDWARE STAGE H9 PASS`.
+
+Do not create `hw-h9-sfu-pe-interleaving-accepted`.
+
+Do not enter Hardware Stage H10.
+
+Stage 8 remains the accepted hardware baseline until the remaining H9 RTL,
+assertion, random-backpressure, reset, cache-full, lint/vlogan, DC, and
+regression conditions are actually executed and pass.

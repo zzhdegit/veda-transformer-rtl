@@ -1,0 +1,3 @@
+Hardware Stage H9 static RTL hygiene: PASS
+VCS/vlogan lint compile: SKIPPED - vlogan executable not found.
+result=PASS

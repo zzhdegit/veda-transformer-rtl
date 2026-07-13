@@ -1,0 +1,8 @@
+Hardware Stage H9 synthesis/elaboration check
+This is analyze/elaborate/link/check_design plus hierarchy count only. It does not generate PPA.
+
+dc_shell: not found
+DW_FOUNDATION_SLDB: not found
+TECH_LIB_ROOT: not set
+DC elaboration: SKIPPED - dc_shell not found.
+result=FAIL

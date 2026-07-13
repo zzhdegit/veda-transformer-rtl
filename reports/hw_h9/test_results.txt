@@ -1,47 +1,58 @@
 Hardware Stage H9 host/model test report
 
-$ fallback-python-test-runner hw-h9 interleaved attention tests
-Fallback Python test runner: 6 tests
-PASS
+$ C:\Users\zzh\anaconda3\python.exe -m pytest tb\model\test_hw_h9_interleaved_attention.py
+============================= test session starts =============================
+platform win32 -- Python 3.12.7, pytest-7.4.4, pluggy-1.0.0
+rootdir: D:\IC_Workspace\VEDA
+plugins: anyio-4.2.0
+collected 7 items
+
+tb\model\test_hw_h9_interleaved_attention.py .......                     [100%]
+
+============================== 7 passed in 0.68s ==============================
 exit_code=0
 
-$ /usr/bin/python3 model/attention/paper_interleaved_cycle_model.py
-hw_h9 d_head=8 seq=1 h8=20 full_array=32 h9=32 qk_sfu_overlap=0 sfu_sv_overlap=0
-hw_h9 d_head=8 seq=2 h8=34 full_array=61 h9=50 qk_sfu_overlap=7 sfu_sv_overlap=2
-hw_h9 d_head=8 seq=8 h8=118 full_array=235 h9=158 qk_sfu_overlap=49 sfu_sv_overlap=14
-hw_h9 d_head=8 seq=16 h8=230 full_array=467 h9=302 qk_sfu_overlap=105 sfu_sv_overlap=30
-hw_h9 d_head=8 seq=32 h8=454 full_array=931 h9=590 qk_sfu_overlap=217 sfu_sv_overlap=62
-hw_h9 d_head=16 seq=1 h8=20 full_array=32 h9=32 qk_sfu_overlap=0 sfu_sv_overlap=0
-hw_h9 d_head=16 seq=2 h8=34 full_array=61 h9=50 qk_sfu_overlap=7 sfu_sv_overlap=2
-hw_h9 d_head=16 seq=8 h8=118 full_array=235 h9=158 qk_sfu_overlap=49 sfu_sv_overlap=14
-hw_h9 d_head=16 seq=16 h8=230 full_array=467 h9=302 qk_sfu_overlap=105 sfu_sv_overlap=30
-hw_h9 d_head=16 seq=32 h8=454 full_array=931 h9=590 qk_sfu_overlap=217 sfu_sv_overlap=62
-hw_h9 d_head=64 seq=1 h8=20 full_array=32 h9=32 qk_sfu_overlap=0 sfu_sv_overlap=0
-hw_h9 d_head=64 seq=2 h8=34 full_array=61 h9=50 qk_sfu_overlap=7 sfu_sv_overlap=2
-hw_h9 d_head=64 seq=8 h8=118 full_array=235 h9=158 qk_sfu_overlap=49 sfu_sv_overlap=14
-hw_h9 d_head=64 seq=16 h8=230 full_array=467 h9=302 qk_sfu_overlap=105 sfu_sv_overlap=30
-hw_h9 d_head=64 seq=32 h8=454 full_array=931 h9=590 qk_sfu_overlap=217 sfu_sv_overlap=62
-hw_h9 d_head=128 seq=1 h8=20 full_array=32 h9=32 qk_sfu_overlap=0 sfu_sv_overlap=0
-hw_h9 d_head=128 seq=2 h8=34 full_array=61 h9=50 qk_sfu_overlap=7 sfu_sv_overlap=2
-hw_h9 d_head=128 seq=8 h8=118 full_array=235 h9=158 qk_sfu_overlap=49 sfu_sv_overlap=14
-hw_h9 d_head=128 seq=16 h8=230 full_array=467 h9=302 qk_sfu_overlap=105 sfu_sv_overlap=30
-hw_h9 d_head=128 seq=32 h8=454 full_array=931 h9=590 qk_sfu_overlap=217 sfu_sv_overlap=62
+$ C:\Users\zzh\anaconda3\python.exe model/attention/paper_interleaved_cycle_model.py
+hw_h9_calibrated d_head=8 seq=1 staged=91 full_array_non_interleaved=204 interleaved=194 qk_sfu_overlap=5 sfu_sv_overlap=1
+hw_h9_calibrated d_head=8 seq=2 staged=187 full_array_non_interleaved=328 interleaved=259 qk_sfu_overlap=19 sfu_sv_overlap=6
+hw_h9_calibrated d_head=8 seq=8 staged=691 full_array_non_interleaved=1072 interleaved=649 qk_sfu_overlap=103 sfu_sv_overlap=36
+hw_h9_calibrated d_head=8 seq=16 staged=1363 full_array_non_interleaved=2064 interleaved=1169 qk_sfu_overlap=215 sfu_sv_overlap=76
+hw_h9_calibrated d_head=8 seq=32 staged=2707 full_array_non_interleaved=4048 interleaved=2209 qk_sfu_overlap=439 sfu_sv_overlap=156
+hw_h9_calibrated d_head=8 seq=64 staged=5395 full_array_non_interleaved=8016 interleaved=4289 qk_sfu_overlap=887 sfu_sv_overlap=316
+hw_h9_calibrated d_head=16 seq=1 staged=165 full_array_non_interleaved=206 interleaved=196 qk_sfu_overlap=5 sfu_sv_overlap=1
+hw_h9_calibrated d_head=16 seq=2 staged=330 full_array_non_interleaved=330 interleaved=261 qk_sfu_overlap=19 sfu_sv_overlap=6
+hw_h9_calibrated d_head=16 seq=8 staged=1248 full_array_non_interleaved=1074 interleaved=651 qk_sfu_overlap=103 sfu_sv_overlap=36
+hw_h9_calibrated d_head=16 seq=16 staged=2472 full_array_non_interleaved=2066 interleaved=1171 qk_sfu_overlap=215 sfu_sv_overlap=76
+hw_h9_calibrated d_head=16 seq=32 staged=4920 full_array_non_interleaved=4050 interleaved=2211 qk_sfu_overlap=439 sfu_sv_overlap=156
+hw_h9_calibrated d_head=16 seq=64 staged=9816 full_array_non_interleaved=8018 interleaved=4291 qk_sfu_overlap=887 sfu_sv_overlap=316
+hw_h9_calibrated d_head=64 seq=1 staged=609 full_array_non_interleaved=218 interleaved=208 qk_sfu_overlap=5 sfu_sv_overlap=1
+hw_h9_calibrated d_head=64 seq=2 staged=1188 full_array_non_interleaved=342 interleaved=273 qk_sfu_overlap=19 sfu_sv_overlap=6
+hw_h9_calibrated d_head=64 seq=8 staged=4590 full_array_non_interleaved=1086 interleaved=663 qk_sfu_overlap=103 sfu_sv_overlap=36
+hw_h9_calibrated d_head=64 seq=16 staged=9126 full_array_non_interleaved=2078 interleaved=1183 qk_sfu_overlap=215 sfu_sv_overlap=76
+hw_h9_calibrated d_head=64 seq=32 staged=18198 full_array_non_interleaved=4062 interleaved=2223 qk_sfu_overlap=439 sfu_sv_overlap=156
+hw_h9_calibrated d_head=64 seq=64 staged=36342 full_array_non_interleaved=8030 interleaved=4303 qk_sfu_overlap=887 sfu_sv_overlap=316
+hw_h9_calibrated d_head=128 seq=1 staged=1201 full_array_non_interleaved=234 interleaved=224 qk_sfu_overlap=5 sfu_sv_overlap=1
+hw_h9_calibrated d_head=128 seq=2 staged=2332 full_array_non_interleaved=358 interleaved=289 qk_sfu_overlap=19 sfu_sv_overlap=6
+hw_h9_calibrated d_head=128 seq=8 staged=9046 full_array_non_interleaved=1102 interleaved=679 qk_sfu_overlap=103 sfu_sv_overlap=36
+hw_h9_calibrated d_head=128 seq=16 staged=17998 full_array_non_interleaved=2094 interleaved=1199 qk_sfu_overlap=215 sfu_sv_overlap=76
+hw_h9_calibrated d_head=128 seq=32 staged=35902 full_array_non_interleaved=4078 interleaved=2239 qk_sfu_overlap=439 sfu_sv_overlap=156
+hw_h9_calibrated d_head=128 seq=64 staged=71710 full_array_non_interleaved=8046 interleaved=4319 qk_sfu_overlap=887 sfu_sv_overlap=316
 exit_code=0
 
-$ /usr/bin/python3 model/attention/paper_interleaved_compare_h8.py
+$ C:\Users\zzh\anaconda3\python.exe model/attention/paper_interleaved_compare_h8.py
 d_head=8 output_bit_exact=True max_abs_error=0.0 max_ulp=0
 d_head=16 output_bit_exact=True max_abs_error=0.0 max_ulp=0
 d_head=64 output_bit_exact=True max_abs_error=0.0 max_ulp=0
 d_head=128 output_bit_exact=True max_abs_error=0.0 max_ulp=0
 exit_code=0
 
-$ /usr/bin/python3 scripts/sim/run_stage8_tests.py
-$ /usr/bin/python3 scripts/sim/run_stage8a_tests.py
+$ C:\Users\zzh\anaconda3\python.exe scripts/sim/run_stage8_tests.py
+$ C:\Users\zzh\anaconda3\python.exe scripts/sim/run_stage8a_tests.py
 Stage 8A paper/spec checks: PASS
 checked_files=3
 exit_code=0
 
-$ /usr/bin/python3 scripts/sim/run_stage8b_tests.py
+$ C:\Users\zzh\anaconda3\python.exe scripts/sim/run_stage8b_tests.py
 inner length=1 tiles=1 total=10
 inner length=7 tiles=1 total=10
 inner length=8 tiles=1 total=10
@@ -62,31 +73,38 @@ Stage 8 paper-array vs legacy outer bit_exact=True metrics={'max_abs_error': 0.0
 Stage 8B paper-structured PE array model regression
 Fallback Python test runner: 8 tests
 PASS
-$ /usr/bin/python3 -m py_compile model/pe_array/__init__.py model/pe_array/paper_pe_reference.py model/pe_array/paper_pe_group_reference.py model/pe_array/paper_array_8x8x2_reference.py model/pe_array/paper_array_mapping.py model/pe_array/paper_array_cycle_model.py model/pe_array/paper_array_compare_legacy.py tb/model/test_stage8_paper_array.py
+$ C:\Users\zzh\anaconda3\python.exe -m py_compile model/pe_array/__init__.py model/pe_array/paper_pe_reference.py model/pe_array/paper_pe_group_reference.py model/pe_array/paper_array_8x8x2_reference.py model/pe_array/paper_array_mapping.py model/pe_array/paper_array_cycle_model.py model/pe_array/paper_array_compare_legacy.py tb/model/test_stage8_paper_array.py
 exit_code=0
-$ /usr/bin/python3 model/pe_array/paper_array_cycle_model.py
+$ C:\Users\zzh\anaconda3\python.exe model/pe_array/paper_array_cycle_model.py
 exit_code=0
-$ /usr/bin/python3 model/pe_array/paper_array_compare_legacy.py
+$ C:\Users\zzh\anaconda3\python.exe model/pe_array/paper_array_compare_legacy.py
 exit_code=0
 Stage 8B paper-array model result: PASS
 exit_code=0
 
-$ /usr/bin/python3 scripts/sim/run_stage8d_tests.py
-$ fallback-python-test-runner stage8d paper attention tests
-Fallback Python test runner: 3 tests
-PASS
+$ C:\Users\zzh\anaconda3\python.exe scripts/sim/run_stage8d_tests.py
+$ C:\Users\zzh\anaconda3\python.exe -m pytest tb\model\test_stage8_paper_attention.py
+============================= test session starts =============================
+platform win32 -- Python 3.12.7, pytest-7.4.4, pluggy-1.0.0
+rootdir: D:\IC_Workspace\VEDA
+plugins: anyio-4.2.0
+collected 3 items
+
+tb\model\test_stage8_paper_attention.py ...                              [100%]
+
+============================== 3 passed in 0.09s ==============================
 exit_code=0
 
-$ /usr/bin/python3 -m py_compile model/attention/paper_attention_reference.py model/attention/paper_attention_cycle_model.py tb/model/test_stage8_paper_attention.py
+$ C:\Users\zzh\anaconda3\python.exe -m py_compile model\attention\paper_attention_reference.py model\attention\paper_attention_cycle_model.py tb\model\test_stage8_paper_attention.py
 
 exit_code=0
 
-$ /usr/bin/python3 model/attention/paper_attention_reference.py
+$ C:\Users\zzh\anaconda3\python.exe model/attention/paper_attention_reference.py
 paper_attention_output_bit_exact=True
 paper_attention_output_metrics={'max_abs_error': 0.0, 'mae': 0.0, 'rmse': 0.0, 'relative_l2': 0.0, 'cosine_similarity': 1.0, 'max_ulp': 0, 'argmax_match': True}
 exit_code=0
 
-$ /usr/bin/python3 model/attention/paper_attention_cycle_model.py
+$ C:\Users\zzh\anaconda3\python.exe model/attention/paper_attention_cycle_model.py
 paper_attention d_head=8 seq_len=1 qk=10 softmax=6 sv=3 total=20
 paper_attention d_head=8 seq_len=8 qk=80 softmax=20 sv=17 total=118
 paper_attention d_head=16 seq_len=1 qk=10 softmax=6 sv=3 total=20
@@ -98,29 +116,27 @@ exit_code=0
 result=PASS
 exit_code=0
 
-$ /usr/bin/python3 scripts/sim/run_stage7a_tests.py
+$ C:\Users\zzh\anaconda3\python.exe scripts/sim/run_stage7a_tests.py
 Stage 7A Pre-Norm Transformer layer specification/model regression
 
-$ fallback-python-test-runner stage7a/stage6e model tests
-Fallback Python test runner: 8 tests
-PASS
+$ C:\Users\zzh\anaconda3\python.exe -m pytest tb\model\test_stage7_transformer_reference.py tb\model\test_stage6e_output_projection.py
+============================= test session starts =============================
+platform win32 -- Python 3.12.7, pytest-7.4.4, pluggy-1.0.0
+rootdir: D:\IC_Workspace\VEDA
+plugins: anyio-4.2.0
+collected 8 items
+
+tb\model\test_stage7_transformer_reference.py ......                     [ 75%]
+tb\model\test_stage6e_output_projection.py ..                            [100%]
+
+============================== 8 passed in 0.54s ==============================
 exit_code=0
 
-py_compile skipped Python 3.7+ files under Python 3.6:
-model/reference_attention.py
-model/arithmetic/arithmetic_reference.py
-model/arithmetic/numeric_format.py
-model/memory/fifo_reference.py
-tb/model/test_reference_attention.py
-tb/model/test_stage1_arithmetic.py
-tb/model/test_stage1_memory.py
-tb/unit/test_stage1_rtl_static.py
-
-$ /usr/bin/python3 -m py_compile model/arithmetic/fp16_fp32_reference.py model/arithmetic/fp32_add_reference.py model/arithmetic/fp32_mac_reference.py model/arithmetic/__init__.py model/attention/paper_attention_cycle_model.py model/attention/paper_attention_reference.py model/attention/paper_interleaved_attention_reference.py model/attention/paper_interleaved_compare_h8.py model/attention/paper_interleaved_cycle_model.py model/attention/paper_interleaved_softmax_reference.py model/attention/single_head_cycle_model.py model/attention/single_head_reference.py model/attention/softmax_reference.py model/attention/__init__.py model/cache/generation_reference.py model/cache/kv_cache_reference.py model/cache/multi_head_generation_reference.py model/cache/multi_head_kv_cache_reference.py model/cache/__init__.py model/memory/__init__.py model/pe/pe_core_reference.py model/pe/pe_lane_reference.py model/pe/reduction_tree_reference.py model/pe/__init__.py model/pe_array/paper_array_8x8x2_reference.py model/pe_array/paper_array_compare_legacy.py model/pe_array/paper_array_cycle_model.py model/pe_array/paper_array_mapping.py model/pe_array/paper_pe_group_reference.py model/pe_array/paper_pe_reference.py model/pe_array/__init__.py model/projection/fp32_fp16_reference.py model/projection/gemv_reference.py model/projection/projection_mha_cycle_model.py model/projection/projection_mha_reference.py model/projection/projection_reference.py model/projection/__init__.py model/transformer/ffn_reference.py model/transformer/relu_reference.py model/transformer/residual_reference.py model/transformer/rmsnorm_reference.py model/transformer/transformer_layer_cycle_model.py model/transformer/transformer_layer_reference.py model/transformer/__init__.py tb/model/test_hw_h9_interleaved_attention.py tb/model/test_stage1b_fp.py tb/model/test_stage2_pe.py tb/model/test_stage3_attention.py tb/model/test_stage4_generation.py tb/model/test_stage5_multihead_generation.py tb/model/test_stage6e_output_projection.py tb/model/test_stage6_projection.py tb/model/test_stage7_transformer_reference.py tb/model/test_stage8_paper_array.py tb/model/test_stage8_paper_attention.py scripts/lint/run_hw_h9_lint.py scripts/lint/run_stage1b_lint.py scripts/lint/run_stage1_lint.py scripts/lint/run_stage2_lint.py scripts/lint/run_stage3_lint.py scripts/lint/run_stage4_lint.py scripts/lint/run_stage5_lint.py scripts/lint/run_stage6b_lint.py scripts/lint/run_stage6c_lint.py scripts/lint/run_stage6d_lint.py scripts/lint/run_stage6e_lint.py scripts/lint/run_stage6_lint.py scripts/lint/run_stage7b_lint.py scripts/lint/run_stage7c_lint.py scripts/lint/run_stage7d_lint.py scripts/lint/run_stage8c_lint.py scripts/lint/run_stage8d_lint.py scripts/sim/gen_stage1b_vectors.py scripts/sim/gen_stage2_vectors.py scripts/sim/gen_stage3_vectors.py scripts/sim/gen_stage4_vectors.py scripts/sim/gen_stage5_vectors.py scripts/sim/gen_stage6b_vectors.py scripts/sim/gen_stage6c_vectors.py scripts/sim/gen_stage6d_vectors.py scripts/sim/gen_stage6e_vectors.py scripts/sim/gen_stage7b_vectors.py scripts/sim/gen_stage7c_vectors.py scripts/sim/gen_stage7d_vectors.py scripts/sim/run_hw_h9_tests.py scripts/sim/run_stage1b_tests.py scripts/sim/run_stage1_tests.py scripts/sim/run_stage1_vcs.py scripts/sim/run_stage2_tests.py scripts/sim/run_stage3_tests.py scripts/sim/run_stage4_tests.py scripts/sim/run_stage5_tests.py scripts/sim/run_stage6a_tests.py scripts/sim/run_stage6b_tests.py scripts/sim/run_stage6c_tests.py scripts/sim/run_stage6d_tests.py scripts/sim/run_stage6e_tests.py scripts/sim/run_stage6_tests.py scripts/sim/run_stage7a_tests.py scripts/sim/run_stage8a_tests.py scripts/sim/run_stage8b_tests.py scripts/sim/run_stage8d_tests.py scripts/sim/run_stage8_tests.py scripts/synth/run_hw_h9_synth_check.py scripts/synth/run_stage1b_synth_check.py scripts/synth/run_stage1_synth_check.py scripts/synth/run_stage2_synth_check.py scripts/synth/run_stage3_synth_check.py scripts/synth/run_stage4_synth_check.py scripts/synth/run_stage5_synth_check.py scripts/synth/run_stage6b_synth_check.py scripts/synth/run_stage6c_synth_check.py scripts/synth/run_stage6d_synth_check.py scripts/synth/run_stage6e_synth_check.py scripts/synth/run_stage6_synth_check.py scripts/synth/run_stage7b_synth_check.py scripts/synth/run_stage7c_synth_check.py scripts/synth/run_stage7d_synth_check.py scripts/synth/run_stage8c_synth_check.py scripts/synth/run_stage8d_synth_check.py
+$ C:\Users\zzh\anaconda3\python.exe -m py_compile model\reference_attention.py model\arithmetic\arithmetic_reference.py model\arithmetic\fp16_fp32_reference.py model\arithmetic\fp32_add_reference.py model\arithmetic\fp32_mac_reference.py model\arithmetic\numeric_format.py model\arithmetic\__init__.py model\attention\paper_attention_cycle_model.py model\attention\paper_attention_reference.py model\attention\paper_interleaved_attention_reference.py model\attention\paper_interleaved_compare_h8.py model\attention\paper_interleaved_cycle_model.py model\attention\paper_interleaved_softmax_reference.py model\attention\single_head_cycle_model.py model\attention\single_head_reference.py model\attention\softmax_reference.py model\attention\__init__.py model\cache\generation_reference.py model\cache\kv_cache_reference.py model\cache\multi_head_generation_reference.py model\cache\multi_head_kv_cache_reference.py model\cache\__init__.py model\memory\fifo_reference.py model\memory\__init__.py model\pe\pe_core_reference.py model\pe\pe_lane_reference.py model\pe\reduction_tree_reference.py model\pe\__init__.py model\pe_array\paper_array_8x8x2_reference.py model\pe_array\paper_array_compare_legacy.py model\pe_array\paper_array_cycle_model.py model\pe_array\paper_array_mapping.py model\pe_array\paper_pe_group_reference.py model\pe_array\paper_pe_reference.py model\pe_array\__init__.py model\projection\fp32_fp16_reference.py model\projection\gemv_reference.py model\projection\projection_mha_cycle_model.py model\projection\projection_mha_reference.py model\projection\projection_reference.py model\projection\__init__.py model\transformer\ffn_reference.py model\transformer\relu_reference.py model\transformer\residual_reference.py model\transformer\rmsnorm_reference.py model\transformer\transformer_layer_cycle_model.py model\transformer\transformer_layer_reference.py model\transformer\__init__.py tb\model\test_hw_h9_interleaved_attention.py tb\model\test_reference_attention.py tb\model\test_stage1b_fp.py tb\model\test_stage1_arithmetic.py tb\model\test_stage1_memory.py tb\model\test_stage2_pe.py tb\model\test_stage3_attention.py tb\model\test_stage4_generation.py tb\model\test_stage5_multihead_generation.py tb\model\test_stage6e_output_projection.py tb\model\test_stage6_projection.py tb\model\test_stage7_transformer_reference.py tb\model\test_stage8_paper_array.py tb\model\test_stage8_paper_attention.py tb\unit\test_stage1_rtl_static.py scripts\lint\run_hw_h9_lint.py scripts\lint\run_stage1b_lint.py scripts\lint\run_stage1_lint.py scripts\lint\run_stage2_lint.py scripts\lint\run_stage3_lint.py scripts\lint\run_stage4_lint.py scripts\lint\run_stage5_lint.py scripts\lint\run_stage6b_lint.py scripts\lint\run_stage6c_lint.py scripts\lint\run_stage6d_lint.py scripts\lint\run_stage6e_lint.py scripts\lint\run_stage6_lint.py scripts\lint\run_stage7b_lint.py scripts\lint\run_stage7c_lint.py scripts\lint\run_stage7d_lint.py scripts\lint\run_stage8c_lint.py scripts\lint\run_stage8d_lint.py scripts\sim\gen_stage1b_vectors.py scripts\sim\gen_stage2_vectors.py scripts\sim\gen_stage3_vectors.py scripts\sim\gen_stage4_vectors.py scripts\sim\gen_stage5_vectors.py scripts\sim\gen_stage6b_vectors.py scripts\sim\gen_stage6c_vectors.py scripts\sim\gen_stage6d_vectors.py scripts\sim\gen_stage6e_vectors.py scripts\sim\gen_stage7b_vectors.py scripts\sim\gen_stage7c_vectors.py scripts\sim\gen_stage7d_vectors.py scripts\sim\run_hw_h9_tests.py scripts\sim\run_stage1b_tests.py scripts\sim\run_stage1_tests.py scripts\sim\run_stage1_vcs.py scripts\sim\run_stage2_tests.py scripts\sim\run_stage3_tests.py scripts\sim\run_stage4_tests.py scripts\sim\run_stage5_tests.py scripts\sim\run_stage6a_tests.py scripts\sim\run_stage6b_tests.py scripts\sim\run_stage6c_tests.py scripts\sim\run_stage6d_tests.py scripts\sim\run_stage6e_tests.py scripts\sim\run_stage6_tests.py scripts\sim\run_stage7a_tests.py scripts\sim\run_stage8a_tests.py scripts\sim\run_stage8b_tests.py scripts\sim\run_stage8d_tests.py scripts\sim\run_stage8_tests.py scripts\synth\run_hw_h9_synth_check.py scripts\synth\run_stage1b_synth_check.py scripts\synth\run_stage1_synth_check.py scripts\synth\run_stage2_synth_check.py scripts\synth\run_stage3_synth_check.py scripts\synth\run_stage4_synth_check.py scripts\synth\run_stage5_synth_check.py scripts\synth\run_stage6b_synth_check.py scripts\synth\run_stage6c_synth_check.py scripts\synth\run_stage6d_synth_check.py scripts\synth\run_stage6e_synth_check.py scripts\synth\run_stage6_synth_check.py scripts\synth\run_stage7b_synth_check.py scripts\synth\run_stage7c_synth_check.py scripts\synth\run_stage7d_synth_check.py scripts\synth\run_stage8c_synth_check.py scripts\synth\run_stage8d_synth_check.py
 
 exit_code=0
 
-$ /usr/bin/python3 model/transformer/transformer_layer_cycle_model.py
+$ C:\Users\zzh\anaconda3\python.exe model/transformer/transformer_layer_cycle_model.py
 Stage 7 no-stall single-token cycle estimate
 total_layer_cycles = input_load + norm1 + MHA + residual1 + norm2 + FFN + residual2 + final_output + control_overhead
 H1D8 total=249 input=8 norm1_reduce=8 norm1_apply=8 mha=40 residual1=8 norm2_reduce=8 norm2_apply=8 ffn1=32 relu=32 act_quant=32 ffn2=32 residual2=8 final=1 overhead=24
@@ -132,24 +148,14 @@ exit_code=0
 Stage 7A Python/model result: PASS
 exit_code=0
 
-py_compile skipped Python 3.7+ files under Python 3.6:
-model/reference_attention.py
-model/arithmetic/arithmetic_reference.py
-model/arithmetic/numeric_format.py
-model/memory/fifo_reference.py
-tb/model/test_reference_attention.py
-tb/model/test_stage1_arithmetic.py
-tb/model/test_stage1_memory.py
-tb/unit/test_stage1_rtl_static.py
-
-$ /usr/bin/python3 -m py_compile model/arithmetic/fp16_fp32_reference.py model/arithmetic/fp32_add_reference.py model/arithmetic/fp32_mac_reference.py model/arithmetic/__init__.py model/attention/paper_attention_cycle_model.py model/attention/paper_attention_reference.py model/attention/paper_interleaved_attention_reference.py model/attention/paper_interleaved_compare_h8.py model/attention/paper_interleaved_cycle_model.py model/attention/paper_interleaved_softmax_reference.py model/attention/single_head_cycle_model.py model/attention/single_head_reference.py model/attention/softmax_reference.py model/attention/__init__.py model/cache/generation_reference.py model/cache/kv_cache_reference.py model/cache/multi_head_generation_reference.py model/cache/multi_head_kv_cache_reference.py model/cache/__init__.py model/memory/__init__.py model/pe/pe_core_reference.py model/pe/pe_lane_reference.py model/pe/reduction_tree_reference.py model/pe/__init__.py model/pe_array/paper_array_8x8x2_reference.py model/pe_array/paper_array_compare_legacy.py model/pe_array/paper_array_cycle_model.py model/pe_array/paper_array_mapping.py model/pe_array/paper_pe_group_reference.py model/pe_array/paper_pe_reference.py model/pe_array/__init__.py model/projection/fp32_fp16_reference.py model/projection/gemv_reference.py model/projection/projection_mha_cycle_model.py model/projection/projection_mha_reference.py model/projection/projection_reference.py model/projection/__init__.py model/transformer/ffn_reference.py model/transformer/relu_reference.py model/transformer/residual_reference.py model/transformer/rmsnorm_reference.py model/transformer/transformer_layer_cycle_model.py model/transformer/transformer_layer_reference.py model/transformer/__init__.py tb/model/test_hw_h9_interleaved_attention.py tb/model/test_stage1b_fp.py tb/model/test_stage2_pe.py tb/model/test_stage3_attention.py tb/model/test_stage4_generation.py tb/model/test_stage5_multihead_generation.py tb/model/test_stage6e_output_projection.py tb/model/test_stage6_projection.py tb/model/test_stage7_transformer_reference.py tb/model/test_stage8_paper_array.py tb/model/test_stage8_paper_attention.py scripts/lint/run_hw_h9_lint.py scripts/lint/run_stage1b_lint.py scripts/lint/run_stage1_lint.py scripts/lint/run_stage2_lint.py scripts/lint/run_stage3_lint.py scripts/lint/run_stage4_lint.py scripts/lint/run_stage5_lint.py scripts/lint/run_stage6b_lint.py scripts/lint/run_stage6c_lint.py scripts/lint/run_stage6d_lint.py scripts/lint/run_stage6e_lint.py scripts/lint/run_stage6_lint.py scripts/lint/run_stage7b_lint.py scripts/lint/run_stage7c_lint.py scripts/lint/run_stage7d_lint.py scripts/lint/run_stage8c_lint.py scripts/lint/run_stage8d_lint.py scripts/sim/gen_stage1b_vectors.py scripts/sim/gen_stage2_vectors.py scripts/sim/gen_stage3_vectors.py scripts/sim/gen_stage4_vectors.py scripts/sim/gen_stage5_vectors.py scripts/sim/gen_stage6b_vectors.py scripts/sim/gen_stage6c_vectors.py scripts/sim/gen_stage6d_vectors.py scripts/sim/gen_stage6e_vectors.py scripts/sim/gen_stage7b_vectors.py scripts/sim/gen_stage7c_vectors.py scripts/sim/gen_stage7d_vectors.py scripts/sim/run_hw_h9_tests.py scripts/sim/run_stage1b_tests.py scripts/sim/run_stage1_tests.py scripts/sim/run_stage1_vcs.py scripts/sim/run_stage2_tests.py scripts/sim/run_stage3_tests.py scripts/sim/run_stage4_tests.py scripts/sim/run_stage5_tests.py scripts/sim/run_stage6a_tests.py scripts/sim/run_stage6b_tests.py scripts/sim/run_stage6c_tests.py scripts/sim/run_stage6d_tests.py scripts/sim/run_stage6e_tests.py scripts/sim/run_stage6_tests.py scripts/sim/run_stage7a_tests.py scripts/sim/run_stage8a_tests.py scripts/sim/run_stage8b_tests.py scripts/sim/run_stage8d_tests.py scripts/sim/run_stage8_tests.py scripts/synth/run_hw_h9_synth_check.py scripts/synth/run_stage1b_synth_check.py scripts/synth/run_stage1_synth_check.py scripts/synth/run_stage2_synth_check.py scripts/synth/run_stage3_synth_check.py scripts/synth/run_stage4_synth_check.py scripts/synth/run_stage5_synth_check.py scripts/synth/run_stage6b_synth_check.py scripts/synth/run_stage6c_synth_check.py scripts/synth/run_stage6d_synth_check.py scripts/synth/run_stage6e_synth_check.py scripts/synth/run_stage6_synth_check.py scripts/synth/run_stage7b_synth_check.py scripts/synth/run_stage7c_synth_check.py scripts/synth/run_stage7d_synth_check.py scripts/synth/run_stage8c_synth_check.py scripts/synth/run_stage8d_synth_check.py
+$ C:\Users\zzh\anaconda3\python.exe -m py_compile model\reference_attention.py model\arithmetic\arithmetic_reference.py model\arithmetic\fp16_fp32_reference.py model\arithmetic\fp32_add_reference.py model\arithmetic\fp32_mac_reference.py model\arithmetic\numeric_format.py model\arithmetic\__init__.py model\attention\paper_attention_cycle_model.py model\attention\paper_attention_reference.py model\attention\paper_interleaved_attention_reference.py model\attention\paper_interleaved_compare_h8.py model\attention\paper_interleaved_cycle_model.py model\attention\paper_interleaved_softmax_reference.py model\attention\single_head_cycle_model.py model\attention\single_head_reference.py model\attention\softmax_reference.py model\attention\__init__.py model\cache\generation_reference.py model\cache\kv_cache_reference.py model\cache\multi_head_generation_reference.py model\cache\multi_head_kv_cache_reference.py model\cache\__init__.py model\memory\fifo_reference.py model\memory\__init__.py model\pe\pe_core_reference.py model\pe\pe_lane_reference.py model\pe\reduction_tree_reference.py model\pe\__init__.py model\pe_array\paper_array_8x8x2_reference.py model\pe_array\paper_array_compare_legacy.py model\pe_array\paper_array_cycle_model.py model\pe_array\paper_array_mapping.py model\pe_array\paper_pe_group_reference.py model\pe_array\paper_pe_reference.py model\pe_array\__init__.py model\projection\fp32_fp16_reference.py model\projection\gemv_reference.py model\projection\projection_mha_cycle_model.py model\projection\projection_mha_reference.py model\projection\projection_reference.py model\projection\__init__.py model\transformer\ffn_reference.py model\transformer\relu_reference.py model\transformer\residual_reference.py model\transformer\rmsnorm_reference.py model\transformer\transformer_layer_cycle_model.py model\transformer\transformer_layer_reference.py model\transformer\__init__.py tb\model\test_hw_h9_interleaved_attention.py tb\model\test_reference_attention.py tb\model\test_stage1b_fp.py tb\model\test_stage1_arithmetic.py tb\model\test_stage1_memory.py tb\model\test_stage2_pe.py tb\model\test_stage3_attention.py tb\model\test_stage4_generation.py tb\model\test_stage5_multihead_generation.py tb\model\test_stage6e_output_projection.py tb\model\test_stage6_projection.py tb\model\test_stage7_transformer_reference.py tb\model\test_stage8_paper_array.py tb\model\test_stage8_paper_attention.py tb\unit\test_stage1_rtl_static.py scripts\lint\run_hw_h9_lint.py scripts\lint\run_stage1b_lint.py scripts\lint\run_stage1_lint.py scripts\lint\run_stage2_lint.py scripts\lint\run_stage3_lint.py scripts\lint\run_stage4_lint.py scripts\lint\run_stage5_lint.py scripts\lint\run_stage6b_lint.py scripts\lint\run_stage6c_lint.py scripts\lint\run_stage6d_lint.py scripts\lint\run_stage6e_lint.py scripts\lint\run_stage6_lint.py scripts\lint\run_stage7b_lint.py scripts\lint\run_stage7c_lint.py scripts\lint\run_stage7d_lint.py scripts\lint\run_stage8c_lint.py scripts\lint\run_stage8d_lint.py scripts\sim\gen_stage1b_vectors.py scripts\sim\gen_stage2_vectors.py scripts\sim\gen_stage3_vectors.py scripts\sim\gen_stage4_vectors.py scripts\sim\gen_stage5_vectors.py scripts\sim\gen_stage6b_vectors.py scripts\sim\gen_stage6c_vectors.py scripts\sim\gen_stage6d_vectors.py scripts\sim\gen_stage6e_vectors.py scripts\sim\gen_stage7b_vectors.py scripts\sim\gen_stage7c_vectors.py scripts\sim\gen_stage7d_vectors.py scripts\sim\run_hw_h9_tests.py scripts\sim\run_stage1b_tests.py scripts\sim\run_stage1_tests.py scripts\sim\run_stage1_vcs.py scripts\sim\run_stage2_tests.py scripts\sim\run_stage3_tests.py scripts\sim\run_stage4_tests.py scripts\sim\run_stage5_tests.py scripts\sim\run_stage6a_tests.py scripts\sim\run_stage6b_tests.py scripts\sim\run_stage6c_tests.py scripts\sim\run_stage6d_tests.py scripts\sim\run_stage6e_tests.py scripts\sim\run_stage6_tests.py scripts\sim\run_stage7a_tests.py scripts\sim\run_stage8a_tests.py scripts\sim\run_stage8b_tests.py scripts\sim\run_stage8d_tests.py scripts\sim\run_stage8_tests.py scripts\synth\run_hw_h9_synth_check.py scripts\synth\run_stage1b_synth_check.py scripts\synth\run_stage1_synth_check.py scripts\synth\run_stage2_synth_check.py scripts\synth\run_stage3_synth_check.py scripts\synth\run_stage4_synth_check.py scripts\synth\run_stage5_synth_check.py scripts\synth\run_stage6b_synth_check.py scripts\synth\run_stage6c_synth_check.py scripts\synth\run_stage6d_synth_check.py scripts\synth\run_stage6e_synth_check.py scripts\synth\run_stage6_synth_check.py scripts\synth\run_stage7b_synth_check.py scripts\synth\run_stage7c_synth_check.py scripts\synth\run_stage7d_synth_check.py scripts\synth\run_stage8c_synth_check.py scripts\synth\run_stage8d_synth_check.py
 
 exit_code=0
 
 result=PASS
 exit_code=0
 
-$ /usr/bin/python3 -m py_compile model/pe_array/paper_array_mapping.py model/attention/paper_interleaved_attention_reference.py model/attention/paper_interleaved_softmax_reference.py model/attention/paper_interleaved_cycle_model.py model/attention/paper_interleaved_compare_h8.py tb/model/test_hw_h9_interleaved_attention.py scripts/sim/run_hw_h9_tests.py scripts/lint/run_hw_h9_lint.py scripts/synth/run_hw_h9_synth_check.py
+$ C:\Users\zzh\anaconda3\python.exe -m py_compile model\pe_array\paper_array_mapping.py model\attention\paper_interleaved_attention_reference.py model\attention\paper_interleaved_softmax_reference.py model\attention\paper_interleaved_cycle_model.py model\attention\paper_interleaved_compare_h8.py tb\model\test_hw_h9_interleaved_attention.py scripts\sim\run_hw_h9_tests.py scripts\lint\run_hw_h9_lint.py scripts\synth\run_hw_h9_synth_check.py
 
 exit_code=0
 

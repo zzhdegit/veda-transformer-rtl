@@ -4,25 +4,25 @@ This repository is for a Transformer RTL accelerator based on the VEDA dataflow 
 
 ## Current Stage
 
-Hardware Stage H9 closure checkpoint: Full-Array Attention Mapping and SFU-PE
+Hardware Stage H9 final-closure progress checkpoint: Full-Array Attention Mapping and SFU-PE
 Element-Serial Interleaving.
 
 Status: HW-H9 IN PROGRESS, NOT ACCEPTED.
 
 The repository now contains a Hardware Stage H9 checkpoint for paper-native
-Attention mapping, bounded score/probability stream buffers, and single-head
-SFU/PE interleaving smoke coverage. It also contains a matched single-head RTL
+Attention mapping, bounded score/probability stream buffers, and SFU/PE
+interleaving coverage infrastructure. It also contains a matched single-head RTL
 A/B baseline for `PAPER_ARRAY+STAGED` versus `PAPER_ARRAY+INTERLEAVED`; the
 matched RTL data shows H9 interleaved faster than paper staged at seq16 and
-seq32 for D_HEAD=8, 16, and 64. The accepted hardware baseline remains Hardware
-Stage H8 / Stage 8: paper-structured 8x8x2 PE array correctness and Attention
-QK/sV mapping correctness.
+seq32 for D_HEAD=8, 16, and 64. The cycle model is calibrated to that matched
+RTL interval for D_HEAD=8, 16, and 64 at seq 1/2/8/16/32/64.
 
-Hardware Stage H9 is not accepted yet. Multi-head/full-layer H9 RTL coverage,
-exhaustive reset/random-backpressure/cache-full coverage, long-sequence H9
-coverage, broad assertion execution evidence, and exact cycle-model-to-RTL
-calibration remain open. Global array sharing, physical memory, timing closure,
-and PPA remain provisional.
+Hardware Stage H9 is not accepted yet. Multi-head/full-layer H9 RTL entries,
+long-sequence/cache-full entries, and assertion-enabled entries are wired into
+the H9 script, but the current environment lacks `vcs`, `vlogan`, `dc_shell`,
+and `DW_FOUNDATION_SLDB`, so final RTL/DC acceptance could not be executed.
+Global array sharing, physical memory, timing closure, and PPA remain
+provisional.
 
 Authoritative current inputs are:
 

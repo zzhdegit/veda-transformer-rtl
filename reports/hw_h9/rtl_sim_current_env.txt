@@ -1,0 +1,4 @@
+Hardware Stage H9 RTL simulation
+Build dir: build/hw_h9_rtl_sim
+vcs: NOT FOUND
+result=FAIL

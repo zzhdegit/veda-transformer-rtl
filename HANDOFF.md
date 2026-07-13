@@ -2,7 +2,7 @@
 
 ## Stage
 
-Hardware Stage H9 closure checkpoint: Full-Array Attention Mapping and SFU-PE
+Hardware Stage H9 final-closure progress checkpoint: Full-Array Attention Mapping and SFU-PE
 Element-Serial Interleaving
 
 ## Status
@@ -11,19 +11,19 @@ HW-H9 IN PROGRESS, NOT ACCEPTED.
 
 Hardware Stage H9 has a checkpoint implementation and verification package for
 paper-native Attention mapping plus SFU/PE stream interleaving infrastructure.
-The checkpoint passes H9 model tests, H9 RTL single-head smoke simulations, a
-matched single-head paper staged versus paper interleaved RTL A/B baseline,
-H9 lint/vlogan, H9 DC structural checks, and Stage 5/6/7/8 regressions from the
-prior H9 checkpoint.
+The checkpoint passes H9 host/model tests in the current environment and has
+existing matched single-head paper staged versus paper interleaved RTL A/B
+evidence from the prior VCS-capable checkpoint.
 
 Hardware Stage H9 is not accepted because the full HW-H9 exit conditions are
-not closed. Missing items include multi-head and full-layer interleaved RTL
-coverage, the requested exhaustive reset/random-backpressure/cache-full and long
-sequence H9 coverage, broad assertion execution evidence, and exact
-cycle-model-to-RTL calibration. The matched single-head RTL A/B baseline now
-shows H9 interleaved faster than paper staged at seq16 and seq32 for D_HEAD=8,
-16, and 64. Do not write `HARDWARE STAGE H9 PASS`, do not create an H9 accepted
-tag, and do not enter Hardware Stage H10 yet.
+not closed. This closure turn calibrated the Python cycle model to the matched
+RTL A/B counter interval and wired multi-head, full-layer, long-sequence,
+cache-full, and assertion-enabled VCS entries, but the current environment does
+not provide `vcs`, `vlogan`, `dc_shell`, or `DW_FOUNDATION_SLDB`. The newly
+wired RTL entries, full reset/random-backpressure/cache-full coverage, assertion
+execution matrix, DC structural rerun, and full Stage5/6/7/8 RTL reruns remain
+blocked until an EDA environment is available. Do not write `HARDWARE STAGE H9
+PASS`, do not create an H9 accepted tag, and do not enter Hardware Stage H10.
 
 Stage 8 remains the accepted baseline. Paper-structured 8x8x2 PE array RTL and
 Attention QK/sV mapping are accepted.

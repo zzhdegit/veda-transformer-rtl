@@ -2,7 +2,7 @@
 
 ## Current Stage
 
-- Stage: Hardware Stage H9 closure checkpoint
+- Stage: Hardware Stage H9 final-closure progress checkpoint
 - Status: HW-H9 IN PROGRESS, NOT ACCEPTED
 - Branch: `hw/h9-sfu-pe-interleaving`
 - Last update: 2026-07-13
@@ -12,16 +12,20 @@ full-array native mapping and SFU/PE element-serial interleaving infrastructure.
 The checkpoint includes H9 Python reference/cycle models, bounded score and
 probability stream buffers, an interleaved paper single-head RTL schedule path,
 matched paper staged versus paper interleaved single-head RTL A/B baselines,
-H9 Make targets, H9 reports, lint/vlogan, and DC structural checks.
+H9 Make targets, and H9 reports.
 
-Hardware Stage H9 is not accepted yet. The checkpoint does not close the full
-HW-H9 exit criteria because multi-head and full-layer interleaved RTL
-verification, exhaustive reset/random-backpressure coverage, all requested long
-sequence/cache-full H9 cases, broad assertion execution evidence, and exact
-cycle-model-to-RTL calibration remain open. The matched single-head RTL A/B
-baseline now shows H9 interleaved faster than paper staged at seq16 and seq32
-for D_HEAD=8, 16, and 64. Do not write `HARDWARE STAGE H9 PASS` or create an
-H9 accepted tag until all remaining HW-H9 exit conditions are closed.
+Hardware Stage H9 is not accepted yet. The cycle model is now calibrated to the
+matched single-head RTL A/B counter interval for D_HEAD=8, 16, and 64 at seq
+1/2/8/16/32/64, and the H9 RTL script now wires multi-head, full-layer,
+long-sequence/cache-full, and assertion-enabled entries. The current execution
+environment cannot run final acceptance because `vcs`, `vlogan`, `dc_shell`,
+and `DW_FOUNDATION_SLDB` are not available. Multi-head/full-layer H9 RTL
+execution, full reset/random-backpressure/cache-full execution, assertion
+execution evidence, DC structural rerun, and Stage5/6/7/8 RTL reruns remain
+open. The matched single-head RTL A/B baseline shows H9 interleaved faster than
+paper staged at seq16 and seq32 for D_HEAD=8, 16, and 64. Do not write
+`HARDWARE STAGE H9 PASS` or create an H9 accepted tag until all remaining
+HW-H9 exit conditions are actually executed and pass.
 
 Stage 8 remains the accepted hardware baseline:
 
