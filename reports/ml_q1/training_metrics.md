@@ -1,0 +1,25 @@
+# ML-Q1 Candidate Training Metrics
+
+```text
+baseline_checkpoint=D:\IC_Workspace\VEDA_artifacts\ml_m2\formal\checkpoints\ml_m2_formal_best.pt
+baseline_sha256=cfaae278aa7fccd903b3b65041bce1b4dd91410ce3cdeacfb50e5b2b6ca933c8
+candidate_best_checkpoint=D:\IC_Workspace\VEDA_artifacts\ml_q1\candidate\checkpoints\ml_q1_candidate_best.pt
+candidate_best_sha256=fbb8b1815d03a0c9fb3cb1559c3cb6942038e7174d7d434ef57f79cb492994da
+train_stories=300000
+validation_stories=10000
+holdout_stories=10000
+train_packed_sequences=944068
+validation_packed_sequences=28370
+holdout_packed_sequences=30694
+steps_per_epoch=922
+total_steps=1844
+elapsed_seconds=301.03536159999203
+initial_train_loss=3.3655314445495605
+final_train_loss=3.1326515674591064
+best_validation_loss=3.1589355026367603
+final_validation_loss=3.1589355026367603
+holdout_loss=3.116297947013361
+```
+
+Optimizer was reinitialized for ML-Q1 continuation; scheduler was restarted
+with the ML-Q1 cosine schedule.
