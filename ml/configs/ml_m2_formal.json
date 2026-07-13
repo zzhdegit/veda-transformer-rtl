@@ -1,0 +1,39 @@
+{
+  "stage": "ML-M2",
+  "model": {
+    "vocab_size": 2048,
+    "context_length": 128,
+    "num_layers": 1,
+    "d_model": 64,
+    "num_attention_heads": 8,
+    "num_key_value_heads": 8,
+    "d_head": 8,
+    "d_ffn": 256,
+    "rms_norm_eps": 1e-5,
+    "activation": "relu",
+    "bias": false,
+    "dropout": 0.0,
+    "tie_word_embeddings": true
+  },
+  "training": {
+    "seed": 20260713,
+    "dtype": "bf16_if_cuda_supported_else_fp32",
+    "batch_size": 64,
+    "learning_rate": 0.001,
+    "weight_decay": 0.01,
+    "grad_clip_norm": 1.0,
+    "max_steps": 2000,
+    "eval_interval": 100,
+    "save_interval": 500,
+    "subset_examples": 100000
+  },
+  "dataset": {
+    "name": "TinyStories",
+    "train_file": "TinyStories-train.txt",
+    "validation_file": "TinyStories-valid.txt",
+    "source": "https://huggingface.co/datasets/roneneldan/TinyStories",
+    "license": "cdla-sharing-1.0",
+    "revision": "main"
+  }
+}
+
