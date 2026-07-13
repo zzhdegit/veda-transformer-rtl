@@ -88,12 +88,36 @@ so the equivalent Python runners were used directly.
 - Qwen eviction experiments.
 - Hardware Stage H8 integration.
 
+## Post-Acceptance ML-Q2 Result
+
+Model Quality Experiment Q2 completed a full-dataset fixed-architecture
+benchmark without changing the ML-M2 hardware math contract.
+
+```text
+status=ML-Q2 FULL-DATASET BENCHMARK PASS
+branch=ml/q2-full-dataset-benchmark
+artifact_root=D:/IC_Workspace/VEDA_artifacts/ml_q2
+benchmark_checkpoint=D:/IC_Workspace/VEDA_artifacts/ml_q2/benchmark/checkpoints/VEDA-HWLM-1L64-Q2.pt
+benchmark_checkpoint_sha256=68b520f1322c79e568c39115809b8d623e21478af1662658cf997bf174cc9214
+validation_loss=1.9365209649992428
+validation_perplexity=6.934583296916738
+holdout_loss=1.8095625025135131
+holdout_perplexity=6.10777764135872
+export_dir=D:/IC_Workspace/VEDA_artifacts/ml_q2/benchmark/exports
+trace_dir=D:/IC_Workspace/VEDA_artifacts/ml_q2/benchmark/traces
+```
+
+ML-Q2 did not overwrite the accepted ML-M2 baseline checkpoint or the ML-Q1
+candidate checkpoint. It did not run real RTL and did not modify functional RTL
+or Hardware Stage H9 files.
+
 ## Next-Stage Cautions
 
 - Do not modify RTL or Hardware Stage H8 files from the model branch.
 - Do not commit datasets, checkpoints, tokenizer caches, FP16 weight exports,
   large traces, or credentials.
 - Model Stage M3 should begin from the formal best checkpoint and compare
-  PyTorch, hardware-aware bit model, and real RTL.
+  PyTorch, hardware-aware bit model, and real RTL. After ML-Q2, the preferred
+  fixed-architecture benchmark input is `VEDA-HWLM-1L64-Q2`.
 - Generation quality is intentionally modest; use this model primarily for
   hardware-matched numeric validation and one-layer deployment experiments.

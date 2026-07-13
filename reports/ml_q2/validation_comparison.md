@@ -1,0 +1,6 @@
+# ML-Q2 Validation Comparison
+
+- ml_m2_baseline: loss=3.3014952083935727, ppl=27.153208288215172
+- ml_q1_candidate: loss=3.1589355026367603, ppl=23.5455184416793
+- q2_continuation: loss=2.2731568149586243, ppl=9.710005172085221
+- q2_from_scratch: loss=1.9365209649992428, ppl=6.934583296916738

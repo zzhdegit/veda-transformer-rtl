@@ -47,3 +47,30 @@ perplexity=27.129980732808296
 Model Stage M3 may begin after user approval. It should consume the ML-M2
 formal checkpoint/export/trace artifacts for PyTorch / bit model / RTL
 co-simulation. ML-M2 did not start real RTL co-simulation.
+
+## Post-Acceptance Quality Experiments
+
+### Model Quality Experiment Q2
+
+- Short id: ML-Q2
+- Name: Full-Dataset Hardware Benchmark Training
+- Branch: `ml/q2-full-dataset-benchmark`
+- Last update: 2026-07-13
+- Status: ML-Q2 FULL-DATASET BENCHMARK PASS
+
+ML-Q2 kept the accepted ML-M2 hardware-matched architecture and BPE-2048
+tokenizer unchanged, used the full official TinyStories train split, and
+selected `VEDA-HWLM-1L64-Q2` as the internal fixed-architecture benchmark
+checkpoint for a later Model Stage M3.
+
+```text
+benchmark_checkpoint=D:/IC_Workspace/VEDA_artifacts/ml_q2/benchmark/checkpoints/VEDA-HWLM-1L64-Q2.pt
+benchmark_checkpoint_sha256=68b520f1322c79e568c39115809b8d623e21478af1662658cf997bf174cc9214
+validation_loss=1.9365209649992428
+holdout_loss=1.8095625025135131
+validation_perplexity=6.934583296916738
+holdout_perplexity=6.10777764135872
+```
+
+ML-Q2 did not run real RTL co-simulation, did not start Model Stage M3, and
+did not modify functional RTL or Hardware Stage H9 files.
