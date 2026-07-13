@@ -1,206 +1,219 @@
 # Project State
 
 ## Current Stage
-- Stage: 5
-- Status: STAGE 5 PASS
-- Branch observed after setup: `stage5-shared-multihead`
-- Last update: 2026-07-12
 
-## Stage 5 Result
-shared multi-head correctness accepted.
+- Stage: 6
+- Status: STAGE 6 PASS
+- Branch: `stage6-projection-mha`
+- Last update: 2026-07-13
 
-throughput and physical memory provisional.
+projection-integrated multi-head attention correctness accepted.
 
-Stage 5 implements shared multi-head causal generation attention on top of the
-accepted Stage 4.1 current-token semantics. For each generation token, all heads
-receive complete Q/K/V, all heads write provisional K/V for the current token,
-one shared `single_head_attention` compute path runs head 0 through
-`N_HEAD-1` sequentially, and the token commits only after every head output and
-done complete successfully.
+throughput, physical memory, and timing pipeline provisional.
 
-## Start-of-Stage Notes
-- Stage 5 requested branch was created as `stage5-shared-multihead`.
-- The requested clean starting worktree was not present. Stage 4/4.1 files and
-  generated reports were already modified or untracked.
-- Required tag `stage4p1-attention-accepted` was not present.
-- No existing workspace changes were reverted, cleaned, or overwritten.
-- Pre-change Stage 4.1 baseline passed:
-  - Host `python scripts/sim/run_stage4_tests.py`: PASS, 23 tests.
-  - Docker `make stage4p1-rtl-sim`: PASS.
-  - Docker `make stage4p1-lint`: PASS.
-  - Docker `make stage4p1-synth`: PASS.
+Stage 6 implements projection-integrated multi-head attention only. It does not
+implement RMSNorm, LayerNorm, residual paths, FFN, activation functions, full
+Transformer layer integration, SRAM macro binding, STA, layout, or PPA.
 
-## Frozen Decisions
-- Stage 4.1 standard causal current-token semantics are preserved.
-- Logical K/V layout is head-banked token-major:
+## Accepted Stage 6 Scope
 
 ```text
-K_cache[head][token][dimension]
-V_cache[head][token][dimension]
-address = ((head * MAX_SEQ_LEN) + token) * D_HEAD + dimension
+hidden FP16
+-> Q/K/V projection
+-> FP32-to-FP16 Q/K/V quantization
+-> Stage 5 multi-head current-token causal attention
+-> streamed FP32 head concat
+-> FP32-to-FP16 concat quantization
+-> FP16 concat buffer
+-> W_O output projection
+-> final tiled FP32 MHA output
 ```
 
-- All heads share one committed `valid_seq_len`.
-- Current K/V is provisional for all heads until the full multi-head token
-  transaction commits.
-- One shared Stage 3 single-head compute path is time-multiplexed by head.
-- No QKV projection, output projection, concat projection, FFN, LayerNorm,
-  Transformer layer, eviction, voting, sliding window, P&R, or PPA is
-  implemented.
-- Behavioral cache memory remains provisional and is not an SRAM macro or PPA
-  basis.
-- DesignWare remains confined to existing project wrappers.
+Frozen relations and layout:
 
-## Stage 5 Generation Semantics
-For generation step `t` with old committed length `valid_seq_len`:
+- `D_MODEL = N_HEAD * D_HEAD`
+- Q/K/V/W_O weights use `weight[kind][output_index][input_index]`
+- concat index is `output_head * D_HEAD + output_base_dim + lane_index`
+- W_O computes `output[o] = sum_i concat_fp16[i] * W_O[o][i]`
+- no bias is implemented
 
-1. Receive `q[h]`, `k[h]`, and `v[h]` for every head in head/dimension order.
-2. If `valid_seq_len == MAX_SEQ_LEN`, return `done_invalid=1`, status `8'h82`,
-   no output, no write, and no length increment.
-3. Write every head's K/V to provisional row `valid_seq_len`.
-4. Keep committed `valid_seq_len` unchanged while provisional data is in flight.
-5. For each head `h = 0..N_HEAD-1`, load that head's q and K/V rows
-   `0..valid_seq_len` into the shared single-head attention path.
-6. Start each head with `start_seq_len = old_valid_seq_len + 1`.
-7. Forward per-head FP32 output tiles in head order.
-8. Commit the token only after all heads complete successfully.
-9. If any head fails before commit, abort all provisional head state and leave
-   `valid_seq_len` unchanged.
+## Frozen Numeric Policy
 
-Mathematically:
+- Hidden and weights are FP16.
+- GEMV operands are exact FP16-to-FP32 extensions.
+- GEMV uses the Stage 2 balanced FP32 reduction tree and tile accumulation
+  order.
+- Q/K/V projection outputs are FP32, then explicitly quantized to FP16.
+- Stage 5 per-head outputs are FP32.
+- The bit model keeps logical `head_output_fp32`, `concat_fp32`,
+  `concat_fp16`, and `wo_output_fp32` trace nodes.
+- RTL streams Stage 5 FP32 output lanes through one `fp32_to_fp16` converter and
+  stores only the FP16 concat vector for W_O.
+- FP32-to-FP16 policy is RNE, FTZ for FP32/FP16 subnormals, finite saturation on
+  overflow, signed-zero preserving, and invalid for NaN/Inf.
 
-```text
-output[h] = Attention(q[h,t], K[h,0:t], V[h,0:t])
-```
+## RTL Structure
 
-where `K[h,t]/V[h,t]` are the current token's provisional K/V for head `h`.
+Final top:
 
-## RTL Changes
-- Added `rtl/cache/multi_head_kv_cache_manager.sv`
-  - Head-banked token-major K/V memory.
-  - Per-head provisional completion with all-head atomic commit.
-  - One shared committed `valid_seq_len`.
-  - Abort clears all provisional head state without changing committed length.
-- Added `rtl/cache/multi_head_generation_controller.sv`
-  - Validates strict head/dimension token input order.
-  - Writes all heads' provisional K/V before any head starts attention.
-  - Schedules the shared single-head datapath from head 0 to `N_HEAD-1`.
-  - Emits per-head output metadata and commits only after all heads complete.
-- Added `rtl/attention/multi_head_generation_engine.sv`
-  - Instantiates one `multi_head_kv_cache_manager`.
-  - Instantiates one shared `single_head_attention`.
-  - Instantiates one `multi_head_generation_controller`.
-  - Does not instantiate `generation_attention_engine` or N copies of Stage 3.
+- `rtl/attention/projection_integrated_mha.sv`
 
-Stage 4.1 `generation_attention_engine` remains available as the single-head
-compatibility path.
+Stage 6E support modules:
 
-## Model And Test Changes
-- Added `model/cache/multi_head_kv_cache_reference.py`.
-- Added `model/cache/multi_head_generation_reference.py`.
-- Added `tb/model/test_stage5_multihead_generation.py`.
-- Added Stage 5 vector generation and regressions:
-  - `scripts/sim/gen_stage5_vectors.py`
-  - `scripts/sim/run_stage5_tests.py`
-  - `scripts/sim/run_stage5_vcs.sh`
-  - `scripts/lint/run_stage5_lint.py`
-  - `scripts/synth/run_stage5_synth_check.py`
-  - `scripts/synth/stage5_elaborate.tcl`
-- Added RTL testbenches:
-  - `tb/rtl/stage5/tb_multi_head_kv_cache_manager.sv`
-  - `tb/rtl/stage5/tb_multi_head_generation_engine.sv`
-- Added Makefile targets:
-  - `make stage5-test`
-  - `make stage5-rtl-sim`
-  - `make stage5-lint`
-  - `make stage5-synth`
+- `rtl/projection/head_concat_quantizer.sv`
+- `rtl/projection/concat_fp16_buffer.sv`
+- `rtl/projection/output_projection_controller.sv`
 
-## Assertions
-Stage 5 RTL and lint include assertion/stability tokens for:
-- `head_and_dim_order_legal`
-- `no_head_start_before_all_provisional_complete`
-- `each_head_attention_seq_len_equals_valid_plus_one`
-- `no_next_head_before_current_done`
-- `no_commit_before_all_heads_done`
-- `no_partial_head_commit`
-- `all_heads_share_valid_seq_len`
-- `provisional_head_token_index_legal`
-- `output_head_order_preserved`
-- `no_overwrite_when_full`
-- `abort_clears_all_head_provisional_state`
-- `output stable under backpressure`
-- `transaction count conserved`
-- `no unknown output when valid`
+Projection datapath:
+
+- One `projection_controller`
+- One `shared_gemv_projection_core`
+- One underlying `reconfigurable_pe_core`
+
+Q, K, V, and W_O all reuse this single projection GEMV datapath. No third PE or
+new W_O-specific floating multiply-add array was added. Stage 5 attention
+internals are not restructured.
+
+## Token Transaction Order
+
+For a successful token:
+
+1. hidden dimensions load;
+2. Q projection;
+3. K projection;
+4. V projection;
+5. Q/K/V FP16 stream to Stage 5;
+6. Stage 5 attention completes;
+7. Stage 5 atomically commits all-head K/V;
+8. concat quantization completes;
+9. W_O output projection completes;
+10. final tiled FP32 output is emitted;
+11. final done handshakes;
+12. only then can the next hidden token start.
+
+If QKV projection or Stage 5 fails before commit, Stage 5 abort semantics are
+preserved, `valid_seq_len` does not increase, and W_O does not start. If Stage 5
+already committed and concat/W_O later reports invalid, the K/V commit is not
+rolled back; final done reports invalid/status and reset clears top transaction
+state.
+
+## Final Top Interface
+
+Weight load:
+
+- `weight_valid`, `weight_ready`
+- `weight_kind` (`WQ`, `WK`, `WV`, `WO`)
+- `weight_output_index`, `weight_input_index`
+- `weight_data_fp16`
+- `weight_last`, `weight_commit`
+
+Hidden input:
+
+- `token_valid`, `token_ready`
+- `token_dim`
+- `token_hidden_fp16`
+- `token_last_dim`
+- `token_meta`
+
+Final output:
+
+- `output_valid`, `output_ready`
+- `output_base_dim`
+- `output_vector_fp32`
+- `output_lane_mask`
+- `output_status`
+- `output_invalid`
+- `output_meta`
+- `output_last`
+
+Done/state:
+
+- `done_valid`, `done_ready`
+- `done_status`
+- `done_invalid`
+- `done_meta`
+- `done_valid_seq_len`
+- `current_valid_seq_len`
+
+Counters:
+
+- `perf_generation_steps`
+- `perf_total_cycles`
+- `perf_q_projection_cycles`
+- `perf_k_projection_cycles`
+- `perf_v_projection_cycles`
+- `perf_qkv_quantization_cycles`
+- `perf_attention_cycles`
+- `perf_concat_quantization_cycles`
+- `perf_output_projection_cycles`
+- `perf_projection_pe_stall_cycles`
+- `perf_attention_pe_stall_cycles`
+- `perf_sfu_stall_cycles`
+- `perf_weight_stall_cycles`
+- `perf_buffer_stall_cycles`
+- `perf_output_stall_cycles`
+- `perf_peak_valid_seq_len`
 
 ## Verification Performed
-Host Python:
+
+Host:
 
 ```bash
-python scripts/sim/run_stage5_tests.py
-python scripts/sim/run_stage4_tests.py
-python scripts/sim/run_stage3_tests.py
+python scripts/sim/run_stage6a_tests.py
+python scripts/sim/run_stage6b_tests.py
+python scripts/sim/run_stage6c_tests.py
+python scripts/sim/run_stage6d_tests.py
+python scripts/sim/run_stage6e_tests.py
+python scripts/sim/run_stage6_tests.py
 ```
 
-PASS:
-- Stage 5 model regression: 31 tests and py_compile.
-- Stage 4.1 model regression: 23 tests and py_compile.
-- Stage 3 model regression: 17 tests and py_compile.
-- Host RTL simulation skipped by scripts because host has no `vcs`.
-
-Docker VCS/lint/DC:
+Docker:
 
 ```bash
-docker exec nailong bash -lc 'cd /workspace/VEDA && make stage5-rtl-sim'
-docker exec nailong bash -lc 'cd /workspace/VEDA && make stage5-lint'
-docker exec nailong bash -lc 'cd /workspace/VEDA && make stage5-synth'
-docker exec nailong bash -lc 'cd /workspace/VEDA && make stage4p1-rtl-sim'
-docker exec nailong bash -lc 'cd /workspace/VEDA && make stage4p1-lint'
-docker exec nailong bash -lc 'cd /workspace/VEDA && make stage4p1-synth'
-docker exec nailong bash -lc 'cd /workspace/VEDA && make stage3-rtl-sim'
-docker exec nailong bash -lc 'cd /workspace/VEDA && make stage3-lint'
-docker exec nailong bash -lc 'cd /workspace/VEDA && make stage3-synth'
+make stage6-test
+make stage6-rtl-sim
+make stage6-lint
+make stage6-synth
+make stage6e-rtl-sim
+make stage6e-lint
+make stage6e-synth
+make stage6d-rtl-sim
+make stage6d-lint
+make stage6d-synth
+make stage6c-rtl-sim
+make stage6c-lint
+make stage6c-synth
+make stage6b-rtl-sim
+make stage6b-lint
+make stage6b-synth
+make stage5-rtl-sim
+make stage5-lint
+make stage5-synth
 ```
 
-PASS:
-- Stage 5 VCS:
-  - `multi_head_kv_cache_manager`: PASS.
-  - `N_HEAD=1,D_HEAD=8`: PASS.
-  - `N_HEAD=2,D_HEAD=8`: PASS.
-  - `N_HEAD=4,D_HEAD=8`: PASS.
-  - `N_HEAD=2,D_HEAD=16`: PASS.
-- Stage 5 vlogan lint: PASS with no diagnostics.
-- Stage 5 DC analyze/elaborate/link/check_design: PASS.
-- Stage 4.1 VCS/lint/DC post-change regression: PASS.
-- Stage 3 RTL/lint/DC post-change regression: PASS.
+Results:
 
-Note: Docker `make stage3-test` was also tried, but that target uses the
-container's old Python, which does not support existing repository files with
-`from __future__ import annotations`. Host Python is the Stage 3/4/5 model-test
-source of truth for this run; Docker remains the VCS/vlogan/DC environment.
+- Stage 6A-6E Python/model/vector/py_compile: PASS
+- Stage 6E final top VCS H1/D8, H2/D8, H4/D8, H2/D16: PASS
+- Stage 6E lint/vlogan: PASS with no diagnostics
+- Stage 6E DC analyze/elaborate/link/check_design: PASS
+- Stage 6B/6C/6D and Stage 5 regressions after Stage 6E: PASS
+- Final `stage6-*` unified commands: PASS
 
-DC checks are analyze/elaborate/link/check_design only. They do not generate
-area, power, WNS, frequency, layout, or process timing claims.
-
-## Stage 5 RTL Counter Snapshot
-Counters are cumulative from reset. Step 8 is the full-cache error case.
-
-| Config | final valid step | total | per_head_attention | head_switch | provisional_write | commit | cache_read | cache_write | pe_stall | sfu_stall | output_stall | peak_seq |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| H1 D8 | 7 | 2924 | 2778 | 0 | 64 | 8 | 576 | 64 | 736 | 300 | 2 | 8 |
-| H2 D8 | 7 | 5835 | 5553 | 8 | 128 | 8 | 1152 | 128 | 1472 | 600 | 1 | 8 |
-| H4 D8 | 7 | 11671 | 11119 | 24 | 256 | 8 | 2304 | 256 | 2944 | 1200 | 15 | 8 |
-| H2 D16 | 7 | 10338 | 9802 | 8 | 256 | 8 | 2304 | 256 | 2944 | 600 | 10 | 8 |
-
-These are RTL cycle counters only. They are not PPA.
+DC checks are structural analyze/elaborate/link/check_design only. No formal
+area, power, frequency, WNS, STA, process timing, or layout result is produced.
 
 ## Known Limitations
-- The multi-head schedule is intentionally serial by head.
-- K/V cache memory is still behavioral and not physically banked SRAM.
-- No projection, concat, output projection, Transformer layer, eviction,
-  voting, PPA, timing closure, or layout is included.
+
+- Scheduling is intentionally serial and throughput is provisional.
+- Projection weights, concat storage, and K/V cache are behavioral memories for
+  correctness closure and are not SRAM macros.
+- D_MODEL=128 DC coverage is address/control/component elaboration, not a
+  physical full-memory implementation claim.
+- No complete Transformer layer is present; Norm/Residual/FFN are out of Stage 6
+  scope.
 
 ## Next Action
-- Do not start projection or Transformer layer work from this stage.
-- A future projection stage must preserve Stage 5's all-head atomic
-  provisional/commit behavior unless a later accepted spec changes RTL, models,
-  tests, and documentation together.
+
+Stage 6 is closed for projection-integrated MHA correctness. Do not start Stage
+7 work in this thread.

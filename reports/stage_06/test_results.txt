@@ -1,0 +1,125 @@
+Stage 6 final Python/model regression
+Covers Stage 6A-6E model tests, vector generation, py_compile, Stage 5 model regression, and cycle model examples.
+
+$ /usr/bin/python3 scripts/sim/run_stage6a_tests.py
+$ fallback-python-test-runner stage5/stage6a model tests
+Fallback Python test runner: 16 tests
+PASS
+exit_code=0
+
+py_compile skipped Python 3.7+ files under Python 3.6:
+model/reference_attention.py
+model/arithmetic/arithmetic_reference.py
+model/arithmetic/numeric_format.py
+model/memory/fifo_reference.py
+tb/model/test_reference_attention.py
+tb/model/test_stage1_arithmetic.py
+tb/model/test_stage1_memory.py
+tb/unit/test_stage1_rtl_static.py
+
+$ /usr/bin/python3 -m py_compile model/arithmetic/fp16_fp32_reference.py model/arithmetic/fp32_add_reference.py model/arithmetic/fp32_mac_reference.py model/arithmetic/__init__.py model/attention/single_head_cycle_model.py model/attention/single_head_reference.py model/attention/softmax_reference.py model/attention/__init__.py model/cache/generation_reference.py model/cache/kv_cache_reference.py model/cache/multi_head_generation_reference.py model/cache/multi_head_kv_cache_reference.py model/cache/__init__.py model/memory/__init__.py model/pe/pe_core_reference.py model/pe/pe_lane_reference.py model/pe/reduction_tree_reference.py model/pe/__init__.py model/projection/fp32_fp16_reference.py model/projection/gemv_reference.py model/projection/projection_mha_cycle_model.py model/projection/projection_mha_reference.py model/projection/projection_reference.py model/projection/__init__.py tb/model/test_stage1b_fp.py tb/model/test_stage2_pe.py tb/model/test_stage3_attention.py tb/model/test_stage4_generation.py tb/model/test_stage5_multihead_generation.py tb/model/test_stage6e_output_projection.py tb/model/test_stage6_projection.py scripts/lint/run_stage1b_lint.py scripts/lint/run_stage1_lint.py scripts/lint/run_stage2_lint.py scripts/lint/run_stage3_lint.py scripts/lint/run_stage4_lint.py scripts/lint/run_stage5_lint.py scripts/lint/run_stage6b_lint.py scripts/lint/run_stage6c_lint.py scripts/lint/run_stage6d_lint.py scripts/lint/run_stage6e_lint.py scripts/lint/run_stage6_lint.py scripts/sim/gen_stage1b_vectors.py scripts/sim/gen_stage2_vectors.py scripts/sim/gen_stage3_vectors.py scripts/sim/gen_stage4_vectors.py scripts/sim/gen_stage5_vectors.py scripts/sim/gen_stage6b_vectors.py scripts/sim/gen_stage6c_vectors.py scripts/sim/gen_stage6d_vectors.py scripts/sim/gen_stage6e_vectors.py scripts/sim/run_stage1b_tests.py scripts/sim/run_stage1_tests.py scripts/sim/run_stage1_vcs.py scripts/sim/run_stage2_tests.py scripts/sim/run_stage3_tests.py scripts/sim/run_stage4_tests.py scripts/sim/run_stage5_tests.py scripts/sim/run_stage6a_tests.py scripts/sim/run_stage6b_tests.py scripts/sim/run_stage6c_tests.py scripts/sim/run_stage6d_tests.py scripts/sim/run_stage6e_tests.py scripts/sim/run_stage6_tests.py scripts/synth/run_stage1b_synth_check.py scripts/synth/run_stage1_synth_check.py scripts/synth/run_stage2_synth_check.py scripts/synth/run_stage3_synth_check.py scripts/synth/run_stage4_synth_check.py scripts/synth/run_stage5_synth_check.py scripts/synth/run_stage6b_synth_check.py scripts/synth/run_stage6c_synth_check.py scripts/synth/run_stage6d_synth_check.py scripts/synth/run_stage6e_synth_check.py scripts/synth/run_stage6_synth_check.py
+
+exit_code=0
+exit_code=0
+
+$ /usr/bin/python3 scripts/sim/run_stage6b_tests.py
+$ fallback-python-test-runner stage5/stage6b model tests
+Fallback Python test runner: 16 tests
+PASS
+exit_code=0
+
+py_compile skipped Python 3.7+ files under Python 3.6:
+model/reference_attention.py
+model/arithmetic/arithmetic_reference.py
+model/arithmetic/numeric_format.py
+model/memory/fifo_reference.py
+tb/model/test_reference_attention.py
+tb/model/test_stage1_arithmetic.py
+tb/model/test_stage1_memory.py
+tb/unit/test_stage1_rtl_static.py
+
+$ /usr/bin/python3 -m py_compile model/arithmetic/fp16_fp32_reference.py model/arithmetic/fp32_add_reference.py model/arithmetic/fp32_mac_reference.py model/arithmetic/__init__.py model/attention/single_head_cycle_model.py model/attention/single_head_reference.py model/attention/softmax_reference.py model/attention/__init__.py model/cache/generation_reference.py model/cache/kv_cache_reference.py model/cache/multi_head_generation_reference.py model/cache/multi_head_kv_cache_reference.py model/cache/__init__.py model/memory/__init__.py model/pe/pe_core_reference.py model/pe/pe_lane_reference.py model/pe/reduction_tree_reference.py model/pe/__init__.py model/projection/fp32_fp16_reference.py model/projection/gemv_reference.py model/projection/projection_mha_cycle_model.py model/projection/projection_mha_reference.py model/projection/projection_reference.py model/projection/__init__.py tb/model/test_stage1b_fp.py tb/model/test_stage2_pe.py tb/model/test_stage3_attention.py tb/model/test_stage4_generation.py tb/model/test_stage5_multihead_generation.py tb/model/test_stage6e_output_projection.py tb/model/test_stage6_projection.py scripts/lint/run_stage1b_lint.py scripts/lint/run_stage1_lint.py scripts/lint/run_stage2_lint.py scripts/lint/run_stage3_lint.py scripts/lint/run_stage4_lint.py scripts/lint/run_stage5_lint.py scripts/lint/run_stage6b_lint.py scripts/lint/run_stage6c_lint.py scripts/lint/run_stage6d_lint.py scripts/lint/run_stage6e_lint.py scripts/lint/run_stage6_lint.py scripts/sim/gen_stage1b_vectors.py scripts/sim/gen_stage2_vectors.py scripts/sim/gen_stage3_vectors.py scripts/sim/gen_stage4_vectors.py scripts/sim/gen_stage5_vectors.py scripts/sim/gen_stage6b_vectors.py scripts/sim/gen_stage6c_vectors.py scripts/sim/gen_stage6d_vectors.py scripts/sim/gen_stage6e_vectors.py scripts/sim/run_stage1b_tests.py scripts/sim/run_stage1_tests.py scripts/sim/run_stage1_vcs.py scripts/sim/run_stage2_tests.py scripts/sim/run_stage3_tests.py scripts/sim/run_stage4_tests.py scripts/sim/run_stage5_tests.py scripts/sim/run_stage6a_tests.py scripts/sim/run_stage6b_tests.py scripts/sim/run_stage6c_tests.py scripts/sim/run_stage6d_tests.py scripts/sim/run_stage6e_tests.py scripts/sim/run_stage6_tests.py scripts/synth/run_stage1b_synth_check.py scripts/synth/run_stage1_synth_check.py scripts/synth/run_stage2_synth_check.py scripts/synth/run_stage3_synth_check.py scripts/synth/run_stage4_synth_check.py scripts/synth/run_stage5_synth_check.py scripts/synth/run_stage6b_synth_check.py scripts/synth/run_stage6c_synth_check.py scripts/synth/run_stage6d_synth_check.py scripts/synth/run_stage6e_synth_check.py scripts/synth/run_stage6_synth_check.py
+
+exit_code=0
+exit_code=0
+
+$ /usr/bin/python3 scripts/sim/run_stage6c_tests.py
+$ fallback-python-test-runner stage5/stage6c model tests
+Fallback Python test runner: 16 tests
+PASS
+exit_code=0
+
+py_compile skipped Python 3.7+ files under Python 3.6:
+model/reference_attention.py
+model/arithmetic/arithmetic_reference.py
+model/arithmetic/numeric_format.py
+model/memory/fifo_reference.py
+tb/model/test_reference_attention.py
+tb/model/test_stage1_arithmetic.py
+tb/model/test_stage1_memory.py
+tb/unit/test_stage1_rtl_static.py
+
+$ /usr/bin/python3 -m py_compile model/arithmetic/fp16_fp32_reference.py model/arithmetic/fp32_add_reference.py model/arithmetic/fp32_mac_reference.py model/arithmetic/__init__.py model/attention/single_head_cycle_model.py model/attention/single_head_reference.py model/attention/softmax_reference.py model/attention/__init__.py model/cache/generation_reference.py model/cache/kv_cache_reference.py model/cache/multi_head_generation_reference.py model/cache/multi_head_kv_cache_reference.py model/cache/__init__.py model/memory/__init__.py model/pe/pe_core_reference.py model/pe/pe_lane_reference.py model/pe/reduction_tree_reference.py model/pe/__init__.py model/projection/fp32_fp16_reference.py model/projection/gemv_reference.py model/projection/projection_mha_cycle_model.py model/projection/projection_mha_reference.py model/projection/projection_reference.py model/projection/__init__.py tb/model/test_stage1b_fp.py tb/model/test_stage2_pe.py tb/model/test_stage3_attention.py tb/model/test_stage4_generation.py tb/model/test_stage5_multihead_generation.py tb/model/test_stage6e_output_projection.py tb/model/test_stage6_projection.py scripts/lint/run_stage1b_lint.py scripts/lint/run_stage1_lint.py scripts/lint/run_stage2_lint.py scripts/lint/run_stage3_lint.py scripts/lint/run_stage4_lint.py scripts/lint/run_stage5_lint.py scripts/lint/run_stage6b_lint.py scripts/lint/run_stage6c_lint.py scripts/lint/run_stage6d_lint.py scripts/lint/run_stage6e_lint.py scripts/lint/run_stage6_lint.py scripts/sim/gen_stage1b_vectors.py scripts/sim/gen_stage2_vectors.py scripts/sim/gen_stage3_vectors.py scripts/sim/gen_stage4_vectors.py scripts/sim/gen_stage5_vectors.py scripts/sim/gen_stage6b_vectors.py scripts/sim/gen_stage6c_vectors.py scripts/sim/gen_stage6d_vectors.py scripts/sim/gen_stage6e_vectors.py scripts/sim/run_stage1b_tests.py scripts/sim/run_stage1_tests.py scripts/sim/run_stage1_vcs.py scripts/sim/run_stage2_tests.py scripts/sim/run_stage3_tests.py scripts/sim/run_stage4_tests.py scripts/sim/run_stage5_tests.py scripts/sim/run_stage6a_tests.py scripts/sim/run_stage6b_tests.py scripts/sim/run_stage6c_tests.py scripts/sim/run_stage6d_tests.py scripts/sim/run_stage6e_tests.py scripts/sim/run_stage6_tests.py scripts/synth/run_stage1b_synth_check.py scripts/synth/run_stage1_synth_check.py scripts/synth/run_stage2_synth_check.py scripts/synth/run_stage3_synth_check.py scripts/synth/run_stage4_synth_check.py scripts/synth/run_stage5_synth_check.py scripts/synth/run_stage6b_synth_check.py scripts/synth/run_stage6c_synth_check.py scripts/synth/run_stage6d_synth_check.py scripts/synth/run_stage6e_synth_check.py scripts/synth/run_stage6_synth_check.py
+
+exit_code=0
+exit_code=0
+
+$ /usr/bin/python3 scripts/sim/run_stage6d_tests.py
+$ fallback-python-test-runner stage5/stage6d model tests
+Fallback Python test runner: 16 tests
+PASS
+exit_code=0
+
+py_compile skipped Python 3.7+ files under Python 3.6:
+model/reference_attention.py
+model/arithmetic/arithmetic_reference.py
+model/arithmetic/numeric_format.py
+model/memory/fifo_reference.py
+tb/model/test_reference_attention.py
+tb/model/test_stage1_arithmetic.py
+tb/model/test_stage1_memory.py
+tb/unit/test_stage1_rtl_static.py
+
+$ /usr/bin/python3 -m py_compile model/arithmetic/fp16_fp32_reference.py model/arithmetic/fp32_add_reference.py model/arithmetic/fp32_mac_reference.py model/arithmetic/__init__.py model/attention/single_head_cycle_model.py model/attention/single_head_reference.py model/attention/softmax_reference.py model/attention/__init__.py model/cache/generation_reference.py model/cache/kv_cache_reference.py model/cache/multi_head_generation_reference.py model/cache/multi_head_kv_cache_reference.py model/cache/__init__.py model/memory/__init__.py model/pe/pe_core_reference.py model/pe/pe_lane_reference.py model/pe/reduction_tree_reference.py model/pe/__init__.py model/projection/fp32_fp16_reference.py model/projection/gemv_reference.py model/projection/projection_mha_cycle_model.py model/projection/projection_mha_reference.py model/projection/projection_reference.py model/projection/__init__.py tb/model/test_stage1b_fp.py tb/model/test_stage2_pe.py tb/model/test_stage3_attention.py tb/model/test_stage4_generation.py tb/model/test_stage5_multihead_generation.py tb/model/test_stage6e_output_projection.py tb/model/test_stage6_projection.py scripts/lint/run_stage1b_lint.py scripts/lint/run_stage1_lint.py scripts/lint/run_stage2_lint.py scripts/lint/run_stage3_lint.py scripts/lint/run_stage4_lint.py scripts/lint/run_stage5_lint.py scripts/lint/run_stage6b_lint.py scripts/lint/run_stage6c_lint.py scripts/lint/run_stage6d_lint.py scripts/lint/run_stage6e_lint.py scripts/lint/run_stage6_lint.py scripts/sim/gen_stage1b_vectors.py scripts/sim/gen_stage2_vectors.py scripts/sim/gen_stage3_vectors.py scripts/sim/gen_stage4_vectors.py scripts/sim/gen_stage5_vectors.py scripts/sim/gen_stage6b_vectors.py scripts/sim/gen_stage6c_vectors.py scripts/sim/gen_stage6d_vectors.py scripts/sim/gen_stage6e_vectors.py scripts/sim/run_stage1b_tests.py scripts/sim/run_stage1_tests.py scripts/sim/run_stage1_vcs.py scripts/sim/run_stage2_tests.py scripts/sim/run_stage3_tests.py scripts/sim/run_stage4_tests.py scripts/sim/run_stage5_tests.py scripts/sim/run_stage6a_tests.py scripts/sim/run_stage6b_tests.py scripts/sim/run_stage6c_tests.py scripts/sim/run_stage6d_tests.py scripts/sim/run_stage6e_tests.py scripts/sim/run_stage6_tests.py scripts/synth/run_stage1b_synth_check.py scripts/synth/run_stage1_synth_check.py scripts/synth/run_stage2_synth_check.py scripts/synth/run_stage3_synth_check.py scripts/synth/run_stage4_synth_check.py scripts/synth/run_stage5_synth_check.py scripts/synth/run_stage6b_synth_check.py scripts/synth/run_stage6c_synth_check.py scripts/synth/run_stage6d_synth_check.py scripts/synth/run_stage6e_synth_check.py scripts/synth/run_stage6_synth_check.py
+
+exit_code=0
+exit_code=0
+
+$ /usr/bin/python3 scripts/sim/run_stage6e_tests.py
+$ fallback-python-test-runner stage5/stage6e model tests
+Fallback Python test runner: 18 tests
+PASS
+exit_code=0
+
+py_compile skipped Python 3.7+ files under Python 3.6:
+model/reference_attention.py
+model/arithmetic/arithmetic_reference.py
+model/arithmetic/numeric_format.py
+model/memory/fifo_reference.py
+tb/model/test_reference_attention.py
+tb/model/test_stage1_arithmetic.py
+tb/model/test_stage1_memory.py
+tb/unit/test_stage1_rtl_static.py
+
+$ /usr/bin/python3 scripts/sim/gen_stage6e_vectors.py build/stage6e_test_vectors
+stage6e_integrated_mha_h1_d8_lines=80
+stage6e_integrated_mha_h2_d8_lines=120
+stage6e_integrated_mha_h4_d8_lines=200
+stage6e_integrated_mha_h2_d16_lines=200
+exit_code=0
+
+$ /usr/bin/python3 -m py_compile model/arithmetic/fp16_fp32_reference.py model/arithmetic/fp32_add_reference.py model/arithmetic/fp32_mac_reference.py model/arithmetic/__init__.py model/attention/single_head_cycle_model.py model/attention/single_head_reference.py model/attention/softmax_reference.py model/attention/__init__.py model/cache/generation_reference.py model/cache/kv_cache_reference.py model/cache/multi_head_generation_reference.py model/cache/multi_head_kv_cache_reference.py model/cache/__init__.py model/memory/__init__.py model/pe/pe_core_reference.py model/pe/pe_lane_reference.py model/pe/reduction_tree_reference.py model/pe/__init__.py model/projection/fp32_fp16_reference.py model/projection/gemv_reference.py model/projection/projection_mha_cycle_model.py model/projection/projection_mha_reference.py model/projection/projection_reference.py model/projection/__init__.py tb/model/test_stage1b_fp.py tb/model/test_stage2_pe.py tb/model/test_stage3_attention.py tb/model/test_stage4_generation.py tb/model/test_stage5_multihead_generation.py tb/model/test_stage6e_output_projection.py tb/model/test_stage6_projection.py scripts/lint/run_stage1b_lint.py scripts/lint/run_stage1_lint.py scripts/lint/run_stage2_lint.py scripts/lint/run_stage3_lint.py scripts/lint/run_stage4_lint.py scripts/lint/run_stage5_lint.py scripts/lint/run_stage6b_lint.py scripts/lint/run_stage6c_lint.py scripts/lint/run_stage6d_lint.py scripts/lint/run_stage6e_lint.py scripts/lint/run_stage6_lint.py scripts/sim/gen_stage1b_vectors.py scripts/sim/gen_stage2_vectors.py scripts/sim/gen_stage3_vectors.py scripts/sim/gen_stage4_vectors.py scripts/sim/gen_stage5_vectors.py scripts/sim/gen_stage6b_vectors.py scripts/sim/gen_stage6c_vectors.py scripts/sim/gen_stage6d_vectors.py scripts/sim/gen_stage6e_vectors.py scripts/sim/run_stage1b_tests.py scripts/sim/run_stage1_tests.py scripts/sim/run_stage1_vcs.py scripts/sim/run_stage2_tests.py scripts/sim/run_stage3_tests.py scripts/sim/run_stage4_tests.py scripts/sim/run_stage5_tests.py scripts/sim/run_stage6a_tests.py scripts/sim/run_stage6b_tests.py scripts/sim/run_stage6c_tests.py scripts/sim/run_stage6d_tests.py scripts/sim/run_stage6e_tests.py scripts/sim/run_stage6_tests.py scripts/synth/run_stage1b_synth_check.py scripts/synth/run_stage1_synth_check.py scripts/synth/run_stage2_synth_check.py scripts/synth/run_stage3_synth_check.py scripts/synth/run_stage4_synth_check.py scripts/synth/run_stage5_synth_check.py scripts/synth/run_stage6b_synth_check.py scripts/synth/run_stage6c_synth_check.py scripts/synth/run_stage6d_synth_check.py scripts/synth/run_stage6e_synth_check.py scripts/synth/run_stage6_synth_check.py
+
+exit_code=0
+exit_code=0
+
+$ /usr/bin/python3 model/projection/projection_mha_cycle_model.py
+Stage 6 no-stall single-token cycle estimate
+total_cycles = hidden_load + q_projection + k_projection + v_projection + qkv_quantization + attention + concat_quantization + output_projection + final_output + control_overhead
+H1D8 total=188 hidden=8 q=24 k=24 v=24 qkv_quant=24 attention=30 concat=8 wo=32 final_output=1 overhead=13
+H2D8 total=428 hidden=16 q=64 k=64 v=64 qkv_quant=48 attention=60 concat=16 wo=80 final_output=2 overhead=14
+H4D8 total=1100 hidden=32 q=192 k=192 v=192 qkv_quant=96 attention=120 concat=32 wo=224 final_output=4 overhead=16
+H2D16 total=1098 hidden=32 q=192 k=192 v=192 qkv_quant=96 attention=120 concat=32 wo=224 final_output=4 overhead=14
+exit_code=0
+
+Stage 6 Python/model result: PASS

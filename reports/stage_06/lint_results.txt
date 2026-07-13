@@ -1,0 +1,36 @@
+Stage 6 final lint/vlogan regression
+Includes shared GEMV, QKV projection, projected attention, streamed concat, W_O, and final top.
+
+$ /usr/bin/python3 scripts/lint/run_stage6b_lint.py
+Static Stage 6B RTL hygiene: PASS
+$ vlogan -full64 -sverilog -work work <DW sim files> <stage6b RTL files>
+vlogan_log=build/stage6b_vlogan_lint/vlogan.log
+vlogan_exit_code=0
+vlogan_diagnostics: none
+exit_code=0
+
+$ /usr/bin/python3 scripts/lint/run_stage6c_lint.py
+Static Stage 6C RTL hygiene: PASS
+$ vlogan -full64 -sverilog -work work <DW sim files> <stage6c RTL files>
+vlogan_log=build/stage6c_vlogan_lint/vlogan.log
+vlogan_exit_code=0
+vlogan_diagnostics: none
+exit_code=0
+
+$ /usr/bin/python3 scripts/lint/run_stage6d_lint.py
+Static Stage 6D RTL hygiene: PASS
+$ vlogan -full64 -sverilog -work work <DW sim files> <stage6d RTL files>
+vlogan_log=build/stage6d_vlogan_lint/vlogan.log
+vlogan_exit_code=0
+vlogan_diagnostics: none
+exit_code=0
+
+$ /usr/bin/python3 scripts/lint/run_stage6e_lint.py
+Static Stage 6E RTL hygiene: PASS
+$ vlogan -full64 -sverilog -work work <DW sim files> <stage6e RTL files>
+vlogan_log=build/stage6e_vlogan_lint/vlogan.log
+vlogan_exit_code=0
+vlogan_diagnostics: none
+exit_code=0
+
+Stage 6 lint result: PASS
