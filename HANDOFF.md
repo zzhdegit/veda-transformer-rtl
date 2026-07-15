@@ -19,11 +19,13 @@ Stage5/6/7/8 regressions in the Docker EDA environment `nailong`.
 Hardware Stage H9 is not accepted because the full HW-H9 exit conditions are
 not closed. The assertion execution blocker is closed with explicit SVA bind
 and negative evidence. Direct H9 datapath reset and 20-seed random
-backpressure stress pass, but strict final acceptance still requires
-independent multi-head/full-layer reset injection coverage and broad
-multi-endpoint multi-head/full-layer random backpressure coverage. Do not write
-`HARDWARE STAGE H9 PASS`, do not create an H9 accepted tag, and do not enter
-Hardware Stage H10.
+backpressure stress pass. Strict independent multi-head reset/random closure
+also passes against the real `multi_head_generation_engine` hierarchy:
+20/20 reset rows and 24/24 fixed-seed random runs. Strict final acceptance still
+requires independent full-layer reset injection coverage and broad
+multi-endpoint full-layer random backpressure coverage against the real
+`transformer_layer` DUT. Do not write `HARDWARE STAGE H9 PASS`, do not create
+an H9 accepted tag, and do not enter Hardware Stage H10.
 
 Stage 8 remains the accepted baseline. Paper-structured 8x8x2 PE array RTL and
 Attention QK/sV mapping are accepted.

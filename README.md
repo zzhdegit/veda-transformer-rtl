@@ -20,12 +20,13 @@ RTL interval for D_HEAD=8, 16, and 64 at seq 1/2/8/16/32/64.
 Hardware Stage H9 is not accepted yet. Multi-head/full-layer H9 RTL entries,
 long-sequence/cache-full entries, lint/vlogan, DC structural checks, direct H9
 datapath reset stress, direct H9 datapath 20-seed random backpressure stress,
-assertion positive/negative execution, and Stage5/6/7/8 regressions have
+assertion positive/negative execution, strict independent multi-head reset and
+24-run multi-head random backpressure, and Stage5/6/7/8 regressions have
 executed and passed in the Docker EDA environment `nailong`. Final acceptance is
-still blocked by strict independent multi-head/full-layer reset injection
-coverage and broad multi-endpoint multi-head/full-layer random-backpressure
-coverage. Global array sharing, physical memory, timing closure, and PPA remain
-provisional.
+still blocked by strict independent full-layer reset injection coverage and
+broad multi-endpoint full-layer random-backpressure coverage against the real
+`transformer_layer` DUT. Global array sharing, physical memory, timing closure,
+and PPA remain provisional.
 
 Authoritative current inputs are:
 

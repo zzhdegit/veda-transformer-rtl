@@ -23,9 +23,12 @@ seq 1/2/8/16/32/64. Multi-head H9 interleaved RTL, full-layer H9 interleaved
 RTL, long-sequence/cache-full, H9 lint, H9 DC, and Stage5/6/7/8 regressions
 pass. The assertion blocker is closed with 23 explicit named SVA properties,
 positive bind execution, and isolated negative tests. Direct H9 datapath reset
-and 20-seed random backpressure stress pass, but strict final acceptance still
-requires independent multi-head/full-layer reset injection coverage and broad
-multi-endpoint multi-head/full-layer random backpressure coverage. Do not write
+and 20-seed random backpressure stress pass. Strict independent multi-head
+reset/random closure now also passes against the real
+`multi_head_generation_engine` hierarchy: 20/20 reset rows and 24/24 fixed-seed
+random runs. Strict final acceptance still requires independent full-layer
+reset injection coverage and broad multi-endpoint full-layer random
+backpressure coverage against the real `transformer_layer` DUT. Do not write
 `HARDWARE STAGE H9 PASS` or create an H9 accepted tag until those remaining
 HW-H9 exit conditions are implemented, executed, and pass.
 

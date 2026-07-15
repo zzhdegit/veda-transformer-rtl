@@ -50,18 +50,23 @@ mapping plus SFU/PE interleaving; it is not pure interleaving benefit.
 - Assertion execution: 23 explicit named SVA properties compile, bind into
   `paper_interleaved_attention_datapath`, pass positive execution, and each
   has an isolated negative test that triggers the target property as expected.
+- Strict multi-head reset: 20/20 independent reset injection rows PASS against
+  the real `multi_head_generation_engine` hierarchy.
+- Strict multi-head random: 24/24 fixed-seed runs PASS against the real
+  `multi_head_generation_engine` hierarchy across H2/D8 seq2, H2/D8 seq8,
+  H2/D8 seq16, H4/D8 seq8, H2/D16 seq8, and H1/D64 seq8.
 
 ## Remaining Acceptance Gap
 
 Hardware Stage H9 is still not accepted. The new reset and random tests close
-substantial H9 datapath coverage, and the assertion blocker is closed, but the
-strict final-acceptance request also required independent multi-head and
-full-layer reset/random endpoint coverage. The current reset matrix maps
-upper-layer labels onto a direct H9 datapath harness, and the random
-backpressure matrix legally stalls only the direct H9 datapath source,
-output, and done endpoints. It does not yet implement independent H2/H4
-multi-head and `transformer_layer` random/reset injection for every requested
-endpoint.
+substantial H9 datapath coverage, the assertion blocker is closed, and the
+strict independent multi-head reset/random blocker is now closed. The remaining
+gap is full-layer independent reset/random endpoint coverage against the real
+`transformer_layer` DUT. Several requested child-stage stall points are not
+legally controllable through the current production top-level; they still need a
+test-only wrapper, observation interface, or legal child-interface interception
+strategy. They must not be replaced with direct datapath proxy labels, fixed
+cycle waits, or forced internal ready signals.
 
 ## Acceptance Status
 

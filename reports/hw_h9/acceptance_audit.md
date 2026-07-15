@@ -45,6 +45,22 @@ Status: not accepted.
 - Assertion execution matrix: 23 explicit named SVA properties compile, bind,
   execute, pass positive runs, and trigger in isolated negative runs.
 
+## Strict Hierarchical Closure Evidence
+
+- Multi-head independent reset coverage now targets the real
+  `multi_head_generation_engine` hierarchy. Result: 20/20 independent rows PASS.
+- Multi-head reset rows use real state/handshake evidence including active head
+  index, child datapath QK/sV state, score/probability FIFO occupancy, SFU
+  activity, head boundary, all-head completion, atomic commit, output stall,
+  and done stall.
+- Multi-head random backpressure now targets the real
+  `multi_head_generation_engine` hierarchy. Result: 24/24 fixed-seed runs PASS.
+- Multi-head random configurations covered H2/D8 seq2, H2/D8 seq8,
+  H2/D8 seq16, H4/D8 seq8, H2/D16 seq8, and H1/D64 seq8, four seeds each.
+- Legal multi-head random endpoints covered token-valid gaps,
+  multi-head output ready, multi-head done ready, real head-boundary pressure,
+  and real commit-near pressure. No internal ready signal was forced.
+
 ## Executed Commands
 
 ```text
@@ -75,16 +91,15 @@ All returned PASS in Docker.
 
 ## Open Items Blocking Hardware Stage H9 PASS
 
-- Reset coverage is not yet a strict implementation of every requested
-  multi-head and full-layer injection point. The 64-label matrix executes
-  against a direct H9 interleaved Attention datapath harness. Upper-layer labels
-  are proxy labels mapped onto reachable datapath states, not independent
-  `transformer_layer` micro-stage reset injections.
-- Random backpressure is not yet the requested broad multi-endpoint
-  multi-head/full-layer matrix. The 20 fixed seeds legally stall the direct H9
-  datapath source, output, and done endpoints, and verify stable payloads,
-  progress, bit-exact output, and no overflow/underflow. They do not yet stall
-  every requested multi-head and full-layer endpoint in independent wrappers.
+- Full-layer independent reset coverage is not yet implemented against the real
+  `transformer_layer` DUT for every requested micro-stage.
+- Full-layer broad multi-endpoint random backpressure is not yet implemented
+  against the real `transformer_layer` DUT. In particular, the production
+  top-level does not expose legal testbench control over several requested
+  child-stage ready endpoints, including MHA child output/done stall points.
+  These must be closed by a legal test-only wrapper, observation interface, or
+  child-interface interception strategy, not by direct datapath proxy labels or
+  forced internal ready signals.
 - No H9 accepted tag has been created.
 
 ## Decision
