@@ -2,46 +2,46 @@
 
 ## Current Stage
 
-- Stage: Hardware Stage H9 final-closure progress checkpoint
-- Status: HW-H9 IN PROGRESS, NOT ACCEPTED
+- Stage: Hardware Stage H9 undergraduate-thesis accepted baseline
+- Status: HARDWARE STAGE H9 PASS — UNDERGRADUATE THESIS SCOPE
+- Strict verification: STRICT IP-GRADE H9 VERIFICATION NOT CLOSED
 - Branch: `hw/h9-sfu-pe-interleaving`
 - Last update: 2026-07-15
 
-Hardware Stage H9 adds a checkpoint implementation of paper Attention
-full-array native mapping and SFU/PE element-serial interleaving infrastructure.
-The checkpoint includes H9 Python reference/cycle models, bounded score and
-probability stream buffers, an interleaved paper single-head RTL schedule path,
-matched paper staged versus paper interleaved single-head RTL A/B baselines,
-H9 Make targets, and H9 reports.
+Hardware Stage H9 implements paper Attention full-array native mapping and
+SFU/PE element-serial interleaving infrastructure. The accepted thesis baseline
+includes H9 Python reference/cycle models, bounded score and probability stream
+buffers, an interleaved paper single-head RTL schedule path, matched paper
+staged versus paper interleaved single-head RTL A/B baselines, multi-head and
+full-layer integration, reset/backpressure/assertion evidence, H9 Make targets,
+and H9 reports.
 
-Hardware Stage H9 is not accepted yet. The Docker EDA environment `nailong`
-successfully ran `make PYTHON=python3 hw-h9-final-acceptance`, including H9
+The undergraduate thesis scope is frozen in
+`docs/hw_h9/thesis_acceptance_scope.md`. The Docker EDA environment `nailong`
+successfully ran `make PYTHON=python3 hw-h9-thesis-acceptance`, including H9
 host/model, RTL, reset, random backpressure, assertion, lint/vlogan, DC
 structural checks, and Stage5/6/7/8 regressions. The cycle model is calibrated
 to the matched single-head RTL A/B counter interval for D_HEAD=8, 16, and 64 at
-seq 1/2/8/16/32/64. Multi-head H9 interleaved RTL, full-layer H9 interleaved
-RTL, long-sequence/cache-full, H9 lint, H9 DC, and Stage5/6/7/8 regressions
-pass. The assertion blocker is closed with 23 explicit named SVA properties,
-positive bind execution, and isolated negative tests. Direct H9 datapath reset
-and 20-seed random backpressure stress pass. Strict independent multi-head
-reset/random closure now also passes against the real
-`multi_head_generation_engine` hierarchy: 20/20 reset rows and 24/24 fixed-seed
-random runs. Strict final acceptance still requires independent full-layer
-reset injection coverage and broad multi-endpoint full-layer random
-backpressure coverage against the real `transformer_layer` DUT. Do not write
-`HARDWARE STAGE H9 PASS` or create an H9 accepted tag until those remaining
-HW-H9 exit conditions are implemented, executed, and pass.
+seq 1/2/8/16/32/64 with total-cycle delta 0. Multi-head H9 interleaved RTL,
+full-layer H9 interleaved RTL, long-sequence/cache-full, H9 lint, H9 DC, and
+Stage5/6/7/8 regressions pass.
 
-Stage 8 remains the accepted hardware baseline:
+The assertion blocker is closed with 23 explicit named SVA properties, positive
+bind execution, and isolated negative tests. Direct H9 datapath reset and
+20-seed random backpressure stress pass. Independent multi-head reset/random
+closure passes against the real `multi_head_generation_engine` hierarchy:
+20/20 reset rows and 24/24 fixed-seed random runs.
 
-```text
-HARDWARE STAGE H8 PASS
-```
+Strict IP-grade H9 verification is not closed. Independent full internal
+`transformer_layer` reset injection coverage and broad full-layer internal
+multi-endpoint random backpressure remain deferred verification enhancements,
+not thesis-scope blockers. They are recorded in
+`reports/hw_h9/deferred_ip_verification.md`. Do not claim full IP-grade
+verification closure, timing closure, physical implementation, or PPA.
 
-Stage 8 implements a Paper-Structured 8x8x2 reconfigurable PE Array and maps
-the current Attention QK and sV paths onto it. The independent array, Python
-bit-accurate model, RTL hierarchy, Attention adapter, A/B architecture
-selection, counters, and reports are added and verified.
+Hardware Stage H9 is the undergraduate-thesis accepted hardware baseline.
+Model Stage M3 may use this as a stable hardware baseline if separately
+approved by the user. Hardware Stage H10 has not started.
 
 Stage 6 projection-integrated multi-head attention correctness remains accepted.
 Stage 6 acceptance audit reset-coverage conditions are closed.
@@ -512,16 +512,15 @@ Results:
 
 ## Next Action
 
-Continue Hardware Stage H9 only after closing the open acceptance items recorded
-in `reports/hw_h9/acceptance_audit.md`. Multi-head, full-layer,
-long-sequence/cache-full, cycle calibration, lint, DC, and Stage5/6/7/8
-regressions have been executed and pass. The remaining H9 work is to implement
-and run the full reset interrupt matrix, broad random backpressure with at
-least 20 fixed seeds, and complete assertion execution evidence without
-changing the frozen Stage 5/6/7 numeric and transaction contracts.
+Hardware Stage H9 is accepted for undergraduate thesis scope. Model Stage M3
+may begin only after a separate user-approved task and must treat the H9 thesis
+baseline as the hardware reference. Hardware Stage H10 has not started.
 
-Do not enter Hardware Stage H10, write `HARDWARE STAGE H9 PASS`, or create an
-H9 accepted tag until all HW-H9 exit conditions are closed. Do not claim SRAM
-macro binding, STA, P&R, area, power, frequency, WNS, or PPA until a future
-stage adds the required technology libraries, memory macros, constraints,
-layout, and reports.
+Strict IP-grade H9 verification is still open for full internal
+`transformer_layer` reset injection, broad full-layer internal multi-endpoint
+random backpressure, coverage closure, and formal proof. Do not claim full
+IP-grade verification closure from the H9 thesis baseline.
+
+Do not claim SRAM macro binding, STA, P&R, area, power, frequency, WNS, TNS, or
+PPA until a future stage adds the required technology libraries, memory macros,
+constraints, layout, and reports.

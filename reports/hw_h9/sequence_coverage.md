@@ -1,7 +1,6 @@
 # Hardware Stage H9 Sequence Coverage
 
-Status: PASS for implemented sequence and cache-full RTL coverage; full
-randomized stress remains open.
+Status: PASS for implemented sequence and cache-full RTL coverage.
 
 The H9 single-head matched RTL A/B evidence covers:
 
@@ -29,5 +28,6 @@ step=step31 seq_before=31 seq_after=32 commit=32 peak_seq=32
 step=step32 seq_before=32 seq_after=32 commit=32 peak_seq=32
 ```
 
-Limit: sequence coverage is deterministic; broad random backpressure and
-20-seed stress are not yet implemented.
+Limit: direct 20-seed random stress and independent multi-head 24-run random
+stress are closed. Full-layer internal multi-endpoint random stress remains a
+deferred strict IP-grade verification enhancement.

@@ -1,6 +1,18 @@
 # Hardware Stage H9 Final Acceptance Regression
 
-Status: regression bundle PASS, Hardware Stage H9 not accepted.
+Status: historical strict-final regression bundle PASS.
+
+Superseded thesis-scope status:
+
+```text
+HARDWARE STAGE H9 PASS — UNDERGRADUATE THESIS SCOPE
+```
+
+Strict status:
+
+```text
+STRICT IP-GRADE H9 VERIFICATION NOT CLOSED
+```
 
 ## Environment
 
@@ -60,16 +72,18 @@ analyze/elaborate/link/check_design and hierarchy. `TECH_LIB_ROOT` was not set.
 No SRAM macro binding, STA, floorplan, placement, CTS, routing, area, power,
 frequency, WNS, TNS, or PPA conclusion is reported.
 
-## Acceptance Decision
+## Historical Strict Decision
 
-The regression bundle passed, but Hardware Stage H9 remains:
+The regression bundle passed, but at the time of this strict-final run Hardware
+Stage H9 remained:
 
 ```text
 HW-H9 IN PROGRESS, NOT ACCEPTED
 ```
 
-Reason: the strict final-acceptance request still requires independent
-multi-head/full-layer reset injection coverage and broad multi-endpoint
-multi-head/full-layer random-backpressure coverage. The implemented closure
-adds direct H9 datapath reset/random stress and complete assertion bind/negative
-evidence; it does not yet fully close those upper-wrapper coverage requirements.
+Reason at that time: the strict final-acceptance request still required
+independent multi-head/full-layer reset injection coverage and broad
+multi-endpoint multi-head/full-layer random-backpressure coverage. A later
+strict hierarchical closure closed the multi-head portion. The full-layer
+internal portion remains a deferred IP-grade verification enhancement and is
+not a blocker for the undergraduate thesis acceptance scope.

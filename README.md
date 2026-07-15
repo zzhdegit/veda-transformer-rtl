@@ -4,29 +4,32 @@ This repository is for a Transformer RTL accelerator based on the VEDA dataflow 
 
 ## Current Stage
 
-Hardware Stage H9 final-closure progress checkpoint: Full-Array Attention Mapping and SFU-PE
-Element-Serial Interleaving.
+Hardware Stage H9 undergraduate-thesis accepted baseline: Full-Array Attention
+Mapping and SFU-PE Element-Serial Interleaving.
 
-Status: HW-H9 IN PROGRESS, NOT ACCEPTED.
+Status: HARDWARE STAGE H9 PASS — UNDERGRADUATE THESIS SCOPE.
 
-The repository now contains a Hardware Stage H9 checkpoint for paper-native
-Attention mapping, bounded score/probability stream buffers, and SFU/PE
-interleaving coverage infrastructure. It also contains a matched single-head RTL
-A/B baseline for `PAPER_ARRAY+STAGED` versus `PAPER_ARRAY+INTERLEAVED`; the
-matched RTL data shows H9 interleaved faster than paper staged at seq16 and
-seq32 for D_HEAD=8, 16, and 64. The cycle model is calibrated to that matched
-RTL interval for D_HEAD=8, 16, and 64 at seq 1/2/8/16/32/64.
+Strict verification status: STRICT IP-GRADE H9 VERIFICATION NOT CLOSED.
 
-Hardware Stage H9 is not accepted yet. Multi-head/full-layer H9 RTL entries,
-long-sequence/cache-full entries, lint/vlogan, DC structural checks, direct H9
-datapath reset stress, direct H9 datapath 20-seed random backpressure stress,
-assertion positive/negative execution, strict independent multi-head reset and
-24-run multi-head random backpressure, and Stage5/6/7/8 regressions have
-executed and passed in the Docker EDA environment `nailong`. Final acceptance is
-still blocked by strict independent full-layer reset injection coverage and
-broad multi-endpoint full-layer random-backpressure coverage against the real
-`transformer_layer` DUT. Global array sharing, physical memory, timing closure,
-and PPA remain provisional.
+The repository now contains the Hardware Stage H9 thesis baseline for
+paper-native Attention mapping, bounded score/probability stream buffers, and
+SFU/PE interleaving. It also contains a matched single-head RTL A/B baseline for
+`PAPER_ARRAY+STAGED` versus `PAPER_ARRAY+INTERLEAVED`; the matched RTL data
+shows H9 interleaved faster than paper staged at seq16 and seq32 for
+D_HEAD=8, 16, and 64. The cycle model is calibrated to that matched RTL
+interval for D_HEAD=8, 16, and 64 at seq 1/2/8/16/32/64.
+
+Multi-head/full-layer H9 RTL entries, long-sequence/cache-full entries,
+lint/vlogan, DC structural checks, direct H9 datapath reset stress, direct H9
+datapath 20-seed random backpressure stress, assertion positive/negative
+execution, independent multi-head reset, 24-run multi-head random
+backpressure, and Stage5/6/7/8 regressions have executed and passed in the
+Docker EDA environment `nailong`.
+
+The full internal transformer-layer reset and multi-endpoint
+random-backpressure matrix remains a deferred IP-grade verification
+enhancement. Global array sharing, physical memory, timing closure, and PPA
+remain provisional.
 
 Authoritative current inputs are:
 
@@ -37,6 +40,8 @@ Authoritative current inputs are:
 - `docs/hw_h9/paper_schedule_evidence.md`
 - `reports/hw_h9/summary.md`
 - `reports/hw_h9/acceptance_audit.md`
+- `docs/hw_h9/thesis_acceptance_scope.md`
+- `reports/hw_h9/deferred_ip_verification.md`
 - `docs/stage_08/spec.md`
 - `docs/stage_08/paper_evidence.md`
 - `reports/stage_08/summary.md`
@@ -89,6 +94,12 @@ make hw-h9-lint
 make hw-h9-synth
 ```
 
+For the undergraduate thesis acceptance bundle:
+
+```bash
+make PYTHON=python3 hw-h9-thesis-acceptance
+```
+
 Stage 8 replaces only the Attention QK and sV PE path. Projection WQ/WK/WV/WO
 and FFN W1/W2 still use the legacy PE path. The Stage 7 Pre-Norm Transformer
 math, FP16/FP32 boundaries, RMSNorm, Residual, FFN, Softmax, KV cache layout,
@@ -115,6 +126,7 @@ PDKs, standard-cell libraries, memory compiler outputs, and EDA installation dir
 
 ## Next Step
 
-Continue Hardware Stage H9 only after addressing
-`reports/hw_h9/acceptance_audit.md`. Do not enter Hardware Stage H10 or create
-an H9 accepted tag until all HW-H9 exit conditions are closed.
+Hardware Stage H9 is accepted for undergraduate thesis scope. Model Stage M3
+may use this hardware baseline only after a separate user-approved task. Do not
+enter Hardware Stage H10 or claim full IP-grade verification closure from the
+current H9 thesis baseline.

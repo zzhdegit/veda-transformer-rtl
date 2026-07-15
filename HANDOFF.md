@@ -2,33 +2,36 @@
 
 ## Stage
 
-Hardware Stage H9 final-closure progress checkpoint: Full-Array Attention Mapping and SFU-PE
-Element-Serial Interleaving
+Hardware Stage H9 undergraduate-thesis accepted baseline: Full-Array Attention
+Mapping and SFU-PE Element-Serial Interleaving
 
 ## Status
 
-HW-H9 IN PROGRESS, NOT ACCEPTED.
+HARDWARE STAGE H9 PASS — UNDERGRADUATE THESIS SCOPE.
 
-Hardware Stage H9 has a checkpoint implementation and verification package for
-paper-native Attention mapping plus SFU/PE stream interleaving infrastructure.
-The checkpoint passes H9 host/model tests, matched single-head paper staged
-versus paper interleaved RTL A/B, H9 multi-head RTL, H9 full-layer RTL,
-long-sequence/cache-full RTL, H9 lint/vlogan, H9 DC structural checks, and
+Strict status: STRICT IP-GRADE H9 VERIFICATION NOT CLOSED.
+
+Hardware Stage H9 has an undergraduate-thesis accepted implementation and
+verification package for paper-native Attention mapping plus SFU/PE stream
+interleaving infrastructure. The accepted thesis baseline passes H9 host/model
+tests, matched single-head paper staged versus paper interleaved RTL A/B, H9
+multi-head RTL, H9 full-layer RTL, long-sequence/cache-full RTL, H9
+lint/vlogan, H9 DC structural checks, direct reset/random stress, independent
+multi-head reset/random stress, assertion positive/negative execution, and
 Stage5/6/7/8 regressions in the Docker EDA environment `nailong`.
 
-Hardware Stage H9 is not accepted because the full HW-H9 exit conditions are
-not closed. The assertion execution blocker is closed with explicit SVA bind
-and negative evidence. Direct H9 datapath reset and 20-seed random
-backpressure stress pass. Strict independent multi-head reset/random closure
-also passes against the real `multi_head_generation_engine` hierarchy:
-20/20 reset rows and 24/24 fixed-seed random runs. Strict final acceptance still
-requires independent full-layer reset injection coverage and broad
-multi-endpoint full-layer random backpressure coverage against the real
-`transformer_layer` DUT. Do not write `HARDWARE STAGE H9 PASS`, do not create
-an H9 accepted tag, and do not enter Hardware Stage H10.
+Accepted baseline commit: the commit pointed to by
+`hw-h9-sfu-pe-interleaving-thesis-accepted`.
+Accepted baseline tag: `hw-h9-sfu-pe-interleaving-thesis-accepted`.
 
-Stage 8 remains the accepted baseline. Paper-structured 8x8x2 PE array RTL and
-Attention QK/sV mapping are accepted.
+The strict IP-grade target is not closed. Full internal `transformer_layer`
+reset injection and broad full-layer internal multi-endpoint random
+backpressure remain deferred verification enhancements, not undergraduate
+thesis blockers. Do not claim full IP-grade verification closure from this H9
+baseline. Hardware Stage H10 has not started.
+
+Hardware Stage H9 is now the undergraduate-thesis accepted hardware baseline.
+Stage 8 remains the previous accepted paper-array correctness baseline.
 
 The Stage 8 implementation adds a repository bit-accurate paper-array model,
 an explicit 8 row x 8 column x 2 group RTL hierarchy with 128 PE cells, and a
@@ -238,6 +241,7 @@ Hardware Stage H9 checkpoint additions:
 - `docs/hw_h9/full_array_mapping.md`
 - `docs/hw_h9/softmax_schedule.md`
 - `docs/hw_h9/verification_plan.md`
+- `docs/hw_h9/thesis_acceptance_scope.md`
 - `model/attention/paper_interleaved_attention_reference.py`
 - `model/attention/paper_interleaved_softmax_reference.py`
 - `model/attention/paper_interleaved_cycle_model.py`
@@ -252,12 +256,13 @@ Hardware Stage H9 checkpoint additions:
 - `tb/rtl/hw_h9/`
 - `scripts/sim/run_hw_h9_tests.py`
 - `scripts/sim/run_hw_h9_vcs.sh`
+- `scripts/sim/run_hw_h9_thesis_acceptance.sh`
 - `scripts/lint/run_hw_h9_lint.py`
 - `scripts/synth/run_hw_h9_synth_check.py`
 - `scripts/synth/hw_h9_elaborate.tcl`
 - Make targets `hw-h9-test`, `hw-h9-model-test`, `hw-h9-buffer-test`,
   `hw-h9-overlap-test`, `hw-h9-ab-compare`, `hw-h9-rtl-sim`,
-  `hw-h9-lint`, and `hw-h9-synth`.
+  `hw-h9-lint`, `hw-h9-synth`, and `hw-h9-thesis-acceptance`.
 - `reports/hw_h9/`
 
 ## Not Completed
@@ -268,12 +273,12 @@ Hardware Stage H9 checkpoint additions:
 - SRAM macro binding or physical memory replacement.
 - Timing pipeline closure.
 - STA, P&R, formal PPA, area, power, frequency, WNS, or layout.
-- Full Hardware Stage H9 acceptance.
-- Full H9 reset interrupt matrix.
-- Broad H9 random backpressure with at least 20 fixed seeds and saved failing
-  seed/trace support.
-- Complete H9 assertion execution matrix with negative/bind proof.
-- H9 accepted tag.
+- Strict IP-grade full-layer internal reset injection at every requested
+  `transformer_layer` micro-stage.
+- Strict IP-grade broad full-layer internal multi-endpoint random
+  backpressure.
+- Functional coverage closure, assertion coverage closure, and formal property
+  proof.
 - KV cache eviction.
 - Global array sharing across Projection, Attention, and FFN.
 - Paper-exact arithmetic claims beyond the evidence in
@@ -686,13 +691,21 @@ docker exec nailong bash -lc 'cd /workspace/VEDA && make stage5-rtl-sim && make 
 
 ## Next-Stage Cautions
 
-- Hardware Stage H9 is not accepted. Continue H9 only; do not begin Hardware
-  Stage H10 yet.
-- The H9 checkpoint now proves bounded-buffer single-head overlap, matched
+- Hardware Stage H9 is accepted only for undergraduate thesis scope:
+  `HARDWARE STAGE H9 PASS — UNDERGRADUATE THESIS SCOPE`.
+- `STRICT IP-GRADE H9 VERIFICATION NOT CLOSED` remains true. Do not claim full
+  IP-grade verification closure, functional coverage closure, assertion
+  coverage closure, or formal proof.
+- The H9 thesis baseline proves bounded-buffer single-head overlap, matched
   single-head RTL performance, implemented multi-head RTL, implemented
-  full-layer RTL, and deterministic cache-full coverage. It still does not
-  prove the full reset interrupt matrix, 20-seed random backpressure, or
-  complete assertion matrix required for acceptance.
+  full-layer RTL, deterministic cache-full coverage, direct reset/random
+  stress, independent multi-head reset/random stress, and assertion
+  positive/negative execution.
+- Full internal `transformer_layer` reset injection and broad full-layer
+  internal multi-endpoint random backpressure are deferred strict verification
+  enhancements.
+- Model Stage M3 may use the H9 thesis baseline only after a separate
+  user-approved task. Hardware Stage H10 has not started.
 - Do not claim H9 paper-exact SFU arithmetic. The checkpoint preserves the
   existing repository softmax arithmetic and marks missing paper details as
   repository design decisions.

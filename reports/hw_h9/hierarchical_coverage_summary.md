@@ -1,6 +1,19 @@
 # Hardware Stage H9 Hierarchical Coverage Summary
 
-Status: HW-H9 IN PROGRESS, NOT ACCEPTED.
+Status: multi-head hierarchical blocker closed; full-layer strict IP-grade
+hierarchical blocker deferred from undergraduate thesis scope.
+
+Thesis acceptance status:
+
+```text
+HARDWARE STAGE H9 PASS — UNDERGRADUATE THESIS SCOPE
+```
+
+Strict verification status:
+
+```text
+STRICT IP-GRADE H9 VERIFICATION NOT CLOSED
+```
 
 ## Closed In This Strict Hierarchical Closure
 
@@ -26,9 +39,11 @@ Status: HW-H9 IN PROGRESS, NOT ACCEPTED.
 - No DUT internal ready was forced.
 - No proxy label is used for any multi-head acceptance row.
 
-## Remaining Blocker
+## Remaining Strict IP-Grade Blocker
 
-Full-layer independent reset/random coverage is not closed.
+Full-layer independent reset/random coverage is not closed for strict IP-grade
+verification. It is not a blocker for the undergraduate thesis acceptance
+scope defined in `docs/hw_h9/thesis_acceptance_scope.md`.
 
 The real DUT for that blocker must be `rtl/transformer/transformer_layer.sv`.
 The current production top-level does not expose legal testbench control over
@@ -38,9 +53,9 @@ interface, or another legal child-interface interception strategy. They must not
 be replaced with direct datapath labels, fixed-cycle waits, or forced internal
 ready signals.
 
-## Acceptance Decision
+## Decision
 
-Do not write `HARDWARE STAGE H9 PASS`.
+Do not claim `FULL IP-GRADE VERIFICATION CLOSURE`.
 
 Do not create `hw-h9-sfu-pe-interleaving-accepted`.
 

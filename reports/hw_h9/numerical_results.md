@@ -44,6 +44,9 @@ RTL numerical evidence:
   PASS against the Stage 7D reference vectors.
 - H9 direct datapath random backpressure: 20 fixed seeds PASS with bit-exact
   FP32 output checks after randomized source/output/done stalls.
+- H9 independent multi-head random backpressure: 24 fixed-seed runs PASS with
+  bit-exact output checks against the accepted Stage 5 reference vectors.
 
-Limit: independent multi-head and full-layer random-backpressure numerical
-coverage is still a strict final-acceptance gap.
+Limit: full-layer internal multi-endpoint random-backpressure numerical
+coverage remains a deferred strict IP-grade verification enhancement. It is not
+claimed as closed by the undergraduate thesis acceptance baseline.
