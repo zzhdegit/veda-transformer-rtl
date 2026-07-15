@@ -1,5 +1,72 @@
 # Stage Handoff
 
+## HW-H9-N1 Post-Acceptance Numeric Repair
+
+Status: HW-H9-N1 closed pending final commit/tag publication.
+
+Branch: `hw/h9-real-weight-numeric-repair`
+
+Historical H9 tag/commit:
+
+- `hw-h9-sfu-pe-interleaving-thesis-accepted`
+- `9e0b4c9ba42356ee68e489e99cc5cf64e94f607e`
+
+New repair tag:
+
+- `hw-h9-real-weight-numeric-repair-accepted`
+
+What was completed:
+
+- Reproduced the M3 real Q2 one-token failure from read-only artifacts.
+- Classified the failure as a shared FP32 add rounding-mode contract bug, not
+  an H8/H9 schedule divergence or transaction association bug.
+- Fixed `rtl/arithmetic/fp32_add_wrapper.sv` to drive DesignWare RNE as
+  `3'b000` and added an elaboration-time guard.
+- Added `fp32_reduction_tree` simulation-only association assertions for
+  inflight add result, pair id, width, operands, and stalled payload stability.
+- Added `hw-h9-numeric-repair` and `hw-h9-q2-length1` regressions.
+- Ran real Q2 length1 H8 staged and H9 interleaved full-layer validation:
+  no-stall and output-stall both pass 64/64 bit-exact.
+- Reran Stage5/6/7/8/H9 regression, lint, and DC structural checks.
+
+What was not completed:
+
+- No PDK, STA, placement, CTS, routing, power, or PPA work was run.
+- No length2/8/16 M3 deployment validation was run; that belongs to the next
+  M3 task.
+- No changes were made under `D:/IC_Workspace/VEDA_ml_m2`.
+- Hardware Stage H10 was not started.
+
+Minimum reproduction:
+
+```text
+token=0 dim=1
+old RTL/H8/H9 final = 32'h3d4a2576
+expected final      = 32'h3d4a2572
+full mismatch       = 54/64 dimensions
+first boundary      = w2_output_fp32_edge
+first add           = 3c81aa0c + 39699f40
+old add result      = 3c837d4b
+expected add result = 3c837d4a
+```
+
+Reproduction and validation commands:
+
+```bash
+make hw-h9-numeric-repair
+make hw-h9-q2-length1
+make hw-h9-thesis-acceptance
+```
+
+Next-stage caution:
+
+- M3 should resume from `hw-h9-real-weight-numeric-repair-accepted`, not from
+  the old thesis tag.
+- The old H9 thesis architecture acceptance remains historical. It cannot be
+  claimed to cover real Q2 deployment validation.
+- The repair did not change H9 no-stall matched cycle results or cycle-model
+  calibration.
+
 ## Stage
 
 Hardware Stage H9 undergraduate-thesis accepted baseline: Full-Array Attention

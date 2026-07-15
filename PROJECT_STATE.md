@@ -1,5 +1,70 @@
 # Project State
 
+## Current Repair Baseline
+
+- Stage: HW-H9-N1 post-acceptance real-weight numeric repair
+- Status: closed for HW-H9-N1 pending final commit/tag publication
+- Branch: `hw/h9-real-weight-numeric-repair`
+- Historical H9 tag: `hw-h9-sfu-pe-interleaving-thesis-accepted`
+- Historical H9 commit: `9e0b4c9ba42356ee68e489e99cc5cf64e94f607e`
+- New repair tag: `hw-h9-real-weight-numeric-repair-accepted`
+- Last update: 2026-07-15
+
+ML-M3 real Q2 length1 validation found a post-acceptance numeric mismatch in
+the common H8/H9 FFN W2 reduction path. The old H9 tag remains the historical
+undergraduate thesis architecture acceptance baseline. It is not moved,
+rewritten, or reclassified as failed. It did not cover real Q2 deployment
+validation. The HW-H9-N1 repair branch supersedes that old tag for ML-M3
+real-weight hardware validation.
+
+The minimum failing case was token 0, dimension 1. H8 staged and H9
+interleaved both produced `32'h3d4a2576`; the hardware-aware bit model expected
+`32'h3d4a2572`; the full 64-dimensional output had 54/64 mismatches. The first
+stable failing boundary was `w2_output_fp32_edge` after matching
+`residual1_fp32_edge` and `norm2_output_fp16_edge`. The first divergent
+operation was FFN W2 tile base 8, width 8, pair 3:
+`32'h3c81aa0c + 32'h39699f40`, old RTL `32'h3c837d4b`, expected
+`32'h3c837d4a`.
+
+Root cause: `rtl/arithmetic/fp32_add_wrapper.sv` used the wrong DesignWare
+rounding-mode encoding for the project RNE FP32-add contract. The repair sets
+the shared wrapper to `rnd=3'b000`, adds a static guard, and adds
+reduction-path assertions for inflight result/pair/width/operand association.
+No interface, bit width, transaction semantics, pipeline latency, Transformer
+structure, K/V layout, or output schedule changes.
+
+New committed regression infrastructure is in:
+
+- `docs/hw_h9_numeric_repair/`
+- `reports/hw_h9_numeric_repair/`
+- `tb/rtl/hw_h9_numeric/`
+- `scripts/sim/run_hw_h9_numeric_repair.py`
+- `scripts/sim/run_hw_h9_q2_length1.py`
+
+Closed verification:
+
+- `make hw-h9-numeric-repair`: PASS, including known operand
+  `3c81aa0c + 39699f40 -> 3c837d4a`, real reduction/PE paths, multi-pair,
+  multi-tile, gap/stall/reset, and 100 fixed-seed random reductions.
+- `make hw-h9-q2-length1`: PASS for H8 staged and H9 interleaved, no-stall and
+  output-stall, 64/64 bit-exact against the M3 hardware-aware expected output,
+  `output_transactions=8`, `output_lanes=64`, `done_count=1`,
+  `valid_seq_len=1`.
+- Stage7C/D, Stage8, H9, H9 thesis acceptance, Stage5, and Stage6 regressions:
+  PASS.
+- H9 lint and DC structural checks: PASS.
+- Matched H9 no-stall performance remains unchanged:
+  D_HEAD=8 seq16/32 `1363/2707` staged and `1169/2209` interleaved;
+  D_HEAD=16 seq16/32 `2472/4920` staged and `1171/2211` interleaved;
+  D_HEAD=64 seq16/32 `9126/18198` staged and `1183/2223` interleaved.
+- H9 cycle model total-cycle delta remains 0.
+- PDK, STA, P&R, routing, power, and PPA were not run.
+
+M3 may resume from `hw-h9-real-weight-numeric-repair-accepted` after that tag is
+pushed. Do not use the historical thesis tag for real Q2 deployment validation.
+No model directory under `D:/IC_Workspace/VEDA_ml_m2` was read or modified, and
+Hardware Stage H10 has not started.
+
 ## Current Stage
 
 - Stage: Hardware Stage H9 undergraduate-thesis accepted baseline

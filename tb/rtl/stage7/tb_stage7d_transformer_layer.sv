@@ -25,14 +25,26 @@ module tb_stage7d_transformer_layer;
     localparam int D_MODEL = N_HEAD * D_HEAD;
     localparam int D_FFN = 4 * D_MODEL;
     localparam int PE_NUM = 8;
+`ifndef STAGE7_MAX_SEQ_LEN
     localparam int MAX_SEQ_LEN = 8;
+`else
+    localparam int MAX_SEQ_LEN = `STAGE7_MAX_SEQ_LEN;
+`endif
     localparam int META_W = 16;
     localparam int COUNTER_W = 64;
     localparam int MODEL_W = (D_MODEL <= 1) ? 1 : $clog2(D_MODEL);
     localparam int FFN_W = (D_FFN <= 1) ? 1 : $clog2(D_FFN);
     localparam int SEQ_LEN_W = (MAX_SEQ_LEN <= 1) ? 1 : $clog2(MAX_SEQ_LEN + 1);
+`ifndef STAGE7_MAX_WEIGHT_LINES
     localparam int MAX_WEIGHT_LINES = 20000;
+`else
+    localparam int MAX_WEIGHT_LINES = `STAGE7_MAX_WEIGHT_LINES;
+`endif
+`ifndef STAGE7_MAX_TOKENS
     localparam int MAX_TOKENS = 4;
+`else
+    localparam int MAX_TOKENS = `STAGE7_MAX_TOKENS;
+`endif
 
     logic clk;
     logic rst_n;
@@ -208,6 +220,7 @@ module tb_stage7d_transformer_layer;
         int d_head_value;
         int d_model_value;
         int d_ffn_value;
+        int max_seq_len_value;
         int kind;
         int row;
         int col;
@@ -217,6 +230,7 @@ module tb_stage7d_transformer_layer;
         logic [15:0] h;
         logic [31:0] f;
         logic [META_W-1:0] meta_value;
+        string line;
         begin
             if (!$value$plusargs("STAGE7D_VECTOR_FILE=%s", path)) begin
                 tb_fail("missing +STAGE7D_VECTOR_FILE");
@@ -235,10 +249,17 @@ module tb_stage7d_transformer_layer;
                 code = $fscanf(fd, "%s", tag);
                 if (code == 1) begin
                     if (tag == "C") begin
-                        code = $fscanf(fd, "%d %d %d %d\n", n_head_value, d_head_value, d_model_value, d_ffn_value);
+                        code = $fgets(line, fd);
+                        code = $sscanf(line, "%d %d %d %d %d",
+                                       n_head_value, d_head_value, d_model_value,
+                                       d_ffn_value, max_seq_len_value);
+                        if (code != 4 && code != 5) tb_fail("configuration parse failed");
                         if (n_head_value != N_HEAD || d_head_value != D_HEAD ||
                             d_model_value != D_MODEL || d_ffn_value != D_FFN) begin
                             tb_fail("configuration mismatch");
+                        end
+                        if (code == 5 && max_seq_len_value > MAX_SEQ_LEN) begin
+                            tb_fail("max sequence length mismatch");
                         end
                     end else if (tag == "W") begin
                         code = $fscanf(fd, "%d %h %h %h\n", kind, row, col, h);
@@ -351,22 +372,39 @@ module tb_stage7d_transformer_layer;
     task automatic run_layer(input int token_idx);
         int received;
         int cycle;
+        int output_stall_mode;
+        int output_txn_count;
+        int done_fire_count;
+        int final_valid_seq_len;
         logic pre_out_fire;
         logic pre_done_fire;
+        logic done_seen;
         int idx;
         logic [31:0] lane_value;
         begin
             load_token(token_idx);
             received = 0;
             cycle = 0;
-            while (received < D_MODEL || !done_valid) begin
+            output_txn_count = 0;
+            done_fire_count = 0;
+            final_valid_seq_len = 0;
+            done_seen = 1'b0;
+            if (!$value$plusargs("STAGE7D_OUTPUT_STALL=%d", output_stall_mode)) begin
+                output_stall_mode = 1;
+            end
+            while (received < D_MODEL || !done_seen) begin
                 @(negedge clk);
-                output_ready = (cycle % 7) != 3;
+                case (output_stall_mode)
+                    0: output_ready = 1'b1;
+                    1: output_ready = (cycle % 7) != 3;
+                    default: output_ready = ((cycle % 5) != 2) && ((cycle % 11) != 4);
+                endcase
                 done_ready = 1'b1;
                 #1;
                 pre_out_fire = output_valid && output_ready;
                 pre_done_fire = done_valid && done_ready;
                 if (pre_out_fire) begin
+                    output_txn_count++;
                     for (int lane = 0; lane < PE_NUM; lane++) begin
                         if (output_lane_mask[lane]) begin
                             idx = int'(output_base_dim) + lane;
@@ -385,10 +423,14 @@ module tb_stage7d_transformer_layer;
                     if (output_last !== (received == D_MODEL)) tb_fail("output last mismatch");
                 end
                 if (pre_done_fire) begin
+                    if (done_seen) tb_fail("duplicate done transaction");
+                    done_seen = 1'b1;
+                    done_fire_count++;
                     if (received != D_MODEL) tb_fail("done before all outputs");
                     if (done_invalid) tb_fail("done invalid");
                     if (done_meta !== expected_meta[token_idx]) tb_fail("done metadata mismatch");
                     if (done_valid_seq_len !== SEQ_LEN_W'(token_idx + 1)) tb_fail("done seq len mismatch");
+                    final_valid_seq_len = int'(done_valid_seq_len);
                 end
                 @(posedge clk);
                 cycle++;
@@ -397,6 +439,10 @@ module tb_stage7d_transformer_layer;
             @(negedge clk);
             output_ready = 1'b0;
             done_ready = 1'b0;
+            $display("STAGE7D_LAYER_TOKEN_DONE token=%0d output_transactions=%0d output_lanes=%0d done_count=%0d valid_seq_len=%0d output_stall_mode=%0d cycles=%0d total_layer_cycles=%0d",
+                     token_idx, output_txn_count, received, done_fire_count,
+                     final_valid_seq_len, output_stall_mode, cycle,
+                     perf_total_layer_cycles);
         end
     endtask
 

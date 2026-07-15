@@ -1,0 +1,33 @@
+HW-H9-N1 Q2 length1 transformer_layer RTL simulation
+Build dir: build/hw_h9_q2_length1
+Artifact root: /workspace/VEDA_artifacts/ml_m3
+Vector file: /workspace/VEDA_artifacts/ml_m3/vectors/len_1/case_len_1.mem
+vcs: FOUND
+vcs script version : O-2018.09
+DesignWare sim dir: detected
+M3 vector file: readable
+
+h8_staged_no_stall result=PASS run_exit_code=0
+STAGE7D_LAYER_TOKEN_DONE token=0 output_transactions=8 output_lanes=64 done_count=1 valid_seq_len=1 output_stall_mode=0 cycles=127397 total_layer_cycles=127461
+STAGE7D_TRANSFORMER_LAYER_PASS arch=1 schedule=0 n_head=8 d_head=8 d_model=64 tokens=1 paper_active=488 paper_inner=424 paper_outer=64 paper_tail=1920 paper_mode_switch=15
+h8_staged_output_stall result=PASS run_exit_code=0
+STAGE7D_LAYER_TOKEN_DONE token=0 output_transactions=8 output_lanes=64 done_count=1 valid_seq_len=1 output_stall_mode=1 cycles=127399 total_layer_cycles=127463
+STAGE7D_TRANSFORMER_LAYER_PASS arch=1 schedule=0 n_head=8 d_head=8 d_model=64 tokens=1 paper_active=488 paper_inner=424 paper_outer=64 paper_tail=1920 paper_mode_switch=15
+h9_interleaved_no_stall result=PASS run_exit_code=0
+STAGE7D_LAYER_TOKEN_DONE token=0 output_transactions=8 output_lanes=64 done_count=1 valid_seq_len=1 output_stall_mode=0 cycles=128221 total_layer_cycles=128285
+STAGE7D_TRANSFORMER_LAYER_PASS arch=1 schedule=1 n_head=8 d_head=8 d_model=64 tokens=1 paper_active=1336 paper_inner=1272 paper_outer=64 paper_tail=3840 paper_mode_switch=15
+h9_interleaved_output_stall result=PASS run_exit_code=0
+STAGE7D_LAYER_TOKEN_DONE token=0 output_transactions=8 output_lanes=64 done_count=1 valid_seq_len=1 output_stall_mode=1 cycles=128222 total_layer_cycles=128286
+STAGE7D_TRANSFORMER_LAYER_PASS arch=1 schedule=1 n_head=8 d_head=8 d_model=64 tokens=1 paper_active=1336 paper_inner=1272 paper_outer=64 paper_tail=3840 paper_mode_switch=15
+
+Run markers:
+STAGE7D_LAYER_TOKEN_DONE token=0 output_transactions=8 output_lanes=64 done_count=1 valid_seq_len=1 output_stall_mode=0 cycles=127397 total_layer_cycles=127461
+STAGE7D_TRANSFORMER_LAYER_PASS arch=1 schedule=0 n_head=8 d_head=8 d_model=64 tokens=1 paper_active=488 paper_inner=424 paper_outer=64 paper_tail=1920 paper_mode_switch=15
+STAGE7D_LAYER_TOKEN_DONE token=0 output_transactions=8 output_lanes=64 done_count=1 valid_seq_len=1 output_stall_mode=1 cycles=127399 total_layer_cycles=127463
+STAGE7D_TRANSFORMER_LAYER_PASS arch=1 schedule=0 n_head=8 d_head=8 d_model=64 tokens=1 paper_active=488 paper_inner=424 paper_outer=64 paper_tail=1920 paper_mode_switch=15
+STAGE7D_LAYER_TOKEN_DONE token=0 output_transactions=8 output_lanes=64 done_count=1 valid_seq_len=1 output_stall_mode=0 cycles=128221 total_layer_cycles=128285
+STAGE7D_TRANSFORMER_LAYER_PASS arch=1 schedule=1 n_head=8 d_head=8 d_model=64 tokens=1 paper_active=1336 paper_inner=1272 paper_outer=64 paper_tail=3840 paper_mode_switch=15
+STAGE7D_LAYER_TOKEN_DONE token=0 output_transactions=8 output_lanes=64 done_count=1 valid_seq_len=1 output_stall_mode=1 cycles=128222 total_layer_cycles=128286
+STAGE7D_TRANSFORMER_LAYER_PASS arch=1 schedule=1 n_head=8 d_head=8 d_model=64 tokens=1 paper_active=1336 paper_inner=1272 paper_outer=64 paper_tail=3840 paper_mode_switch=15
+result=PASS
+Full logs: build/hw_h9_q2_length1/*_compile.log and *_run.log

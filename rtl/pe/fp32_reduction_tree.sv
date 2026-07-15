@@ -185,12 +185,51 @@ module fp32_reduction_tree #(
     end
 
 `ifndef SYNTHESIS
+    logic add_inflight_q;
+    logic [PAIR_W-1:0] add_launch_pair_q;
+    logic [LEVEL_W-1:0] add_launch_width_q;
+    logic [31:0] add_launch_a_q;
+    logic [31:0] add_launch_b_q;
+
+    always_ff @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            add_inflight_q <= 1'b0;
+            add_launch_pair_q <= '0;
+            add_launch_width_q <= '0;
+            add_launch_a_q <= 32'd0;
+            add_launch_b_q <= 32'd0;
+        end else begin
+            if (add_input_fire) begin
+                add_inflight_q <= 1'b1;
+                add_launch_pair_q <= pair_q;
+                add_launch_width_q <= width_q;
+                add_launch_a_q <= add_in_a;
+                add_launch_b_q <= add_in_b;
+            end
+            if (add_output_fire) begin
+                add_inflight_q <= 1'b0;
+            end
+        end
+    end
+
     always_ff @(posedge clk) begin
         if (rst_n) begin
             assert (!(out_valid && $isunknown({out_sum, out_status, out_invalid, out_meta, out_last})))
                 else $error("fp32_reduction_tree no_unknown_result_when_valid failed");
             assert (!(in_valid && in_ready && (in_lane_mask === '0)))
                 else $error("fp32_reduction_tree lane_mask_legal failed: zero active lanes");
+            assert (!(add_input_fire && add_inflight_q))
+                else $error("fp32_reduction_tree no_add_launch_while_inflight failed");
+            assert (!(add_out_valid && add_out_ready && !add_inflight_q))
+                else $error("fp32_reduction_tree no_result_without_matching_inflight_operation failed");
+            if (add_out_valid && add_out_ready && add_inflight_q) begin
+                assert (pair_q == add_launch_pair_q)
+                    else $error("fp32_reduction_tree reduction_result_valid_has_matching_pair_id failed");
+                assert (width_q == add_launch_width_q)
+                    else $error("fp32_reduction_tree reduction_result_valid_has_matching_width failed");
+                assert (add_in_a == add_launch_a_q && add_in_b == add_launch_b_q)
+                    else $error("fp32_reduction_tree add_operands_stable_until_result failed");
+            end
 
             if ($past(rst_n) && $past(out_valid && !out_ready)) begin
                 assert (out_valid)

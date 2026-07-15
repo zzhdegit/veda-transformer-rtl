@@ -4,6 +4,41 @@ This repository is for a Transformer RTL accelerator based on the VEDA dataflow 
 
 ## Current Stage
 
+HW-H9-N1 post-acceptance real-weight numeric repair is the current hardware
+baseline for ML-M3 real-weight validation.
+
+Historical H9 thesis tag:
+
+```text
+hw-h9-sfu-pe-interleaving-thesis-accepted
+9e0b4c9ba42356ee68e489e99cc5cf64e94f607e
+```
+
+Repair branch/tag:
+
+```text
+hw/h9-real-weight-numeric-repair
+hw-h9-real-weight-numeric-repair-accepted
+```
+
+ML-M3 real Q2 length1 found a common H8/H9 FFN W2 reduction numeric mismatch
+that old artificial vectors did not cover. The root cause was the shared
+`fp32_add_wrapper` DesignWare rounding-mode encoding for the project RNE
+contract. HW-H9-N1 sets the wrapper to `rnd=3'b000`, adds reduction
+association assertions, and adds real-weight and randomized numeric
+regressions.
+
+Repair validation entry points:
+
+```bash
+make hw-h9-numeric-repair
+make hw-h9-q2-length1
+make hw-h9-thesis-acceptance
+```
+
+The historical H9 thesis architecture acceptance remains historical. For ML-M3
+real Q2 deployment validation, use the HW-H9-N1 repair tag after it is pushed.
+
 Hardware Stage H9 undergraduate-thesis accepted baseline: Full-Array Attention
 Mapping and SFU-PE Element-Serial Interleaving.
 

@@ -1,8 +1,8 @@
- 
+
 ****************************************
 check_design summary:
 Version:     L-2016.03-SP1
-Date:        Wed Jul 15 16:48:46 2026
+Date:        Thu Jul 16 00:10:34 2026
 ****************************************
 
                    Name                                            Total
@@ -1354,165 +1354,165 @@ Warning: In design 'qkv_staging_buffer_N_HEAD2_D_HEAD16', input port 'read_index
 Warning: In design 'qkv_staging_buffer_N_HEAD2_D_HEAD16', input port 'read_index[1]' is connected directly to output port 'read_dim[1]'. (LINT-29)
 Warning: In design 'qkv_staging_buffer_N_HEAD2_D_HEAD16', input port 'read_index[0]' is connected directly to output port 'read_dim[0]'. (LINT-29)
 Warning: In design 'qkv_projection_engine_N_HEAD2_D_HEAD16_PE_NUM8', a pin on submodule 'u_projection_controller' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'start_input_length[5]' is connected to logic 1. 
+   Pin 'start_input_length[5]' is connected to logic 1.
 Warning: In design 'qkv_projection_engine_N_HEAD2_D_HEAD16_PE_NUM8', a pin on submodule 'u_projection_controller' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'start_input_length[4]' is connected to logic 0. 
+   Pin 'start_input_length[4]' is connected to logic 0.
 Warning: In design 'qkv_projection_engine_N_HEAD2_D_HEAD16_PE_NUM8', a pin on submodule 'u_projection_controller' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'start_input_length[3]' is connected to logic 0. 
+   Pin 'start_input_length[3]' is connected to logic 0.
 Warning: In design 'qkv_projection_engine_N_HEAD2_D_HEAD16_PE_NUM8', a pin on submodule 'u_projection_controller' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'start_input_length[2]' is connected to logic 0. 
+   Pin 'start_input_length[2]' is connected to logic 0.
 Warning: In design 'qkv_projection_engine_N_HEAD2_D_HEAD16_PE_NUM8', a pin on submodule 'u_projection_controller' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'start_input_length[1]' is connected to logic 0. 
+   Pin 'start_input_length[1]' is connected to logic 0.
 Warning: In design 'qkv_projection_engine_N_HEAD2_D_HEAD16_PE_NUM8', a pin on submodule 'u_projection_controller' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'start_input_length[0]' is connected to logic 0. 
+   Pin 'start_input_length[0]' is connected to logic 0.
 Warning: In design 'qkv_projection_engine_N_HEAD2_D_HEAD16_PE_NUM8', a pin on submodule 'u_projection_controller' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'start_output_length[5]' is connected to logic 1. 
+   Pin 'start_output_length[5]' is connected to logic 1.
 Warning: In design 'qkv_projection_engine_N_HEAD2_D_HEAD16_PE_NUM8', a pin on submodule 'u_projection_controller' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'start_output_length[4]' is connected to logic 0. 
+   Pin 'start_output_length[4]' is connected to logic 0.
 Warning: In design 'qkv_projection_engine_N_HEAD2_D_HEAD16_PE_NUM8', a pin on submodule 'u_projection_controller' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'start_output_length[3]' is connected to logic 0. 
+   Pin 'start_output_length[3]' is connected to logic 0.
 Warning: In design 'qkv_projection_engine_N_HEAD2_D_HEAD16_PE_NUM8', a pin on submodule 'u_projection_controller' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'start_output_length[2]' is connected to logic 0. 
+   Pin 'start_output_length[2]' is connected to logic 0.
 Warning: In design 'qkv_projection_engine_N_HEAD2_D_HEAD16_PE_NUM8', a pin on submodule 'u_projection_controller' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'start_output_length[1]' is connected to logic 0. 
+   Pin 'start_output_length[1]' is connected to logic 0.
 Warning: In design 'qkv_projection_engine_N_HEAD2_D_HEAD16_PE_NUM8', a pin on submodule 'u_projection_controller' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'start_output_length[0]' is connected to logic 0. 
+   Pin 'start_output_length[0]' is connected to logic 0.
 Warning: In design 'qkv_projection_engine_N_HEAD2_D_HEAD16_PE_NUM8', a pin on submodule 'u_qkv_quantizer' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'out_ready' is connected to logic 1. 
+   Pin 'out_ready' is connected to logic 1.
 Warning: In design 'projection_controller_32_8_16_64_1', a pin on submodule 'u_input_buffer' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'clear' is connected to logic 0. 
+   Pin 'clear' is connected to logic 0.
 Warning: In design 'projection_controller_32_8_16_64_1', a pin on submodule 'u_weight_buffer' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'clear' is connected to logic 0. 
+   Pin 'clear' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_mode[1]' is connected to logic 0. 
+   Pin 'in_mode[1]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_mode[0]' is connected to logic 0. 
+   Pin 'in_mode[0]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_use_explicit_mask' is connected to logic 0. 
+   Pin 'in_use_explicit_mask' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_mask[7]' is connected to logic 0. 
+   Pin 'in_lane_mask[7]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_mask[6]' is connected to logic 0. 
+   Pin 'in_lane_mask[6]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_mask[5]' is connected to logic 0. 
+   Pin 'in_lane_mask[5]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_mask[4]' is connected to logic 0. 
+   Pin 'in_lane_mask[4]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_mask[3]' is connected to logic 0. 
+   Pin 'in_lane_mask[3]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_mask[2]' is connected to logic 0. 
+   Pin 'in_lane_mask[2]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_mask[1]' is connected to logic 0. 
+   Pin 'in_lane_mask[1]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_mask[0]' is connected to logic 0. 
+   Pin 'in_lane_mask[0]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[31]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[31]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[30]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[30]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[29]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[29]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[28]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[28]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[27]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[27]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[26]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[26]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[25]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[25]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[24]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[24]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[23]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[23]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[22]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[22]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[21]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[21]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[20]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[20]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[19]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[19]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[18]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[18]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[17]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[17]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[16]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[16]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[15]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[15]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[14]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[14]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[13]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[13]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[12]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[12]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[11]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[11]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[10]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[10]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[9]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[9]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[8]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[8]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[7]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[7]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[6]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[6]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[5]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[5]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[4]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[4]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[3]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[3]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[2]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[2]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[1]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[1]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_32_8_16_64_1', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[0]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[0]' is connected to logic 0.
 Warning: In design 'reconfigurable_pe_core_8_16_64_1', a pin on submodule 'g_lanes[0].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core_8_16_64_1', a pin on submodule 'g_lanes[1].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core_8_16_64_1', a pin on submodule 'g_lanes[2].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core_8_16_64_1', a pin on submodule 'g_lanes[3].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core_8_16_64_1', a pin on submodule 'g_lanes[4].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core_8_16_64_1', a pin on submodule 'g_lanes[5].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core_8_16_64_1', a pin on submodule 'g_lanes[6].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core_8_16_64_1', a pin on submodule 'g_lanes[7].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core_8_16_64_1', a pin on submodule 'u_perf_counter' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'clear' is connected to logic 0. 
+   Pin 'clear' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[12]' is connected to logic 0. 
+   Pin 'in_data[12]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[11]' is connected to logic 0. 
+   Pin 'in_data[11]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[10]' is connected to logic 0. 
+   Pin 'in_data[10]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[9]' is connected to logic 0. 
+   Pin 'in_data[9]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[8]' is connected to logic 0. 
+   Pin 'in_data[8]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[7]' is connected to logic 0. 
+   Pin 'in_data[7]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[6]' is connected to logic 0. 
+   Pin 'in_data[6]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[5]' is connected to logic 0. 
+   Pin 'in_data[5]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[4]' is connected to logic 0. 
+   Pin 'in_data[4]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[3]' is connected to logic 0. 
+   Pin 'in_data[3]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[2]' is connected to logic 0. 
+   Pin 'in_data[2]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[1]' is connected to logic 0. 
+   Pin 'in_data[1]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[0]' is connected to logic 0. 
+   Pin 'in_data[0]' is connected to logic 0.
 Warning: In design 'qkv_projection_engine_N_HEAD2_D_HEAD16_PE_NUM8', the same net is connected to more than one pin on submodule 'u_projection_controller'. (LINT-33)
    Net '*Logic1*' is connected to pins 'start_input_length[5]', 'start_output_length[5]''.
 Warning: In design 'qkv_projection_engine_N_HEAD2_D_HEAD16_PE_NUM8', the same net is connected to more than one pin on submodule 'u_projection_controller'. (LINT-33)

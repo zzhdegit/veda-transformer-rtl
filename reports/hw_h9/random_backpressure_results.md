@@ -28,25 +28,3 @@ seeds=101 211 307 401 503 601 701 809 907 1009 1103 1201 1301 1409 1511 1601 170
 failures=0
 matrix=reports/hw_h9/random_backpressure_matrix.md
 result=PASS
-
-Aggregate:
-
-```text
-score_fifo_peak_max=2
-probability_fifo_peak_max=5
-source_gap_cycles=296737
-output_stall_cycles=623
-done_stall_cycles=141
-score_fifo_full_stall_cycles=0
-score_fifo_empty_cycles=0
-probability_fifo_full_stall_cycles=0
-probability_fifo_empty_cycles=200
-qk_sfu_overlap_cycles=4960
-sfu_sv_overlap_cycles=2696
-```
-
-Coverage note: these 20 seeds run the direct H9 interleaved Attention datapath
-for H1 configurations across D_HEAD 8, 16, and 64. They legally randomize
-source gaps, output ready, and done ready and observe FIFO/overlap counters.
-Independent multi-head and full-layer random-backpressure endpoint coverage is
-still required before Hardware Stage H9 can be accepted.

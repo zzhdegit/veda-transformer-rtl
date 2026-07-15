@@ -1,18 +1,340 @@
-$ C:\Users\zzh\anaconda3\python.exe -m pytest tb\model\test_stage1b_fp.py tb\model\test_stage2_pe.py
-============================= test session starts =============================
-platform win32 -- Python 3.12.7, pytest-7.4.4, pluggy-1.0.0
-rootdir: D:\IC_Workspace\VEDA
-plugins: anyio-4.2.0
-collected 12 items
-
-tb\model\test_stage1b_fp.py ......                                       [ 50%]
-tb\model\test_stage2_pe.py ......                                        [100%]
-
-============================= 12 passed in 0.07s ==============================
+$ fallback-python-test-runner stage1b/stage2 model tests
+Fallback Python test runner: 12 tests
+PASS
 exit_code=0
 
-$ C:\Users\zzh\anaconda3\python.exe -m py_compile model\reference_attention.py model\arithmetic\arithmetic_reference.py model\arithmetic\fp16_fp32_reference.py model\arithmetic\fp32_add_reference.py model\arithmetic\fp32_mac_reference.py model\arithmetic\numeric_format.py model\arithmetic\__init__.py model\attention\single_head_cycle_model.py model\attention\single_head_reference.py model\attention\softmax_reference.py model\attention\__init__.py model\memory\fifo_reference.py model\memory\__init__.py model\pe\pe_core_reference.py model\pe\pe_lane_reference.py model\pe\reduction_tree_reference.py model\pe\__init__.py tb\model\test_reference_attention.py tb\model\test_stage1b_fp.py tb\model\test_stage1_arithmetic.py tb\model\test_stage1_memory.py tb\model\test_stage2_pe.py tb\model\test_stage3_attention.py tb\unit\test_stage1_rtl_static.py scripts\lint\run_stage1b_lint.py scripts\lint\run_stage1_lint.py scripts\lint\run_stage2_lint.py scripts\lint\run_stage3_lint.py scripts\sim\gen_stage1b_vectors.py scripts\sim\gen_stage2_vectors.py scripts\sim\gen_stage3_vectors.py scripts\sim\run_stage1b_tests.py scripts\sim\run_stage1_tests.py scripts\sim\run_stage1_vcs.py scripts\sim\run_stage2_tests.py scripts\sim\run_stage3_tests.py scripts\synth\run_stage1b_synth_check.py scripts\synth\run_stage1_synth_check.py scripts\synth\run_stage2_synth_check.py scripts\synth\run_stage3_synth_check.py
+$ /usr/bin/python3 -m py_compile model/reference_attention.py model/arithmetic/arithmetic_reference.py model/arithmetic/fp16_fp32_reference.py model/arithmetic/fp32_add_reference.py model/arithmetic/fp32_mac_reference.py model/arithmetic/numeric_format.py model/arithmetic/__init__.py model/attention/paper_attention_cycle_model.py model/attention/paper_attention_reference.py model/attention/paper_interleaved_attention_reference.py model/attention/paper_interleaved_compare_h8.py model/attention/paper_interleaved_cycle_model.py model/attention/paper_interleaved_softmax_reference.py model/attention/single_head_cycle_model.py model/attention/single_head_reference.py model/attention/softmax_reference.py model/attention/__init__.py model/cache/generation_reference.py model/cache/kv_cache_reference.py model/cache/multi_head_generation_reference.py model/cache/multi_head_kv_cache_reference.py model/cache/__init__.py model/memory/fifo_reference.py model/memory/__init__.py model/pe/pe_core_reference.py model/pe/pe_lane_reference.py model/pe/reduction_tree_reference.py model/pe/__init__.py model/pe_array/paper_array_8x8x2_reference.py model/pe_array/paper_array_compare_legacy.py model/pe_array/paper_array_cycle_model.py model/pe_array/paper_array_mapping.py model/pe_array/paper_pe_group_reference.py model/pe_array/paper_pe_reference.py model/pe_array/__init__.py model/projection/fp32_fp16_reference.py model/projection/gemv_reference.py model/projection/projection_mha_cycle_model.py model/projection/projection_mha_reference.py model/projection/projection_reference.py model/projection/__init__.py model/transformer/ffn_reference.py model/transformer/relu_reference.py model/transformer/residual_reference.py model/transformer/rmsnorm_reference.py model/transformer/transformer_layer_cycle_model.py model/transformer/transformer_layer_reference.py model/transformer/__init__.py tb/model/test_hw_h9_interleaved_attention.py tb/model/test_reference_attention.py tb/model/test_stage1b_fp.py tb/model/test_stage1_arithmetic.py tb/model/test_stage1_memory.py tb/model/test_stage2_pe.py tb/model/test_stage3_attention.py tb/model/test_stage4_generation.py tb/model/test_stage5_multihead_generation.py tb/model/test_stage6e_output_projection.py tb/model/test_stage6_projection.py tb/model/test_stage7_transformer_reference.py tb/model/test_stage8_paper_array.py tb/model/test_stage8_paper_attention.py tb/unit/test_stage1_rtl_static.py scripts/lint/run_hw_h9_lint.py scripts/lint/run_stage1b_lint.py scripts/lint/run_stage1_lint.py scripts/lint/run_stage2_lint.py scripts/lint/run_stage3_lint.py scripts/lint/run_stage4_lint.py scripts/lint/run_stage5_lint.py scripts/lint/run_stage6b_lint.py scripts/lint/run_stage6c_lint.py scripts/lint/run_stage6d_lint.py scripts/lint/run_stage6e_lint.py scripts/lint/run_stage6_lint.py scripts/lint/run_stage7b_lint.py scripts/lint/run_stage7c_lint.py scripts/lint/run_stage7d_lint.py scripts/lint/run_stage8c_lint.py scripts/lint/run_stage8d_lint.py scripts/sim/gen_hw_h9_numeric_repair_vectors.py scripts/sim/gen_stage1b_vectors.py scripts/sim/gen_stage2_vectors.py scripts/sim/gen_stage3_vectors.py scripts/sim/gen_stage4_vectors.py scripts/sim/gen_stage5_vectors.py scripts/sim/gen_stage6b_vectors.py scripts/sim/gen_stage6c_vectors.py scripts/sim/gen_stage6d_vectors.py scripts/sim/gen_stage6e_vectors.py scripts/sim/gen_stage7b_vectors.py scripts/sim/gen_stage7c_vectors.py scripts/sim/gen_stage7d_vectors.py scripts/sim/run_hw_h9_numeric_repair.py scripts/sim/run_hw_h9_q2_length1.py scripts/sim/run_hw_h9_tests.py scripts/sim/run_stage1b_tests.py scripts/sim/run_stage1_tests.py scripts/sim/run_stage1_vcs.py scripts/sim/run_stage2_tests.py scripts/sim/run_stage3_tests.py scripts/sim/run_stage4_tests.py scripts/sim/run_stage5_tests.py scripts/sim/run_stage6a_tests.py scripts/sim/run_stage6b_tests.py scripts/sim/run_stage6c_tests.py scripts/sim/run_stage6d_tests.py scripts/sim/run_stage6e_tests.py scripts/sim/run_stage6_tests.py scripts/sim/run_stage7a_tests.py scripts/sim/run_stage8a_tests.py scripts/sim/run_stage8b_tests.py scripts/sim/run_stage8d_tests.py scripts/sim/run_stage8_tests.py scripts/synth/run_hw_h9_synth_check.py scripts/synth/run_stage1b_synth_check.py scripts/synth/run_stage1_synth_check.py scripts/synth/run_stage2_synth_check.py scripts/synth/run_stage3_synth_check.py scripts/synth/run_stage4_synth_check.py scripts/synth/run_stage5_synth_check.py scripts/synth/run_stage6b_synth_check.py scripts/synth/run_stage6c_synth_check.py scripts/synth/run_stage6d_synth_check.py scripts/synth/run_stage6e_synth_check.py scripts/synth/run_stage6_synth_check.py scripts/synth/run_stage7b_synth_check.py scripts/synth/run_stage7c_synth_check.py scripts/synth/run_stage7d_synth_check.py scripts/synth/run_stage8c_synth_check.py scripts/synth/run_stage8d_synth_check.py
+  File "model/reference_attention.py", line 7
+    from __future__ import annotations
+                                     ^
+SyntaxError: future feature annotations is not defined
 
+  File "model/arithmetic/arithmetic_reference.py", line 8
+    from __future__ import annotations
+                                     ^
+SyntaxError: future feature annotations is not defined
+
+  File "model/arithmetic/numeric_format.py", line 3
+    from __future__ import annotations
+                                     ^
+SyntaxError: future feature annotations is not defined
+
+  File "model/memory/fifo_reference.py", line 3
+    from __future__ import annotations
+                                     ^
+SyntaxError: future feature annotations is not defined
+
+  File "tb/model/test_reference_attention.py", line 1
+    from __future__ import annotations
+                                     ^
+SyntaxError: future feature annotations is not defined
+
+  File "tb/model/test_stage1_arithmetic.py", line 1
+    from __future__ import annotations
+                                     ^
+SyntaxError: future feature annotations is not defined
+
+  File "tb/model/test_stage1_memory.py", line 1
+    from __future__ import annotations
+                                     ^
+SyntaxError: future feature annotations is not defined
+
+  File "tb/unit/test_stage1_rtl_static.py", line 1
+    from __future__ import annotations
+                                     ^
+SyntaxError: future feature annotations is not defined
+exit_code=1
+
+$ bash /workspace/VEDA/scripts/sim/run_stage2_vcs.sh
+                         Chronologic VCS (TM)
+      Version O-2018.09-SP2-2_Full64 -- Thu Jul 16 00:18:11 2026
+               Copyright (c) 1991-2018 by Synopsys Inc.
+                         ALL RIGHTS RESERVED
+
+This program is proprietary and confidential information of Synopsys Inc.
+and may be used and disclosed only as authorized in a license agreement
+controlling such use and disclosure.
+
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_addsub.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_dp2.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_ifp_mult.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_ifp_addsub.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_ifp_conv.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_ifp_fp_conv.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_mult.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_add.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_mac.v'
+Parsing design file '/workspace/VEDA/rtl/common/stream_reg.sv'
+Parsing design file '/workspace/VEDA/rtl/arithmetic/fp32_add_wrapper.sv'
+Parsing design file '/workspace/VEDA/tb/rtl/stage2/tb_fp32_add_wrapper.sv'
+Top Level Modules:
+       tb_fp32_add_wrapper
+TimeScale is 1 ns / 1 ps
+Starting vcs inline pass...
+1 module and 0 UDP read.
+recompiling module tb_fp32_add_wrapper
+make[1]: Entering directory '/workspace/VEDA/build/stage2_rtl_sim/fp32_add_wrapper_csrc'
+make[1]: Leaving directory '/workspace/VEDA/build/stage2_rtl_sim/fp32_add_wrapper_csrc'
+make[1]: Entering directory '/workspace/VEDA/build/stage2_rtl_sim/fp32_add_wrapper_csrc'
+rm -f _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
+if [ -x /workspace/VEDA/build/stage2_rtl_sim/fp32_add_wrapper_simv ]; then chmod -x /workspace/VEDA/build/stage2_rtl_sim/fp32_add_wrapper_simv; fi
+g++  -o /workspace/VEDA/build/stage2_rtl_sim/fp32_add_wrapper_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/fp32_add_wrapper_simv.daidir/ -Wl,-rpath=./fp32_add_wrapper_simv.daidir/ -Wl,-rpath='$ORIGIN'/fp32_add_wrapper_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _1119154_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../fp32_add_wrapper_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl
+/workspace/VEDA/build/stage2_rtl_sim/fp32_add_wrapper_simv up to date
+make[1]: Leaving directory '/workspace/VEDA/build/stage2_rtl_sim/fp32_add_wrapper_csrc'
+CPU time: .354 seconds to compile + .223 seconds to elab + .229 seconds to link
+Chronologic VCS simulator copyright 1991-2018
+Contains Synopsys proprietary information.
+Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 16 00:18 2026
+STAGE2_FP32_ADD_VECTORS count=30
+STAGE2_FP32_ADD_WRAPPER_PASS
+$finish called from file "/workspace/VEDA/tb/rtl/stage2/tb_fp32_add_wrapper.sv", line 207.
+$finish at simulation time               506000
+           V C S   S i m u l a t i o n   R e p o r t
+Time: 506000 ps
+CPU Time:      0.130 seconds;       Data structure size:   0.0Mb
+Thu Jul 16 00:18:21 2026
+                         Chronologic VCS (TM)
+      Version O-2018.09-SP2-2_Full64 -- Thu Jul 16 00:18:22 2026
+               Copyright (c) 1991-2018 by Synopsys Inc.
+                         ALL RIGHTS RESERVED
+
+This program is proprietary and confidential information of Synopsys Inc.
+and may be used and disclosed only as authorized in a license agreement
+controlling such use and disclosure.
+
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_addsub.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_dp2.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_ifp_mult.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_ifp_addsub.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_ifp_conv.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_ifp_fp_conv.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_mult.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_add.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_mac.v'
+Parsing design file '/workspace/VEDA/rtl/common/stream_reg.sv'
+Parsing design file '/workspace/VEDA/rtl/arithmetic/fp32_add_wrapper.sv'
+Parsing design file '/workspace/VEDA/tb/rtl/stage2/tb_fp32_add_invalid_assert.sv'
+Top Level Modules:
+       tb_fp32_add_invalid_assert
+TimeScale is 1 ns / 1 ps
+Starting vcs inline pass...
+1 module and 0 UDP read.
+recompiling module tb_fp32_add_invalid_assert
+make[1]: Entering directory '/workspace/VEDA/build/stage2_rtl_sim/fp32_add_invalid_csrc'
+make[1]: Warning: File 'filelist.hsopt.llvm2_0.objs' has modification time 0.19 s in the future
+make[1]: warning:  Clock skew detected.  Your build may be incomplete.
+make[1]: Leaving directory '/workspace/VEDA/build/stage2_rtl_sim/fp32_add_invalid_csrc'
+make[1]: Entering directory '/workspace/VEDA/build/stage2_rtl_sim/fp32_add_invalid_csrc'
+rm -f _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
+if [ -x /workspace/VEDA/build/stage2_rtl_sim/fp32_add_invalid_simv ]; then chmod -x /workspace/VEDA/build/stage2_rtl_sim/fp32_add_invalid_simv; fi
+g++  -o /workspace/VEDA/build/stage2_rtl_sim/fp32_add_invalid_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/fp32_add_invalid_simv.daidir/ -Wl,-rpath=./fp32_add_invalid_simv.daidir/ -Wl,-rpath='$ORIGIN'/fp32_add_invalid_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _1119976_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../fp32_add_invalid_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl
+/workspace/VEDA/build/stage2_rtl_sim/fp32_add_invalid_simv up to date
+make[1]: Leaving directory '/workspace/VEDA/build/stage2_rtl_sim/fp32_add_invalid_csrc'
+CPU time: .349 seconds to compile + .215 seconds to elab + .224 seconds to link
+Chronologic VCS simulator copyright 1991-2018
+Contains Synopsys proprietary information.
+Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 16 00:18 2026
+"/workspace/VEDA/rtl/arithmetic/fp32_add_wrapper.sv", 104: tb_fp32_add_invalid_assert.u_dut.unnamed$$_1: started at 45000ps failed at 45000ps
+	Offending '(!invalid_comb)'
+Fatal: "/workspace/VEDA/rtl/arithmetic/fp32_add_wrapper.sv", 104: tb_fp32_add_invalid_assert.u_dut.unnamed$$_1: at time 45000 ps
+fp32_add_wrapper unsupported NaN/Inf input assertion failed
+$finish called from file "/workspace/VEDA/rtl/arithmetic/fp32_add_wrapper.sv", line 104.
+$finish at simulation time                45000
+           V C S   S i m u l a t i o n   R e p o r t
+Time: 45000 ps
+                         Chronologic VCS (TM)
+      Version O-2018.09-SP2-2_Full64 -- Thu Jul 16 00:18:34 2026
+               Copyright (c) 1991-2018 by Synopsys Inc.
+                         ALL RIGHTS RESERVED
+
+This program is proprietary and confidential information of Synopsys Inc.
+and may be used and disclosed only as authorized in a license agreement
+controlling such use and disclosure.
+
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_addsub.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_dp2.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_ifp_mult.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_ifp_addsub.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_ifp_conv.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_ifp_fp_conv.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_mult.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_add.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_mac.v'
+Parsing design file '/workspace/VEDA/rtl/common/stream_reg.sv'
+Parsing design file '/workspace/VEDA/rtl/arithmetic/fp32_mac_wrapper.sv'
+Parsing design file '/workspace/VEDA/rtl/pe/pe_lane.sv'
+Parsing design file '/workspace/VEDA/tb/rtl/stage2/tb_pe_lane.sv'
+Top Level Modules:
+       tb_pe_lane
+TimeScale is 1 ns / 1 ps
+Starting vcs inline pass...
+3 modules and 0 UDP read.
+recompiling module DW_ifp_mult
+recompiling module DW_fp_ifp_conv
+recompiling module tb_pe_lane
+All of 3 modules done
+make[1]: Entering directory '/workspace/VEDA/build/stage2_rtl_sim/pe_lane_csrc'
+make[1]: Leaving directory '/workspace/VEDA/build/stage2_rtl_sim/pe_lane_csrc'
+make[1]: Entering directory '/workspace/VEDA/build/stage2_rtl_sim/pe_lane_csrc'
+rm -f _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
+if [ -x /workspace/VEDA/build/stage2_rtl_sim/pe_lane_simv ]; then chmod -x /workspace/VEDA/build/stage2_rtl_sim/pe_lane_simv; fi
+g++  -o /workspace/VEDA/build/stage2_rtl_sim/pe_lane_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/pe_lane_simv.daidir/ -Wl,-rpath=./pe_lane_simv.daidir/ -Wl,-rpath='$ORIGIN'/pe_lane_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _1120819_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../pe_lane_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl
+/workspace/VEDA/build/stage2_rtl_sim/pe_lane_simv up to date
+make[1]: Leaving directory '/workspace/VEDA/build/stage2_rtl_sim/pe_lane_csrc'
+CPU time: .407 seconds to compile + .224 seconds to elab + .235 seconds to link
+Chronologic VCS simulator copyright 1991-2018
+Contains Synopsys proprietary information.
+Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 16 00:18 2026
+STAGE2_PE_LANE_VECTORS count=6
+STAGE2_PE_LANE_PASS
+$finish called from file "/workspace/VEDA/tb/rtl/stage2/tb_pe_lane.sv", line 222.
+$finish at simulation time               156000
+           V C S   S i m u l a t i o n   R e p o r t
+Time: 156000 ps
+CPU Time:      0.120 seconds;       Data structure size:   0.0Mb
+Thu Jul 16 00:18:45 2026
+                         Chronologic VCS (TM)
+      Version O-2018.09-SP2-2_Full64 -- Thu Jul 16 00:18:47 2026
+               Copyright (c) 1991-2018 by Synopsys Inc.
+                         ALL RIGHTS RESERVED
+
+This program is proprietary and confidential information of Synopsys Inc.
+and may be used and disclosed only as authorized in a license agreement
+controlling such use and disclosure.
+
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_addsub.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_dp2.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_ifp_mult.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_ifp_addsub.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_ifp_conv.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_ifp_fp_conv.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_mult.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_add.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_mac.v'
+Parsing design file '/workspace/VEDA/rtl/common/stream_reg.sv'
+Parsing design file '/workspace/VEDA/rtl/arithmetic/fp32_add_wrapper.sv'
+Parsing design file '/workspace/VEDA/rtl/pe/fp32_reduction_tree.sv'
+Parsing design file '/workspace/VEDA/tb/rtl/stage2/tb_fp32_reduction_tree.sv'
+Top Level Modules:
+       tb_fp32_reduction_tree
+TimeScale is 1 ns / 1 ps
+Starting vcs inline pass...
+1 module and 0 UDP read.
+recompiling module tb_fp32_reduction_tree
+make[1]: Entering directory '/workspace/VEDA/build/stage2_rtl_sim/fp32_reduction_tree_csrc'
+make[1]: Warning: File 'filelist.hsopt.llvm2_0.objs' has modification time 0.43 s in the future
+make[1]: warning:  Clock skew detected.  Your build may be incomplete.
+make[1]: Leaving directory '/workspace/VEDA/build/stage2_rtl_sim/fp32_reduction_tree_csrc'
+make[1]: Entering directory '/workspace/VEDA/build/stage2_rtl_sim/fp32_reduction_tree_csrc'
+make[1]: Warning: File 'filelist.hsopt.objs' has modification time 0.0032 s in the future
+rm -f _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
+if [ -x /workspace/VEDA/build/stage2_rtl_sim/fp32_reduction_tree_simv ]; then chmod -x /workspace/VEDA/build/stage2_rtl_sim/fp32_reduction_tree_simv; fi
+g++  -o /workspace/VEDA/build/stage2_rtl_sim/fp32_reduction_tree_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/fp32_reduction_tree_simv.daidir/ -Wl,-rpath=./fp32_reduction_tree_simv.daidir/ -Wl,-rpath='$ORIGIN'/fp32_reduction_tree_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _1121662_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../fp32_reduction_tree_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl
+/workspace/VEDA/build/stage2_rtl_sim/fp32_reduction_tree_simv up to date
+make[1]: warning:  Clock skew detected.  Your build may be incomplete.
+make[1]: Leaving directory '/workspace/VEDA/build/stage2_rtl_sim/fp32_reduction_tree_csrc'
+CPU time: .374 seconds to compile + .223 seconds to elab + .231 seconds to link
+Chronologic VCS simulator copyright 1991-2018
+Contains Synopsys proprietary information.
+Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 16 00:18 2026
+STAGE2_REDUCTION_VECTORS count=4
+STAGE2_REDUCTION_TREE_PASS
+$finish called from file "/workspace/VEDA/tb/rtl/stage2/tb_fp32_reduction_tree.sv", line 195.
+$finish at simulation time               706000
+           V C S   S i m u l a t i o n   R e p o r t
+Time: 706000 ps
+CPU Time:      0.120 seconds;       Data structure size:   0.0Mb
+Thu Jul 16 00:18:57 2026
+                         Chronologic VCS (TM)
+      Version O-2018.09-SP2-2_Full64 -- Thu Jul 16 00:18:58 2026
+               Copyright (c) 1991-2018 by Synopsys Inc.
+                         ALL RIGHTS RESERVED
+
+This program is proprietary and confidential information of Synopsys Inc.
+and may be used and disclosed only as authorized in a license agreement
+controlling such use and disclosure.
+
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_addsub.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_dp2.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_ifp_mult.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_ifp_addsub.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_ifp_conv.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_ifp_fp_conv.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_mult.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_add.v'
+Parsing design file '/usr/synopsys/dc-L-2016.03-SP1/dw/sim_ver/DW_fp_mac.v'
+Parsing design file '/workspace/VEDA/rtl/common/stream_reg.sv'
+Parsing design file '/workspace/VEDA/rtl/arithmetic/fp16_to_fp32.sv'
+Parsing design file '/workspace/VEDA/rtl/arithmetic/fp32_mac_wrapper.sv'
+Parsing design file '/workspace/VEDA/rtl/arithmetic/fp32_add_wrapper.sv'
+Parsing design file '/workspace/VEDA/rtl/pe/lane_mask_generator.sv'
+Parsing design file '/workspace/VEDA/rtl/pe/accumulator_bank.sv'
+Parsing design file '/workspace/VEDA/rtl/pe/pe_perf_counter.sv'
+Parsing design file '/workspace/VEDA/rtl/pe/pe_lane.sv'
+Parsing design file '/workspace/VEDA/rtl/pe/fp32_reduction_tree.sv'
+Parsing design file '/workspace/VEDA/rtl/pe/reconfigurable_pe_core.sv'
+Parsing design file '/workspace/VEDA/tb/rtl/stage2/tb_reconfigurable_pe_core.sv'
+Top Level Modules:
+       tb_reconfigurable_pe_core
+TimeScale is 1 ns / 1 ps
+Starting vcs inline pass...
+10 modules and 0 UDP read.
+recompiling module DW_ifp_mult
+recompiling module DW_fp_ifp_conv
+recompiling module fp16_to_fp32
+recompiling module fp32_add_wrapper
+recompiling module lane_mask_generator
+recompiling module accumulator_bank
+recompiling module pe_perf_counter
+recompiling module pe_lane
+recompiling module fp32_reduction_tree
+recompiling module tb_reconfigurable_pe_core
+All of 10 modules done
+make[1]: Entering directory '/workspace/VEDA/build/stage2_rtl_sim/reconfigurable_pe_core_csrc'
+make[1]: Warning: File 'filelist.hsopt.llvm2_0.objs' has modification time 0.013 s in the future
+make[1]: warning:  Clock skew detected.  Your build may be incomplete.
+make[1]: Leaving directory '/workspace/VEDA/build/stage2_rtl_sim/reconfigurable_pe_core_csrc'
+make[1]: Entering directory '/workspace/VEDA/build/stage2_rtl_sim/reconfigurable_pe_core_csrc'
+rm -f _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
+if [ -x /workspace/VEDA/build/stage2_rtl_sim/reconfigurable_pe_core_simv ]; then chmod -x /workspace/VEDA/build/stage2_rtl_sim/reconfigurable_pe_core_simv; fi
+g++  -o /workspace/VEDA/build/stage2_rtl_sim/reconfigurable_pe_core_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/reconfigurable_pe_core_simv.daidir/ -Wl,-rpath=./reconfigurable_pe_core_simv.daidir/ -Wl,-rpath='$ORIGIN'/reconfigurable_pe_core_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _1122652_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../reconfigurable_pe_core_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl
+/workspace/VEDA/build/stage2_rtl_sim/reconfigurable_pe_core_simv up to date
+make[1]: Leaving directory '/workspace/VEDA/build/stage2_rtl_sim/reconfigurable_pe_core_csrc'
+CPU time: .633 seconds to compile + .224 seconds to elab + .255 seconds to link
+Chronologic VCS simulator copyright 1991-2018
+Contains Synopsys proprietary information.
+Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 16 00:19 2026
+STAGE2_PE_CORE_VECTORS count=7
+STAGE2_PE_CORE_PERF total=100 busy=90 active_lane_cycles=42 available_lane_cycles=56 input_stall=67 output_stall=1 mode_switch=2 tile_count=7 operation_count=4 invalid_count=0
+STAGE2_RECONFIGURABLE_PE_CORE_PASS
+$finish called from file "/workspace/VEDA/tb/rtl/stage2/tb_reconfigurable_pe_core.sv", line 322.
+$finish at simulation time              1046000
+           V C S   S i m u l a t i o n   R e p o r t
+Time: 1046000 ps
+CPU Time:      0.120 seconds;       Data structure size:   0.2Mb
+Thu Jul 16 00:19:10 2026
+Stage 2 VCS RTL simulation
+Build dir: build/stage2_rtl_sim
+vcs: FOUND
+vcs script version : O-2018.09
+DesignWare sim dir: detected
+
+fp32_add_wrapper result=PASS run_exit_code=0
+fp32_add_invalid result=PASS_EXPECTED_FAILURE run_exit_code=0 assertion_markers=1
+pe_lane result=PASS run_exit_code=0
+fp32_reduction_tree result=PASS run_exit_code=0
+reconfigurable_pe_core result=PASS run_exit_code=0
+
+Run markers:
+STAGE2_FP32_ADD_VECTORS count=30
+STAGE2_FP32_ADD_WRAPPER_PASS
+STAGE2_REDUCTION_VECTORS count=4
+STAGE2_REDUCTION_TREE_PASS
+STAGE2_PE_LANE_VECTORS count=6
+STAGE2_PE_LANE_PASS
+STAGE2_PE_CORE_VECTORS count=7
+STAGE2_PE_CORE_PERF total=100 busy=90 active_lane_cycles=42 available_lane_cycles=56 input_stall=67 output_stall=1 mode_switch=2 tile_count=7 operation_count=4 invalid_count=0
+STAGE2_RECONFIGURABLE_PE_CORE_PASS
+result=PASS
+Full logs: build/stage2_rtl_sim/*_compile.log and *_run.log
 exit_code=0
-
-Stage 2 RTL simulation: SKIPPED - vcs executable not found on host.

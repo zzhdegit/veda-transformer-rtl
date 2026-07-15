@@ -1,8 +1,8 @@
- 
+
 ****************************************
 check_design summary:
 Version:     L-2016.03-SP1
-Date:        Sun Jul 12 12:37:14 2026
+Date:        Thu Jul 16 00:20:37 2026
 ****************************************
 
                    Name                                            Total
@@ -52,49 +52,49 @@ Warning: In design 'reconfigurable_pe_core', net 'u_reduction_tree/add_out_meta[
 Warning: In design 'reconfigurable_pe_core', net 'u_reduction_tree/add_out_meta[14]' driven by pin 'u_reduction_tree/u_add/out_meta[14]' has no loads. (LINT-2)
 Warning: In design 'reconfigurable_pe_core', net 'u_reduction_tree/add_out_meta[15]' driven by pin 'u_reduction_tree/u_add/out_meta[15]' has no loads. (LINT-2)
 Warning: In design 'reconfigurable_pe_core', a pin on submodule 'g_lanes[0].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core', a pin on submodule 'g_lanes[1].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core', a pin on submodule 'g_lanes[2].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core', a pin on submodule 'g_lanes[3].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core', a pin on submodule 'g_lanes[4].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core', a pin on submodule 'g_lanes[5].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core', a pin on submodule 'g_lanes[6].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core', a pin on submodule 'g_lanes[7].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core', a pin on submodule 'u_perf_counter' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'clear' is connected to logic 0. 
+   Pin 'clear' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[12]' is connected to logic 0. 
+   Pin 'in_data[12]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[11]' is connected to logic 0. 
+   Pin 'in_data[11]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[10]' is connected to logic 0. 
+   Pin 'in_data[10]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[9]' is connected to logic 0. 
+   Pin 'in_data[9]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[8]' is connected to logic 0. 
+   Pin 'in_data[8]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[7]' is connected to logic 0. 
+   Pin 'in_data[7]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[6]' is connected to logic 0. 
+   Pin 'in_data[6]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[5]' is connected to logic 0. 
+   Pin 'in_data[5]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[4]' is connected to logic 0. 
+   Pin 'in_data[4]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[3]' is connected to logic 0. 
+   Pin 'in_data[3]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[2]' is connected to logic 0. 
+   Pin 'in_data[2]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[1]' is connected to logic 0. 
+   Pin 'in_data[1]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[0]' is connected to logic 0. 
+   Pin 'in_data[0]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', the same net is connected to more than one pin on submodule 'u_output_reg'. (LINT-33)
    Net '*Logic0*' is connected to pins 'in_data[12]', 'in_data[11]'', 'in_data[10]', 'in_data[9]', 'in_data[8]', 'in_data[7]', 'in_data[6]', 'in_data[5]', 'in_data[4]', 'in_data[3]', 'in_data[2]', 'in_data[1]', 'in_data[0]'.
 1

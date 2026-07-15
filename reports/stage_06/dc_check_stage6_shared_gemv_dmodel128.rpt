@@ -1,8 +1,8 @@
- 
+
 ****************************************
 check_design summary:
 Version:     L-2016.03-SP1
-Date:        Wed Jul 15 16:51:00 2026
+Date:        Thu Jul 16 00:13:20 2026
 ****************************************
 
                    Name                                            Total
@@ -956,135 +956,135 @@ Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUN
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', net 'u_pe_core/u_reduction_tree/add_out_meta[14]' driven by pin 'u_pe_core/u_reduction_tree/u_add/out_meta[14]' has no loads. (LINT-2)
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', net 'u_pe_core/u_reduction_tree/add_out_meta[15]' driven by pin 'u_pe_core/u_reduction_tree/u_add/out_meta[15]' has no loads. (LINT-2)
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_mode[1]' is connected to logic 0. 
+   Pin 'in_mode[1]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_mode[0]' is connected to logic 0. 
+   Pin 'in_mode[0]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_use_explicit_mask' is connected to logic 0. 
+   Pin 'in_use_explicit_mask' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_mask[7]' is connected to logic 0. 
+   Pin 'in_lane_mask[7]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_mask[6]' is connected to logic 0. 
+   Pin 'in_lane_mask[6]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_mask[5]' is connected to logic 0. 
+   Pin 'in_lane_mask[5]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_mask[4]' is connected to logic 0. 
+   Pin 'in_lane_mask[4]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_mask[3]' is connected to logic 0. 
+   Pin 'in_lane_mask[3]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_mask[2]' is connected to logic 0. 
+   Pin 'in_lane_mask[2]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_mask[1]' is connected to logic 0. 
+   Pin 'in_lane_mask[1]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_mask[0]' is connected to logic 0. 
+   Pin 'in_lane_mask[0]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[31]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[31]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[30]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[30]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[29]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[29]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[28]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[28]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[27]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[27]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[26]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[26]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[25]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[25]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[24]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[24]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[23]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[23]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[22]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[22]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[21]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[21]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[20]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[20]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[19]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[19]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[18]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[18]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[17]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[17]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[16]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[16]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[15]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[15]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[14]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[14]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[13]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[13]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[12]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[12]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[11]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[11]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[10]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[10]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[9]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[9]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[8]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[8]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[7]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[7]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[6]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[6]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[5]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[5]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[4]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[4]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[3]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[3]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[2]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[2]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[1]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[1]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', a pin on submodule 'u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_scalar_fp32[0]' is connected to logic 0. 
+   Pin 'in_scalar_fp32[0]' is connected to logic 0.
 Warning: In design 'reconfigurable_pe_core_8_16_64_1', a pin on submodule 'g_lanes[0].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core_8_16_64_1', a pin on submodule 'g_lanes[1].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core_8_16_64_1', a pin on submodule 'g_lanes[2].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core_8_16_64_1', a pin on submodule 'g_lanes[3].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core_8_16_64_1', a pin on submodule 'g_lanes[4].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core_8_16_64_1', a pin on submodule 'g_lanes[5].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core_8_16_64_1', a pin on submodule 'g_lanes[6].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core_8_16_64_1', a pin on submodule 'g_lanes[7].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core_8_16_64_1', a pin on submodule 'u_perf_counter' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'clear' is connected to logic 0. 
+   Pin 'clear' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[12]' is connected to logic 0. 
+   Pin 'in_data[12]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[11]' is connected to logic 0. 
+   Pin 'in_data[11]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[10]' is connected to logic 0. 
+   Pin 'in_data[10]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[9]' is connected to logic 0. 
+   Pin 'in_data[9]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[8]' is connected to logic 0. 
+   Pin 'in_data[8]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[7]' is connected to logic 0. 
+   Pin 'in_data[7]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[6]' is connected to logic 0. 
+   Pin 'in_data[6]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[5]' is connected to logic 0. 
+   Pin 'in_data[5]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[4]' is connected to logic 0. 
+   Pin 'in_data[4]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[3]' is connected to logic 0. 
+   Pin 'in_data[3]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[2]' is connected to logic 0. 
+   Pin 'in_data[2]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[1]' is connected to logic 0. 
+   Pin 'in_data[1]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[0]' is connected to logic 0. 
+   Pin 'in_data[0]' is connected to logic 0.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', the same net is connected to more than one pin on submodule 'u_pe_core'. (LINT-33)
    Net '*Logic0*' is connected to pins 'in_mode[1]', 'in_mode[0]'', 'in_use_explicit_mask', 'in_lane_mask[7]', 'in_lane_mask[6]', 'in_lane_mask[5]', 'in_lane_mask[4]', 'in_lane_mask[3]', 'in_lane_mask[2]', 'in_lane_mask[1]', 'in_lane_mask[0]', 'in_scalar_fp32[31]', 'in_scalar_fp32[30]', 'in_scalar_fp32[29]', 'in_scalar_fp32[28]', 'in_scalar_fp32[27]', 'in_scalar_fp32[26]', 'in_scalar_fp32[25]', 'in_scalar_fp32[24]', 'in_scalar_fp32[23]', 'in_scalar_fp32[22]', 'in_scalar_fp32[21]', 'in_scalar_fp32[20]', 'in_scalar_fp32[19]', 'in_scalar_fp32[18]', 'in_scalar_fp32[17]', 'in_scalar_fp32[16]', 'in_scalar_fp32[15]', 'in_scalar_fp32[14]', 'in_scalar_fp32[13]', 'in_scalar_fp32[12]', 'in_scalar_fp32[11]', 'in_scalar_fp32[10]', 'in_scalar_fp32[9]', 'in_scalar_fp32[8]', 'in_scalar_fp32[7]', 'in_scalar_fp32[6]', 'in_scalar_fp32[5]', 'in_scalar_fp32[4]', 'in_scalar_fp32[3]', 'in_scalar_fp32[2]', 'in_scalar_fp32[1]', 'in_scalar_fp32[0]'.
 Warning: In design 'shared_gemv_projection_core_D_MODEL128_PE_NUM8_META_W16_COUNTER_W64', the same net is connected to more than one pin on submodule 'u_pe_core'. (LINT-33)

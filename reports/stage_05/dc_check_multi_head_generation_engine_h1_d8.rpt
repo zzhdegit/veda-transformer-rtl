@@ -1,8 +1,8 @@
- 
+
 ****************************************
 check_design summary:
 Version:     L-2016.03-SP1
-Date:        Wed Jul 15 16:54:15 2026
+Date:        Thu Jul 16 00:16:53 2026
 ****************************************
 
                    Name                                            Total
@@ -1877,329 +1877,329 @@ Warning: In design 'single_head_attention_controller_8_8_8_16_64_0_1', output po
 Warning: In design 'single_head_attention_controller_8_8_8_16_64_0_1', output port 'perf_paper_array_active_cycles[63]' is connected directly to output port 'perf_paper_array_active_cycles[61]'. (LINT-31)
 Warning: In design 'single_head_attention_controller_8_8_8_16_64_0_1', output port 'perf_paper_array_active_cycles[63]' is connected directly to output port 'perf_paper_array_active_cycles[62]'. (LINT-31)
 Warning: In design 'single_head_attention_controller_8_8_8_16_64_0_1', a pin on submodule 'g_legacy_attention_pe.u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_use_explicit_mask' is connected to logic 1. 
+   Pin 'in_use_explicit_mask' is connected to logic 1.
 Warning: In design 'single_head_attention_controller_8_8_8_16_64_0_1', a pin on submodule 'g_legacy_attention_pe.u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_active_lanes[3]' is connected to logic 0. 
+   Pin 'in_active_lanes[3]' is connected to logic 0.
 Warning: In design 'single_head_attention_controller_8_8_8_16_64_0_1', a pin on submodule 'g_legacy_attention_pe.u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_active_lanes[2]' is connected to logic 0. 
+   Pin 'in_active_lanes[2]' is connected to logic 0.
 Warning: In design 'single_head_attention_controller_8_8_8_16_64_0_1', a pin on submodule 'g_legacy_attention_pe.u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_active_lanes[1]' is connected to logic 0. 
+   Pin 'in_active_lanes[1]' is connected to logic 0.
 Warning: In design 'single_head_attention_controller_8_8_8_16_64_0_1', a pin on submodule 'g_legacy_attention_pe.u_pe_core' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_active_lanes[0]' is connected to logic 0. 
+   Pin 'in_active_lanes[0]' is connected to logic 0.
 Warning: In design 'single_head_attention_controller_8_8_8_16_64_0_1', a pin on submodule 'u_score_buffer' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'read_rewind' is connected to logic 0. 
+   Pin 'read_rewind' is connected to logic 0.
 Warning: In design 'reconfigurable_pe_core_8_16_64_1', a pin on submodule 'g_lanes[0].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core_8_16_64_1', a pin on submodule 'g_lanes[1].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core_8_16_64_1', a pin on submodule 'g_lanes[2].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core_8_16_64_1', a pin on submodule 'g_lanes[3].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core_8_16_64_1', a pin on submodule 'g_lanes[4].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core_8_16_64_1', a pin on submodule 'g_lanes[5].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core_8_16_64_1', a pin on submodule 'g_lanes[6].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core_8_16_64_1', a pin on submodule 'g_lanes[7].u_pe_lane' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_lane_enable' is connected to logic 1. 
+   Pin 'in_lane_enable' is connected to logic 1.
 Warning: In design 'reconfigurable_pe_core_8_16_64_1', a pin on submodule 'u_perf_counter' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'clear' is connected to logic 0. 
+   Pin 'clear' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[31]' is connected to logic 0. 
+   Pin 'in_b[31]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[30]' is connected to logic 0. 
+   Pin 'in_b[30]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[29]' is connected to logic 1. 
+   Pin 'in_b[29]' is connected to logic 1.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[28]' is connected to logic 1. 
+   Pin 'in_b[28]' is connected to logic 1.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[27]' is connected to logic 1. 
+   Pin 'in_b[27]' is connected to logic 1.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[26]' is connected to logic 1. 
+   Pin 'in_b[26]' is connected to logic 1.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[25]' is connected to logic 1. 
+   Pin 'in_b[25]' is connected to logic 1.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[24]' is connected to logic 0. 
+   Pin 'in_b[24]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[23]' is connected to logic 1. 
+   Pin 'in_b[23]' is connected to logic 1.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[22]' is connected to logic 0. 
+   Pin 'in_b[22]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[21]' is connected to logic 1. 
+   Pin 'in_b[21]' is connected to logic 1.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[20]' is connected to logic 1. 
+   Pin 'in_b[20]' is connected to logic 1.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[19]' is connected to logic 0. 
+   Pin 'in_b[19]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[18]' is connected to logic 1. 
+   Pin 'in_b[18]' is connected to logic 1.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[17]' is connected to logic 0. 
+   Pin 'in_b[17]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[16]' is connected to logic 1. 
+   Pin 'in_b[16]' is connected to logic 1.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[15]' is connected to logic 0. 
+   Pin 'in_b[15]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[14]' is connected to logic 0. 
+   Pin 'in_b[14]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[13]' is connected to logic 0. 
+   Pin 'in_b[13]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[12]' is connected to logic 0. 
+   Pin 'in_b[12]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[11]' is connected to logic 0. 
+   Pin 'in_b[11]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[10]' is connected to logic 1. 
+   Pin 'in_b[10]' is connected to logic 1.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[9]' is connected to logic 0. 
+   Pin 'in_b[9]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[8]' is connected to logic 0. 
+   Pin 'in_b[8]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[7]' is connected to logic 1. 
+   Pin 'in_b[7]' is connected to logic 1.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[6]' is connected to logic 1. 
+   Pin 'in_b[6]' is connected to logic 1.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[5]' is connected to logic 1. 
+   Pin 'in_b[5]' is connected to logic 1.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[4]' is connected to logic 1. 
+   Pin 'in_b[4]' is connected to logic 1.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[3]' is connected to logic 0. 
+   Pin 'in_b[3]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[2]' is connected to logic 0. 
+   Pin 'in_b[2]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[1]' is connected to logic 1. 
+   Pin 'in_b[1]' is connected to logic 1.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_b[0]' is connected to logic 1. 
+   Pin 'in_b[0]' is connected to logic 1.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[31]' is connected to logic 0. 
+   Pin 'in_c[31]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[30]' is connected to logic 0. 
+   Pin 'in_c[30]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[29]' is connected to logic 0. 
+   Pin 'in_c[29]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[28]' is connected to logic 0. 
+   Pin 'in_c[28]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[27]' is connected to logic 0. 
+   Pin 'in_c[27]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[26]' is connected to logic 0. 
+   Pin 'in_c[26]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[25]' is connected to logic 0. 
+   Pin 'in_c[25]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[24]' is connected to logic 0. 
+   Pin 'in_c[24]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[23]' is connected to logic 0. 
+   Pin 'in_c[23]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[22]' is connected to logic 0. 
+   Pin 'in_c[22]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[21]' is connected to logic 0. 
+   Pin 'in_c[21]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[20]' is connected to logic 0. 
+   Pin 'in_c[20]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[19]' is connected to logic 0. 
+   Pin 'in_c[19]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[18]' is connected to logic 0. 
+   Pin 'in_c[18]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[17]' is connected to logic 0. 
+   Pin 'in_c[17]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[16]' is connected to logic 0. 
+   Pin 'in_c[16]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[15]' is connected to logic 0. 
+   Pin 'in_c[15]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[14]' is connected to logic 0. 
+   Pin 'in_c[14]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[13]' is connected to logic 0. 
+   Pin 'in_c[13]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[12]' is connected to logic 0. 
+   Pin 'in_c[12]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[11]' is connected to logic 0. 
+   Pin 'in_c[11]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[10]' is connected to logic 0. 
+   Pin 'in_c[10]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[9]' is connected to logic 0. 
+   Pin 'in_c[9]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[8]' is connected to logic 0. 
+   Pin 'in_c[8]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[7]' is connected to logic 0. 
+   Pin 'in_c[7]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[6]' is connected to logic 0. 
+   Pin 'in_c[6]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[5]' is connected to logic 0. 
+   Pin 'in_c[5]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[4]' is connected to logic 0. 
+   Pin 'in_c[4]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[3]' is connected to logic 0. 
+   Pin 'in_c[3]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[2]' is connected to logic 0. 
+   Pin 'in_c[2]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[1]' is connected to logic 0. 
+   Pin 'in_c[1]' is connected to logic 0.
 Warning: In design 'attention_score_scaler_8_16_1', a pin on submodule 'u_scale_mac' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[0]' is connected to logic 0. 
+   Pin 'in_c[0]' is connected to logic 0.
 Warning: In design 'score_buffer_DEPTH8_COUNTER_W64_READ_LATENCY1', a pin on submodule 'u_mem' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'clk_en' is connected to logic 1. 
+   Pin 'clk_en' is connected to logic 1.
 Warning: In design 'score_buffer_DEPTH8_COUNTER_W64_READ_LATENCY1', a pin on submodule 'u_mem' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'wr_wstrb[3]' is connected to logic 1. 
+   Pin 'wr_wstrb[3]' is connected to logic 1.
 Warning: In design 'score_buffer_DEPTH8_COUNTER_W64_READ_LATENCY1', a pin on submodule 'u_mem' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'wr_wstrb[2]' is connected to logic 1. 
+   Pin 'wr_wstrb[2]' is connected to logic 1.
 Warning: In design 'score_buffer_DEPTH8_COUNTER_W64_READ_LATENCY1', a pin on submodule 'u_mem' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'wr_wstrb[1]' is connected to logic 1. 
+   Pin 'wr_wstrb[1]' is connected to logic 1.
 Warning: In design 'score_buffer_DEPTH8_COUNTER_W64_READ_LATENCY1', a pin on submodule 'u_mem' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'wr_wstrb[0]' is connected to logic 1. 
+   Pin 'wr_wstrb[0]' is connected to logic 1.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[31]' is connected to logic 0. 
+   Pin 'in_c[31]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[30]' is connected to logic 0. 
+   Pin 'in_c[30]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[29]' is connected to logic 0. 
+   Pin 'in_c[29]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[28]' is connected to logic 0. 
+   Pin 'in_c[28]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[27]' is connected to logic 0. 
+   Pin 'in_c[27]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[26]' is connected to logic 0. 
+   Pin 'in_c[26]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[25]' is connected to logic 0. 
+   Pin 'in_c[25]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[24]' is connected to logic 0. 
+   Pin 'in_c[24]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[23]' is connected to logic 0. 
+   Pin 'in_c[23]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[22]' is connected to logic 0. 
+   Pin 'in_c[22]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[21]' is connected to logic 0. 
+   Pin 'in_c[21]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[20]' is connected to logic 0. 
+   Pin 'in_c[20]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[19]' is connected to logic 0. 
+   Pin 'in_c[19]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[18]' is connected to logic 0. 
+   Pin 'in_c[18]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[17]' is connected to logic 0. 
+   Pin 'in_c[17]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[16]' is connected to logic 0. 
+   Pin 'in_c[16]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[15]' is connected to logic 0. 
+   Pin 'in_c[15]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[14]' is connected to logic 0. 
+   Pin 'in_c[14]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[13]' is connected to logic 0. 
+   Pin 'in_c[13]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[12]' is connected to logic 0. 
+   Pin 'in_c[12]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[11]' is connected to logic 0. 
+   Pin 'in_c[11]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[10]' is connected to logic 0. 
+   Pin 'in_c[10]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[9]' is connected to logic 0. 
+   Pin 'in_c[9]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[8]' is connected to logic 0. 
+   Pin 'in_c[8]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[7]' is connected to logic 0. 
+   Pin 'in_c[7]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[6]' is connected to logic 0. 
+   Pin 'in_c[6]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[5]' is connected to logic 0. 
+   Pin 'in_c[5]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[4]' is connected to logic 0. 
+   Pin 'in_c[4]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[3]' is connected to logic 0. 
+   Pin 'in_c[3]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[2]' is connected to logic 0. 
+   Pin 'in_c[2]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[1]' is connected to logic 0. 
+   Pin 'in_c[1]' is connected to logic 0.
 Warning: In design 'softmax_reduction_16_1', a pin on submodule 'u_scale_old_sum' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[0]' is connected to logic 0. 
+   Pin 'in_c[0]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_recip' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_last' is connected to logic 0. 
+   Pin 'in_last' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[31]' is connected to logic 0. 
+   Pin 'in_c[31]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[30]' is connected to logic 0. 
+   Pin 'in_c[30]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[29]' is connected to logic 0. 
+   Pin 'in_c[29]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[28]' is connected to logic 0. 
+   Pin 'in_c[28]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[27]' is connected to logic 0. 
+   Pin 'in_c[27]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[26]' is connected to logic 0. 
+   Pin 'in_c[26]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[25]' is connected to logic 0. 
+   Pin 'in_c[25]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[24]' is connected to logic 0. 
+   Pin 'in_c[24]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[23]' is connected to logic 0. 
+   Pin 'in_c[23]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[22]' is connected to logic 0. 
+   Pin 'in_c[22]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[21]' is connected to logic 0. 
+   Pin 'in_c[21]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[20]' is connected to logic 0. 
+   Pin 'in_c[20]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[19]' is connected to logic 0. 
+   Pin 'in_c[19]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[18]' is connected to logic 0. 
+   Pin 'in_c[18]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[17]' is connected to logic 0. 
+   Pin 'in_c[17]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[16]' is connected to logic 0. 
+   Pin 'in_c[16]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[15]' is connected to logic 0. 
+   Pin 'in_c[15]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[14]' is connected to logic 0. 
+   Pin 'in_c[14]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[13]' is connected to logic 0. 
+   Pin 'in_c[13]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[12]' is connected to logic 0. 
+   Pin 'in_c[12]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[11]' is connected to logic 0. 
+   Pin 'in_c[11]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[10]' is connected to logic 0. 
+   Pin 'in_c[10]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[9]' is connected to logic 0. 
+   Pin 'in_c[9]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[8]' is connected to logic 0. 
+   Pin 'in_c[8]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[7]' is connected to logic 0. 
+   Pin 'in_c[7]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[6]' is connected to logic 0. 
+   Pin 'in_c[6]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[5]' is connected to logic 0. 
+   Pin 'in_c[5]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[4]' is connected to logic 0. 
+   Pin 'in_c[4]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[3]' is connected to logic 0. 
+   Pin 'in_c[3]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[2]' is connected to logic 0. 
+   Pin 'in_c[2]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[1]' is connected to logic 0. 
+   Pin 'in_c[1]' is connected to logic 0.
 Warning: In design 'softmax_normalization_16_3_1', a pin on submodule 'u_prob_mul' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_c[0]' is connected to logic 0. 
+   Pin 'in_c[0]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[12]' is connected to logic 0. 
+   Pin 'in_data[12]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[11]' is connected to logic 0. 
+   Pin 'in_data[11]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[10]' is connected to logic 0. 
+   Pin 'in_data[10]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[9]' is connected to logic 0. 
+   Pin 'in_data[9]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[8]' is connected to logic 0. 
+   Pin 'in_data[8]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[7]' is connected to logic 0. 
+   Pin 'in_data[7]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[6]' is connected to logic 0. 
+   Pin 'in_data[6]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[5]' is connected to logic 0. 
+   Pin 'in_data[5]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[4]' is connected to logic 0. 
+   Pin 'in_data[4]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[3]' is connected to logic 0. 
+   Pin 'in_data[3]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[2]' is connected to logic 0. 
+   Pin 'in_data[2]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[1]' is connected to logic 0. 
+   Pin 'in_data[1]' is connected to logic 0.
 Warning: In design 'fp16_to_fp32_16_1', a pin on submodule 'u_output_reg' is connected to logic 1 or logic 0. (LINT-32)
-   Pin 'in_data[0]' is connected to logic 0. 
+   Pin 'in_data[0]' is connected to logic 0.
 Warning: In design 'single_head_attention_controller_8_8_8_16_64_0_1', the same net is connected to more than one pin on submodule 'g_legacy_attention_pe.u_pe_core'. (LINT-33)
    Net 'pe_in_clear' is connected to pins 'in_clear', 'in_tile_first''.
 Warning: In design 'single_head_attention_controller_8_8_8_16_64_0_1', the same net is connected to more than one pin on submodule 'g_legacy_attention_pe.u_pe_core'. (LINT-33)

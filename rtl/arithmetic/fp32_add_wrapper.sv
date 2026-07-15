@@ -24,7 +24,7 @@ module fp32_add_wrapper #(
     output logic [META_W-1:0] out_meta,
     output logic              out_last
 );
-    localparam [2:0] ROUND_NEAREST_EVEN = 3'b100;
+    localparam [2:0] ROUND_NEAREST_EVEN = 3'b000;
     localparam int SIG_WIDTH = 23;
     localparam int EXP_WIDTH = 8;
     localparam int IEEE_COMPLIANCE = 1;
@@ -48,6 +48,9 @@ module fp32_add_wrapper #(
         end
         if (INITIATION_INTERVAL != 1) begin
             $fatal(1, "fp32_add_wrapper currently supports initiation interval 1");
+        end
+        if (ROUND_NEAREST_EVEN != 3'b000) begin
+            $fatal(1, "fp32_add_wrapper DesignWare RNE rounding mode must be 3'b000");
         end
     end
 
