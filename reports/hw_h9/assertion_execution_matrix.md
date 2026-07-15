@@ -1,55 +1,28 @@
 # Hardware Stage H9 Assertion Execution Matrix
 
-Status: assertions compiled and executed in passing VCS runs, but the matrix is
-not complete enough for final acceptance.
-
-H9 VCS commands compile with:
-
-```text
--assert svaext
-```
-
-The following H9 RTL simulations completed with `assertion_markers=0`:
-
-- score buffer;
-- probability FIFO;
-- single-head D_HEAD 8, 16, and 64;
-- matched A/B staged and interleaved D_HEAD 8, 16, and 64 at seq 1, 2, 8, 16,
-  32, and 64;
-- deterministic backpressure matched A/B subset;
-- H9 multi-head Stage 5 wrapper runs;
-- H9 full-layer Stage 7D wrapper runs.
-
-Execution matrix:
-
-| Assertion or check | Location | Executed top/testbench | Status |
-|---|---|---|---|
-| no_inner_and_outer_same_cycle | `paper_interleaved_attention_datapath.sv` | H9 single-head and matched A/B | executed, no failure |
-| no_mode_switch_with_inflight_operation | `paper_interleaved_attention_datapath.sv` command/mode checks | H9 single-head and matched A/B | executed, no failure |
-| no_outer_before_qk_retired | `paper_interleaved_attention_datapath.sv` outer command guard | H9 single-head and matched A/B | executed, no failure |
-| no_outer_before_softmax_valid | `paper_interleaved_attention_datapath.sv` phase/softmax guard | H9 single-head and matched A/B | executed, no failure |
-| no_new_head_before_previous_retired | Stage 5 multi-head scoreboards | H9 multi-head | scoreboard executed, no named SVA |
-| score_count_conserved | H9 matched A/B and Stage 5 scoreboards | matched A/B and multi-head | scoreboard executed |
-| probability_count_conserved | H9 matched A/B and Stage 5 scoreboards | matched A/B and multi-head | scoreboard executed |
-| no_score_overflow | `paper_score_buffer.sv` | H9 score buffer and single-head | executed, no failure |
-| no_score_underflow | `paper_score_buffer.sv` | H9 score buffer and single-head | executed, no failure |
-| no_probability_overflow | `paper_probability_fifo.sv` | H9 probability FIFO and single-head | executed, no failure |
-| no_probability_underflow | `paper_probability_fifo.sv` | H9 probability FIFO and single-head | executed, no failure |
-| score_payload_stable_until_ready | `paper_score_buffer.sv` | H9 score buffer | executed, no failure |
-| probability_payload_stable_until_ready | `paper_probability_fifo.sv` | H9 probability FIFO | executed, no failure |
-| probability_matches_v_index | `paper_interleaved_attention_datapath.sv` | H9 single-head and matched A/B | executed, no failure |
-| no_duplicate_sv_update | H9 output/count checks | H9 single-head and matched A/B | scoreboard executed |
-| no_missing_sv_update | H9 output/count checks | H9 single-head and matched A/B | scoreboard executed |
-| no_duplicate_head_done | Stage 5 multi-head done checks | H9 multi-head | scoreboard executed |
-| no_duplicate_cache_commit | Stage 5 multi-head commit checks | H9 multi-head/cache-full | scoreboard executed |
-| valid_seq_len_changes_only_by_commit | Stage 5 expected seq checks | H9 multi-head/cache-full | scoreboard executed |
-| reset_clears_interleaved_state | Stage 5 reset checks plus RTL reset logic | H9 multi-head | partially executed |
-| progress_or_legal_stall | watchdogs in H9/Stage5/Stage7 testbenches | H9 single/multi/layer | executed for deterministic runs |
-
-Why this is not final acceptance evidence:
-
-- several requested names are not explicit named SV assertion properties;
-- no negative tests or bind-based assertion activation proof were added;
-- the full reset matrix and 20-seed random backpressure tests are absent.
-
-Therefore assertions are exercised, but Hardware Stage H9 remains not accepted.
+| Item | Configuration | Testbench | Seed/Injection | Expected | Result | Log |
+|---|---|---|---|---|---|---|
+| positive_bind | H1/D8 seq8 | tb_h9_single_head + h9_assertion_bind | bind paper_interleaved_attention_datapath | all properties compile, bind, execute, and do not fire | PASS | build/hw_h9_assertions/assertion_positive_run.log |
+| 1. no_inner_and_outer_same_cycle | isolated monitor | tb_h9_assertion_negative | +NEGATIVE_CASE=no_inner_and_outer_same_cycle | target property fires exactly as expected | PASS | build/hw_h9_assertions/negative_no_inner_and_outer_same_cycle.log |
+| 2. no_mode_switch_with_inflight_operation | isolated monitor | tb_h9_assertion_negative | +NEGATIVE_CASE=no_mode_switch_with_inflight_operation | target property fires exactly as expected | PASS | build/hw_h9_assertions/negative_no_mode_switch_with_inflight_operation.log |
+| 3. no_outer_before_qk_retired | isolated monitor | tb_h9_assertion_negative | +NEGATIVE_CASE=no_outer_before_qk_retired | target property fires exactly as expected | PASS | build/hw_h9_assertions/negative_no_outer_before_qk_retired.log |
+| 4. no_outer_before_softmax_valid | isolated monitor | tb_h9_assertion_negative | +NEGATIVE_CASE=no_outer_before_softmax_valid | target property fires exactly as expected | PASS | build/hw_h9_assertions/negative_no_outer_before_softmax_valid.log |
+| 5. no_new_head_before_previous_retired | isolated monitor | tb_h9_assertion_negative | +NEGATIVE_CASE=no_new_head_before_previous_retired | target property fires exactly as expected | PASS | build/hw_h9_assertions/negative_no_new_head_before_previous_retired.log |
+| 6. score_count_conserved | isolated monitor | tb_h9_assertion_negative | +NEGATIVE_CASE=score_count_conserved | target property fires exactly as expected | PASS | build/hw_h9_assertions/negative_score_count_conserved.log |
+| 7. probability_count_conserved | isolated monitor | tb_h9_assertion_negative | +NEGATIVE_CASE=probability_count_conserved | target property fires exactly as expected | PASS | build/hw_h9_assertions/negative_probability_count_conserved.log |
+| 8. no_score_overflow | isolated monitor | tb_h9_assertion_negative | +NEGATIVE_CASE=no_score_overflow | target property fires exactly as expected | PASS | build/hw_h9_assertions/negative_no_score_overflow.log |
+| 9. no_score_underflow | isolated monitor | tb_h9_assertion_negative | +NEGATIVE_CASE=no_score_underflow | target property fires exactly as expected | PASS | build/hw_h9_assertions/negative_no_score_underflow.log |
+| 10. no_probability_overflow | isolated monitor | tb_h9_assertion_negative | +NEGATIVE_CASE=no_probability_overflow | target property fires exactly as expected | PASS | build/hw_h9_assertions/negative_no_probability_overflow.log |
+| 11. no_probability_underflow | isolated monitor | tb_h9_assertion_negative | +NEGATIVE_CASE=no_probability_underflow | target property fires exactly as expected | PASS | build/hw_h9_assertions/negative_no_probability_underflow.log |
+| 12. score_payload_stable_until_ready | isolated monitor | tb_h9_assertion_negative | +NEGATIVE_CASE=score_payload_stable_until_ready | target property fires exactly as expected | PASS | build/hw_h9_assertions/negative_score_payload_stable_until_ready.log |
+| 13. probability_payload_stable_until_ready | isolated monitor | tb_h9_assertion_negative | +NEGATIVE_CASE=probability_payload_stable_until_ready | target property fires exactly as expected | PASS | build/hw_h9_assertions/negative_probability_payload_stable_until_ready.log |
+| 14. probability_matches_v_index | isolated monitor | tb_h9_assertion_negative | +NEGATIVE_CASE=probability_matches_v_index | target property fires exactly as expected | PASS | build/hw_h9_assertions/negative_probability_matches_v_index.log |
+| 15. no_duplicate_sv_update | isolated monitor | tb_h9_assertion_negative | +NEGATIVE_CASE=no_duplicate_sv_update | target property fires exactly as expected | PASS | build/hw_h9_assertions/negative_no_duplicate_sv_update.log |
+| 16. no_missing_sv_update | isolated monitor | tb_h9_assertion_negative | +NEGATIVE_CASE=no_missing_sv_update | target property fires exactly as expected | PASS | build/hw_h9_assertions/negative_no_missing_sv_update.log |
+| 17. no_duplicate_head_done | isolated monitor | tb_h9_assertion_negative | +NEGATIVE_CASE=no_duplicate_head_done | target property fires exactly as expected | PASS | build/hw_h9_assertions/negative_no_duplicate_head_done.log |
+| 18. no_duplicate_cache_commit | isolated monitor | tb_h9_assertion_negative | +NEGATIVE_CASE=no_duplicate_cache_commit | target property fires exactly as expected | PASS | build/hw_h9_assertions/negative_no_duplicate_cache_commit.log |
+| 19. valid_seq_len_changes_only_by_commit | isolated monitor | tb_h9_assertion_negative | +NEGATIVE_CASE=valid_seq_len_changes_only_by_commit | target property fires exactly as expected | PASS | build/hw_h9_assertions/negative_valid_seq_len_changes_only_by_commit.log |
+| 20. reset_clears_interleaved_state | isolated monitor | tb_h9_assertion_negative | +NEGATIVE_CASE=reset_clears_interleaved_state | target property fires exactly as expected | PASS | build/hw_h9_assertions/negative_reset_clears_interleaved_state.log |
+| 21. no_unknown_control_when_active | isolated monitor | tb_h9_assertion_negative | +NEGATIVE_CASE=no_unknown_control_when_active | target property fires exactly as expected | PASS | build/hw_h9_assertions/negative_no_unknown_control_when_active.log |
+| 22. transaction_count_conserved | isolated monitor | tb_h9_assertion_negative | +NEGATIVE_CASE=transaction_count_conserved | target property fires exactly as expected | PASS | build/hw_h9_assertions/negative_transaction_count_conserved.log |
+| 23. progress_or_legal_stall | isolated monitor | tb_h9_assertion_negative | +NEGATIVE_CASE=progress_or_legal_stall | target property fires exactly as expected | PASS | build/hw_h9_assertions/negative_progress_or_legal_stall.log |

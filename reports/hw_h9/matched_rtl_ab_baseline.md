@@ -83,7 +83,8 @@ it compared an abstract cycle model against neither the staged nor interleaved
 RTL with the same top, latencies, buffers, and ready/valid environment.
 
 Hardware Stage H9 is still not accepted. Multi-head, full-layer,
-long-sequence, and cache-full RTL coverage has since executed and passed in the
-final-closure run. The remaining blockers are the full reset interrupt matrix,
-broad random backpressure with at least 20 fixed seeds, and complete assertion
-execution evidence.
+long-sequence, cache-full, assertion bind/negative evidence, direct reset
+matrix, and direct 20-seed random backpressure coverage have since executed and
+passed in the final-closure run. The remaining blockers are strict independent
+multi-head/full-layer reset injection coverage and broad multi-endpoint
+multi-head/full-layer random-backpressure coverage.

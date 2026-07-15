@@ -1,41 +1,52 @@
-# Hardware Stage H9 Backpressure Results
+# Hardware Stage H9 Random Backpressure Results
 
-Status: deterministic backpressure passes; broad random backpressure remains
-open.
+Watchdog formula: calibrated_cycles + load_ops*20 + seq_len*80 + output_tiles*80 + 2000.
 
-Executed deterministic coverage:
+HW_H9_RANDOM_BACKPRESSURE_PASS seed=101 pattern=0 config=H1/D8 seq=1 token_count=2 cycles=573 watchdog=2834 source_gap=115 output_stall=0 done_stall=0 score_peak=2 prob_peak=1 score_full_stall=0 score_empty=0 prob_full_stall=0 prob_empty=10 qk_sfu_overlap=56 sfu_sv_overlap=10 outputs=2 done=2
+HW_H9_RANDOM_BACKPRESSURE_PASS seed=211 pattern=1 config=H1/D8 seq=8 token_count=2 cycles=2343 watchdog=6089 source_gap=697 output_stall=2 done_stall=0 score_peak=2 prob_peak=2 score_full_stall=0 score_empty=0 prob_full_stall=0 prob_empty=10 qk_sfu_overlap=135 sfu_sv_overlap=66 outputs=2 done=2
+HW_H9_RANDOM_BACKPRESSURE_PASS seed=307 pattern=2 config=H1/D8 seq=16 token_count=2 cycles=4410 watchdog=9809 source_gap=1443 output_stall=2 done_stall=0 score_peak=2 prob_peak=3 score_full_stall=0 score_empty=0 prob_full_stall=0 prob_empty=10 qk_sfu_overlap=239 sfu_sv_overlap=130 outputs=2 done=2
+HW_H9_RANDOM_BACKPRESSURE_PASS seed=401 pattern=3 config=H1/D8 seq=32 token_count=2 cycles=8811 watchdog=17249 source_gap=3156 output_stall=0 done_stall=0 score_peak=2 prob_peak=5 score_full_stall=0 score_empty=0 prob_full_stall=0 prob_empty=10 qk_sfu_overlap=447 sfu_sv_overlap=258 outputs=2 done=2
+HW_H9_RANDOM_BACKPRESSURE_PASS seed=503 pattern=4 config=H1/D16 seq=16 token_count=2 cycles=22537 watchdog=15171 source_gap=18873 output_stall=52 done_stall=34 score_peak=2 prob_peak=3 score_full_stall=0 score_empty=0 prob_full_stall=0 prob_empty=10 qk_sfu_overlap=239 sfu_sv_overlap=130 outputs=4 done=2
+HW_H9_RANDOM_BACKPRESSURE_PASS seed=601 pattern=5 config=H1/D16 seq=32 token_count=2 cycles=12669 watchdog=27731 source_gap=5806 output_stall=1 done_stall=2 score_peak=2 prob_peak=5 score_full_stall=0 score_empty=0 prob_full_stall=0 prob_empty=10 qk_sfu_overlap=447 sfu_sv_overlap=258 outputs=4 done=2
+HW_H9_RANDOM_BACKPRESSURE_PASS seed=701 pattern=3 config=H1/D64 seq=16 token_count=2 cycles=20532 watchdog=47343 source_gap=13273 output_stall=0 done_stall=0 score_peak=2 prob_peak=3 score_full_stall=0 score_empty=0 prob_full_stall=0 prob_empty=10 qk_sfu_overlap=239 sfu_sv_overlap=130 outputs=16 done=2
+HW_H9_RANDOM_BACKPRESSURE_PASS seed=809 pattern=4 config=H1/D64 seq=32 token_count=2 cycles=162869 watchdog=90623 source_gap=148366 output_stall=266 done_stall=34 score_peak=2 prob_peak=5 score_full_stall=0 score_empty=0 prob_full_stall=0 prob_empty=10 qk_sfu_overlap=447 sfu_sv_overlap=258 outputs=16 done=2
+HW_H9_RANDOM_BACKPRESSURE_PASS seed=907 pattern=5 config=H1/D8 seq=8 token_count=2 cycles=2369 watchdog=6089 source_gap=735 output_stall=0 done_stall=1 score_peak=2 prob_peak=2 score_full_stall=0 score_empty=0 prob_full_stall=0 prob_empty=10 qk_sfu_overlap=135 sfu_sv_overlap=66 outputs=2 done=2
+HW_H9_RANDOM_BACKPRESSURE_PASS seed=1009 pattern=2 config=H1/D16 seq=8 token_count=2 cycles=3427 watchdog=8891 source_gap=1475 output_stall=1 done_stall=2 score_peak=2 prob_peak=2 score_full_stall=0 score_empty=0 prob_full_stall=0 prob_empty=10 qk_sfu_overlap=135 sfu_sv_overlap=66 outputs=4 done=2
+HW_H9_RANDOM_BACKPRESSURE_PASS seed=1103 pattern=1 config=H1/D64 seq=8 token_count=2 cycles=10067 watchdog=25703 source_gap=6191 output_stall=2 done_stall=0 score_peak=2 prob_peak=2 score_full_stall=0 score_empty=0 prob_full_stall=0 prob_empty=10 qk_sfu_overlap=135 sfu_sv_overlap=66 outputs=16 done=2
+HW_H9_RANDOM_BACKPRESSURE_PASS seed=1201 pattern=4 config=H1/D8 seq=16 token_count=2 cycles=12464 watchdog=9809 source_gap=9455 output_stall=18 done_stall=34 score_peak=2 prob_peak=3 score_full_stall=0 score_empty=0 prob_full_stall=0 prob_empty=10 qk_sfu_overlap=239 sfu_sv_overlap=130 outputs=2 done=2
+HW_H9_RANDOM_BACKPRESSURE_PASS seed=1301 pattern=5 config=H1/D16 seq=16 token_count=2 cycles=6493 watchdog=15171 source_gap=2904 output_stall=1 done_stall=0 score_peak=2 prob_peak=3 score_full_stall=0 score_empty=0 prob_full_stall=0 prob_empty=10 qk_sfu_overlap=239 sfu_sv_overlap=130 outputs=4 done=2
+HW_H9_RANDOM_BACKPRESSURE_PASS seed=1409 pattern=3 config=H1/D64 seq=16 token_count=2 cycles=20388 watchdog=47343 source_gap=13084 output_stall=0 done_stall=0 score_peak=2 prob_peak=3 score_full_stall=0 score_empty=0 prob_full_stall=0 prob_empty=10 qk_sfu_overlap=239 sfu_sv_overlap=130 outputs=16 done=2
+HW_H9_RANDOM_BACKPRESSURE_PASS seed=1511 pattern=2 config=H1/D8 seq=32 token_count=2 cycles=8475 watchdog=17249 source_gap=2837 output_stall=0 done_stall=0 score_peak=2 prob_peak=5 score_full_stall=0 score_empty=0 prob_full_stall=0 prob_empty=10 qk_sfu_overlap=447 sfu_sv_overlap=258 outputs=2 done=2
+HW_H9_RANDOM_BACKPRESSURE_PASS seed=1601 pattern=1 config=H1/D16 seq=32 token_count=2 cycles=12796 watchdog=27731 source_gap=5941 output_stall=2 done_stall=0 score_peak=2 prob_peak=5 score_full_stall=0 score_empty=0 prob_full_stall=0 prob_empty=10 qk_sfu_overlap=447 sfu_sv_overlap=258 outputs=4 done=2
+HW_H9_RANDOM_BACKPRESSURE_PASS seed=1709 pattern=5 config=H1/D64 seq=32 token_count=2 cycles=37098 watchdog=90623 source_gap=22919 output_stall=6 done_stall=0 score_peak=2 prob_peak=5 score_full_stall=0 score_empty=0 prob_full_stall=0 prob_empty=10 qk_sfu_overlap=447 sfu_sv_overlap=258 outputs=16 done=2
+HW_H9_RANDOM_BACKPRESSURE_PASS seed=1801 pattern=0 config=H1/D8 seq=1 token_count=2 cycles=583 watchdog=2834 source_gap=129 output_stall=0 done_stall=0 score_peak=2 prob_peak=1 score_full_stall=0 score_empty=0 prob_full_stall=0 prob_empty=10 qk_sfu_overlap=56 sfu_sv_overlap=10 outputs=2 done=2
+HW_H9_RANDOM_BACKPRESSURE_PASS seed=1907 pattern=3 config=H1/D16 seq=2 token_count=2 cycles=1232 watchdog=4181 source_gap=512 output_stall=0 done_stall=0 score_peak=2 prob_peak=2 score_full_stall=0 score_empty=0 prob_full_stall=0 prob_empty=10 qk_sfu_overlap=57 sfu_sv_overlap=18 outputs=4 done=2
+HW_H9_RANDOM_BACKPRESSURE_PASS seed=2003 pattern=4 config=H1/D64 seq=8 token_count=2 cycles=43017 watchdog=25703 source_gap=38826 output_stall=270 done_stall=34 score_peak=2 prob_peak=2 score_full_stall=0 score_empty=0 prob_full_stall=0 prob_empty=10 qk_sfu_overlap=135 sfu_sv_overlap=66 outputs=16 done=2
 
-- no external backpressure matched A/B for D_HEAD 8, 16, and 64 at seq 1, 2,
-  8, 16, 32, and 64: PASS;
-- deterministic output/done ready pattern for D_HEAD 8, 16, and 64 at seq16
-  and seq32: PASS;
-- Stage 5 multi-head output/done deterministic backpressure through H1/D8,
-  H2/D8, H4/D8, H2/D16, H1/D64, and H1/D8 MAX_SEQ_LEN=32: PASS;
-- Stage 7D full-layer output/done deterministic backpressure inherited from
-  the Stage 7D testbench: PASS.
+seed_count=20
+seeds=101 211 307 401 503 601 701 809 907 1009 1103 1201 1301 1409 1511 1601 1709 1801 1907 2003
+failures=0
+matrix=reports/hw_h9/random_backpressure_matrix.md
+result=PASS
 
-Representative deterministic matched A/B results:
-
-| D_HEAD | Seq | Staged | Interleaved | Result |
-|---:|---:|---:|---:|---|
-| 8 | 16 | 1363 | 1170 | PASS |
-| 8 | 32 | 2708 | 2209 | PASS |
-| 16 | 16 | 2472 | 1172 | PASS |
-| 16 | 32 | 4920 | 2213 | PASS |
-| 64 | 16 | 9131 | 1187 | PASS |
-| 64 | 32 | 18200 | 2225 | PASS |
-
-Still open for acceptance:
-
-- at least 20 fixed random seeds;
-- random score/SFU/probability/array/head/final/done ready patterns;
-- saved failed seed and transaction trace on failure;
-- watchdog derived from maximum legal latency.
-
-Random seed list for this closure:
+Aggregate:
 
 ```text
-none
+score_fifo_peak_max=2
+probability_fifo_peak_max=5
+source_gap_cycles=296737
+output_stall_cycles=623
+done_stall_cycles=141
+score_fifo_full_stall_cycles=0
+score_fifo_empty_cycles=0
+probability_fifo_full_stall_cycles=0
+probability_fifo_empty_cycles=200
+qk_sfu_overlap_cycles=4960
+sfu_sv_overlap_cycles=2696
 ```
 
-No random seed set is accepted for Hardware Stage H9 Final Closure.
+Coverage note: these 20 seeds run the direct H9 interleaved Attention datapath
+for H1 configurations across D_HEAD 8, 16, and 64. They legally randomize
+source gaps, output ready, and done ready and observe FIFO/overlap counters.
+Independent multi-head and full-layer random-backpressure endpoint coverage is
+still required before Hardware Stage H9 can be accepted.

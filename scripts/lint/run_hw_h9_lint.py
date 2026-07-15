@@ -35,6 +35,7 @@ RTL_FILES = [
     ROOT / "rtl/attention/paper/interleaved/paper_score_packet_pkg.sv",
     ROOT / "rtl/attention/paper/interleaved/paper_score_buffer.sv",
     ROOT / "rtl/attention/paper/interleaved/paper_probability_fifo.sv",
+    ROOT / "rtl/attention/paper/interleaved/h9_assertions.sv",
     ROOT / "rtl/attention/paper/interleaved/paper_interleaved_attention_datapath.sv",
     ROOT / "rtl/attention/attention_score_scaler.sv",
     ROOT / "rtl/attention/score_buffer.sv",
@@ -108,6 +109,7 @@ def static_hygiene():
         "no_inner_and_outer_same_cycle",
         "score_payload_stable_until_ready",
         "probability_payload_stable_until_ready",
+        "h9_interleaved_assertions",
     ]
     for token in required:
         if token not in all_text:

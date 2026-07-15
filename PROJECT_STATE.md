@@ -15,16 +15,19 @@ matched paper staged versus paper interleaved single-head RTL A/B baselines,
 H9 Make targets, and H9 reports.
 
 Hardware Stage H9 is not accepted yet. The Docker EDA environment `nailong`
-successfully reran the H9 host/model, RTL, lint/vlogan, and DC structural
-checks plus Stage5/6/7/8 regressions. The cycle model is calibrated to the
-matched single-head RTL A/B counter interval for D_HEAD=8, 16, and 64 at seq
-1/2/8/16/32/64. Multi-head H9 interleaved RTL, full-layer H9 interleaved RTL,
-long-sequence/cache-full, H9 lint, H9 DC, and Stage5/6/7/8 regressions pass.
-The remaining blockers are the full reset interrupt matrix, broad random
-backpressure with at least 20 fixed seeds, and complete assertion execution
-evidence with negative/bind proof. Do not write `HARDWARE STAGE H9 PASS` or
-create an H9 accepted tag until those remaining HW-H9 exit conditions are
-implemented, executed, and pass.
+successfully ran `make PYTHON=python3 hw-h9-final-acceptance`, including H9
+host/model, RTL, reset, random backpressure, assertion, lint/vlogan, DC
+structural checks, and Stage5/6/7/8 regressions. The cycle model is calibrated
+to the matched single-head RTL A/B counter interval for D_HEAD=8, 16, and 64 at
+seq 1/2/8/16/32/64. Multi-head H9 interleaved RTL, full-layer H9 interleaved
+RTL, long-sequence/cache-full, H9 lint, H9 DC, and Stage5/6/7/8 regressions
+pass. The assertion blocker is closed with 23 explicit named SVA properties,
+positive bind execution, and isolated negative tests. Direct H9 datapath reset
+and 20-seed random backpressure stress pass, but strict final acceptance still
+requires independent multi-head/full-layer reset injection coverage and broad
+multi-endpoint multi-head/full-layer random backpressure coverage. Do not write
+`HARDWARE STAGE H9 PASS` or create an H9 accepted tag until those remaining
+HW-H9 exit conditions are implemented, executed, and pass.
 
 Stage 8 remains the accepted hardware baseline:
 

@@ -17,10 +17,13 @@ long-sequence/cache-full RTL, H9 lint/vlogan, H9 DC structural checks, and
 Stage5/6/7/8 regressions in the Docker EDA environment `nailong`.
 
 Hardware Stage H9 is not accepted because the full HW-H9 exit conditions are
-not closed. The remaining blockers are the full reset interrupt matrix, broad
-random backpressure with at least 20 fixed seeds, and complete assertion
-execution evidence with negative/bind proof. Do not write `HARDWARE STAGE H9
-PASS`, do not create an H9 accepted tag, and do not enter Hardware Stage H10.
+not closed. The assertion execution blocker is closed with explicit SVA bind
+and negative evidence. Direct H9 datapath reset and 20-seed random
+backpressure stress pass, but strict final acceptance still requires
+independent multi-head/full-layer reset injection coverage and broad
+multi-endpoint multi-head/full-layer random backpressure coverage. Do not write
+`HARDWARE STAGE H9 PASS`, do not create an H9 accepted tag, and do not enter
+Hardware Stage H10.
 
 Stage 8 remains the accepted baseline. Paper-structured 8x8x2 PE array RTL and
 Attention QK/sV mapping are accepted.
