@@ -117,7 +117,21 @@ module tb_ml_m3_transformer_layer;
     logic [META_W-1:0] expected_meta [0:MAX_TOKENS-1];
     int token_count;
     int out_fd;
+    int node_fd;
     string out_path;
+    string node_path;
+    int diagnostic_mode;
+    int mismatch_count;
+    int w2_trace_current_row;
+    int w2_trace_current_base;
+    logic w2_trace_tile_active;
+    logic w2_trace_tile_last;
+    int edge_w2_trace_current_row;
+    int edge_w2_trace_current_base;
+    logic edge_w2_trace_tile_active;
+    logic edge_w2_trace_tile_last;
+    int active_token_idx;
+    int sim_cycle;
 
     int norm1_done_count;
     int mha_done_count;
@@ -131,6 +145,14 @@ module tb_ml_m3_transformer_layer;
     initial begin
         clk = 1'b0;
         forever #5 clk = ~clk;
+    end
+
+    always_ff @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            sim_cycle <= 0;
+        end else begin
+            sim_cycle <= sim_cycle + 1;
+        end
     end
 
     transformer_layer #(
@@ -208,6 +230,98 @@ module tb_ml_m3_transformer_layer;
         .perf_array_output_stall_cycles       (perf_array_output_stall_cycles),
         .perf_peak_valid_seq_len              (perf_peak_valid_seq_len)
     );
+
+    always @(posedge clk) begin
+        if (rst_n && (node_fd != 0)) begin
+            if (u_layer.u_ffn.pe_in_fire && !u_layer.u_ffn.in_ffn1) begin
+                edge_w2_trace_current_row = int'(u_layer.u_ffn.row_index_q);
+                edge_w2_trace_current_base = int'(u_layer.u_ffn.tile_base_q);
+                edge_w2_trace_tile_active = int'(u_layer.u_ffn.row_index_q) == 1;
+                edge_w2_trace_tile_last = u_layer.u_ffn.pe_in_tile_last;
+                if (int'(u_layer.u_ffn.row_index_q) == 1) begin
+                    for (int lane = 0; lane < PE_NUM; lane++) begin
+                        $fdisplay(node_fd, "{\"cycle\":%0d,\"schedule\":%0d,\"token\":%0d,\"boundary\":\"w2_tile_operand_fp16_edge\",\"dim\":1,\"row\":%0d,\"base\":%0d,\"lane\":%0d,\"activation\":\"%04h\",\"weight\":\"%04h\",\"tile_first\":%0d,\"tile_last\":%0d}",
+                                  sim_cycle, ATTENTION_SCHEDULE, active_token_idx, int'(u_layer.u_ffn.row_index_q),
+                                  int'(u_layer.u_ffn.tile_base_q), lane,
+                                  u_layer.u_ffn.pe_in_vector_a[lane*16 +: 16],
+                                  u_layer.u_ffn.pe_in_vector_b[lane*16 +: 16],
+                                  u_layer.u_ffn.pe_in_tile_first, u_layer.u_ffn.pe_in_tile_last);
+                    end
+                end
+            end
+            if (u_layer.u_ffn.u_pe_core.lane_output_fire && edge_w2_trace_tile_active) begin
+                for (int lane = 0; lane < PE_NUM; lane++) begin
+                    $fdisplay(node_fd, "{\"cycle\":%0d,\"schedule\":%0d,\"token\":%0d,\"boundary\":\"w2_lane_product_fp32_edge\",\"dim\":1,\"row\":%0d,\"base\":%0d,\"lane\":%0d,\"lane_mask\":%0d,\"actual\":\"%08h\",\"status\":\"%02h\",\"invalid\":%0d}",
+                              sim_cycle, ATTENTION_SCHEDULE, active_token_idx, edge_w2_trace_current_row,
+                              edge_w2_trace_current_base, lane, u_layer.u_ffn.u_pe_core.lane_mask_q[lane],
+                              u_layer.u_ffn.u_pe_core.lane_result[lane],
+                              u_layer.u_ffn.u_pe_core.lane_status[lane],
+                              u_layer.u_ffn.u_pe_core.lane_invalid[lane]);
+                end
+            end
+            if (u_layer.u_ffn.u_pe_core.u_reduction_tree.add_input_fire && edge_w2_trace_tile_active) begin
+                $fdisplay(node_fd, "{\"cycle\":%0d,\"schedule\":%0d,\"token\":%0d,\"boundary\":\"w2_reduction_add_input_edge\",\"dim\":1,\"row\":%0d,\"base\":%0d,\"width\":%0d,\"pair\":%0d,\"a\":\"%08h\",\"b\":\"%08h\"}",
+                          sim_cycle, ATTENTION_SCHEDULE, active_token_idx, edge_w2_trace_current_row,
+                          edge_w2_trace_current_base,
+                          int'(u_layer.u_ffn.u_pe_core.u_reduction_tree.width_q),
+                          int'(u_layer.u_ffn.u_pe_core.u_reduction_tree.pair_q),
+                          u_layer.u_ffn.u_pe_core.u_reduction_tree.add_in_a,
+                          u_layer.u_ffn.u_pe_core.u_reduction_tree.add_in_b);
+            end
+            if (u_layer.u_ffn.u_pe_core.u_reduction_tree.add_output_fire && edge_w2_trace_tile_active) begin
+                $fdisplay(node_fd, "{\"cycle\":%0d,\"schedule\":%0d,\"token\":%0d,\"boundary\":\"w2_reduction_add_output_edge\",\"dim\":1,\"row\":%0d,\"base\":%0d,\"width\":%0d,\"pair\":%0d,\"result\":\"%08h\",\"status\":\"%02h\",\"invalid\":%0d}",
+                          sim_cycle, ATTENTION_SCHEDULE, active_token_idx, edge_w2_trace_current_row,
+                          edge_w2_trace_current_base,
+                          int'(u_layer.u_ffn.u_pe_core.u_reduction_tree.width_q),
+                          int'(u_layer.u_ffn.u_pe_core.u_reduction_tree.pair_q),
+                          u_layer.u_ffn.u_pe_core.u_reduction_tree.add_out_result,
+                          u_layer.u_ffn.u_pe_core.u_reduction_tree.add_out_status,
+                          u_layer.u_ffn.u_pe_core.u_reduction_tree.add_out_invalid);
+            end
+            if (u_layer.u_ffn.u_pe_core.reduce_output_fire && edge_w2_trace_tile_active) begin
+                $fdisplay(node_fd, "{\"cycle\":%0d,\"schedule\":%0d,\"token\":%0d,\"boundary\":\"w2_reduce_sum_fp32_edge\",\"dim\":1,\"row\":%0d,\"base\":%0d,\"actual\":\"%08h\",\"status\":\"%02h\",\"invalid\":%0d}",
+                          sim_cycle, ATTENTION_SCHEDULE, active_token_idx, edge_w2_trace_current_row,
+                          edge_w2_trace_current_base, u_layer.u_ffn.u_pe_core.reduce_sum,
+                          u_layer.u_ffn.u_pe_core.reduce_status,
+                          u_layer.u_ffn.u_pe_core.reduce_invalid);
+            end
+            if (u_layer.u_ffn.u_pe_core.tile_add_input_fire && edge_w2_trace_tile_active) begin
+                $fdisplay(node_fd, "{\"cycle\":%0d,\"schedule\":%0d,\"token\":%0d,\"boundary\":\"w2_tile_add_input_edge\",\"dim\":1,\"row\":%0d,\"base\":%0d,\"acc_before\":\"%08h\",\"tile_sum\":\"%08h\",\"tile_last\":%0d}",
+                          sim_cycle, ATTENTION_SCHEDULE, active_token_idx, edge_w2_trace_current_row,
+                          edge_w2_trace_current_base, u_layer.u_ffn.u_pe_core.inner_acc_q,
+                          u_layer.u_ffn.u_pe_core.reduce_sum, edge_w2_trace_tile_last);
+            end
+            if (u_layer.u_ffn.u_pe_core.tile_add_output_fire && edge_w2_trace_tile_active) begin
+                $fdisplay(node_fd, "{\"cycle\":%0d,\"schedule\":%0d,\"token\":%0d,\"boundary\":\"w2_tile_accum_fp32_edge\",\"dim\":1,\"row\":%0d,\"base\":%0d,\"acc_after\":\"%08h\",\"status\":\"%02h\",\"invalid\":%0d,\"tile_last\":%0d}",
+                          sim_cycle, ATTENTION_SCHEDULE, active_token_idx, edge_w2_trace_current_row,
+                          edge_w2_trace_current_base, u_layer.u_ffn.u_pe_core.tile_add_result,
+                          u_layer.u_ffn.u_pe_core.tile_add_status,
+                          u_layer.u_ffn.u_pe_core.tile_add_invalid, edge_w2_trace_tile_last);
+            end
+            if (u_layer.res1_output_valid && u_layer.res1_output_ready && int'(u_layer.res1_output_dim) == 1) begin
+                $fdisplay(node_fd, "{\"cycle\":%0d,\"schedule\":%0d,\"token\":%0d,\"boundary\":\"residual1_fp32_edge\",\"dim\":1,\"actual\":\"%08h\"}",
+                          sim_cycle, ATTENTION_SCHEDULE, active_token_idx, u_layer.res1_output_data);
+            end
+            if (u_layer.norm2_output_valid && u_layer.norm2_output_ready && int'(u_layer.norm2_output_dim) == 1) begin
+                $fdisplay(node_fd, "{\"cycle\":%0d,\"schedule\":%0d,\"token\":%0d,\"boundary\":\"norm2_output_fp16_edge\",\"dim\":1,\"actual\":\"%04h\"}",
+                          sim_cycle, ATTENTION_SCHEDULE, active_token_idx, u_layer.norm2_output_data);
+            end
+            if (u_layer.ffn_output_valid && u_layer.ffn_output_ready && int'(u_layer.ffn_output_dim) == 1) begin
+                $fdisplay(node_fd, "{\"cycle\":%0d,\"schedule\":%0d,\"token\":%0d,\"boundary\":\"w2_output_fp32_edge\",\"dim\":1,\"actual\":\"%08h\"}",
+                          sim_cycle, ATTENTION_SCHEDULE, active_token_idx, u_layer.ffn_output_data);
+            end
+            if (u_layer.res2_input_valid && u_layer.res2_input_ready && int'(u_layer.ffn_output_dim) == 1) begin
+                $fdisplay(node_fd, "{\"cycle\":%0d,\"schedule\":%0d,\"token\":%0d,\"boundary\":\"residual2_input_lhs_fp32_edge\",\"dim\":1,\"actual\":\"%08h\"}",
+                          sim_cycle, ATTENTION_SCHEDULE, active_token_idx, u_layer.res1_mem[1]);
+                $fdisplay(node_fd, "{\"cycle\":%0d,\"schedule\":%0d,\"token\":%0d,\"boundary\":\"residual2_input_rhs_fp32_edge\",\"dim\":1,\"actual\":\"%08h\"}",
+                          sim_cycle, ATTENTION_SCHEDULE, active_token_idx, u_layer.ffn_output_data);
+            end
+            if (u_layer.res2_output_valid && u_layer.res2_output_ready && int'(u_layer.res2_output_dim) == 1) begin
+                $fdisplay(node_fd, "{\"cycle\":%0d,\"schedule\":%0d,\"token\":%0d,\"boundary\":\"residual2_final_fp32_edge\",\"dim\":1,\"actual\":\"%08h\"}",
+                          sim_cycle, ATTENTION_SCHEDULE, active_token_idx, u_layer.res2_output_data);
+            end
+        end
+    end
 
     task automatic tb_fail(input string message);
         begin
@@ -294,9 +408,18 @@ module tb_ml_m3_transformer_layer;
     task automatic open_capture_file;
         begin
             out_fd = 0;
+            node_fd = 0;
+            diagnostic_mode = 0;
+            if ($test$plusargs("ML_M3_DIAGNOSTIC")) begin
+                diagnostic_mode = 1;
+            end
             if ($value$plusargs("ML_M3_OUTPUT_FILE=%s", out_path)) begin
                 out_fd = $fopen(out_path, "w");
                 if (out_fd == 0) tb_fail("could not open output capture file");
+            end
+            if ($value$plusargs("ML_M3_NODE_FILE=%s", node_path)) begin
+                node_fd = $fopen(node_path, "w");
+                if (node_fd == 0) tb_fail("could not open node trace file");
             end
         end
     endtask
@@ -326,6 +449,16 @@ module tb_ml_m3_transformer_layer;
             residual2_done_count = 0;
             top_done_count = 0;
             output_tile_count = 0;
+            mismatch_count = 0;
+            w2_trace_current_row = -1;
+            w2_trace_current_base = -1;
+            w2_trace_tile_active = 1'b0;
+            w2_trace_tile_last = 1'b0;
+            edge_w2_trace_current_row = -1;
+            edge_w2_trace_current_base = -1;
+            edge_w2_trace_tile_active = 1'b0;
+            edge_w2_trace_tile_last = 1'b0;
+            active_token_idx = -1;
             repeat (8) @(posedge clk);
             rst_n = 1'b1;
             repeat (4) @(posedge clk);
@@ -400,6 +533,7 @@ module tb_ml_m3_transformer_layer;
         int token_ffn_before;
         int token_res2_before;
         begin
+            active_token_idx = token_idx;
             token_norm1_before = norm1_done_count;
             token_mha_before = mha_done_count;
             token_res1_before = residual1_done_count;
@@ -414,6 +548,95 @@ module tb_ml_m3_transformer_layer;
                 output_ready = (cycle % 7) != 3;
                 done_ready = 1'b1;
                 #1;
+                if (node_fd != 0) begin
+                    if (u_layer.u_ffn.pe_in_fire && !u_layer.u_ffn.in_ffn1) begin
+                        w2_trace_current_row = int'(u_layer.u_ffn.row_index_q);
+                        w2_trace_current_base = int'(u_layer.u_ffn.tile_base_q);
+                        w2_trace_tile_active = int'(u_layer.u_ffn.row_index_q) == 1;
+                        w2_trace_tile_last = u_layer.u_ffn.pe_in_tile_last;
+                        if (int'(u_layer.u_ffn.row_index_q) == 1) begin
+                            for (int lane = 0; lane < PE_NUM; lane++) begin
+                                $fdisplay(node_fd, "{\"cycle\":%0d,\"schedule\":%0d,\"token\":%0d,\"boundary\":\"w2_tile_operand_fp16\",\"dim\":1,\"row\":%0d,\"base\":%0d,\"lane\":%0d,\"activation\":\"%04h\",\"weight\":\"%04h\",\"tile_first\":%0d,\"tile_last\":%0d}",
+                                          cycle, ATTENTION_SCHEDULE, token_idx, int'(u_layer.u_ffn.row_index_q),
+                                          int'(u_layer.u_ffn.tile_base_q), lane,
+                                          u_layer.u_ffn.pe_in_vector_a[lane*16 +: 16],
+                                          u_layer.u_ffn.pe_in_vector_b[lane*16 +: 16],
+                                          u_layer.u_ffn.pe_in_tile_first, u_layer.u_ffn.pe_in_tile_last);
+                            end
+                        end
+                    end
+                    if (u_layer.u_ffn.u_pe_core.lane_output_fire && w2_trace_tile_active) begin
+                        for (int lane = 0; lane < PE_NUM; lane++) begin
+                            $fdisplay(node_fd, "{\"cycle\":%0d,\"schedule\":%0d,\"token\":%0d,\"boundary\":\"w2_lane_product_fp32\",\"dim\":1,\"row\":%0d,\"base\":%0d,\"lane\":%0d,\"lane_mask\":%0d,\"actual\":\"%08h\",\"status\":\"%02h\",\"invalid\":%0d}",
+                                      cycle, ATTENTION_SCHEDULE, token_idx, w2_trace_current_row,
+                                      w2_trace_current_base, lane, u_layer.u_ffn.u_pe_core.lane_mask_q[lane],
+                                      u_layer.u_ffn.u_pe_core.lane_result[lane],
+                                      u_layer.u_ffn.u_pe_core.lane_status[lane],
+                                      u_layer.u_ffn.u_pe_core.lane_invalid[lane]);
+                        end
+                    end
+                    if (u_layer.u_ffn.u_pe_core.u_reduction_tree.add_input_fire && w2_trace_tile_active) begin
+                        $fdisplay(node_fd, "{\"cycle\":%0d,\"schedule\":%0d,\"token\":%0d,\"boundary\":\"w2_reduction_add_input\",\"dim\":1,\"row\":%0d,\"base\":%0d,\"width\":%0d,\"pair\":%0d,\"a\":\"%08h\",\"b\":\"%08h\"}",
+                                  cycle, ATTENTION_SCHEDULE, token_idx, w2_trace_current_row,
+                                  w2_trace_current_base,
+                                  int'(u_layer.u_ffn.u_pe_core.u_reduction_tree.width_q),
+                                  int'(u_layer.u_ffn.u_pe_core.u_reduction_tree.pair_q),
+                                  u_layer.u_ffn.u_pe_core.u_reduction_tree.add_in_a,
+                                  u_layer.u_ffn.u_pe_core.u_reduction_tree.add_in_b);
+                    end
+                    if (u_layer.u_ffn.u_pe_core.u_reduction_tree.add_output_fire && w2_trace_tile_active) begin
+                        $fdisplay(node_fd, "{\"cycle\":%0d,\"schedule\":%0d,\"token\":%0d,\"boundary\":\"w2_reduction_add_output\",\"dim\":1,\"row\":%0d,\"base\":%0d,\"width\":%0d,\"pair\":%0d,\"result\":\"%08h\",\"status\":\"%02h\",\"invalid\":%0d}",
+                                  cycle, ATTENTION_SCHEDULE, token_idx, w2_trace_current_row,
+                                  w2_trace_current_base,
+                                  int'(u_layer.u_ffn.u_pe_core.u_reduction_tree.width_q),
+                                  int'(u_layer.u_ffn.u_pe_core.u_reduction_tree.pair_q),
+                                  u_layer.u_ffn.u_pe_core.u_reduction_tree.add_out_result,
+                                  u_layer.u_ffn.u_pe_core.u_reduction_tree.add_out_status,
+                                  u_layer.u_ffn.u_pe_core.u_reduction_tree.add_out_invalid);
+                    end
+                    if (u_layer.u_ffn.u_pe_core.reduce_output_fire && w2_trace_tile_active) begin
+                        $fdisplay(node_fd, "{\"cycle\":%0d,\"schedule\":%0d,\"token\":%0d,\"boundary\":\"w2_reduce_sum_fp32\",\"dim\":1,\"row\":%0d,\"base\":%0d,\"actual\":\"%08h\",\"status\":\"%02h\",\"invalid\":%0d}",
+                                  cycle, ATTENTION_SCHEDULE, token_idx, w2_trace_current_row,
+                                  w2_trace_current_base, u_layer.u_ffn.u_pe_core.reduce_sum,
+                                  u_layer.u_ffn.u_pe_core.reduce_status,
+                                  u_layer.u_ffn.u_pe_core.reduce_invalid);
+                    end
+                    if (u_layer.u_ffn.u_pe_core.tile_add_input_fire && w2_trace_tile_active) begin
+                        $fdisplay(node_fd, "{\"cycle\":%0d,\"schedule\":%0d,\"token\":%0d,\"boundary\":\"w2_tile_add_input\",\"dim\":1,\"row\":%0d,\"base\":%0d,\"acc_before\":\"%08h\",\"tile_sum\":\"%08h\",\"tile_last\":%0d}",
+                                  cycle, ATTENTION_SCHEDULE, token_idx, w2_trace_current_row,
+                                  w2_trace_current_base, u_layer.u_ffn.u_pe_core.inner_acc_q,
+                                  u_layer.u_ffn.u_pe_core.reduce_sum, w2_trace_tile_last);
+                    end
+                    if (u_layer.u_ffn.u_pe_core.tile_add_output_fire && w2_trace_tile_active) begin
+                        $fdisplay(node_fd, "{\"cycle\":%0d,\"schedule\":%0d,\"token\":%0d,\"boundary\":\"w2_tile_accum_fp32\",\"dim\":1,\"row\":%0d,\"base\":%0d,\"acc_after\":\"%08h\",\"status\":\"%02h\",\"invalid\":%0d,\"tile_last\":%0d}",
+                                  cycle, ATTENTION_SCHEDULE, token_idx, w2_trace_current_row,
+                                  w2_trace_current_base, u_layer.u_ffn.u_pe_core.tile_add_result,
+                                  u_layer.u_ffn.u_pe_core.tile_add_status,
+                                  u_layer.u_ffn.u_pe_core.tile_add_invalid, w2_trace_tile_last);
+                    end
+                    if (u_layer.res1_output_valid && u_layer.res1_output_ready && int'(u_layer.res1_output_dim) == 1) begin
+                        $fdisplay(node_fd, "{\"cycle\":%0d,\"schedule\":%0d,\"token\":%0d,\"boundary\":\"residual1_fp32\",\"dim\":1,\"actual\":\"%08h\"}",
+                                  cycle, ATTENTION_SCHEDULE, token_idx, u_layer.res1_output_data);
+                    end
+                    if (u_layer.norm2_output_valid && u_layer.norm2_output_ready && int'(u_layer.norm2_output_dim) == 1) begin
+                        $fdisplay(node_fd, "{\"cycle\":%0d,\"schedule\":%0d,\"token\":%0d,\"boundary\":\"norm2_output_fp16\",\"dim\":1,\"actual\":\"%04h\"}",
+                                  cycle, ATTENTION_SCHEDULE, token_idx, u_layer.norm2_output_data);
+                    end
+                    if (u_layer.ffn_output_valid && u_layer.ffn_output_ready && int'(u_layer.ffn_output_dim) == 1) begin
+                        $fdisplay(node_fd, "{\"cycle\":%0d,\"schedule\":%0d,\"token\":%0d,\"boundary\":\"w2_output_fp32\",\"dim\":1,\"actual\":\"%08h\"}",
+                                  cycle, ATTENTION_SCHEDULE, token_idx, u_layer.ffn_output_data);
+                    end
+                    if (u_layer.res2_input_valid && u_layer.res2_input_ready && int'(u_layer.ffn_output_dim) == 1) begin
+                        $fdisplay(node_fd, "{\"cycle\":%0d,\"schedule\":%0d,\"token\":%0d,\"boundary\":\"residual2_input_lhs_fp32\",\"dim\":1,\"actual\":\"%08h\"}",
+                                  cycle, ATTENTION_SCHEDULE, token_idx, u_layer.res1_mem[1]);
+                        $fdisplay(node_fd, "{\"cycle\":%0d,\"schedule\":%0d,\"token\":%0d,\"boundary\":\"residual2_input_rhs_fp32\",\"dim\":1,\"actual\":\"%08h\"}",
+                                  cycle, ATTENTION_SCHEDULE, token_idx, u_layer.ffn_output_data);
+                    end
+                    if (u_layer.res2_output_valid && u_layer.res2_output_ready && int'(u_layer.res2_output_dim) == 1) begin
+                        $fdisplay(node_fd, "{\"cycle\":%0d,\"schedule\":%0d,\"token\":%0d,\"boundary\":\"residual2_final_fp32\",\"dim\":1,\"actual\":\"%08h\"}",
+                                  cycle, ATTENTION_SCHEDULE, token_idx, u_layer.res2_output_data);
+                    end
+                end
                 if (u_layer.norm1_done_valid && u_layer.norm1_done_ready) norm1_done_count++;
                 if (u_layer.stage6_done_valid && u_layer.stage6_done_ready) mha_done_count++;
                 if (u_layer.res1_done_valid && u_layer.res1_done_ready) residual1_done_count++;
@@ -432,9 +655,16 @@ module tb_ml_m3_transformer_layer;
                             captured_output[token_idx][idx] = lane_value;
                             if (out_fd != 0) $fdisplay(out_fd, "R %0d %0d %08h", token_idx, idx, lane_value);
                             if (lane_value !== expected_output[token_idx][idx]) begin
-                                $display("CHECK_FAIL layer token=%0d dim=%0d got=%08h expected=%08h",
-                                         token_idx, idx, lane_value, expected_output[token_idx][idx]);
-                                $fatal(1);
+                                mismatch_count++;
+                                if (diagnostic_mode) begin
+                                    $display("ML_M3_NUMERIC_MISMATCH token=%0d dim=%0d got=%08h expected=%08h",
+                                             token_idx, idx, lane_value, expected_output[token_idx][idx]);
+                                    if (out_fd != 0) $fdisplay(out_fd, "D %0d %0d %08h %08h", token_idx, idx, lane_value, expected_output[token_idx][idx]);
+                                end else begin
+                                    $display("CHECK_FAIL layer token=%0d dim=%0d got=%08h expected=%08h",
+                                             token_idx, idx, lane_value, expected_output[token_idx][idx]);
+                                    $fatal(1);
+                                end
                             end
                             received++;
                         end
@@ -477,9 +707,16 @@ module tb_ml_m3_transformer_layer;
             run_layer(tok);
         end
         if (out_fd != 0) $fclose(out_fd);
-        $display("ML_M3_RTL_PASS arch=%0d schedule=%0d n_head=%0d d_head=%0d d_model=%0d d_ffn=%0d max_seq_len=%0d tokens=%0d total_cycles=%0d output_tiles=%0d done_count=%0d valid_seq_len=%0d",
-                 ATTENTION_PE_ARCH, ATTENTION_SCHEDULE, N_HEAD, D_HEAD, D_MODEL, D_FFN, MAX_SEQ_LEN,
-                 token_count, perf_total_layer_cycles, output_tile_count, top_done_count, current_valid_seq_len);
+        if (node_fd != 0) $fclose(node_fd);
+        if (diagnostic_mode) begin
+            $display("ML_M3_RTL_DIAGNOSTIC_DONE arch=%0d schedule=%0d n_head=%0d d_head=%0d d_model=%0d d_ffn=%0d max_seq_len=%0d tokens=%0d mismatches=%0d total_cycles=%0d output_tiles=%0d done_count=%0d valid_seq_len=%0d",
+                     ATTENTION_PE_ARCH, ATTENTION_SCHEDULE, N_HEAD, D_HEAD, D_MODEL, D_FFN, MAX_SEQ_LEN,
+                     token_count, mismatch_count, perf_total_layer_cycles, output_tile_count, top_done_count, current_valid_seq_len);
+        end else begin
+            $display("ML_M3_RTL_PASS arch=%0d schedule=%0d n_head=%0d d_head=%0d d_model=%0d d_ffn=%0d max_seq_len=%0d tokens=%0d total_cycles=%0d output_tiles=%0d done_count=%0d valid_seq_len=%0d",
+                     ATTENTION_PE_ARCH, ATTENTION_SCHEDULE, N_HEAD, D_HEAD, D_MODEL, D_FFN, MAX_SEQ_LEN,
+                     token_count, perf_total_layer_cycles, output_tile_count, top_done_count, current_valid_seq_len);
+        end
         $display("ML_M3_BOUNDARY_OBS norm1=%0d mha=%0d residual1=%0d norm2=%0d ffn=%0d residual2=%0d output_tiles=%0d done=%0d",
                  norm1_done_count, mha_done_count, residual1_done_count, norm2_done_count,
                  ffn_done_count, residual2_done_count, output_tile_count, top_done_count);

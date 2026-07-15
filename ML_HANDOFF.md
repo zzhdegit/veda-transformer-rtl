@@ -8,7 +8,7 @@ Short id: ML-M3
 
 ## Status
 
-MODEL STAGE M3 IN PROGRESS - RTL/BIT-MODEL NUMERIC MISMATCH BLOCKED.
+MODEL STAGE M3 IN PROGRESS - HARDWARE NUMERIC FIX REQUIRED.
 
 ## Completed In ML-M3
 
@@ -30,7 +30,7 @@ MODEL STAGE M3 IN PROGRESS - RTL/BIT-MODEL NUMERIC MISMATCH BLOCKED.
   `N_HEAD=8`, `D_HEAD=8`, `D_MODEL=64`, `D_FFN=256`, `MAX_SEQ_LEN=128`.
 - Ran one-token smoke for both H8 staged and H9 interleaved schedules.
 
-## ML-M3 Blocker
+## ML-M3 Numeric Alignment Closure
 
 One-token smoke failed in both schedules at the first checked real RTL final
 output mismatch:
@@ -50,6 +50,43 @@ both differ from the current hardware-aware bit model. Per the ML-M3 gate,
 length 2/8/16 RTL runs, hybrid next-token logits, and acceptance tagging were
 not started.
 
+The ML-M3 Numeric Alignment task reproduced the mismatch, collected the full
+64-dimension one-token diagnostic output, and found 54/64 final dimensions
+mismatching the hardware-aware bit model. H8 staged and H9 interleaved remained
+identical.
+
+First stable boundary divergence:
+
+```text
+residual1_fp32_edge       matches bit model
+norm2_output_fp16_edge    matches bit model
+w2_output_fp32_edge       differs: H8/H9=3e12e075, bit=3e12e074
+residual2_final_fp32_edge differs: H8/H9=3d4a2576, bit=3d4a2572
+```
+
+First divergent arithmetic operation:
+
+```text
+path=W2 reduction tree add
+cycle=185551
+tile_base=8
+width=8
+pair=3
+operand_a=32'h3c81aa0c
+operand_b=32'h39699f40
+RTL_result=32'h3c837d4b
+bit_model_result=32'h3c837d4a
+```
+
+Vector/export and W2 lane-product issues were excluded by direct diagnostic
+capture. Standalone stable `fp32_add_wrapper` replay of the same operands
+matches the bit model and NumPy float32. Current evidence therefore classifies
+the blocker as a common RTL PE reduction/stream-register numeric issue, not an
+M3 vector/export issue and not a supported bit-model fix.
+
+Per task boundary, the model branch did not patch RTL. Hardware follow-up is
+documented in `reports/ml_m3/hardware_numeric_bug_report.md`.
+
 ## ML-M3 Reproduction
 
 ```bash
@@ -57,6 +94,9 @@ python scripts/ml/run_ml_m3_artifact_audit.py
 python scripts/ml/run_ml_m3_vector_generation.py
 python scripts/ml/run_ml_m3_vcs.py --length 1 --schedule staged --schedule interleaved --run-id smoke_len1_combined
 python scripts/ml/run_ml_m3_acceptance.py
+python scripts/ml/run_ml_m3_vcs.py --length 1 --schedule staged --schedule interleaved --run-id numeric_alignment_edge_adds --diagnostic
+python scripts/ml/run_ml_m3_numeric_replay.py --run-id numeric_alignment_first_add_const
+python scripts/ml/run_ml_m3_numeric_classification.py
 ```
 
 Key logs:
@@ -73,8 +113,9 @@ D:/IC_Workspace/VEDA_artifacts/ml_m3/rtl_logs/ml_m3_interleaved_len_1_smoke_len1
 - hybrid RTL-assisted next-token validation;
 - accepted ML-M3 tag.
 
-These are blocked until the RTL/bit-model numerical mismatch is resolved by a
-separate hardware/reference-model fix task.
+These are blocked until the common RTL PE reduction numeric issue is fixed and
+the one-token H8/H9 smoke is re-run bit-exact against the hardware-aware bit
+model.
 
 ## Previous Stage
 

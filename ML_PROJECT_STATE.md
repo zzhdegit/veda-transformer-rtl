@@ -8,7 +8,7 @@
 - Branch: `ml/m3-real-rtl-cosim`
 - Base tag: `ml-q2-full-dataset-benchmark-accepted`
 - Last update: 2026-07-15
-- Status: MODEL STAGE M3 IN PROGRESS - RTL/BIT-MODEL NUMERIC MISMATCH BLOCKED
+- Status: MODEL STAGE M3 IN PROGRESS - HARDWARE NUMERIC FIX REQUIRED
 
 ML-M3 consumed the frozen Q2 benchmark checkpoint and generated real Q2
 vectors for lengths 1, 2, 8, 16, and 32. Q2 artifact audit, tokenizer SHA,
@@ -20,12 +20,30 @@ but one-token smoke failed before multi-token RTL co-simulation:
 CHECK_FAIL layer token=0 dim=1 got=3d4a2576 expected=3d4a2572
 ```
 
-Both H8 and H9 produced the same captured prefix SHA
-`5adbf7b5ef5e5fbff1a767e271d852ab711ec9d829a9f7fe9125288901d4f3be`,
-so the current blocker is common RTL-vs-bit-model numerical mismatch, not a
-staged/interleaved divergence. ML-M3 did not modify hardware files, did not run
-multi-token RTL after the one-token gate failed, and did not invoke PDK, STA,
-P&R, or PPA.
+Numeric alignment diagnostics reproduced the mismatch and collected the full
+64-dimension one-token output. H8 and H9 remained identical, with 54/64 final
+dimensions mismatching the hardware-aware bit model. The first stable divergent
+boundary is FFN W2 output, not residual1, RMSNorm2, vector export, W2 operands,
+or W2 lane products.
+
+First divergent arithmetic operation:
+
+```text
+path=W2 reduction tree add
+tile_base=8
+width=8
+pair=3
+operand_a=32'h3c81aa0c
+operand_b=32'h39699f40
+RTL_result=32'h3c837d4b
+bit_model_result=32'h3c837d4a
+```
+
+Standalone stable `fp32_add_wrapper` replay of the same operands matches the
+bit model and NumPy float32, so the current evidence points to a common RTL PE
+reduction/stream-register handshake issue that must be fixed on the hardware
+line. ML-M3 did not modify hardware files, did not run multi-token RTL after
+the one-token gate failed, and did not invoke PDK, STA, P&R, or PPA.
 
 ## Previous Model Stage
 
@@ -69,11 +87,13 @@ best_validation_loss=3.300639416490282
 perplexity=27.129980732808296
 ```
 
-## Next Stage
+## ML-M3 Continuation Gate
 
-Model Stage M3 may begin after user approval. It should consume the ML-M2
-formal checkpoint/export/trace artifacts for PyTorch / bit model / RTL
-co-simulation. ML-M2 did not start real RTL co-simulation.
+Model Stage M3 has begun from the accepted ML-Q2 benchmark checkpoint. The
+current continuation gate is a hardware-owned numeric fix for the common W2
+reduction-path mismatch documented above. Do not resume length 2/8/16 real RTL
+co-simulation, hybrid next-token validation, or M3 acceptance tagging until
+one-token H8/H9 RTL output is bit-exact against the hardware-aware bit model.
 
 ## Post-Acceptance Quality Experiments
 

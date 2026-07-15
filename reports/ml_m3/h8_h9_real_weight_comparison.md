@@ -1,7 +1,13 @@
 # ML-M3 H8/H9 Real-Weight Comparison
 
-| Case | H8 staged | H9 interleaved | H8 SHA | H9 SHA | H8/H9 captured output identical |
-|---|---|---|---|---|---|
-| length 1 partial | FAIL | FAIL | `5adbf7b5ef5e5fbff1a767e271d852ab711ec9d829a9f7fe9125288901d4f3be` | `5adbf7b5ef5e5fbff1a767e271d852ab711ec9d829a9f7fe9125288901d4f3be` | True |
+| Length | H8 staged result | H9 interleaved result | H8 capture SHA | H9 capture SHA | Output identical |
+|---:|---|---|---|---|---|
+| 1 | DIAGNOSTIC | DIAGNOSTIC | `d09c4b80953c18ba7edea335490cca63f5ac4d9fcf24f4e17027813ca0045fb4` | `d09c4b80953c18ba7edea335490cca63f5ac4d9fcf24f4e17027813ca0045fb4` | True |
 
-Both schedules hit the same first mismatch against the hardware-aware bit model before completing token 0. This confirms the two accepted schedules agree on the captured prefix, but ML-M3 cannot claim bit-model equivalence.
+H8 staged and H9 interleaved remain numerically identical for the one-token
+diagnostic capture. Both schedules differ from the hardware-aware bit model in
+the same way, so the current blocker is a common arithmetic path issue and not
+an interleaving-only scheduler issue.
+
+The H8/H9 A/B cycle comparison for length 2/8/16 remains blocked by the
+one-token bit-exact gate.

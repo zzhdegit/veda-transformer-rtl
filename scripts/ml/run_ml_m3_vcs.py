@@ -168,11 +168,27 @@ vcs -full64 -sverilog -debug_access+pp -assert svaext -timescale=1ns/1ps \\
 
 
 def _run_script(simv: str, vector_path: str, capture_path: str, run_log: str, timeout_seconds: int) -> str:
+    return _run_script_with_options(simv, vector_path, capture_path, "", run_log, timeout_seconds, False)
+
+
+def _run_script_with_options(
+    simv: str,
+    vector_path: str,
+    capture_path: str,
+    node_path: str,
+    run_log: str,
+    timeout_seconds: int,
+    diagnostic: bool,
+) -> str:
+    diagnostic_arg = "+ML_M3_DIAGNOSTIC" if diagnostic else ""
+    node_arg = f'+ML_M3_NODE_FILE="{node_path}"' if node_path else ""
     return f"""
 set -u
 timeout {timeout_seconds}s "{simv}" \\
   +ML_M3_VECTOR_FILE="{vector_path}" \\
   +ML_M3_OUTPUT_FILE="{capture_path}" \\
+  {diagnostic_arg} \\
+  {node_arg} \\
   -l "{run_log}"
 """
 
@@ -193,8 +209,10 @@ def _parse_log(path: Path) -> dict[str, Any]:
             boundary_line = line
         elif line.startswith("ML_M3_TOKEN_PASS"):
             token_lines.append(line)
+        elif line.startswith("ML_M3_RTL_DIAGNOSTIC_DONE"):
+            pass_line = line
     return {
-        "pass": bool(pass_line) and not fail_markers,
+        "pass": bool(pass_line) and not fail_markers and not pass_line.startswith("ML_M3_RTL_DIAGNOSTIC_DONE"),
         "pass_line": pass_line,
         "perf_line": perf_line,
         "boundary_line": boundary_line,
@@ -203,7 +221,7 @@ def _parse_log(path: Path) -> dict[str, Any]:
     }
 
 
-def run_vcs(lengths: list[int], schedules: list[str], run_id: str | None = None) -> dict[str, Any]:
+def run_vcs(lengths: list[int], schedules: list[str], run_id: str | None = None, diagnostic: bool = False) -> dict[str, Any]:
     run_id = run_id or time.strftime("%Y%m%d_%H%M%S")
     (ARTIFACT_ROOT / "rtl_logs").mkdir(parents=True, exist_ok=True)
     (ARTIFACT_ROOT / "temporary_build").mkdir(parents=True, exist_ok=True)
@@ -232,14 +250,17 @@ def run_vcs(lengths: list[int], schedules: list[str], run_id: str | None = None)
         for length in lengths:
             vector_host = ARTIFACT_ROOT / "vectors" / f"len_{length}" / f"case_len_{length}.mem"
             capture_host = ARTIFACT_ROOT / "traces" / f"rtl_{schedule_name}_len_{length}.captured"
+            node_host = ARTIFACT_ROOT / "traces" / f"numeric_alignment_{schedule_name}_len_{length}.jsonl"
             run_log_host = ARTIFACT_ROOT / "rtl_logs" / f"ml_m3_{schedule_name}_len_{length}_{run_id}.log"
             run = _run_container_bash(
-                _run_script(
+                _run_script_with_options(
                     simv,
                     _container_path(vector_host),
                     _container_path(capture_host),
+                    _container_path(node_host),
                     _container_path(run_log_host),
                     timeout_seconds=1800 if length <= 16 else 3600,
+                    diagnostic=diagnostic,
                 ),
                 timeout_seconds=3900,
             )
@@ -251,8 +272,10 @@ def run_vcs(lengths: list[int], schedules: list[str], run_id: str | None = None)
                 "run_log": str(run_log_host),
                 "capture": str(capture_host),
                 "capture_sha256": sha256_file(capture_host) if capture_host.exists() else None,
+                "node_trace": str(node_host),
+                "node_trace_sha256": sha256_file(node_host) if node_host.exists() else None,
                 **parsed,
-                "result": "PASS" if run.returncode == 0 and parsed["pass"] else "FAIL",
+                "result": "PASS" if run.returncode == 0 and parsed["pass"] else ("DIAGNOSTIC" if diagnostic and run.returncode == 0 else "FAIL"),
             }
             schedule_result["cases"][f"len_{length}"] = case
         schedule_result["result"] = "PASS" if all(case["result"] == "PASS" for case in schedule_result["cases"].values()) else "FAIL"
@@ -307,10 +330,11 @@ def main() -> None:
     parser.add_argument("--length", action="append", type=int, help="Length to run; may be repeated.")
     parser.add_argument("--schedule", choices=sorted(SCHEDULES), action="append", help="Schedule to run; may be repeated.")
     parser.add_argument("--run-id")
+    parser.add_argument("--diagnostic", action="store_true")
     args = parser.parse_args()
     lengths = args.length or VECTOR_LENGTHS_REQUIRED
     schedules = args.schedule or ["staged", "interleaved"]
-    print(json.dumps(run_vcs(lengths, schedules, run_id=args.run_id), indent=2, sort_keys=True))
+    print(json.dumps(run_vcs(lengths, schedules, run_id=args.run_id, diagnostic=args.diagnostic), indent=2, sort_keys=True))
 
 
 if __name__ == "__main__":
