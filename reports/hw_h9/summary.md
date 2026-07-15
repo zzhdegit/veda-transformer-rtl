@@ -1,79 +1,75 @@
 # Hardware Stage H9 Summary
 
-Status: final-closure progress checkpoint, not accepted.
+Status: final-closure regression checkpoint, not accepted.
 
-## Completed In This Closure Turn
+## Executed In This Closure Turn
 
-- Reconfirmed work continued on `D:/IC_Workspace/VEDA` and branch
-  `hw/h9-sfu-pe-interleaving`.
-- Added `ATTENTION_SCHEDULE` parameter control to the Stage5 multi-head and
-  Stage7D full-layer RTL testbenches without changing their default staged
-  behavior.
-- Added configurable `MAX_SEQ_LEN` and config-list generation to
-  `scripts/sim/gen_stage5_vectors.py`.
-- Extended `scripts/sim/run_hw_h9_vcs.sh` so `hw-h9-rtl-sim` now includes:
-  - matched single-head staged/interleaved A/B;
-  - deterministic matched backpressure subset;
-  - H9 multi-head interleaved runs for H1/D8, H2/D8, H4/D8, H2/D16, and H1/D64;
-  - H9 H1/D8 `MAX_SEQ_LEN=32` sequence/cache-full run;
-  - H9 full-layer interleaved runs for H1/D8, H2/D8, H2/D8 two-token, H4/D8,
-    and H2/D16.
-- Calibrated `model/attention/paper_interleaved_cycle_model.py` to exact
-  matched RTL A/B cycle formulas for D_HEAD 8, 16, and 64 at seq 1, 2, 8, 16,
-  32, and 64.
-- Added model tests for the calibrated RTL cycle points.
-- Added H9 Make aliases for cycle calibration, multi-head, full-layer, reset,
-  backpressure, cache-full, and assertion tests.
-- Added final-closure reports for performance attribution, cycle calibration,
-  multi-head, full-layer, sequence, cache-full, reset, random backpressure,
-  assertion execution, and numerical results.
+Work stayed in `D:/IC_Workspace/VEDA` on branch
+`hw/h9-sfu-pe-interleaving`.
 
-## Passing Commands In This Environment
+The Docker EDA environment `nailong` was used for RTL, vlogan, and DC checks.
+The following commands completed:
 
 ```text
-python scripts/sim/run_hw_h9_tests.py
-python scripts/lint/run_hw_h9_lint.py
+python3 scripts/sim/run_hw_h9_tests.py
+make hw-h9-test
+make hw-h9-rtl-sim
+make hw-h9-lint
+make hw-h9-synth
+make stage8-test stage8-rtl-sim stage8-lint stage8-synth
+make stage7a-test
+make stage7b-test stage7b-rtl-sim stage7b-lint stage7b-synth
+make stage7c-test stage7c-rtl-sim stage7c-lint stage7c-synth
+make stage7d-test stage7d-rtl-sim stage7d-lint stage7d-synth
+make stage6-test stage6-rtl-sim stage6-lint stage6-synth
+make stage5-test stage5-rtl-sim stage5-lint stage5-synth
 ```
 
-The host/model command passed 7 H9 pytest cases, H9 vs H8 bit-exact comparison,
-Stage8 Python regression, Stage7A Python regression, and py_compile.
+All commands above returned PASS.
 
-Static hygiene lint passed. VCS/vlogan compile was skipped because `vlogan` is
-not installed in the current environment.
+## H9 Results
 
-## Blocked Commands In This Environment
+- H9 host/model tests: PASS.
+- H9 vs H8 bit-model comparison: bit-exact for D_HEAD 8, 16, 64, and 128.
+- H9 calibrated cycle model: exact total-cycle match against matched RTL A/B
+  for D_HEAD 8, 16, and 64 at seq 1, 2, 8, 16, 32, and 64.
+- H9 RTL simulation: PASS.
+- H9 lint/vlogan: PASS with only accepted DesignWare pragma-no-effect warnings.
+- H9 DC structural check: PASS for analyze/elaborate/link/check_design and
+  hierarchy only. No PPA is claimed.
 
-```text
-bash scripts/sim/run_hw_h9_vcs.sh
-python scripts/synth/run_hw_h9_synth_check.py
-```
+Matched RTL A/B remains the performance authority. The old structural cycle
+model is retained only as trend evidence and is not used to decide H9 speedup.
 
-`run_hw_h9_vcs.sh` exits before compilation because `vcs` is not found.
-`run_hw_h9_synth_check.py` fails because `dc_shell` and
-`DW_FOUNDATION_SLDB` are not found.
+The measured performance gain is the combined result of native full-array
+mapping plus SFU/PE interleaving. It must not be described as pure interleaving
+benefit.
 
-The current-environment tool-block logs are saved separately as:
+## Covered H9 RTL Configurations
 
-```text
-reports/hw_h9/rtl_sim_current_env.txt
-reports/hw_h9/lint_results_current_env.txt
-reports/hw_h9/synth_check_current_env.txt
-```
+- Single-head smoke: D_HEAD 8, 16, and 64.
+- Matched single-head A/B: staged and interleaved schedules at D_HEAD 8, 16,
+  and 64 for seq 1, 2, 8, 16, 32, and 64.
+- Deterministic output/done backpressure matched A/B: D_HEAD 8, 16, and 64 at
+  seq16 and seq32.
+- Multi-head interleaved Stage 5 wrapper: H1/D8, H2/D8, H4/D8, H2/D16, and
+  H1/D64, each through MAX_SEQ_LEN=8 plus one cache-full extra token.
+- Long sequence/cache-full: H1/D8 through MAX_SEQ_LEN=32 plus one extra token.
+- Full `transformer_layer` interleaved schedule: H1/D8, H2/D8, H2/D8
+  two-token, H4/D8, and H2/D16.
 
-The checkpoint `rtl_sim.txt`, `lint_results.txt`, and `synth_check.txt` files
-remain preserved as prior VCS/vlogan/DC evidence.
+## Remaining Acceptance Blockers
 
-## Performance Status
+Hardware Stage H9 remains not accepted because these final exit conditions are
+not yet fully closed:
 
-Matched RTL A/B remains the performance authority. The current accepted
-evidence is the existing `reports/hw_h9/matched_rtl_ab_baseline.md`, not the
-old structural cycle model.
-
-The calibrated model reproduces the matched RTL cycles exactly for D_HEAD 8,
-16, and 64 at seq 1, 2, 8, 16, 32, and 64.
-
-The measured speedup is the combined result of H9 native full-array mapping
-plus SFU/PE interleaving. It must not be described as pure interleaving gain.
+- the requested reset interrupt matrix is only partially covered;
+- the requested broad deterministic/random backpressure matrix with at least
+  20 fixed random seeds is not implemented or executed;
+- assertions are compiled and executed in the passing H9 VCS runs, but the
+  requested assertion execution matrix is still incomplete because it lacks
+  negative/bind evidence and several named checks are implemented as testbench
+  scoreboards rather than explicit named SV assertions.
 
 ## Acceptance Status
 

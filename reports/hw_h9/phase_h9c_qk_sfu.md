@@ -22,8 +22,14 @@ RTL smoke evidence:
 - `tb_h9_single_head` D_HEAD=16: `qk_sfu_overlap=135`.
 - `tb_h9_single_head` D_HEAD=64: `qk_sfu_overlap=135`.
 
+Final-closure update:
+
+- Multi-head interleaved RTL: PASS.
+- Full-layer interleaved RTL: PASS.
+- Long-sequence/cache-full matrix: PASS for implemented deterministic coverage.
+
 Open acceptance coverage:
 
-- Broad random backpressure/deadlock testing.
-- Multi-head and full-layer interleaved RTL.
-- Required long-sequence/cache-full matrix.
+- Broad random backpressure/deadlock testing with at least 20 fixed seeds.
+- Full reset interrupt matrix.
+- Complete assertion execution evidence.

@@ -11,18 +11,15 @@ HW-H9 IN PROGRESS, NOT ACCEPTED.
 
 Hardware Stage H9 has a checkpoint implementation and verification package for
 paper-native Attention mapping plus SFU/PE stream interleaving infrastructure.
-The checkpoint passes H9 host/model tests in the current environment and has
-existing matched single-head paper staged versus paper interleaved RTL A/B
-evidence from the prior VCS-capable checkpoint.
+The checkpoint passes H9 host/model tests, matched single-head paper staged
+versus paper interleaved RTL A/B, H9 multi-head RTL, H9 full-layer RTL,
+long-sequence/cache-full RTL, H9 lint/vlogan, H9 DC structural checks, and
+Stage5/6/7/8 regressions in the Docker EDA environment `nailong`.
 
 Hardware Stage H9 is not accepted because the full HW-H9 exit conditions are
-not closed. This closure turn calibrated the Python cycle model to the matched
-RTL A/B counter interval and wired multi-head, full-layer, long-sequence,
-cache-full, and assertion-enabled VCS entries, but the current environment does
-not provide `vcs`, `vlogan`, `dc_shell`, or `DW_FOUNDATION_SLDB`. The newly
-wired RTL entries, full reset/random-backpressure/cache-full coverage, assertion
-execution matrix, DC structural rerun, and full Stage5/6/7/8 RTL reruns remain
-blocked until an EDA environment is available. Do not write `HARDWARE STAGE H9
+not closed. The remaining blockers are the full reset interrupt matrix, broad
+random backpressure with at least 20 fixed seeds, and complete assertion
+execution evidence with negative/bind proof. Do not write `HARDWARE STAGE H9
 PASS`, do not create an H9 accepted tag, and do not enter Hardware Stage H10.
 
 Stage 8 remains the accepted baseline. Paper-structured 8x8x2 PE array RTL and
@@ -267,10 +264,10 @@ Hardware Stage H9 checkpoint additions:
 - Timing pipeline closure.
 - STA, P&R, formal PPA, area, power, frequency, WNS, or layout.
 - Full Hardware Stage H9 acceptance.
-- H9 multi-head interleaved RTL testbench.
-- H9 full-layer interleaved RTL testbench.
-- Exhaustive H9 reset, random backpressure, cache-full extra-token, and
-  long-sequence RTL coverage.
+- Full H9 reset interrupt matrix.
+- Broad H9 random backpressure with at least 20 fixed seeds and saved failing
+  seed/trace support.
+- Complete H9 assertion execution matrix with negative/bind proof.
 - H9 accepted tag.
 - KV cache eviction.
 - Global array sharing across Projection, Attention, and FFN.
@@ -459,7 +456,10 @@ single-head performance evidence:
 - D_HEAD=16 seq16/32: 2472/4920 staged versus 1171/2211 interleaved.
 - D_HEAD=64 seq16/32: 9126/18198 staged versus 1183/2223 interleaved.
 
-The cycle model still needs exact calibration to matched RTL counter intervals.
+The cycle model is calibrated to exact matched RTL total cycles for D_HEAD 8,
+16, and 64 at seq 1, 2, 8, 16, 32, and 64. The model's
+`full_array_non_interleaved_cycles` and overlap subtotals remain structural
+trend estimates, not acceptance counters.
 
 Stage 8:
 
@@ -683,9 +683,11 @@ docker exec nailong bash -lc 'cd /workspace/VEDA && make stage5-rtl-sim && make 
 
 - Hardware Stage H9 is not accepted. Continue H9 only; do not begin Hardware
   Stage H10 yet.
-- The H9 checkpoint proves bounded-buffer single-head overlap smoke coverage and
-  matched single-head RTL performance, not full multi-head/full-layer H9
-  acceptance.
+- The H9 checkpoint now proves bounded-buffer single-head overlap, matched
+  single-head RTL performance, implemented multi-head RTL, implemented
+  full-layer RTL, and deterministic cache-full coverage. It still does not
+  prove the full reset interrupt matrix, 20-seed random backpressure, or
+  complete assertion matrix required for acceptance.
 - Do not claim H9 paper-exact SFU arithmetic. The checkpoint preserves the
   existing repository softmax arithmetic and marks missing paper details as
   repository design decisions.

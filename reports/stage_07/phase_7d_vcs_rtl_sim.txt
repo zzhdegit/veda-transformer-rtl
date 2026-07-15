@@ -12,14 +12,14 @@ layer_h2_d16 result=PASS run_exit_code=0
 
 Run markers:
 Command: /workspace/VEDA/build/stage7d_rtl_sim/layer_h1_d8_simv +STAGE7D_VECTOR_FILE=/workspace/VEDA/build/stage7d_rtl_sim/vectors/stage7d_h1_d8.mem -l /workspace/VEDA/build/stage7d_rtl_sim/layer_h1_d8_run.log
-STAGE7D_TRANSFORMER_LAYER_PASS arch=0 n_head=1 d_head=8 d_model=8 tokens=1 paper_active=0 paper_inner=0 paper_outer=0 paper_tail=0 paper_mode_switch=0
+STAGE7D_TRANSFORMER_LAYER_PASS arch=0 schedule=0 n_head=1 d_head=8 d_model=8 tokens=1 paper_active=0 paper_inner=0 paper_outer=0 paper_tail=0 paper_mode_switch=0
 Command: /workspace/VEDA/build/stage7d_rtl_sim/layer_h2_d16_simv +STAGE7D_VECTOR_FILE=/workspace/VEDA/build/stage7d_rtl_sim/vectors/stage7d_h2_d16.mem -l /workspace/VEDA/build/stage7d_rtl_sim/layer_h2_d16_run.log
-STAGE7D_TRANSFORMER_LAYER_PASS arch=0 n_head=2 d_head=16 d_model=32 tokens=1 paper_active=0 paper_inner=0 paper_outer=0 paper_tail=0 paper_mode_switch=0
+STAGE7D_TRANSFORMER_LAYER_PASS arch=0 schedule=0 n_head=2 d_head=16 d_model=32 tokens=1 paper_active=0 paper_inner=0 paper_outer=0 paper_tail=0 paper_mode_switch=0
 Command: /workspace/VEDA/build/stage7d_rtl_sim/layer_h2_d8_simv +STAGE7D_VECTOR_FILE=/workspace/VEDA/build/stage7d_rtl_sim/vectors/stage7d_h2_d8.mem -l /workspace/VEDA/build/stage7d_rtl_sim/layer_h2_d8_run.log
-STAGE7D_TRANSFORMER_LAYER_PASS arch=0 n_head=2 d_head=8 d_model=16 tokens=1 paper_active=0 paper_inner=0 paper_outer=0 paper_tail=0 paper_mode_switch=0
+STAGE7D_TRANSFORMER_LAYER_PASS arch=0 schedule=0 n_head=2 d_head=8 d_model=16 tokens=1 paper_active=0 paper_inner=0 paper_outer=0 paper_tail=0 paper_mode_switch=0
 Command: /workspace/VEDA/build/stage7d_rtl_sim/layer_h2_d8_two_token_simv +STAGE7D_VECTOR_FILE=/workspace/VEDA/build/stage7d_rtl_sim/vectors/stage7d_h2_d8_two_token.mem -l /workspace/VEDA/build/stage7d_rtl_sim/layer_h2_d8_two_token_run.log
-STAGE7D_TRANSFORMER_LAYER_PASS arch=0 n_head=2 d_head=8 d_model=16 tokens=2 paper_active=0 paper_inner=0 paper_outer=0 paper_tail=0 paper_mode_switch=0
+STAGE7D_TRANSFORMER_LAYER_PASS arch=0 schedule=0 n_head=2 d_head=8 d_model=16 tokens=2 paper_active=0 paper_inner=0 paper_outer=0 paper_tail=0 paper_mode_switch=0
 Command: /workspace/VEDA/build/stage7d_rtl_sim/layer_h4_d8_simv +STAGE7D_VECTOR_FILE=/workspace/VEDA/build/stage7d_rtl_sim/vectors/stage7d_h4_d8.mem -l /workspace/VEDA/build/stage7d_rtl_sim/layer_h4_d8_run.log
-STAGE7D_TRANSFORMER_LAYER_PASS arch=0 n_head=4 d_head=8 d_model=32 tokens=1 paper_active=0 paper_inner=0 paper_outer=0 paper_tail=0 paper_mode_switch=0
+STAGE7D_TRANSFORMER_LAYER_PASS arch=0 schedule=0 n_head=4 d_head=8 d_model=32 tokens=1 paper_active=0 paper_inner=0 paper_outer=0 paper_tail=0 paper_mode_switch=0
 result=PASS
 Full logs: build/stage7d_rtl_sim/*_compile.log and *_run.log

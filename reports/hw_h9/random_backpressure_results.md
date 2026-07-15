@@ -1,19 +1,29 @@
 # Hardware Stage H9 Backpressure Results
 
-Status: deterministic output/done backpressure exists; broad random
-backpressure remains open.
+Status: deterministic backpressure passes; broad random backpressure remains
+open.
 
-Closed evidence from the matched RTL A/B checkpoint:
+Executed deterministic coverage:
 
-- no external backpressure matched A/B;
+- no external backpressure matched A/B for D_HEAD 8, 16, and 64 at seq 1, 2,
+  8, 16, 32, and 64: PASS;
 - deterministic output/done ready pattern for D_HEAD 8, 16, and 64 at seq16
-  and seq32;
-- bounded score/probability buffer stable-payload assertions in RTL source.
+  and seq32: PASS;
+- Stage 5 multi-head output/done deterministic backpressure through H1/D8,
+  H2/D8, H4/D8, H2/D16, H1/D64, and H1/D8 MAX_SEQ_LEN=32: PASS;
+- Stage 7D full-layer output/done deterministic backpressure inherited from
+  the Stage 7D testbench: PASS.
 
-Implemented but not executed in this closure turn:
+Representative deterministic matched A/B results:
 
-- multi-head output/done deterministic backpressure via Stage 5 testbench;
-- full-layer final output backpressure via Stage 7D testbench.
+| D_HEAD | Seq | Staged | Interleaved | Result |
+|---:|---:|---:|---:|---|
+| 8 | 16 | 1363 | 1170 | PASS |
+| 8 | 32 | 2708 | 2209 | PASS |
+| 16 | 16 | 2472 | 1172 | PASS |
+| 16 | 32 | 4920 | 2213 | PASS |
+| 64 | 16 | 9131 | 1187 | PASS |
+| 64 | 32 | 18200 | 2225 | PASS |
 
 Still open for acceptance:
 
@@ -22,11 +32,10 @@ Still open for acceptance:
 - saved failed seed and transaction trace on failure;
 - watchdog derived from maximum legal latency.
 
-Current execution result:
+Random seed list for this closure:
 
 ```text
-vcs: NOT FOUND
-result=FAIL
+none
 ```
 
-No random seed list is accepted for HW-H9 Final Closure in this environment.
+No random seed set is accepted for Hardware Stage H9 Final Closure.

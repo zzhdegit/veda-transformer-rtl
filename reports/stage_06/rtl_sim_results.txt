@@ -3,7 +3,7 @@ Runs Stage 6B, 6C, 6D, and 6E VCS regressions. Stage 6E includes the final proje
 
 $ bash scripts/sim/run_stage6b_vcs.sh
                          Chronologic VCS (TM)
-      Version O-2018.09-SP2-2_Full64 -- Mon Jul 13 23:02:11 2026
+      Version O-2018.09-SP2-2_Full64 -- Wed Jul 15 13:55:27 2026
                Copyright (c) 1991-2018 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -25,22 +25,22 @@ make[1]: Leaving directory '/workspace/VEDA/build/stage6b_rtl_sim/fp32_to_fp16_c
 make[1]: Entering directory '/workspace/VEDA/build/stage6b_rtl_sim/fp32_to_fp16_csrc'
 rm -f _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
 if [ -x /workspace/VEDA/build/stage6b_rtl_sim/fp32_to_fp16_simv ]; then chmod -x /workspace/VEDA/build/stage6b_rtl_sim/fp32_to_fp16_simv; fi
-g++  -o /workspace/VEDA/build/stage6b_rtl_sim/fp32_to_fp16_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/fp32_to_fp16_simv.daidir/ -Wl,-rpath=./fp32_to_fp16_simv.daidir/ -Wl,-rpath='$ORIGIN'/fp32_to_fp16_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _817948_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../fp32_to_fp16_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl
+g++  -o /workspace/VEDA/build/stage6b_rtl_sim/fp32_to_fp16_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/fp32_to_fp16_simv.daidir/ -Wl,-rpath=./fp32_to_fp16_simv.daidir/ -Wl,-rpath='$ORIGIN'/fp32_to_fp16_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _145024_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../fp32_to_fp16_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl 
 /workspace/VEDA/build/stage6b_rtl_sim/fp32_to_fp16_simv up to date
 make[1]: Leaving directory '/workspace/VEDA/build/stage6b_rtl_sim/fp32_to_fp16_csrc'
-CPU time: .268 seconds to compile + .174 seconds to elab + .186 seconds to link
+CPU time: .282 seconds to compile + .181 seconds to elab + .188 seconds to link
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 13 23:02 2026
+Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 15 13:55 2026
 STAGE6B_FP32_TO_FP16_PASS cases=145
 $finish called from file "/workspace/VEDA/tb/rtl/stage6/tb_fp32_to_fp16.sv", line 249.
 $finish at simulation time              2166000
-           V C S   S i m u l a t i o n   R e p o r t
+           V C S   S i m u l a t i o n   R e p o r t 
 Time: 2166000 ps
-CPU Time:      0.100 seconds;       Data structure size:   0.0Mb
-Mon Jul 13 23:02:21 2026
+CPU Time:      0.120 seconds;       Data structure size:   0.0Mb
+Wed Jul 15 13:55:38 2026
                          Chronologic VCS (TM)
-      Version O-2018.09-SP2-2_Full64 -- Mon Jul 13 23:02:22 2026
+      Version O-2018.09-SP2-2_Full64 -- Wed Jul 15 13:55:39 2026
                Copyright (c) 1991-2018 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -94,20 +94,20 @@ make[1]: Leaving directory '/workspace/VEDA/build/stage6b_rtl_sim/shared_gemv_pr
 make[1]: Entering directory '/workspace/VEDA/build/stage6b_rtl_sim/shared_gemv_projection_core_csrc'
 rm -f _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
 if [ -x /workspace/VEDA/build/stage6b_rtl_sim/shared_gemv_projection_core_simv ]; then chmod -x /workspace/VEDA/build/stage6b_rtl_sim/shared_gemv_projection_core_simv; fi
-g++  -o /workspace/VEDA/build/stage6b_rtl_sim/shared_gemv_projection_core_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/shared_gemv_projection_core_simv.daidir/ -Wl,-rpath=./shared_gemv_projection_core_simv.daidir/ -Wl,-rpath='$ORIGIN'/shared_gemv_projection_core_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _819043_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../shared_gemv_projection_core_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl
+g++  -o /workspace/VEDA/build/stage6b_rtl_sim/shared_gemv_projection_core_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/shared_gemv_projection_core_simv.daidir/ -Wl,-rpath=./shared_gemv_projection_core_simv.daidir/ -Wl,-rpath='$ORIGIN'/shared_gemv_projection_core_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _146119_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../shared_gemv_projection_core_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl 
 /workspace/VEDA/build/stage6b_rtl_sim/shared_gemv_projection_core_simv up to date
 make[1]: Leaving directory '/workspace/VEDA/build/stage6b_rtl_sim/shared_gemv_projection_core_csrc'
-CPU time: .531 seconds to compile + .194 seconds to elab + .212 seconds to link
+CPU time: .552 seconds to compile + .194 seconds to elab + .223 seconds to link
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 13 23:02 2026
+Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 15 13:55 2026
 STAGE6B_SHARED_GEMV_PASS cases=16 total_cycles=764 tile_cycles=35 pe_stall=361 output_stall=16
 $finish called from file "/workspace/VEDA/tb/rtl/stage6/tb_shared_gemv_projection_core.sv", line 257.
 $finish at simulation time              7696000
-           V C S   S i m u l a t i o n   R e p o r t
+           V C S   S i m u l a t i o n   R e p o r t 
 Time: 7696000 ps
-CPU Time:      0.120 seconds;       Data structure size:   0.2Mb
-Mon Jul 13 23:02:34 2026
+CPU Time:      0.110 seconds;       Data structure size:   0.2Mb
+Wed Jul 15 13:55:50 2026
 Stage 6B VCS RTL simulation
 Build dir: build/stage6b_rtl_sim
 vcs: FOUND
@@ -126,7 +126,7 @@ stage6b-rtl-sim: PASS
 
 $ bash scripts/sim/run_stage6c_vcs.sh
                          Chronologic VCS (TM)
-      Version O-2018.09-SP2-2_Full64 -- Mon Jul 13 23:02:36 2026
+      Version O-2018.09-SP2-2_Full64 -- Wed Jul 15 13:55:53 2026
                Copyright (c) 1991-2018 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -186,22 +186,22 @@ make[1]: Leaving directory '/workspace/VEDA/build/stage6c_rtl_sim/qkv_h1_d8_csrc
 make[1]: Entering directory '/workspace/VEDA/build/stage6c_rtl_sim/qkv_h1_d8_csrc'
 rm -f _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
 if [ -x /workspace/VEDA/build/stage6c_rtl_sim/qkv_h1_d8_simv ]; then chmod -x /workspace/VEDA/build/stage6c_rtl_sim/qkv_h1_d8_simv; fi
-g++  -o /workspace/VEDA/build/stage6c_rtl_sim/qkv_h1_d8_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/qkv_h1_d8_simv.daidir/ -Wl,-rpath=./qkv_h1_d8_simv.daidir/ -Wl,-rpath='$ORIGIN'/qkv_h1_d8_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _820354_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../qkv_h1_d8_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl
+g++  -o /workspace/VEDA/build/stage6c_rtl_sim/qkv_h1_d8_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/qkv_h1_d8_simv.daidir/ -Wl,-rpath=./qkv_h1_d8_simv.daidir/ -Wl,-rpath='$ORIGIN'/qkv_h1_d8_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _147430_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../qkv_h1_d8_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl 
 /workspace/VEDA/build/stage6c_rtl_sim/qkv_h1_d8_simv up to date
 make[1]: Leaving directory '/workspace/VEDA/build/stage6c_rtl_sim/qkv_h1_d8_csrc'
-CPU time: .643 seconds to compile + .199 seconds to elab + .237 seconds to link
+CPU time: .677 seconds to compile + .200 seconds to elab + .240 seconds to link
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 13 23:02 2026
+Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 15 13:56 2026
 STAGE6C_QKV_PROJECTION_PASS N_HEAD=1 D_HEAD=8 q=372 k=372 v=372 quant=96 pe_stall=0 output_stall=6
 $finish called from file "/workspace/VEDA/tb/rtl/stage6/tb_qkv_projection_engine.sv", line 413.
 $finish at simulation time             13596000
-           V C S   S i m u l a t i o n   R e p o r t
+           V C S   S i m u l a t i o n   R e p o r t 
 Time: 13596000 ps
 CPU Time:      0.110 seconds;       Data structure size:   0.3Mb
-Mon Jul 13 23:02:47 2026
+Wed Jul 15 13:56:04 2026
                          Chronologic VCS (TM)
-      Version O-2018.09-SP2-2_Full64 -- Mon Jul 13 23:02:49 2026
+      Version O-2018.09-SP2-2_Full64 -- Wed Jul 15 13:56:06 2026
                Copyright (c) 1991-2018 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -257,34 +257,26 @@ recompiling module qkv_staging_buffer
 recompiling module tb_qkv_projection_engine
 All of 14 modules done
 make[1]: Entering directory '/workspace/VEDA/build/stage6c_rtl_sim/qkv_h2_d8_csrc'
-make[1]: Warning: File 'filelist.hsopt.llvm2_0.objs' has modification time 0.51 s in the future
-make[1]: warning:  Clock skew detected.  Your build may be incomplete.
 make[1]: Leaving directory '/workspace/VEDA/build/stage6c_rtl_sim/qkv_h2_d8_csrc'
 make[1]: Entering directory '/workspace/VEDA/build/stage6c_rtl_sim/qkv_h2_d8_csrc'
-make[1]: Warning: File 'filelist.hsopt.llvm2_0.objs' has modification time 0.1 s in the future
-make[2]: Warning: File 'filelist.hsopt.llvm2_0.objs' has modification time 0.08 s in the future
 rm -f _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
-make[2]: warning:  Clock skew detected.  Your build may be incomplete.
-make[2]: Warning: File 'filelist.hsopt.llvm2_0.objs' has modification time 0.022 s in the future
-make[2]: warning:  Clock skew detected.  Your build may be incomplete.
 if [ -x /workspace/VEDA/build/stage6c_rtl_sim/qkv_h2_d8_simv ]; then chmod -x /workspace/VEDA/build/stage6c_rtl_sim/qkv_h2_d8_simv; fi
-g++  -o /workspace/VEDA/build/stage6c_rtl_sim/qkv_h2_d8_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/qkv_h2_d8_simv.daidir/ -Wl,-rpath=./qkv_h2_d8_simv.daidir/ -Wl,-rpath='$ORIGIN'/qkv_h2_d8_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _821577_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../qkv_h2_d8_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl
+g++  -o /workspace/VEDA/build/stage6c_rtl_sim/qkv_h2_d8_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/qkv_h2_d8_simv.daidir/ -Wl,-rpath=./qkv_h2_d8_simv.daidir/ -Wl,-rpath='$ORIGIN'/qkv_h2_d8_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _148653_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../qkv_h2_d8_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl 
 /workspace/VEDA/build/stage6c_rtl_sim/qkv_h2_d8_simv up to date
-make[1]: warning:  Clock skew detected.  Your build may be incomplete.
 make[1]: Leaving directory '/workspace/VEDA/build/stage6c_rtl_sim/qkv_h2_d8_csrc'
-CPU time: .645 seconds to compile + .198 seconds to elab + .230 seconds to link
+CPU time: .686 seconds to compile + .199 seconds to elab + .240 seconds to link
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 13 23:02 2026
+Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 15 13:56 2026
 STAGE6C_QKV_PROJECTION_PASS N_HEAD=2 D_HEAD=8 q=1380 k=1380 v=1380 quant=192 pe_stall=1824 output_stall=16
 $finish called from file "/workspace/VEDA/tb/rtl/stage6/tb_qkv_projection_engine.sv", line 413.
 $finish at simulation time             50016000
-           V C S   S i m u l a t i o n   R e p o r t
+           V C S   S i m u l a t i o n   R e p o r t 
 Time: 50016000 ps
-CPU Time:      0.130 seconds;       Data structure size:   0.3Mb
-Mon Jul 13 23:03:00 2026
+CPU Time:      0.120 seconds;       Data structure size:   0.3Mb
+Wed Jul 15 13:56:18 2026
                          Chronologic VCS (TM)
-      Version O-2018.09-SP2-2_Full64 -- Mon Jul 13 23:03:01 2026
+      Version O-2018.09-SP2-2_Full64 -- Wed Jul 15 13:56:19 2026
                Copyright (c) 1991-2018 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -340,28 +332,26 @@ recompiling module qkv_staging_buffer
 recompiling module tb_qkv_projection_engine
 All of 14 modules done
 make[1]: Entering directory '/workspace/VEDA/build/stage6c_rtl_sim/qkv_h4_d8_csrc'
-make[1]: Warning: File 'filelist.hsopt.llvm2_0.objs' has modification time 0.15 s in the future
-make[1]: warning:  Clock skew detected.  Your build may be incomplete.
 make[1]: Leaving directory '/workspace/VEDA/build/stage6c_rtl_sim/qkv_h4_d8_csrc'
 make[1]: Entering directory '/workspace/VEDA/build/stage6c_rtl_sim/qkv_h4_d8_csrc'
 rm -f _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
 if [ -x /workspace/VEDA/build/stage6c_rtl_sim/qkv_h4_d8_simv ]; then chmod -x /workspace/VEDA/build/stage6c_rtl_sim/qkv_h4_d8_simv; fi
-g++  -o /workspace/VEDA/build/stage6c_rtl_sim/qkv_h4_d8_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/qkv_h4_d8_simv.daidir/ -Wl,-rpath=./qkv_h4_d8_simv.daidir/ -Wl,-rpath='$ORIGIN'/qkv_h4_d8_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _822800_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../qkv_h4_d8_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl
+g++  -o /workspace/VEDA/build/stage6c_rtl_sim/qkv_h4_d8_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/qkv_h4_d8_simv.daidir/ -Wl,-rpath=./qkv_h4_d8_simv.daidir/ -Wl,-rpath='$ORIGIN'/qkv_h4_d8_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _149876_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../qkv_h4_d8_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl 
 /workspace/VEDA/build/stage6c_rtl_sim/qkv_h4_d8_simv up to date
 make[1]: Leaving directory '/workspace/VEDA/build/stage6c_rtl_sim/qkv_h4_d8_csrc'
-CPU time: .665 seconds to compile + .198 seconds to elab + .228 seconds to link
+CPU time: .686 seconds to compile + .200 seconds to elab + .240 seconds to link
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 13 23:03 2026
+Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 15 13:56 2026
 STAGE6C_QKV_PROJECTION_PASS N_HEAD=4 D_HEAD=8 q=5316 k=5316 v=5316 quant=384 pe_stall=10944 output_stall=28
 $finish called from file "/workspace/VEDA/tb/rtl/stage6/tb_qkv_projection_engine.sv", line 413.
 $finish at simulation time            191896000
-           V C S   S i m u l a t i o n   R e p o r t
+           V C S   S i m u l a t i o n   R e p o r t 
 Time: 191896000 ps
-CPU Time:      0.170 seconds;       Data structure size:   1.0Mb
-Mon Jul 13 23:03:13 2026
+CPU Time:      0.180 seconds;       Data structure size:   1.0Mb
+Wed Jul 15 13:56:31 2026
                          Chronologic VCS (TM)
-      Version O-2018.09-SP2-2_Full64 -- Mon Jul 13 23:03:15 2026
+      Version O-2018.09-SP2-2_Full64 -- Wed Jul 15 13:56:32 2026
                Copyright (c) 1991-2018 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -421,20 +411,20 @@ make[1]: Leaving directory '/workspace/VEDA/build/stage6c_rtl_sim/qkv_h2_d16_csr
 make[1]: Entering directory '/workspace/VEDA/build/stage6c_rtl_sim/qkv_h2_d16_csrc'
 rm -f _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
 if [ -x /workspace/VEDA/build/stage6c_rtl_sim/qkv_h2_d16_simv ]; then chmod -x /workspace/VEDA/build/stage6c_rtl_sim/qkv_h2_d16_simv; fi
-g++  -o /workspace/VEDA/build/stage6c_rtl_sim/qkv_h2_d16_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/qkv_h2_d16_simv.daidir/ -Wl,-rpath=./qkv_h2_d16_simv.daidir/ -Wl,-rpath='$ORIGIN'/qkv_h2_d16_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _824023_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../qkv_h2_d16_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl
+g++  -o /workspace/VEDA/build/stage6c_rtl_sim/qkv_h2_d16_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/qkv_h2_d16_simv.daidir/ -Wl,-rpath=./qkv_h2_d16_simv.daidir/ -Wl,-rpath='$ORIGIN'/qkv_h2_d16_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _151099_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../qkv_h2_d16_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl 
 /workspace/VEDA/build/stage6c_rtl_sim/qkv_h2_d16_simv up to date
 make[1]: Leaving directory '/workspace/VEDA/build/stage6c_rtl_sim/qkv_h2_d16_csrc'
-CPU time: .668 seconds to compile + .200 seconds to elab + .230 seconds to link
+CPU time: .774 seconds to compile + .220 seconds to elab + .268 seconds to link
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 13 23:03 2026
+Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 15 13:56 2026
 STAGE6C_QKV_PROJECTION_PASS N_HEAD=2 D_HEAD=16 q=5316 k=5316 v=5316 quant=384 pe_stall=10944 output_stall=28
 $finish called from file "/workspace/VEDA/tb/rtl/stage6/tb_qkv_projection_engine.sv", line 413.
 $finish at simulation time            191896000
-           V C S   S i m u l a t i o n   R e p o r t
+           V C S   S i m u l a t i o n   R e p o r t 
 Time: 191896000 ps
-CPU Time:      0.180 seconds;       Data structure size:   1.0Mb
-Mon Jul 13 23:03:26 2026
+CPU Time:      0.190 seconds;       Data structure size:   1.0Mb
+Wed Jul 15 13:56:44 2026
 Stage 6C VCS RTL simulation
 Build dir: build/stage6c_rtl_sim
 vcs: FOUND
@@ -457,7 +447,7 @@ stage6c-rtl-sim: PASS
 
 $ bash scripts/sim/run_stage6d_vcs.sh
                          Chronologic VCS (TM)
-      Version O-2018.09-SP2-2_Full64 -- Mon Jul 13 23:03:31 2026
+      Version O-2018.09-SP2-2_Full64 -- Wed Jul 15 13:56:49 2026
                Copyright (c) 1991-2018 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -525,7 +515,7 @@ Warning-[TFIPC] Too few instance port connections
 /workspace/VEDA/rtl/attention/projected_multi_head_attention.sv, 200
 projected_multi_head_attention, "multi_head_generation_engine #(.N_HEAD(N_HEAD), .PE_NUM(PE_NUM), .D_HEAD(D_HEAD), .MAX_SEQ_LEN(MAX_SEQ_LEN), .META_W(META_W), .COUNTER_W(COUNTER_W), .ASSERT_ON_INVALID(ASSERT_ON_INVALID)) u_multi_head_generation_engine( .clk (clk),  .rst_n (rst_n),  .token_valid (qkv_valid),  .token_ready (qkv_ready),  .token_head (qkv_head),  .token_dim (qkv_dim),  .token_q_fp16 (qkv_q_fp16),  .token_k_fp16 (qkv_k_fp16),  .token_v_fp16 (qkv_v_fp16),  .token_last_dim (qkv_last_dim),  .token_last_head (qkv_last_head),  .token_meta (qkv_meta),  .output_valid (output_valid),  .output_ready (output_ready),  .output_head (output_head),  .output_base_dim (output_base_dim),  .output_vector_fp32 (output_vector_fp32),  .output_lane_mask (output_lane_mask),  .output_status (outpu ... "
   The above instance has fewer port connections than the module definition.
-  Please use '+lint=TFIPC-L' to print out detailed information of unconnected
+  Please use '+lint=TFIPC-L' to print out detailed information of unconnected 
   ports.
 
 Starting vcs inline pass...
@@ -557,17 +547,19 @@ recompiling module qkv_staging_buffer
 recompiling module tb_projected_multi_head_attention
 All of 25 modules done
 make[1]: Entering directory '/workspace/VEDA/build/stage6d_rtl_sim/projected_h1_d8_csrc'
+make[1]: Warning: File 'filelist.hsopt.objs' has modification time 0.0052 s in the future
+make[1]: warning:  Clock skew detected.  Your build may be incomplete.
 make[1]: Leaving directory '/workspace/VEDA/build/stage6d_rtl_sim/projected_h1_d8_csrc'
 make[1]: Entering directory '/workspace/VEDA/build/stage6d_rtl_sim/projected_h1_d8_csrc'
 rm -f _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
 if [ -x /workspace/VEDA/build/stage6d_rtl_sim/projected_h1_d8_simv ]; then chmod -x /workspace/VEDA/build/stage6d_rtl_sim/projected_h1_d8_simv; fi
-g++  -o /workspace/VEDA/build/stage6d_rtl_sim/projected_h1_d8_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/projected_h1_d8_simv.daidir/ -Wl,-rpath=./projected_h1_d8_simv.daidir/ -Wl,-rpath='$ORIGIN'/projected_h1_d8_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _825819_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../projected_h1_d8_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl
+g++  -o /workspace/VEDA/build/stage6d_rtl_sim/projected_h1_d8_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/projected_h1_d8_simv.daidir/ -Wl,-rpath=./projected_h1_d8_simv.daidir/ -Wl,-rpath='$ORIGIN'/projected_h1_d8_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _152895_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../projected_h1_d8_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl 
 /workspace/VEDA/build/stage6d_rtl_sim/projected_h1_d8_simv up to date
 make[1]: Leaving directory '/workspace/VEDA/build/stage6d_rtl_sim/projected_h1_d8_csrc'
-CPU time: 4.063 seconds to compile + .296 seconds to elab + .297 seconds to link
+CPU time: 4.807 seconds to compile + .310 seconds to elab + .324 seconds to link
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 13 23:03 2026
+Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 15 13:57 2026
 STAGE6D_PROJECTED_MHA_PERF N_HEAD=1 D_HEAD=8 step=step0 seq_before=0 seq_after=1 q=186 k=186 v=186 qkv_quant=48 attention=88 total=664 pe_stall=22 sfu_stall=6 weight_stall=0 buffer_stall=0 output_stall=0 peak_seq=1
 STAGE6D_PROJECTED_MHA_PERF N_HEAD=1 D_HEAD=8 step=step1 seq_before=1 seq_after=2 q=372 k=372 v=372 qkv_quant=96 attention=259 total=1411 pe_stall=64 sfu_stall=30 weight_stall=0 buffer_stall=0 output_stall=0 peak_seq=2
 STAGE6D_PROJECTED_MHA_PERF N_HEAD=1 D_HEAD=8 step=step2 seq_before=2 seq_after=3 q=558 k=558 v=558 qkv_quant=144 attention=501 total=2229 pe_stall=126 sfu_stall=60 weight_stall=0 buffer_stall=0 output_stall=0 peak_seq=3
@@ -580,12 +572,12 @@ STAGE6D_PROJECTED_MHA_PERF N_HEAD=1 D_HEAD=8 step=step8 seq_before=8 seq_after=8
 STAGE6D_PROJECTED_MHA_PASS N_HEAD=1 D_HEAD=8 generation_steps=8
 $finish called from file "/workspace/VEDA/tb/rtl/stage6/tb_projected_multi_head_attention.sv", line 480.
 $finish at simulation time             82386000
-           V C S   S i m u l a t i o n   R e p o r t
+           V C S   S i m u l a t i o n   R e p o r t 
 Time: 82386000 ps
-CPU Time:      0.120 seconds;       Data structure size:   0.6Mb
-Mon Jul 13 23:03:47 2026
+CPU Time:      0.140 seconds;       Data structure size:   0.6Mb
+Wed Jul 15 13:57:06 2026
                          Chronologic VCS (TM)
-      Version O-2018.09-SP2-2_Full64 -- Mon Jul 13 23:03:50 2026
+      Version O-2018.09-SP2-2_Full64 -- Wed Jul 15 13:57:09 2026
                Copyright (c) 1991-2018 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -653,7 +645,7 @@ Warning-[TFIPC] Too few instance port connections
 /workspace/VEDA/rtl/attention/projected_multi_head_attention.sv, 200
 projected_multi_head_attention, "multi_head_generation_engine #(.N_HEAD(N_HEAD), .PE_NUM(PE_NUM), .D_HEAD(D_HEAD), .MAX_SEQ_LEN(MAX_SEQ_LEN), .META_W(META_W), .COUNTER_W(COUNTER_W), .ASSERT_ON_INVALID(ASSERT_ON_INVALID)) u_multi_head_generation_engine( .clk (clk),  .rst_n (rst_n),  .token_valid (qkv_valid),  .token_ready (qkv_ready),  .token_head (qkv_head),  .token_dim (qkv_dim),  .token_q_fp16 (qkv_q_fp16),  .token_k_fp16 (qkv_k_fp16),  .token_v_fp16 (qkv_v_fp16),  .token_last_dim (qkv_last_dim),  .token_last_head (qkv_last_head),  .token_meta (qkv_meta),  .output_valid (output_valid),  .output_ready (output_ready),  .output_head (output_head),  .output_base_dim (output_base_dim),  .output_vector_fp32 (output_vector_fp32),  .output_lane_mask (output_lane_mask),  .output_status (outpu ... "
   The above instance has fewer port connections than the module definition.
-  Please use '+lint=TFIPC-L' to print out detailed information of unconnected
+  Please use '+lint=TFIPC-L' to print out detailed information of unconnected 
   ports.
 
 Starting vcs inline pass...
@@ -685,17 +677,19 @@ recompiling module qkv_staging_buffer
 recompiling module tb_projected_multi_head_attention
 All of 25 modules done
 make[1]: Entering directory '/workspace/VEDA/build/stage6d_rtl_sim/projected_h2_d8_csrc'
+make[1]: Warning: File 'filelist.hsopt.objs' has modification time 0.014 s in the future
+make[1]: warning:  Clock skew detected.  Your build may be incomplete.
 make[1]: Leaving directory '/workspace/VEDA/build/stage6d_rtl_sim/projected_h2_d8_csrc'
 make[1]: Entering directory '/workspace/VEDA/build/stage6d_rtl_sim/projected_h2_d8_csrc'
 rm -f _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
 if [ -x /workspace/VEDA/build/stage6d_rtl_sim/projected_h2_d8_simv ]; then chmod -x /workspace/VEDA/build/stage6d_rtl_sim/projected_h2_d8_simv; fi
-g++  -o /workspace/VEDA/build/stage6d_rtl_sim/projected_h2_d8_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/projected_h2_d8_simv.daidir/ -Wl,-rpath=./projected_h2_d8_simv.daidir/ -Wl,-rpath='$ORIGIN'/projected_h2_d8_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _827525_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../projected_h2_d8_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl
+g++  -o /workspace/VEDA/build/stage6d_rtl_sim/projected_h2_d8_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/projected_h2_d8_simv.daidir/ -Wl,-rpath=./projected_h2_d8_simv.daidir/ -Wl,-rpath='$ORIGIN'/projected_h2_d8_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _154601_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../projected_h2_d8_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl 
 /workspace/VEDA/build/stage6d_rtl_sim/projected_h2_d8_simv up to date
 make[1]: Leaving directory '/workspace/VEDA/build/stage6d_rtl_sim/projected_h2_d8_csrc'
-CPU time: 4.052 seconds to compile + .285 seconds to elab + .289 seconds to link
+CPU time: 4.952 seconds to compile + .313 seconds to elab + .333 seconds to link
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 13 23:04 2026
+Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 15 13:57 2026
 STAGE6D_PROJECTED_MHA_PERF N_HEAD=2 D_HEAD=8 step=step0 seq_before=0 seq_after=1 q=690 k=690 v=690 qkv_quant=96 attention=176 total=2281 pe_stall=956 sfu_stall=12 weight_stall=0 buffer_stall=0 output_stall=0 peak_seq=1
 STAGE6D_PROJECTED_MHA_PERF N_HEAD=2 D_HEAD=8 step=step1 seq_before=1 seq_after=2 q=1380 k=1380 v=1380 qkv_quant=192 attention=519 total=4729 pe_stall=1952 sfu_stall=60 weight_stall=0 buffer_stall=0 output_stall=1 peak_seq=2
 STAGE6D_PROJECTED_MHA_PERF N_HEAD=2 D_HEAD=8 step=step2 seq_before=2 seq_after=3 q=2070 k=2070 v=2070 qkv_quant=288 attention=1003 total=7318 pe_stall=2988 sfu_stall=120 weight_stall=0 buffer_stall=0 output_stall=1 peak_seq=3
@@ -708,12 +702,12 @@ STAGE6D_PROJECTED_MHA_PERF N_HEAD=2 D_HEAD=8 step=step8 seq_before=8 seq_after=8
 STAGE6D_PROJECTED_MHA_PASS N_HEAD=2 D_HEAD=8 generation_steps=8
 $finish called from file "/workspace/VEDA/tb/rtl/stage6/tb_projected_multi_head_attention.sv", line 480.
 $finish at simulation time            254156000
-           V C S   S i m u l a t i o n   R e p o r t
+           V C S   S i m u l a t i o n   R e p o r t 
 Time: 254156000 ps
-CPU Time:      0.160 seconds;       Data structure size:   0.7Mb
-Mon Jul 13 23:04:06 2026
+CPU Time:      0.170 seconds;       Data structure size:   0.7Mb
+Wed Jul 15 13:57:27 2026
                          Chronologic VCS (TM)
-      Version O-2018.09-SP2-2_Full64 -- Mon Jul 13 23:04:08 2026
+      Version O-2018.09-SP2-2_Full64 -- Wed Jul 15 13:57:29 2026
                Copyright (c) 1991-2018 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -781,7 +775,7 @@ Warning-[TFIPC] Too few instance port connections
 /workspace/VEDA/rtl/attention/projected_multi_head_attention.sv, 200
 projected_multi_head_attention, "multi_head_generation_engine #(.N_HEAD(N_HEAD), .PE_NUM(PE_NUM), .D_HEAD(D_HEAD), .MAX_SEQ_LEN(MAX_SEQ_LEN), .META_W(META_W), .COUNTER_W(COUNTER_W), .ASSERT_ON_INVALID(ASSERT_ON_INVALID)) u_multi_head_generation_engine( .clk (clk),  .rst_n (rst_n),  .token_valid (qkv_valid),  .token_ready (qkv_ready),  .token_head (qkv_head),  .token_dim (qkv_dim),  .token_q_fp16 (qkv_q_fp16),  .token_k_fp16 (qkv_k_fp16),  .token_v_fp16 (qkv_v_fp16),  .token_last_dim (qkv_last_dim),  .token_last_head (qkv_last_head),  .token_meta (qkv_meta),  .output_valid (output_valid),  .output_ready (output_ready),  .output_head (output_head),  .output_base_dim (output_base_dim),  .output_vector_fp32 (output_vector_fp32),  .output_lane_mask (output_lane_mask),  .output_status (outpu ... "
   The above instance has fewer port connections than the module definition.
-  Please use '+lint=TFIPC-L' to print out detailed information of unconnected
+  Please use '+lint=TFIPC-L' to print out detailed information of unconnected 
   ports.
 
 Starting vcs inline pass...
@@ -817,13 +811,13 @@ make[1]: Leaving directory '/workspace/VEDA/build/stage6d_rtl_sim/projected_h4_d
 make[1]: Entering directory '/workspace/VEDA/build/stage6d_rtl_sim/projected_h4_d8_csrc'
 rm -f _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
 if [ -x /workspace/VEDA/build/stage6d_rtl_sim/projected_h4_d8_simv ]; then chmod -x /workspace/VEDA/build/stage6d_rtl_sim/projected_h4_d8_simv; fi
-g++  -o /workspace/VEDA/build/stage6d_rtl_sim/projected_h4_d8_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/projected_h4_d8_simv.daidir/ -Wl,-rpath=./projected_h4_d8_simv.daidir/ -Wl,-rpath='$ORIGIN'/projected_h4_d8_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _829231_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../projected_h4_d8_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl
+g++  -o /workspace/VEDA/build/stage6d_rtl_sim/projected_h4_d8_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/projected_h4_d8_simv.daidir/ -Wl,-rpath=./projected_h4_d8_simv.daidir/ -Wl,-rpath='$ORIGIN'/projected_h4_d8_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _156307_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../projected_h4_d8_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl 
 /workspace/VEDA/build/stage6d_rtl_sim/projected_h4_d8_simv up to date
 make[1]: Leaving directory '/workspace/VEDA/build/stage6d_rtl_sim/projected_h4_d8_csrc'
-CPU time: 4.109 seconds to compile + .290 seconds to elab + .297 seconds to link
+CPU time: 4.795 seconds to compile + .313 seconds to elab + .325 seconds to link
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 13 23:04 2026
+Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 15 13:57 2026
 STAGE6D_PROJECTED_MHA_PERF N_HEAD=4 D_HEAD=8 step=step0 seq_before=0 seq_after=1 q=2658 k=2658 v=2658 qkv_quant=192 attention=353 total=8396 pe_stall=5560 sfu_stall=24 weight_stall=0 buffer_stall=0 output_stall=1 peak_seq=1
 STAGE6D_PROJECTED_MHA_PERF N_HEAD=4 D_HEAD=8 step=step1 seq_before=1 seq_after=2 q=5316 k=5316 v=5316 qkv_quant=384 attention=1038 total=17124 pe_stall=11200 sfu_stall=120 weight_stall=0 buffer_stall=0 output_stall=2 peak_seq=2
 STAGE6D_PROJECTED_MHA_PERF N_HEAD=4 D_HEAD=8 step=step2 seq_before=2 seq_after=3 q=7974 k=7974 v=7974 qkv_quant=576 attention=2007 total=26136 pe_stall=16920 sfu_stall=240 weight_stall=0 buffer_stall=0 output_stall=3 peak_seq=3
@@ -836,12 +830,12 @@ STAGE6D_PROJECTED_MHA_PERF N_HEAD=4 D_HEAD=8 step=step8 seq_before=8 seq_after=8
 STAGE6D_PROJECTED_MHA_PASS N_HEAD=4 D_HEAD=8 generation_steps=8
 $finish called from file "/workspace/VEDA/tb/rtl/stage6/tb_projected_multi_head_attention.sv", line 480.
 $finish at simulation time            868466000
-           V C S   S i m u l a t i o n   R e p o r t
+           V C S   S i m u l a t i o n   R e p o r t 
 Time: 868466000 ps
-CPU Time:      0.290 seconds;       Data structure size:   1.4Mb
-Mon Jul 13 23:04:24 2026
+CPU Time:      0.310 seconds;       Data structure size:   1.4Mb
+Wed Jul 15 13:57:47 2026
                          Chronologic VCS (TM)
-      Version O-2018.09-SP2-2_Full64 -- Mon Jul 13 23:04:27 2026
+      Version O-2018.09-SP2-2_Full64 -- Wed Jul 15 13:57:49 2026
                Copyright (c) 1991-2018 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -909,7 +903,7 @@ Warning-[TFIPC] Too few instance port connections
 /workspace/VEDA/rtl/attention/projected_multi_head_attention.sv, 200
 projected_multi_head_attention, "multi_head_generation_engine #(.N_HEAD(N_HEAD), .PE_NUM(PE_NUM), .D_HEAD(D_HEAD), .MAX_SEQ_LEN(MAX_SEQ_LEN), .META_W(META_W), .COUNTER_W(COUNTER_W), .ASSERT_ON_INVALID(ASSERT_ON_INVALID)) u_multi_head_generation_engine( .clk (clk),  .rst_n (rst_n),  .token_valid (qkv_valid),  .token_ready (qkv_ready),  .token_head (qkv_head),  .token_dim (qkv_dim),  .token_q_fp16 (qkv_q_fp16),  .token_k_fp16 (qkv_k_fp16),  .token_v_fp16 (qkv_v_fp16),  .token_last_dim (qkv_last_dim),  .token_last_head (qkv_last_head),  .token_meta (qkv_meta),  .output_valid (output_valid),  .output_ready (output_ready),  .output_head (output_head),  .output_base_dim (output_base_dim),  .output_vector_fp32 (output_vector_fp32),  .output_lane_mask (output_lane_mask),  .output_status (outpu ... "
   The above instance has fewer port connections than the module definition.
-  Please use '+lint=TFIPC-L' to print out detailed information of unconnected
+  Please use '+lint=TFIPC-L' to print out detailed information of unconnected 
   ports.
 
 Starting vcs inline pass...
@@ -941,19 +935,17 @@ recompiling module qkv_staging_buffer
 recompiling module tb_projected_multi_head_attention
 All of 25 modules done
 make[1]: Entering directory '/workspace/VEDA/build/stage6d_rtl_sim/projected_h2_d16_csrc'
-make[1]: Warning: File 'filelist.hsopt.llvm2_0.objs' has modification time 0.0085 s in the future
-make[1]: warning:  Clock skew detected.  Your build may be incomplete.
 make[1]: Leaving directory '/workspace/VEDA/build/stage6d_rtl_sim/projected_h2_d16_csrc'
 make[1]: Entering directory '/workspace/VEDA/build/stage6d_rtl_sim/projected_h2_d16_csrc'
 rm -f _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
 if [ -x /workspace/VEDA/build/stage6d_rtl_sim/projected_h2_d16_simv ]; then chmod -x /workspace/VEDA/build/stage6d_rtl_sim/projected_h2_d16_simv; fi
-g++  -o /workspace/VEDA/build/stage6d_rtl_sim/projected_h2_d16_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/projected_h2_d16_simv.daidir/ -Wl,-rpath=./projected_h2_d16_simv.daidir/ -Wl,-rpath='$ORIGIN'/projected_h2_d16_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _830937_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../projected_h2_d16_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl
+g++  -o /workspace/VEDA/build/stage6d_rtl_sim/projected_h2_d16_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/projected_h2_d16_simv.daidir/ -Wl,-rpath=./projected_h2_d16_simv.daidir/ -Wl,-rpath='$ORIGIN'/projected_h2_d16_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _158013_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../projected_h2_d16_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl 
 /workspace/VEDA/build/stage6d_rtl_sim/projected_h2_d16_simv up to date
 make[1]: Leaving directory '/workspace/VEDA/build/stage6d_rtl_sim/projected_h2_d16_csrc'
-CPU time: 4.048 seconds to compile + .289 seconds to elab + .290 seconds to link
+CPU time: 4.857 seconds to compile + .313 seconds to elab + .326 seconds to link
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 13 23:04 2026
+Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 15 13:58 2026
 STAGE6D_PROJECTED_MHA_PERF N_HEAD=2 D_HEAD=16 step=step0 seq_before=0 seq_after=1 q=2658 k=2658 v=2658 qkv_quant=192 attention=315 total=8356 pe_stall=5560 sfu_stall=12 weight_stall=0 buffer_stall=0 output_stall=1 peak_seq=1
 STAGE6D_PROJECTED_MHA_PERF N_HEAD=2 D_HEAD=16 step=step1 seq_before=1 seq_after=2 q=5316 k=5316 v=5316 qkv_quant=384 attention=908 total=16990 pe_stall=11200 sfu_stall=60 weight_stall=0 buffer_stall=0 output_stall=2 peak_seq=2
 STAGE6D_PROJECTED_MHA_PERF N_HEAD=2 D_HEAD=16 step=step2 seq_before=2 seq_after=3 q=7974 k=7974 v=7974 qkv_quant=576 attention=1756 total=25879 pe_stall=16920 sfu_stall=120 weight_stall=0 buffer_stall=0 output_stall=4 peak_seq=3
@@ -966,10 +958,10 @@ STAGE6D_PROJECTED_MHA_PERF N_HEAD=2 D_HEAD=16 step=step8 seq_before=8 seq_after=
 STAGE6D_PROJECTED_MHA_PASS N_HEAD=2 D_HEAD=16 generation_steps=8
 $finish called from file "/workspace/VEDA/tb/rtl/stage6/tb_projected_multi_head_attention.sv", line 480.
 $finish at simulation time            855196000
-           V C S   S i m u l a t i o n   R e p o r t
+           V C S   S i m u l a t i o n   R e p o r t 
 Time: 855196000 ps
-CPU Time:      0.280 seconds;       Data structure size:   1.4Mb
-Mon Jul 13 23:04:43 2026
+CPU Time:      0.300 seconds;       Data structure size:   1.4Mb
+Wed Jul 15 13:58:07 2026
 Stage 6D VCS RTL simulation
 Build dir: build/stage6d_rtl_sim
 vcs: FOUND
@@ -1028,7 +1020,7 @@ stage6d-rtl-sim: PASS
 
 $ bash scripts/sim/run_stage6e_vcs.sh
                          Chronologic VCS (TM)
-      Version O-2018.09-SP2-2_Full64 -- Mon Jul 13 23:04:48 2026
+      Version O-2018.09-SP2-2_Full64 -- Wed Jul 15 13:58:12 2026
                Copyright (c) 1991-2018 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -1098,7 +1090,7 @@ Warning-[TFIPC] Too few instance port connections
 /workspace/VEDA/tb/rtl/stage6/tb_projection_integrated_mha_stage6e.sv, 121
 tb_projection_integrated_mha_stage6e, "projection_integrated_mha #(.N_HEAD(N_HEAD), .D_HEAD(D_HEAD), .PE_NUM(PE_NUM), .MAX_SEQ_LEN(MAX_SEQ_LEN), .META_W(META_W), .COUNTER_W(COUNTER_W), .ASSERT_ON_INVALID(1'b0)) u_dut( .clk (clk),  .rst_n (rst_n),  .weight_valid (weight_valid),  .weight_ready (weight_ready),  .weight_kind (weight_kind),  .weight_output_index (weight_output_index),  .weight_input_index (weight_input_index),  .weight_data_fp16 (weight_data_fp16),  .weight_last (weight_last),  .weight_commit (weight_commit),  .token_valid (token_valid),  .token_ready (token_ready),  .token_dim (token_dim),  .token_hidden_fp16 (token_hidden_fp16),  .token_last_dim (token_last_dim),  .token_meta (token_meta),  .output_valid (output_valid),  .output_ready (output_ready),  .output_base_dim (output_b ... "
   The above instance has fewer port connections than the module definition.
-  Please use '+lint=TFIPC-L' to print out detailed information of unconnected
+  Please use '+lint=TFIPC-L' to print out detailed information of unconnected 
   ports.
 
 Starting vcs inline pass...
@@ -1138,13 +1130,13 @@ make[1]: Leaving directory '/workspace/VEDA/build/stage6e_rtl_sim/integrated_h1_
 make[1]: Entering directory '/workspace/VEDA/build/stage6e_rtl_sim/integrated_h1_d8_csrc'
 rm -f _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
 if [ -x /workspace/VEDA/build/stage6e_rtl_sim/integrated_h1_d8_simv ]; then chmod -x /workspace/VEDA/build/stage6e_rtl_sim/integrated_h1_d8_simv; fi
-g++  -o /workspace/VEDA/build/stage6e_rtl_sim/integrated_h1_d8_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/integrated_h1_d8_simv.daidir/ -Wl,-rpath=./integrated_h1_d8_simv.daidir/ -Wl,-rpath='$ORIGIN'/integrated_h1_d8_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _832775_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../integrated_h1_d8_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl
+g++  -o /workspace/VEDA/build/stage6e_rtl_sim/integrated_h1_d8_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/integrated_h1_d8_simv.daidir/ -Wl,-rpath=./integrated_h1_d8_simv.daidir/ -Wl,-rpath='$ORIGIN'/integrated_h1_d8_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _159851_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../integrated_h1_d8_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl 
 /workspace/VEDA/build/stage6e_rtl_sim/integrated_h1_d8_simv up to date
 make[1]: Leaving directory '/workspace/VEDA/build/stage6e_rtl_sim/integrated_h1_d8_csrc'
-CPU time: 4.164 seconds to compile + .292 seconds to elab + .308 seconds to link
+CPU time: 4.962 seconds to compile + .320 seconds to elab + .349 seconds to link
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 13 23:05 2026
+Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 15 13:58 2026
 STAGE6E_INTEGRATED_MHA_PERF N_HEAD=1 D_HEAD=8 step=step0 seq_before=0 seq_after=1 q=186 k=186 v=186 qkv_quant=48 attention=88 concat=17 wo=197 total=884 proj_pe_stall=0 attn_pe_stall=22 sfu_stall=6 weight_stall=0 buffer_stall=0 output_stall=0 peak_seq=1
 STAGE6E_INTEGRATED_MHA_PERF N_HEAD=1 D_HEAD=8 step=reset_during_q_projection_recovery seq_before=0 seq_after=1 q=186 k=186 v=186 qkv_quant=48 attention=88 concat=17 wo=197 total=884 proj_pe_stall=0 attn_pe_stall=22 sfu_stall=6 weight_stall=0 buffer_stall=0 output_stall=0 peak_seq=1
 STAGE6E_INTEGRATED_MHA_PERF N_HEAD=1 D_HEAD=8 step=reset_during_k_projection_recovery seq_before=0 seq_after=1 q=186 k=186 v=186 qkv_quant=48 attention=88 concat=17 wo=197 total=884 proj_pe_stall=0 attn_pe_stall=22 sfu_stall=6 weight_stall=0 buffer_stall=0 output_stall=0 peak_seq=1
@@ -1168,12 +1160,12 @@ STAGE6E_INTEGRATED_MHA_PERF N_HEAD=1 D_HEAD=8 step=step8 seq_before=8 seq_after=
 STAGE6E_INTEGRATED_MHA_PASS N_HEAD=1 D_HEAD=8 generation_steps=8
 $finish called from file "/workspace/VEDA/tb/rtl/stage6/tb_projection_integrated_mha_stage6e.sv", line 788.
 $finish at simulation time            290896000
-           V C S   S i m u l a t i o n   R e p o r t
+           V C S   S i m u l a t i o n   R e p o r t 
 Time: 290896000 ps
-CPU Time:      0.170 seconds;       Data structure size:   0.6Mb
-Mon Jul 13 23:05:05 2026
+CPU Time:      0.190 seconds;       Data structure size:   0.6Mb
+Wed Jul 15 13:58:30 2026
                          Chronologic VCS (TM)
-      Version O-2018.09-SP2-2_Full64 -- Mon Jul 13 23:05:07 2026
+      Version O-2018.09-SP2-2_Full64 -- Wed Jul 15 13:58:32 2026
                Copyright (c) 1991-2018 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -1243,7 +1235,7 @@ Warning-[TFIPC] Too few instance port connections
 /workspace/VEDA/tb/rtl/stage6/tb_projection_integrated_mha_stage6e.sv, 121
 tb_projection_integrated_mha_stage6e, "projection_integrated_mha #(.N_HEAD(N_HEAD), .D_HEAD(D_HEAD), .PE_NUM(PE_NUM), .MAX_SEQ_LEN(MAX_SEQ_LEN), .META_W(META_W), .COUNTER_W(COUNTER_W), .ASSERT_ON_INVALID(1'b0)) u_dut( .clk (clk),  .rst_n (rst_n),  .weight_valid (weight_valid),  .weight_ready (weight_ready),  .weight_kind (weight_kind),  .weight_output_index (weight_output_index),  .weight_input_index (weight_input_index),  .weight_data_fp16 (weight_data_fp16),  .weight_last (weight_last),  .weight_commit (weight_commit),  .token_valid (token_valid),  .token_ready (token_ready),  .token_dim (token_dim),  .token_hidden_fp16 (token_hidden_fp16),  .token_last_dim (token_last_dim),  .token_meta (token_meta),  .output_valid (output_valid),  .output_ready (output_ready),  .output_base_dim (output_b ... "
   The above instance has fewer port connections than the module definition.
-  Please use '+lint=TFIPC-L' to print out detailed information of unconnected
+  Please use '+lint=TFIPC-L' to print out detailed information of unconnected 
   ports.
 
 Starting vcs inline pass...
@@ -1283,13 +1275,13 @@ make[1]: Leaving directory '/workspace/VEDA/build/stage6e_rtl_sim/integrated_h2_
 make[1]: Entering directory '/workspace/VEDA/build/stage6e_rtl_sim/integrated_h2_d8_csrc'
 rm -f _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
 if [ -x /workspace/VEDA/build/stage6e_rtl_sim/integrated_h2_d8_simv ]; then chmod -x /workspace/VEDA/build/stage6e_rtl_sim/integrated_h2_d8_simv; fi
-g++  -o /workspace/VEDA/build/stage6e_rtl_sim/integrated_h2_d8_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/integrated_h2_d8_simv.daidir/ -Wl,-rpath=./integrated_h2_d8_simv.daidir/ -Wl,-rpath='$ORIGIN'/integrated_h2_d8_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _834523_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../integrated_h2_d8_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl
+g++  -o /workspace/VEDA/build/stage6e_rtl_sim/integrated_h2_d8_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/integrated_h2_d8_simv.daidir/ -Wl,-rpath=./integrated_h2_d8_simv.daidir/ -Wl,-rpath='$ORIGIN'/integrated_h2_d8_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _161599_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../integrated_h2_d8_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl 
 /workspace/VEDA/build/stage6e_rtl_sim/integrated_h2_d8_simv up to date
 make[1]: Leaving directory '/workspace/VEDA/build/stage6e_rtl_sim/integrated_h2_d8_csrc'
-CPU time: 4.296 seconds to compile + .303 seconds to elab + .304 seconds to link
+CPU time: 5.054 seconds to compile + .314 seconds to elab + .345 seconds to link
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 13 23:05 2026
+Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 15 13:58 2026
 STAGE6E_INTEGRATED_MHA_PERF N_HEAD=2 D_HEAD=8 step=step0 seq_before=0 seq_after=1 q=690 k=690 v=690 qkv_quant=96 attention=176 concat=34 wo=709 total=3021 proj_pe_stall=1216 attn_pe_stall=44 sfu_stall=12 weight_stall=0 buffer_stall=0 output_stall=1 peak_seq=1
 STAGE6E_INTEGRATED_MHA_PERF N_HEAD=2 D_HEAD=8 step=reset_during_q_projection_recovery seq_before=0 seq_after=1 q=690 k=690 v=690 qkv_quant=96 attention=176 concat=34 wo=709 total=3021 proj_pe_stall=1216 attn_pe_stall=44 sfu_stall=12 weight_stall=0 buffer_stall=0 output_stall=1 peak_seq=1
 STAGE6E_INTEGRATED_MHA_PERF N_HEAD=2 D_HEAD=8 step=reset_during_k_projection_recovery seq_before=0 seq_after=1 q=690 k=690 v=690 qkv_quant=96 attention=176 concat=34 wo=709 total=3021 proj_pe_stall=1216 attn_pe_stall=44 sfu_stall=12 weight_stall=0 buffer_stall=0 output_stall=1 peak_seq=1
@@ -1313,12 +1305,12 @@ STAGE6E_INTEGRATED_MHA_PERF N_HEAD=2 D_HEAD=8 step=step8 seq_before=8 seq_after=
 STAGE6E_INTEGRATED_MHA_PASS N_HEAD=2 D_HEAD=8 generation_steps=8
 $finish called from file "/workspace/VEDA/tb/rtl/stage6/tb_projection_integrated_mha_stage6e.sv", line 788.
 $finish at simulation time            989576000
-           V C S   S i m u l a t i o n   R e p o r t
+           V C S   S i m u l a t i o n   R e p o r t 
 Time: 989576000 ps
-CPU Time:      0.390 seconds;       Data structure size:   0.7Mb
-Mon Jul 13 23:05:24 2026
+CPU Time:      0.420 seconds;       Data structure size:   0.7Mb
+Wed Jul 15 13:58:50 2026
                          Chronologic VCS (TM)
-      Version O-2018.09-SP2-2_Full64 -- Mon Jul 13 23:05:26 2026
+      Version O-2018.09-SP2-2_Full64 -- Wed Jul 15 13:58:53 2026
                Copyright (c) 1991-2018 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -1388,7 +1380,7 @@ Warning-[TFIPC] Too few instance port connections
 /workspace/VEDA/tb/rtl/stage6/tb_projection_integrated_mha_stage6e.sv, 121
 tb_projection_integrated_mha_stage6e, "projection_integrated_mha #(.N_HEAD(N_HEAD), .D_HEAD(D_HEAD), .PE_NUM(PE_NUM), .MAX_SEQ_LEN(MAX_SEQ_LEN), .META_W(META_W), .COUNTER_W(COUNTER_W), .ASSERT_ON_INVALID(1'b0)) u_dut( .clk (clk),  .rst_n (rst_n),  .weight_valid (weight_valid),  .weight_ready (weight_ready),  .weight_kind (weight_kind),  .weight_output_index (weight_output_index),  .weight_input_index (weight_input_index),  .weight_data_fp16 (weight_data_fp16),  .weight_last (weight_last),  .weight_commit (weight_commit),  .token_valid (token_valid),  .token_ready (token_ready),  .token_dim (token_dim),  .token_hidden_fp16 (token_hidden_fp16),  .token_last_dim (token_last_dim),  .token_meta (token_meta),  .output_valid (output_valid),  .output_ready (output_ready),  .output_base_dim (output_b ... "
   The above instance has fewer port connections than the module definition.
-  Please use '+lint=TFIPC-L' to print out detailed information of unconnected
+  Please use '+lint=TFIPC-L' to print out detailed information of unconnected 
   ports.
 
 Starting vcs inline pass...
@@ -1428,13 +1420,13 @@ make[1]: Leaving directory '/workspace/VEDA/build/stage6e_rtl_sim/integrated_h4_
 make[1]: Entering directory '/workspace/VEDA/build/stage6e_rtl_sim/integrated_h4_d8_csrc'
 rm -f _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
 if [ -x /workspace/VEDA/build/stage6e_rtl_sim/integrated_h4_d8_simv ]; then chmod -x /workspace/VEDA/build/stage6e_rtl_sim/integrated_h4_d8_simv; fi
-g++  -o /workspace/VEDA/build/stage6e_rtl_sim/integrated_h4_d8_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/integrated_h4_d8_simv.daidir/ -Wl,-rpath=./integrated_h4_d8_simv.daidir/ -Wl,-rpath='$ORIGIN'/integrated_h4_d8_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _836271_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../integrated_h4_d8_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl
+g++  -o /workspace/VEDA/build/stage6e_rtl_sim/integrated_h4_d8_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/integrated_h4_d8_simv.daidir/ -Wl,-rpath=./integrated_h4_d8_simv.daidir/ -Wl,-rpath='$ORIGIN'/integrated_h4_d8_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _163347_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../integrated_h4_d8_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl 
 /workspace/VEDA/build/stage6e_rtl_sim/integrated_h4_d8_simv up to date
 make[1]: Leaving directory '/workspace/VEDA/build/stage6e_rtl_sim/integrated_h4_d8_csrc'
-CPU time: 4.193 seconds to compile + .287 seconds to elab + .300 seconds to link
+CPU time: 5.005 seconds to compile + .311 seconds to elab + .342 seconds to link
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 13 23:05 2026
+Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 15 13:59 2026
 STAGE6E_INTEGRATED_MHA_PERF N_HEAD=4 D_HEAD=8 step=step0 seq_before=0 seq_after=1 q=2658 k=2658 v=2658 qkv_quant=192 attention=352 concat=68 wo=2693 total=11135 proj_pe_stall=7296 attn_pe_stall=88 sfu_stall=24 weight_stall=0 buffer_stall=0 output_stall=3 peak_seq=1
 STAGE6E_INTEGRATED_MHA_PERF N_HEAD=4 D_HEAD=8 step=reset_during_q_projection_recovery seq_before=0 seq_after=1 q=2658 k=2658 v=2658 qkv_quant=192 attention=352 concat=68 wo=2693 total=11135 proj_pe_stall=7296 attn_pe_stall=88 sfu_stall=24 weight_stall=0 buffer_stall=0 output_stall=3 peak_seq=1
 STAGE6E_INTEGRATED_MHA_PERF N_HEAD=4 D_HEAD=8 step=reset_during_k_projection_recovery seq_before=0 seq_after=1 q=2658 k=2658 v=2658 qkv_quant=192 attention=352 concat=68 wo=2693 total=11135 proj_pe_stall=7296 attn_pe_stall=88 sfu_stall=24 weight_stall=0 buffer_stall=0 output_stall=3 peak_seq=1
@@ -1458,12 +1450,12 @@ STAGE6E_INTEGRATED_MHA_PERF N_HEAD=4 D_HEAD=8 step=step8 seq_before=8 seq_after=
 STAGE6E_INTEGRATED_MHA_PASS N_HEAD=4 D_HEAD=8 generation_steps=8
 $finish called from file "/workspace/VEDA/tb/rtl/stage6/tb_projection_integrated_mha_stage6e.sv", line 788.
 $finish at simulation time           3640716000
-           V C S   S i m u l a t i o n   R e p o r t
+           V C S   S i m u l a t i o n   R e p o r t 
 Time: 3640716000 ps
-CPU Time:      1.900 seconds;       Data structure size:   1.4Mb
-Mon Jul 13 23:05:45 2026
+CPU Time:      2.070 seconds;       Data structure size:   1.4Mb
+Wed Jul 15 13:59:13 2026
                          Chronologic VCS (TM)
-      Version O-2018.09-SP2-2_Full64 -- Mon Jul 13 23:05:47 2026
+      Version O-2018.09-SP2-2_Full64 -- Wed Jul 15 13:59:15 2026
                Copyright (c) 1991-2018 by Synopsys Inc.
                          ALL RIGHTS RESERVED
 
@@ -1533,7 +1525,7 @@ Warning-[TFIPC] Too few instance port connections
 /workspace/VEDA/tb/rtl/stage6/tb_projection_integrated_mha_stage6e.sv, 121
 tb_projection_integrated_mha_stage6e, "projection_integrated_mha #(.N_HEAD(N_HEAD), .D_HEAD(D_HEAD), .PE_NUM(PE_NUM), .MAX_SEQ_LEN(MAX_SEQ_LEN), .META_W(META_W), .COUNTER_W(COUNTER_W), .ASSERT_ON_INVALID(1'b0)) u_dut( .clk (clk),  .rst_n (rst_n),  .weight_valid (weight_valid),  .weight_ready (weight_ready),  .weight_kind (weight_kind),  .weight_output_index (weight_output_index),  .weight_input_index (weight_input_index),  .weight_data_fp16 (weight_data_fp16),  .weight_last (weight_last),  .weight_commit (weight_commit),  .token_valid (token_valid),  .token_ready (token_ready),  .token_dim (token_dim),  .token_hidden_fp16 (token_hidden_fp16),  .token_last_dim (token_last_dim),  .token_meta (token_meta),  .output_valid (output_valid),  .output_ready (output_ready),  .output_base_dim (output_b ... "
   The above instance has fewer port connections than the module definition.
-  Please use '+lint=TFIPC-L' to print out detailed information of unconnected
+  Please use '+lint=TFIPC-L' to print out detailed information of unconnected 
   ports.
 
 Starting vcs inline pass...
@@ -1569,19 +1561,17 @@ recompiling module projection_integrated_mha
 recompiling module tb_projection_integrated_mha_stage6e
 All of 29 modules done
 make[1]: Entering directory '/workspace/VEDA/build/stage6e_rtl_sim/integrated_h2_d16_csrc'
-make[1]: Warning: File 'filelist.hsopt.llvm2_0.objs' has modification time 0.4 s in the future
-make[1]: warning:  Clock skew detected.  Your build may be incomplete.
 make[1]: Leaving directory '/workspace/VEDA/build/stage6e_rtl_sim/integrated_h2_d16_csrc'
 make[1]: Entering directory '/workspace/VEDA/build/stage6e_rtl_sim/integrated_h2_d16_csrc'
 rm -f _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
 if [ -x /workspace/VEDA/build/stage6e_rtl_sim/integrated_h2_d16_simv ]; then chmod -x /workspace/VEDA/build/stage6e_rtl_sim/integrated_h2_d16_simv; fi
-g++  -o /workspace/VEDA/build/stage6e_rtl_sim/integrated_h2_d16_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/integrated_h2_d16_simv.daidir/ -Wl,-rpath=./integrated_h2_d16_simv.daidir/ -Wl,-rpath='$ORIGIN'/integrated_h2_d16_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _838019_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../integrated_h2_d16_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl
+g++  -o /workspace/VEDA/build/stage6e_rtl_sim/integrated_h2_d16_simv    -Wl,-rpath-link=./ -Wl,-rpath='$ORIGIN'/integrated_h2_d16_simv.daidir/ -Wl,-rpath=./integrated_h2_d16_simv.daidir/ -Wl,-rpath='$ORIGIN'/integrated_h2_d16_simv.daidir//scsim.db.dir  -rdynamic  -Wl,-rpath=/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib -L/usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib   objs/amcQw_d.o   _165095_archive_1.so  SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o rmar_llvm_0_0.o          -lnuma -lzerosoft_rt_stubs -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -lsimprofile -luclinative /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_tls.o   -Wl,-whole-archive -lvcsucli -Wl,-no-whole-archive       ./../integrated_h2_d16_simv.daidir/vc_hdrs.o    /usr/synopsys/vc_static-O-2018.09-SP2-2/vcs-mx/linux64/lib/vcs_save_restore_new.o -ldl  -lc -lm -lpthread -ldl 
 /workspace/VEDA/build/stage6e_rtl_sim/integrated_h2_d16_simv up to date
 make[1]: Leaving directory '/workspace/VEDA/build/stage6e_rtl_sim/integrated_h2_d16_csrc'
-CPU time: 4.246 seconds to compile + .279 seconds to elab + .293 seconds to link
+CPU time: 4.951 seconds to compile + .312 seconds to elab + .337 seconds to link
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 13 23:06 2026
+Compiler version O-2018.09-SP2-2_Full64; Runtime version O-2018.09-SP2-2_Full64;  Jul 15 13:59 2026
 STAGE6E_INTEGRATED_MHA_PERF N_HEAD=2 D_HEAD=16 step=step0 seq_before=0 seq_after=1 q=2658 k=2658 v=2658 qkv_quant=192 attention=330 concat=68 wo=2693 total=11111 proj_pe_stall=7296 attn_pe_stall=88 sfu_stall=12 weight_stall=0 buffer_stall=0 output_stall=17 peak_seq=1
 STAGE6E_INTEGRATED_MHA_PERF N_HEAD=2 D_HEAD=16 step=reset_during_q_projection_recovery seq_before=0 seq_after=1 q=2658 k=2658 v=2658 qkv_quant=192 attention=330 concat=68 wo=2693 total=11111 proj_pe_stall=7296 attn_pe_stall=88 sfu_stall=12 weight_stall=0 buffer_stall=0 output_stall=17 peak_seq=1
 STAGE6E_INTEGRATED_MHA_PERF N_HEAD=2 D_HEAD=16 step=reset_during_k_projection_recovery seq_before=0 seq_after=1 q=2658 k=2658 v=2658 qkv_quant=192 attention=330 concat=68 wo=2693 total=11111 proj_pe_stall=7296 attn_pe_stall=88 sfu_stall=12 weight_stall=0 buffer_stall=0 output_stall=17 peak_seq=1
@@ -1605,10 +1595,10 @@ STAGE6E_INTEGRATED_MHA_PERF N_HEAD=2 D_HEAD=16 step=step8 seq_before=8 seq_after
 STAGE6E_INTEGRATED_MHA_PASS N_HEAD=2 D_HEAD=16 generation_steps=8
 $finish called from file "/workspace/VEDA/tb/rtl/stage6/tb_projection_integrated_mha_stage6e.sv", line 788.
 $finish at simulation time           3625156000
-           V C S   S i m u l a t i o n   R e p o r t
+           V C S   S i m u l a t i o n   R e p o r t 
 Time: 3625156000 ps
-CPU Time:      1.880 seconds;       Data structure size:   1.4Mb
-Mon Jul 13 23:06:05 2026
+CPU Time:      2.130 seconds;       Data structure size:   1.4Mb
+Wed Jul 15 13:59:35 2026
 Stage 6E VCS RTL simulation
 Build dir: build/stage6e_rtl_sim
 vcs: FOUND

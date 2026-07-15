@@ -5,7 +5,7 @@
 - Stage: Hardware Stage H9 final-closure progress checkpoint
 - Status: HW-H9 IN PROGRESS, NOT ACCEPTED
 - Branch: `hw/h9-sfu-pe-interleaving`
-- Last update: 2026-07-13
+- Last update: 2026-07-15
 
 Hardware Stage H9 adds a checkpoint implementation of paper Attention
 full-array native mapping and SFU/PE element-serial interleaving infrastructure.
@@ -14,18 +14,17 @@ probability stream buffers, an interleaved paper single-head RTL schedule path,
 matched paper staged versus paper interleaved single-head RTL A/B baselines,
 H9 Make targets, and H9 reports.
 
-Hardware Stage H9 is not accepted yet. The cycle model is now calibrated to the
+Hardware Stage H9 is not accepted yet. The Docker EDA environment `nailong`
+successfully reran the H9 host/model, RTL, lint/vlogan, and DC structural
+checks plus Stage5/6/7/8 regressions. The cycle model is calibrated to the
 matched single-head RTL A/B counter interval for D_HEAD=8, 16, and 64 at seq
-1/2/8/16/32/64, and the H9 RTL script now wires multi-head, full-layer,
-long-sequence/cache-full, and assertion-enabled entries. The current execution
-environment cannot run final acceptance because `vcs`, `vlogan`, `dc_shell`,
-and `DW_FOUNDATION_SLDB` are not available. Multi-head/full-layer H9 RTL
-execution, full reset/random-backpressure/cache-full execution, assertion
-execution evidence, DC structural rerun, and Stage5/6/7/8 RTL reruns remain
-open. The matched single-head RTL A/B baseline shows H9 interleaved faster than
-paper staged at seq16 and seq32 for D_HEAD=8, 16, and 64. Do not write
-`HARDWARE STAGE H9 PASS` or create an H9 accepted tag until all remaining
-HW-H9 exit conditions are actually executed and pass.
+1/2/8/16/32/64. Multi-head H9 interleaved RTL, full-layer H9 interleaved RTL,
+long-sequence/cache-full, H9 lint, H9 DC, and Stage5/6/7/8 regressions pass.
+The remaining blockers are the full reset interrupt matrix, broad random
+backpressure with at least 20 fixed seeds, and complete assertion execution
+evidence with negative/bind proof. Do not write `HARDWARE STAGE H9 PASS` or
+create an H9 accepted tag until those remaining HW-H9 exit conditions are
+implemented, executed, and pass.
 
 Stage 8 remains the accepted hardware baseline:
 
@@ -508,12 +507,12 @@ Results:
 ## Next Action
 
 Continue Hardware Stage H9 only after closing the open acceptance items recorded
-in `reports/hw_h9/acceptance_audit.md`. The next work is to broaden the
-interleaved RTL verification from the single-head checkpoint into the required
-multi-head and full-layer configurations, add the missing reset/random
-backpressure/cache-full/long-sequence coverage, and calibrate the cycle model
-against the matched RTL counter intervals without changing the frozen Stage
-5/6/7 numeric and transaction contracts.
+in `reports/hw_h9/acceptance_audit.md`. Multi-head, full-layer,
+long-sequence/cache-full, cycle calibration, lint, DC, and Stage5/6/7/8
+regressions have been executed and pass. The remaining H9 work is to implement
+and run the full reset interrupt matrix, broad random backpressure with at
+least 20 fixed seeds, and complete assertion execution evidence without
+changing the frozen Stage 5/6/7 numeric and transaction contracts.
 
 Do not enter Hardware Stage H10, write `HARDWARE STAGE H9 PASS`, or create an
 H9 accepted tag until all HW-H9 exit conditions are closed. Do not claim SRAM

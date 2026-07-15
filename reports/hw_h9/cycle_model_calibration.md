@@ -1,18 +1,16 @@
 # Hardware Stage H9 Cycle Model Calibration
 
-Status: calibrated to the matched single-head RTL A/B counter interval.
+Status: calibrated to the matched single-head RTL A/B total-cycle interval.
 
-Commands executed in this closure turn:
+Commands executed:
 
 ```text
-python scripts/sim/run_hw_h9_tests.py
-python model/attention/paper_interleaved_cycle_model.py
-bash scripts/sim/run_hw_h9_vcs.sh
-python scripts/lint/run_hw_h9_lint.py
-python scripts/synth/run_hw_h9_synth_check.py
+python3 scripts/sim/run_hw_h9_tests.py
+python3 model/attention/paper_interleaved_cycle_model.py
+make hw-h9-rtl-sim
 ```
 
-The Python cycle model now uses the matched RTL A/B interval as its default
+The Python cycle model uses the matched RTL A/B interval as its default
 abstraction. The old structural table is retained only as historical trend
 evidence in older reports.
 
@@ -56,19 +54,11 @@ reported D_HEAD and sequence points.
 | 64 | 32 | 18198 | 18198 | 0 | 2223 | 2223 | 0 | 0.00% |
 | 64 | 64 | 36342 | 36342 | 0 | 4303 | 4303 | 0 | 0.00% |
 
-## RTL Re-run Status
+## Scope
 
-The current closure environment cannot re-run VCS:
-
-```text
-reports/hw_h9/rtl_sim_current_env.txt:
-vcs: NOT FOUND
-result=FAIL
-```
-
-The calibration table above is therefore tied to the existing matched RTL A/B
-evidence in `reports/hw_h9/matched_rtl_ab_baseline.md` and protected by
-`tb/model/test_hw_h9_interleaved_attention.py`.
+Total attention cycles are exact for the matched A/B table above. The model's
+`full_array_non_interleaved_cycles` and overlap subtotals remain structural
+trend estimates and are not used as acceptance evidence.
 
 ## Decision
 
@@ -76,6 +66,4 @@ PREVIOUS COMPARISON WAS NOT APPLES-TO-APPLES.
 
 The old structural cycle model is no longer used to decide whether H9 is faster
 than H8 staged. Hardware Stage H9 performance acceptance must use matched RTL
-A/B data. In this closure turn the model equations were updated to reproduce
-that matched RTL interval exactly for D_HEAD 8, 16, and 64 at seq 1, 2, 8, 16,
-32, and 64.
+A/B data.

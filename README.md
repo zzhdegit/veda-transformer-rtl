@@ -18,11 +18,12 @@ seq32 for D_HEAD=8, 16, and 64. The cycle model is calibrated to that matched
 RTL interval for D_HEAD=8, 16, and 64 at seq 1/2/8/16/32/64.
 
 Hardware Stage H9 is not accepted yet. Multi-head/full-layer H9 RTL entries,
-long-sequence/cache-full entries, and assertion-enabled entries are wired into
-the H9 script, but the current environment lacks `vcs`, `vlogan`, `dc_shell`,
-and `DW_FOUNDATION_SLDB`, so final RTL/DC acceptance could not be executed.
-Global array sharing, physical memory, timing closure, and PPA remain
-provisional.
+long-sequence/cache-full entries, lint/vlogan, DC structural checks, and
+Stage5/6/7/8 regressions have executed and passed in the Docker EDA
+environment `nailong`. Final acceptance is still blocked by the full reset
+interrupt matrix, broad random backpressure with at least 20 fixed seeds, and
+complete assertion execution evidence with negative/bind proof. Global array
+sharing, physical memory, timing closure, and PPA remain provisional.
 
 Authoritative current inputs are:
 

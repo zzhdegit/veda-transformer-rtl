@@ -82,6 +82,8 @@ performance acceptance. The earlier comparison was not apples-to-apples because
 it compared an abstract cycle model against neither the staged nor interleaved
 RTL with the same top, latencies, buffers, and ready/valid environment.
 
-Hardware Stage H9 is still not accepted. Multi-head, full-layer, full reset
-matrix, random backpressure, cache-full, and long-sequence acceptance coverage
-remain open.
+Hardware Stage H9 is still not accepted. Multi-head, full-layer,
+long-sequence, and cache-full RTL coverage has since executed and passed in the
+final-closure run. The remaining blockers are the full reset interrupt matrix,
+broad random backpressure with at least 20 fixed seeds, and complete assertion
+execution evidence.

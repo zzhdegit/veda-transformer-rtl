@@ -1,12 +1,12 @@
 # Hardware Stage H9 Numerical Results
 
-Status: host bit-model comparison passes; expanded RTL numerical matrix is not
-executed in the current environment.
+Status: PASS for host H9/H8 bit-model comparison and implemented RTL
+bit-exact matrices.
 
 Host/model command:
 
 ```text
-python scripts/sim/run_hw_h9_tests.py
+python3 scripts/sim/run_hw_h9_tests.py
 ```
 
 Result:
@@ -33,14 +33,15 @@ max_ULP = 0
 attention ranking = match
 ```
 
-The H9 RTL expanded numerical matrix is wired through the multi-head and
-full-layer VCS entries, but current execution is blocked:
+RTL numerical evidence:
 
-```text
-vcs: NOT FOUND
-result=FAIL
-```
+- H9 single-head D_HEAD 8, 16, and 64: PASS, output lanes matched expected FP32
+  values.
+- H9 matched A/B D_HEAD 8, 16, and 64 at seq 1, 2, 8, 16, 32, and 64: PASS.
+- H9 multi-head interleaved H1/D8, H2/D8, H4/D8, H2/D16, and H1/D64: PASS
+  against the Stage 5 reference vectors.
+- H9 full-layer interleaved H1/D8, H2/D8, H2/D8 two-token, H4/D8, and H2/D16:
+  PASS against the Stage 7D reference vectors.
 
-Therefore `RTL == H9 bit model` is accepted only for the previously recorded
-matched single-head checkpoint, not for the newly added multi-head/full-layer
-final-closure matrix.
+Limit: random-backpressure numerical coverage with at least 20 seeds is still
+open.

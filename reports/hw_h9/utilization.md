@@ -21,8 +21,10 @@ tb_h9_single_head D_HEAD=64 group0=408 group1=408 total=663
 ```
 
 The RTL smoke counters prove both groups are active in the checkpoint
-single-head interleaved path. Full multi-head/full-layer utilization acceptance
-remains open.
+single-head interleaved path. Final-closure multi-head and full-layer RTL runs
+also pass, but detailed multi-head/full-layer utilization attribution remains
+informational rather than an H9 PASS condition because reset/random/assertion
+coverage is still incomplete.
 
 ## Matched RTL Closure Update
 

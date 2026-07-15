@@ -5,15 +5,15 @@ vcs script version : O-2018.09
 DesignWare sim dir: detected
 
 paper_layer_h1_d8 result=PASS run_exit_code=0 assertion_markers=0
-STAGE7D_TRANSFORMER_LAYER_PASS arch=1 n_head=1 d_head=8 d_model=8 tokens=1 paper_active=61 paper_inner=53 paper_outer=8 paper_tail=240 paper_mode_switch=1
+STAGE7D_TRANSFORMER_LAYER_PASS arch=1 schedule=0 n_head=1 d_head=8 d_model=8 tokens=1 paper_active=61 paper_inner=53 paper_outer=8 paper_tail=240 paper_mode_switch=1
 paper_layer_h2_d8 result=PASS run_exit_code=0 assertion_markers=0
-STAGE7D_TRANSFORMER_LAYER_PASS arch=1 n_head=2 d_head=8 d_model=16 tokens=1 paper_active=122 paper_inner=106 paper_outer=16 paper_tail=480 paper_mode_switch=3
+STAGE7D_TRANSFORMER_LAYER_PASS arch=1 schedule=0 n_head=2 d_head=8 d_model=16 tokens=1 paper_active=122 paper_inner=106 paper_outer=16 paper_tail=480 paper_mode_switch=3
 paper_layer_h2_d8_two_token result=PASS run_exit_code=0 assertion_markers=0
-STAGE7D_TRANSFORMER_LAYER_PASS arch=1 n_head=2 d_head=8 d_model=16 tokens=2 paper_active=366 paper_inner=318 paper_outer=48 paper_tail=1440 paper_mode_switch=7
+STAGE7D_TRANSFORMER_LAYER_PASS arch=1 schedule=0 n_head=2 d_head=8 d_model=16 tokens=2 paper_active=366 paper_inner=318 paper_outer=48 paper_tail=1440 paper_mode_switch=7
 paper_layer_h4_d8 result=PASS run_exit_code=0 assertion_markers=0
-STAGE7D_TRANSFORMER_LAYER_PASS arch=1 n_head=4 d_head=8 d_model=32 tokens=1 paper_active=244 paper_inner=212 paper_outer=32 paper_tail=960 paper_mode_switch=7
+STAGE7D_TRANSFORMER_LAYER_PASS arch=1 schedule=0 n_head=4 d_head=8 d_model=32 tokens=1 paper_active=244 paper_inner=212 paper_outer=32 paper_tail=960 paper_mode_switch=7
 paper_layer_h2_d16 result=PASS run_exit_code=0 assertion_markers=0
-STAGE7D_TRANSFORMER_LAYER_PASS arch=1 n_head=2 d_head=16 d_model=32 tokens=1 paper_active=244 paper_inner=212 paper_outer=32 paper_tail=960 paper_mode_switch=3
+STAGE7D_TRANSFORMER_LAYER_PASS arch=1 schedule=0 n_head=2 d_head=16 d_model=32 tokens=1 paper_active=244 paper_inner=212 paper_outer=32 paper_tail=960 paper_mode_switch=3
 
 result=PASS
 Full logs: build/stage8d_layer_rtl_sim/*_compile.log and *_run.log
