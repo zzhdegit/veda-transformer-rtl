@@ -2,6 +2,33 @@
 
 ## Current Model Stage
 
+- Stage: Model Stage M3
+- Short id: ML-M3
+- Name: Real-Weight RTL Co-Simulation and Deployment Validation
+- Branch: `ml/m3-real-rtl-cosim`
+- Base tag: `ml-q2-full-dataset-benchmark-accepted`
+- Last update: 2026-07-15
+- Status: MODEL STAGE M3 IN PROGRESS - RTL/BIT-MODEL NUMERIC MISMATCH BLOCKED
+
+ML-M3 consumed the frozen Q2 benchmark checkpoint and generated real Q2
+vectors for lengths 1, 2, 8, 16, and 32. Q2 artifact audit, tokenizer SHA,
+export tensor audit, and weight mapping audit passed. H8 staged and H9
+interleaved RTL both compiled/elaborated for the Q2 H8/D8 layer configuration,
+but one-token smoke failed before multi-token RTL co-simulation:
+
+```text
+CHECK_FAIL layer token=0 dim=1 got=3d4a2576 expected=3d4a2572
+```
+
+Both H8 and H9 produced the same captured prefix SHA
+`5adbf7b5ef5e5fbff1a767e271d852ab711ec9d829a9f7fe9125288901d4f3be`,
+so the current blocker is common RTL-vs-bit-model numerical mismatch, not a
+staged/interleaved divergence. ML-M3 did not modify hardware files, did not run
+multi-token RTL after the one-token gate failed, and did not invoke PDK, STA,
+P&R, or PPA.
+
+## Previous Model Stage
+
 - Stage: Model Stage M2
 - Short id: ML-M2
 - Name: Hardware-Matched Language Model Training

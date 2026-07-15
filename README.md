@@ -120,6 +120,9 @@ Hardware and model work are tracked separately after Model Stage M1.
 - Model Stage M2 uses `ml/`, `scripts/ml/`, `docs/ml/`, and
   `reports/ml_m2/`.
 - Hardware Stage H8 remains isolated from ML-M2.
+- Model Stage M3 uses Q2 real weights and model-line testbenches for
+  PyTorch/bit-model/RTL co-simulation. Current M3 status is blocked at a
+  one-token RTL-vs-bit-model mismatch; see `reports/ml_m3/summary.md`.
 
 ## Next Step
 

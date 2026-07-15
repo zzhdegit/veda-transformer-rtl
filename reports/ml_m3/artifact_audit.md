@@ -1,0 +1,14 @@
+# ML-M3 Artifact Audit
+
+- Checkpoint: `D:\IC_Workspace\VEDA_artifacts\ml_q2\benchmark\checkpoints\VEDA-HWLM-1L64-Q2.pt`
+- Checkpoint SHA256: `68b520f1322c79e568c39115809b8d623e21478af1662658cf997bf174cc9214` (PASS)
+- Tokenizer: `D:\IC_Workspace\VEDA_artifacts\ml_m2\formal\tokenizer\tokenizer.json`
+- Tokenizer SHA256: `72c4100b9c923f8fc89ea563cdf18743742b87ad7cda6732606b61f50f290a1a` (PASS)
+- Export tensor count: 12 (PASS)
+- Hardware read-only branch: `hw/h9-sfu-pe-interleaving`
+- Hardware HEAD: `9e0b4c9ba42356ee68e489e99cc5cf64e94f607e`
+- Hardware accepted tag commit: `9e0b4c9ba42356ee68e489e99cc5cf64e94f607e`
+- Incremental/full reference: PASS max_abs=3.618001937866211e-05
+- Overall: **PASS**
+
+No checkpoint, tokenizer, dataset, trace, waveform, or hardware source file is written to Git by this audit.

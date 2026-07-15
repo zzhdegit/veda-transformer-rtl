@@ -1,12 +1,88 @@
 # Model Handoff
 
-## Stage
+## Current Stage
+
+Model Stage M3: Real-Weight RTL Co-Simulation and Deployment Validation
+
+Short id: ML-M3
+
+## Status
+
+MODEL STAGE M3 IN PROGRESS - RTL/BIT-MODEL NUMERIC MISMATCH BLOCKED.
+
+## Completed In ML-M3
+
+- Confirmed model worktree `D:/IC_Workspace/VEDA_ml_m2` on branch
+  `ml/m3-real-rtl-cosim`.
+- Confirmed hardware read-only repo `D:/IC_Workspace/VEDA` is clean on
+  `hw/h9-sfu-pe-interleaving` at tag
+  `hw-h9-sfu-pe-interleaving-thesis-accepted`.
+- Recomputed Q2 checkpoint SHA256:
+  `68b520f1322c79e568c39115809b8d623e21478af1662658cf997bf174cc9214`.
+- Recomputed tokenizer SHA256:
+  `72c4100b9c923f8fc89ea563cdf18743742b87ad7cda6732606b61f50f290a1a`.
+- Audited 12 Q2 export tensors and 8 RTL layer weight mappings.
+- Generated real Q2 vectors for lengths 1, 2, 8, 16, and 32 under
+  `D:/IC_Workspace/VEDA_artifacts/ml_m3/vectors`.
+- Added model-line-only RTL testbench and VCS runner.
+- Confirmed VCS/vlogan are available inside Docker container `nailong`.
+- Compiled/elaborated the accepted H9 RTL for Q2 parameters:
+  `N_HEAD=8`, `D_HEAD=8`, `D_MODEL=64`, `D_FFN=256`, `MAX_SEQ_LEN=128`.
+- Ran one-token smoke for both H8 staged and H9 interleaved schedules.
+
+## ML-M3 Blocker
+
+One-token smoke failed in both schedules at the first checked real RTL final
+output mismatch:
+
+```text
+CHECK_FAIL layer token=0 dim=1 got=3d4a2576 expected=3d4a2572
+```
+
+The H8 and H9 captured prefix files have the same SHA256:
+
+```text
+5adbf7b5ef5e5fbff1a767e271d852ab711ec9d829a9f7fe9125288901d4f3be
+```
+
+This means staged and interleaved schedules agree for the captured prefix, but
+both differ from the current hardware-aware bit model. Per the ML-M3 gate,
+length 2/8/16 RTL runs, hybrid next-token logits, and acceptance tagging were
+not started.
+
+## ML-M3 Reproduction
+
+```bash
+python scripts/ml/run_ml_m3_artifact_audit.py
+python scripts/ml/run_ml_m3_vector_generation.py
+python scripts/ml/run_ml_m3_vcs.py --length 1 --schedule staged --schedule interleaved --run-id smoke_len1_combined
+python scripts/ml/run_ml_m3_acceptance.py
+```
+
+Key logs:
+
+```text
+D:/IC_Workspace/VEDA_artifacts/ml_m3/rtl_logs/ml_m3_staged_len_1_smoke_len1_combined.log
+D:/IC_Workspace/VEDA_artifacts/ml_m3/rtl_logs/ml_m3_interleaved_len_1_smoke_len1_combined.log
+```
+
+## Not Completed In ML-M3
+
+- length 2, 8, and 16 real RTL incremental co-simulation;
+- full H8/H9 real-weight A/B cycle comparison;
+- hybrid RTL-assisted next-token validation;
+- accepted ML-M3 tag.
+
+These are blocked until the RTL/bit-model numerical mismatch is resolved by a
+separate hardware/reference-model fix task.
+
+## Previous Stage
 
 Model Stage M2: Hardware-Matched Language Model Training
 
 Short id: ML-M2
 
-## Status
+## Previous Status
 
 MODEL STAGE M2 PASS.
 
