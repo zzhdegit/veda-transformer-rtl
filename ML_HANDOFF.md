@@ -8,15 +8,15 @@ Short id: ML-M3
 
 ## Status
 
-MODEL STAGE M3 IN PROGRESS - HARDWARE NUMERIC FIX REQUIRED.
+MODEL STAGE M3 PASS.
 
 ## Completed In ML-M3
 
 - Confirmed model worktree `D:/IC_Workspace/VEDA_ml_m2` on branch
   `ml/m3-real-rtl-cosim`.
 - Confirmed hardware read-only repo `D:/IC_Workspace/VEDA` is clean on
-  `hw/h9-sfu-pe-interleaving` at tag
-  `hw-h9-sfu-pe-interleaving-thesis-accepted`.
+  `hw/h9-real-weight-numeric-repair` at tag
+  `hw-h9-real-weight-numeric-repair-accepted`.
 - Recomputed Q2 checkpoint SHA256:
   `68b520f1322c79e568c39115809b8d623e21478af1662658cf997bf174cc9214`.
 - Recomputed tokenizer SHA256:
@@ -26,96 +26,70 @@ MODEL STAGE M3 IN PROGRESS - HARDWARE NUMERIC FIX REQUIRED.
   `D:/IC_Workspace/VEDA_artifacts/ml_m3/vectors`.
 - Added model-line-only RTL testbench and VCS runner.
 - Confirmed VCS/vlogan are available inside Docker container `nailong`.
-- Compiled/elaborated the accepted H9 RTL for Q2 parameters:
+- Compiled/elaborated the repaired H9 RTL for Q2 parameters:
   `N_HEAD=8`, `D_HEAD=8`, `D_MODEL=64`, `D_FFN=256`, `MAX_SEQ_LEN=128`.
-- Ran one-token smoke for both H8 staged and H9 interleaved schedules.
-
-## ML-M3 Numeric Alignment Closure
-
-One-token smoke failed in both schedules at the first checked real RTL final
-output mismatch:
-
-```text
-CHECK_FAIL layer token=0 dim=1 got=3d4a2576 expected=3d4a2572
-```
-
-The H8 and H9 captured prefix files have the same SHA256:
-
-```text
-5adbf7b5ef5e5fbff1a767e271d852ab711ec9d829a9f7fe9125288901d4f3be
-```
-
-This means staged and interleaved schedules agree for the captured prefix, but
-both differ from the current hardware-aware bit model. Per the ML-M3 gate,
-length 2/8/16 RTL runs, hybrid next-token logits, and acceptance tagging were
-not started.
-
-The ML-M3 Numeric Alignment task reproduced the mismatch, collected the full
-64-dimension one-token diagnostic output, and found 54/64 final dimensions
-mismatching the hardware-aware bit model. H8 staged and H9 interleaved remained
-identical.
-
-First stable boundary divergence:
-
-```text
-residual1_fp32_edge       matches bit model
-norm2_output_fp16_edge    matches bit model
-w2_output_fp32_edge       differs: H8/H9=3e12e075, bit=3e12e074
-residual2_final_fp32_edge differs: H8/H9=3d4a2576, bit=3d4a2572
-```
-
-First divergent arithmetic operation:
-
-```text
-path=W2 reduction tree add
-cycle=185551
-tile_base=8
-width=8
-pair=3
-operand_a=32'h3c81aa0c
-operand_b=32'h39699f40
-RTL_result=32'h3c837d4b
-bit_model_result=32'h3c837d4a
-```
-
-Vector/export and W2 lane-product issues were excluded by direct diagnostic
-capture. Standalone stable `fp32_add_wrapper` replay of the same operands
-matches the bit model and NumPy float32. Current evidence therefore classifies
-the blocker as a common RTL PE reduction/stream-register numeric issue, not an
-M3 vector/export issue and not a supported bit-model fix.
-
-Per task boundary, the model branch did not patch RTL. Hardware follow-up is
-documented in `reports/ml_m3/hardware_numeric_bug_report.md`.
+- Ran the core real-weight RTL matrix:
+  lengths 1, 2, 8, and 16; H8 staged and H9 interleaved; no-stall and
+  deterministic output+done stall modes.
+- Confirmed H8 RTL == H9 RTL == hardware-aware bit model for every core output
+  bit.
+- Ran length32 no-stall as an extended co-simulation case; it passed and does
+  not block the core acceptance result.
+- Compared 9 real RTL internal node categories per schedule against the
+  hardware-aware bit model with zero mismatches.
+- Closed software full-vs-incremental reference comparison.
+- Closed valid_seq_len, output lane/tile, done, metadata, duplicate output, and
+  missing output checks in the model-line testbench.
+- Generated H8/H9 cycle tables and Attention/full-layer cycle deltas.
+- Ran 3 hybrid next-token cases and one continuous 2-step prediction.
+- Ran model-side regression (`ml/tests/test_architecture.py`, 11 tests) and
+  M3 Python compile checks.
+- Ran forbidden-path and hardware read-only audits.
+- Generated final M3 reports under `reports/ml_m3/` and final artifact
+  manifests under `D:/IC_Workspace/VEDA_artifacts/ml_m3`.
 
 ## ML-M3 Reproduction
 
 ```bash
 python scripts/ml/run_ml_m3_artifact_audit.py
 python scripts/ml/run_ml_m3_vector_generation.py
-python scripts/ml/run_ml_m3_vcs.py --length 1 --schedule staged --schedule interleaved --run-id smoke_len1_combined
+python scripts/ml/run_ml_m3_vcs.py --length 1 --length 2 --length 8 --length 16 --schedule staged --schedule interleaved --stall-mode none --stall-mode output_done --run-id repair_core_len1_2_8_16
+python scripts/ml/run_ml_m3_compare.py
 python scripts/ml/run_ml_m3_acceptance.py
-python scripts/ml/run_ml_m3_vcs.py --length 1 --schedule staged --schedule interleaved --run-id numeric_alignment_edge_adds --diagnostic
-python scripts/ml/run_ml_m3_numeric_replay.py --run-id numeric_alignment_first_add_const
-python scripts/ml/run_ml_m3_numeric_classification.py
 ```
 
-Key logs:
+Extended length32 reproduction:
 
-```text
-D:/IC_Workspace/VEDA_artifacts/ml_m3/rtl_logs/ml_m3_staged_len_1_smoke_len1_combined.log
-D:/IC_Workspace/VEDA_artifacts/ml_m3/rtl_logs/ml_m3_interleaved_len_1_smoke_len1_combined.log
+```bash
+python scripts/ml/run_ml_m3_vcs.py --length 32 --schedule staged --schedule interleaved --stall-mode none --run-id repair_len32_no_stall
 ```
 
 ## Not Completed In ML-M3
 
-- length 2, 8, and 16 real RTL incremental co-simulation;
-- full H8/H9 real-weight A/B cycle comparison;
-- hybrid RTL-assisted next-token validation;
-- accepted ML-M3 tag.
+- No remaining core M3 items.
+- Length32 output+done stall is not required by the ML-M3 acceptance standard
+  because length32 is an extended case; length32 no-stall passed.
 
-These are blocked until the common RTL PE reduction numeric issue is fixed and
-the one-token H8/H9 smoke is re-run bit-exact against the hardware-aware bit
-model.
+## Dependencies
+
+- Host Python 3.12 environment for model/reference/report scripts.
+- Docker Desktop and existing container `nailong` for VCS.
+- Synopsys VCS/vlogan and DesignWare simulation libraries inside `nailong`.
+- Read-only hardware repository at `D:/IC_Workspace/VEDA` on repair commit
+  `a54e608a8dc7e63c7e5dd342f8b893bb1e0b7485`.
+
+## Next-Stage Cautions
+
+- Do not modify the Q2 checkpoint, tokenizer, or exported FP16 weights when
+  reproducing M3.
+- Do not modify `D:/IC_Workspace/VEDA` from the model branch.
+- Do not enter Hardware Stage H10, PDK, STA, P&R, PPA, or physical signoff from
+  the ML-M3 flow.
+- Preserve DesignWare FP32 add RNE mode `3'b000`; do not restore the old
+  `3'b100` behavior.
+- If future runs alter vectors, bit widths, ready/valid protocol, K/V layout, or
+  model architecture, first update the model stage spec and rerun the full M3
+  acceptance flow.
 
 ## Previous Stage
 

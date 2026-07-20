@@ -46,16 +46,16 @@ captures=/workspace/VEDA_artifacts/ml_m3/traces
 build=/workspace/VEDA_artifacts/ml_m3/temporary_build
 ```
 
-## Current Blocker
+## Repaired Baseline Result
 
-Both H8 staged and H9 interleaved elaborate for `N_HEAD=8`, `D_HEAD=8`,
-`D_MODEL=64`, `D_FFN=256`, `MAX_SEQ_LEN=128`. Both schedules produce the same
-captured prefix for length 1, but both differ from the bit model at the first
-checked token output boundary:
+Both H8 staged and H9 interleaved elaborate and pass for `N_HEAD=8`,
+`D_HEAD=8`, `D_MODEL=64`, `D_FFN=256`, `MAX_SEQ_LEN=128` using the repaired
+hardware tag `hw-h9-real-weight-numeric-repair-accepted`.
 
 ```text
-token=0 dim=1 RTL=3d4a2576 bit_model=3d4a2572
+lengths=1,2,8,16
+stall_modes=none,output_done
+bit_model == H8 RTL == H9 RTL
 ```
 
-No multi-token RTL run is allowed until this mismatch is resolved in a separate
-hardware or reference-model fix task.
+Length32 no-stall also passes as an extended co-simulation case.

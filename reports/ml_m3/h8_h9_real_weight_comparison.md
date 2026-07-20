@@ -1,13 +1,14 @@
 # ML-M3 H8/H9 Real-Weight Comparison
 
-| Length | H8 staged result | H9 interleaved result | H8 capture SHA | H9 capture SHA | Output identical |
-|---:|---|---|---|---|---|
-| 1 | DIAGNOSTIC | DIAGNOSTIC | `d09c4b80953c18ba7edea335490cca63f5ac4d9fcf24f4e17027813ca0045fb4` | `d09c4b80953c18ba7edea335490cca63f5ac4d9fcf24f4e17027813ca0045fb4` | True |
+| Case | H8 SHA | H9 SHA | H8/H9 bit-exact |
+|---|---|---|---|
+| len1 none | `befe09659b608ec1e99fef209b1b3a362f84a77da9fd33ac52f95782bdc27297` | `befe09659b608ec1e99fef209b1b3a362f84a77da9fd33ac52f95782bdc27297` | True |
+| len1 output_done | `befe09659b608ec1e99fef209b1b3a362f84a77da9fd33ac52f95782bdc27297` | `befe09659b608ec1e99fef209b1b3a362f84a77da9fd33ac52f95782bdc27297` | True |
+| len2 none | `df76cd6a9a9e8d3a1a73e1038939b1991810d061f201496dca2336d92f129446` | `df76cd6a9a9e8d3a1a73e1038939b1991810d061f201496dca2336d92f129446` | True |
+| len2 output_done | `df76cd6a9a9e8d3a1a73e1038939b1991810d061f201496dca2336d92f129446` | `df76cd6a9a9e8d3a1a73e1038939b1991810d061f201496dca2336d92f129446` | True |
+| len8 none | `0c9fe3ecc820401a000f6eb8f58e8e9a3029b885c26d9145b6253e32431d132a` | `0c9fe3ecc820401a000f6eb8f58e8e9a3029b885c26d9145b6253e32431d132a` | True |
+| len8 output_done | `0c9fe3ecc820401a000f6eb8f58e8e9a3029b885c26d9145b6253e32431d132a` | `0c9fe3ecc820401a000f6eb8f58e8e9a3029b885c26d9145b6253e32431d132a` | True |
+| len16 none | `e555a59dfe57b6a593b06b72acae9098de1c745302c9088f9f0ae5cc49b0009b` | `e555a59dfe57b6a593b06b72acae9098de1c745302c9088f9f0ae5cc49b0009b` | True |
+| len16 output_done | `e555a59dfe57b6a593b06b72acae9098de1c745302c9088f9f0ae5cc49b0009b` | `e555a59dfe57b6a593b06b72acae9098de1c745302c9088f9f0ae5cc49b0009b` | True |
 
-H8 staged and H9 interleaved remain numerically identical for the one-token
-diagnostic capture. Both schedules differ from the hardware-aware bit model in
-the same way, so the current blocker is a common arithmetic path issue and not
-an interleaving-only scheduler issue.
-
-The H8/H9 A/B cycle comparison for length 2/8/16 remains blocked by the
-one-token bit-exact gate.
+Aggregate output SHA256: `3b91b56e4142444dbfc9fe1dbea6edd248932dffaf296c8f10d983e4710535a1`

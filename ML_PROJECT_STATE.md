@@ -7,43 +7,37 @@
 - Name: Real-Weight RTL Co-Simulation and Deployment Validation
 - Branch: `ml/m3-real-rtl-cosim`
 - Base tag: `ml-q2-full-dataset-benchmark-accepted`
-- Last update: 2026-07-15
-- Status: MODEL STAGE M3 IN PROGRESS - HARDWARE NUMERIC FIX REQUIRED
+- Last update: 2026-07-20
+- Status: MODEL STAGE M3 PASS
 
-ML-M3 consumed the frozen Q2 benchmark checkpoint and generated real Q2
-vectors for lengths 1, 2, 8, 16, and 32. Q2 artifact audit, tokenizer SHA,
-export tensor audit, and weight mapping audit passed. H8 staged and H9
-interleaved RTL both compiled/elaborated for the Q2 H8/D8 layer configuration,
-but one-token smoke failed before multi-token RTL co-simulation:
-
-```text
-CHECK_FAIL layer token=0 dim=1 got=3d4a2576 expected=3d4a2572
-```
-
-Numeric alignment diagnostics reproduced the mismatch and collected the full
-64-dimension one-token output. H8 and H9 remained identical, with 54/64 final
-dimensions mismatching the hardware-aware bit model. The first stable divergent
-boundary is FFN W2 output, not residual1, RMSNorm2, vector export, W2 operands,
-or W2 lane products.
-
-First divergent arithmetic operation:
+ML-M3 consumed the frozen Q2 benchmark checkpoint and generated real Q2 vectors
+for lengths 1, 2, 8, 16, and 32. Q2 artifact audit, tokenizer SHA, export
+tensor audit, and weight mapping audit passed. The accepted hardware baseline
+is the repaired H9 tag:
 
 ```text
-path=W2 reduction tree add
-tile_base=8
-width=8
-pair=3
-operand_a=32'h3c81aa0c
-operand_b=32'h39699f40
-RTL_result=32'h3c837d4b
-bit_model_result=32'h3c837d4a
+tag=hw-h9-real-weight-numeric-repair-accepted
+commit=a54e608a8dc7e63c7e5dd342f8b893bb1e0b7485
 ```
 
-Standalone stable `fp32_add_wrapper` replay of the same operands matches the
-bit model and NumPy float32, so the current evidence points to a common RTL PE
-reduction/stream-register handshake issue that must be fixed on the hardware
-line. ML-M3 did not modify hardware files, did not run multi-token RTL after
-the one-token gate failed, and did not invoke PDK, STA, P&R, or PPA.
+The repaired H8 staged and H9 interleaved RTL both compile and pass bit-exact
+real-weight co-simulation against the hardware-aware bit model for lengths 1,
+2, 8, and 16 in both no-stall and deterministic output+done stall modes. H8
+and H9 captured outputs are identical for every accepted core case. Length32
+no-stall also passes as an extended co-simulation case.
+
+ML-M3 also closed:
+
+- software full-vs-incremental reference comparison;
+- valid_seq_len progression 1..N for real RTL runs;
+- output lane/tile, done, metadata, and duplicate/missing output checks;
+- 9 categories of real RTL internal node comparison per schedule;
+- H8/H9 real-weight cycle comparison;
+- 3 hybrid next-token cases and one continuous 2-step prediction;
+- forbidden-path and hardware read-only audits.
+
+No hardware source files, checkpoints, tokenizer files, PDK, STA, P&R, PPA, or
+Hardware Stage H10 flow were modified or invoked.
 
 ## Previous Model Stage
 
@@ -87,13 +81,12 @@ best_validation_loss=3.300639416490282
 perplexity=27.129980732808296
 ```
 
-## ML-M3 Continuation Gate
+## ML-M3 Acceptance Result
 
-Model Stage M3 has begun from the accepted ML-Q2 benchmark checkpoint. The
-current continuation gate is a hardware-owned numeric fix for the common W2
-reduction-path mismatch documented above. Do not resume length 2/8/16 real RTL
-co-simulation, hybrid next-token validation, or M3 acceptance tagging until
-one-token H8/H9 RTL output is bit-exact against the hardware-aware bit model.
+Model Stage M3 is accepted on branch `ml/m3-real-rtl-cosim`. Acceptance evidence
+is recorded in `reports/ml_m3/acceptance_audit.md`,
+`reports/ml_m3/summary.md`, and
+`D:/IC_Workspace/VEDA_artifacts/ml_m3/manifests/acceptance.json`.
 
 ## Post-Acceptance Quality Experiments
 

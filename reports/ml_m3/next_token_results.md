@@ -1,7 +1,14 @@
-# ML-M3 Next-Token Results
+# ML-M3 Hybrid Next-Token Results
 
-Status: BLOCKED.
+| Case | Prompt token IDs | Bit top-1 | H8 top-1 | H9 top-1 | Top-1 pass |
+|---|---|---:|---:|---:|---|
+| len_1 | [1] | 230 | 230 | 230 | True |
+| len_8 | [1, 230, 5, 240, 5, 54, 5, 204] | 5 | 5 | 5 | True |
+| len_16 | [1, 230, 5, 240, 5, 54, 5, 204, 5, 206, 5, 107, 5, 54, 5, 556] | 5 | 5 | 5 | True |
 
-Hybrid next-token validation requires a complete real RTL layer output. The one-token RTL smoke stopped at output dimension 1, so no RTL-assisted logits or top-k token result was claimed.
+## Continuous Two-Step
 
-Software hardware-aware next-token references remain available in `D:/IC_Workspace/VEDA_artifacts/ml_m3/comparisons/next_token_reference.json`.
+| Step | Prompt token IDs | Bit top-1 | H8 top-1 | H9 top-1 | Result |
+|---:|---|---:|---:|---:|---|
+| 0 | [1] | 230 | 230 | 230 | PASS |
+| 1 | [1, 230] | 5 | 5 | 5 | PASS |

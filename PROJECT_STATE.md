@@ -13,6 +13,14 @@ residual-add RTL foundations. Stage 7C adds the FFN/ReLU RTL foundation. Stage
 7D adds the full Pre-Norm `transformer_layer` top around the frozen Stage 6
 projection-integrated MHA and is accepted.
 
+## Model Integration Note
+
+Model Stage M3 is accepted on branch `ml/m3-real-rtl-cosim` using the
+hardware-owned repair tag `hw-h9-real-weight-numeric-repair-accepted` at commit
+`a54e608a8dc7e63c7e5dd342f8b893bb1e0b7485`. The model flow treated
+`D:/IC_Workspace/VEDA` as read-only, did not modify hardware files, and did not
+invoke PDK, STA, P&R, PPA, or Hardware Stage H10.
+
 Stage 7 acceptance audit is recorded in
 `reports/stage_07/acceptance_audit.md`. The acceptance tag is
 `stage7-correctness-accepted`, pointing to the Stage 7 final functional commit,

@@ -248,10 +248,10 @@ ml-m3-reference-test:
 	$(PYTHON) scripts/ml/run_ml_m3_vector_generation.py
 
 ml-m3-rtl-smoke:
-	$(PYTHON) scripts/ml/run_ml_m3_vcs.py --length 1 --schedule staged --schedule interleaved
+	$(PYTHON) scripts/ml/run_ml_m3_vcs.py --length 1 --schedule staged --schedule interleaved --stall-mode none --stall-mode output_done
 
 ml-m3-rtl-incremental:
-	$(PYTHON) scripts/ml/run_ml_m3_vcs.py --length 2 --length 8 --length 16 --schedule staged --schedule interleaved
+	$(PYTHON) scripts/ml/run_ml_m3_vcs.py --length 2 --length 8 --length 16 --schedule staged --schedule interleaved --stall-mode none --stall-mode output_done
 
 ml-m3-h8-h9-compare:
 	$(PYTHON) scripts/ml/run_ml_m3_compare.py
@@ -262,5 +262,6 @@ ml-m3-next-token-test:
 ml-m3-test:
 	$(PYTHON) scripts/ml/run_ml_m3_artifact_audit.py
 	$(PYTHON) scripts/ml/run_ml_m3_vector_generation.py
-	$(PYTHON) scripts/ml/run_ml_m3_vcs.py --length 1 --schedule staged --schedule interleaved
+	$(PYTHON) scripts/ml/run_ml_m3_vcs.py --length 1 --length 2 --length 8 --length 16 --schedule staged --schedule interleaved --stall-mode none --stall-mode output_done
+	$(PYTHON) scripts/ml/run_ml_m3_compare.py
 	$(PYTHON) scripts/ml/run_ml_m3_acceptance.py

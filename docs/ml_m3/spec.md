@@ -4,7 +4,7 @@ Short id: ML-M3
 
 Name: Real-Weight RTL Co-Simulation and Deployment Validation
 
-Status: IN PROGRESS - RTL/bit-model numeric mismatch blocked.
+Status: PASS - repaired H9 hardware baseline accepted for ML-M3.
 
 ## Scope
 
@@ -73,9 +73,9 @@ Hardware sources are read-only from:
 
 ```text
 D:/IC_Workspace/VEDA
-tag=hw-h9-sfu-pe-interleaving-thesis-accepted
-commit=9e0b4c9ba42356ee68e489e99cc5cf64e94f607e
-branch=hw/h9-sfu-pe-interleaving
+tag=hw-h9-real-weight-numeric-repair-accepted
+commit=a54e608a8dc7e63c7e5dd342f8b893bb1e0b7485
+branch=hw/h9-real-weight-numeric-repair
 ```
 
 ML-M3 must not modify hardware files, hardware branches, RTL, PDK collateral, or
@@ -84,9 +84,11 @@ hardware reports.
 ## Mandatory Gate
 
 One-token H9 and H8 real RTL must pass bit-exact comparison against the
-hardware-aware bit model before multi-token length 2/8/16 runs. The current
-M3 run is blocked at this gate:
+hardware-aware bit model before multi-token length 2/8/16 runs. This gate is
+closed on the repaired H9 hardware baseline:
 
 ```text
-CHECK_FAIL layer token=0 dim=1 got=3d4a2576 expected=3d4a2572
+length1 H8 staged == bit model
+length1 H9 interleaved == bit model
+length1 H8 staged == H9 interleaved
 ```

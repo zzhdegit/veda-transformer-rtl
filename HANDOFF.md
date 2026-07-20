@@ -12,6 +12,11 @@ Pre-Norm Transformer layer specification and Python bit-model framework are
 frozen. RMSNorm, residual-add, FFN/ReLU, and the full Stage 7 top-level
 `transformer_layer` RTL are added and verified.
 
+Model Stage M3 is also accepted on branch `ml/m3-real-rtl-cosim` using the
+hardware-owned repair tag `hw-h9-real-weight-numeric-repair-accepted` at commit
+`a54e608a8dc7e63c7e5dd342f8b893bb1e0b7485`. The M3 model flow did not modify
+hardware files and did not enter PDK, STA, P&R, PPA, or Hardware Stage H10.
+
 Stage 6 projection-integrated multi-head attention correctness remains accepted,
 and the Stage 6 acceptance audit is closed.
 

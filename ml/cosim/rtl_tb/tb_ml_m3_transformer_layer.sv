@@ -114,6 +114,7 @@ module tb_ml_m3_transformer_layer;
     logic [15:0] hidden_vec [0:MAX_TOKENS-1][0:D_MODEL-1];
     logic [31:0] expected_output [0:MAX_TOKENS-1][0:D_MODEL-1];
     logic [31:0] captured_output [0:MAX_TOKENS-1][0:D_MODEL-1];
+    logic captured_seen [0:MAX_TOKENS-1][0:D_MODEL-1];
     logic [META_W-1:0] expected_meta [0:MAX_TOKENS-1];
     int token_count;
     int out_fd;
@@ -121,6 +122,7 @@ module tb_ml_m3_transformer_layer;
     string out_path;
     string node_path;
     int diagnostic_mode;
+    int stall_mode;
     int mismatch_count;
     int w2_trace_current_row;
     int w2_trace_current_base;
@@ -410,8 +412,12 @@ module tb_ml_m3_transformer_layer;
             out_fd = 0;
             node_fd = 0;
             diagnostic_mode = 0;
+            stall_mode = 0;
             if ($test$plusargs("ML_M3_DIAGNOSTIC")) begin
                 diagnostic_mode = 1;
+            end
+            if ($value$plusargs("ML_M3_STALL_MODE=%d", stall_mode)) begin
+                if (stall_mode < 0 || stall_mode > 3) tb_fail("invalid stall mode");
             end
             if ($value$plusargs("ML_M3_OUTPUT_FILE=%s", out_path)) begin
                 out_fd = $fopen(out_path, "w");
@@ -532,6 +538,8 @@ module tb_ml_m3_transformer_layer;
         int token_norm2_before;
         int token_ffn_before;
         int token_res2_before;
+        int token_output_tiles_before;
+        int done_seen;
         begin
             active_token_idx = token_idx;
             token_norm1_before = norm1_done_count;
@@ -540,13 +548,34 @@ module tb_ml_m3_transformer_layer;
             token_norm2_before = norm2_done_count;
             token_ffn_before = ffn_done_count;
             token_res2_before = residual2_done_count;
+            token_output_tiles_before = output_tile_count;
+            for (int dim = 0; dim < D_MODEL; dim++) begin
+                captured_seen[token_idx][dim] = 1'b0;
+            end
             load_token(token_idx);
             received = 0;
             cycle = 0;
-            while (received < D_MODEL || !done_valid) begin
+            done_seen = 0;
+            while (received < D_MODEL || !done_seen) begin
                 @(negedge clk);
-                output_ready = (cycle % 7) != 3;
-                done_ready = 1'b1;
+                case (stall_mode)
+                    0: begin
+                        output_ready = 1'b1;
+                        done_ready = 1'b1;
+                    end
+                    1: begin
+                        output_ready = (cycle % 7) != 3;
+                        done_ready = 1'b1;
+                    end
+                    2: begin
+                        output_ready = 1'b1;
+                        done_ready = (cycle % 11) != 5;
+                    end
+                    default: begin
+                        output_ready = (cycle % 7) != 3;
+                        done_ready = (cycle % 11) != 5;
+                    end
+                endcase
                 #1;
                 if (node_fd != 0) begin
                     if (u_layer.u_ffn.pe_in_fire && !u_layer.u_ffn.in_ffn1) begin
@@ -652,6 +681,8 @@ module tb_ml_m3_transformer_layer;
                             idx = int'(output_base_dim) + lane;
                             lane_value = output_vector_fp32[lane*32 +: 32];
                             if (idx >= D_MODEL) tb_fail("output lane index out of range");
+                            if (captured_seen[token_idx][idx]) tb_fail("duplicate output dimension");
+                            captured_seen[token_idx][idx] = 1'b1;
                             captured_output[token_idx][idx] = lane_value;
                             if (out_fd != 0) $fdisplay(out_fd, "R %0d %0d %08h", token_idx, idx, lane_value);
                             if (lane_value !== expected_output[token_idx][idx]) begin
@@ -674,6 +705,8 @@ module tb_ml_m3_transformer_layer;
                     if (output_last !== (received == D_MODEL)) tb_fail("output last mismatch");
                 end
                 if (pre_done_fire) begin
+                    if (done_seen != 0) tb_fail("duplicate done");
+                    done_seen = 1;
                     top_done_count++;
                     if (received != D_MODEL) tb_fail("done before all outputs");
                     if (done_invalid) tb_fail("done invalid");
@@ -684,11 +717,23 @@ module tb_ml_m3_transformer_layer;
                 cycle++;
                 if (cycle > 500000) tb_fail("layer timeout");
             end
+            for (int dim = 0; dim < D_MODEL; dim++) begin
+                if (!captured_seen[token_idx][dim]) tb_fail("missing output dimension");
+            end
+            if (received != D_MODEL) tb_fail("output lane count mismatch");
+            if ((output_tile_count - token_output_tiles_before) != (D_MODEL / PE_NUM)) tb_fail("output tile count mismatch");
+            if ((norm1_done_count - token_norm1_before) != 1) tb_fail("norm1 done count mismatch");
+            if ((mha_done_count - token_mha_before) != 1) tb_fail("mha commit count mismatch");
+            if ((residual1_done_count - token_res1_before) != 1) tb_fail("residual1 done count mismatch");
+            if ((norm2_done_count - token_norm2_before) != 1) tb_fail("norm2 done count mismatch");
+            if ((ffn_done_count - token_ffn_before) != 1) tb_fail("ffn done count mismatch");
+            if ((residual2_done_count - token_res2_before) != 1) tb_fail("residual2 done count mismatch");
+            if (current_valid_seq_len !== SEQ_LEN_W'(token_idx + 1)) tb_fail("current seq len mismatch");
             @(negedge clk);
             output_ready = 1'b0;
             done_ready = 1'b0;
-            $display("ML_M3_TOKEN_PASS token=%0d cycles=%0d outputs=%0d tiles_so_far=%0d valid_seq_len=%0d norm1_delta=%0d mha_delta=%0d res1_delta=%0d norm2_delta=%0d ffn_delta=%0d res2_delta=%0d",
-                     token_idx, cycle, received, output_tile_count, done_valid_seq_len,
+            $display("ML_M3_TOKEN_PASS token=%0d stall_mode=%0d cycles=%0d outputs=%0d output_tiles_delta=%0d tiles_so_far=%0d valid_seq_len=%0d norm1_delta=%0d mha_delta=%0d res1_delta=%0d norm2_delta=%0d ffn_delta=%0d res2_delta=%0d",
+                     token_idx, stall_mode, cycle, received, output_tile_count - token_output_tiles_before, output_tile_count, done_valid_seq_len,
                      norm1_done_count - token_norm1_before,
                      mha_done_count - token_mha_before,
                      residual1_done_count - token_res1_before,
@@ -713,8 +758,8 @@ module tb_ml_m3_transformer_layer;
                      ATTENTION_PE_ARCH, ATTENTION_SCHEDULE, N_HEAD, D_HEAD, D_MODEL, D_FFN, MAX_SEQ_LEN,
                      token_count, mismatch_count, perf_total_layer_cycles, output_tile_count, top_done_count, current_valid_seq_len);
         end else begin
-            $display("ML_M3_RTL_PASS arch=%0d schedule=%0d n_head=%0d d_head=%0d d_model=%0d d_ffn=%0d max_seq_len=%0d tokens=%0d total_cycles=%0d output_tiles=%0d done_count=%0d valid_seq_len=%0d",
-                     ATTENTION_PE_ARCH, ATTENTION_SCHEDULE, N_HEAD, D_HEAD, D_MODEL, D_FFN, MAX_SEQ_LEN,
+            $display("ML_M3_RTL_PASS arch=%0d schedule=%0d stall_mode=%0d n_head=%0d d_head=%0d d_model=%0d d_ffn=%0d max_seq_len=%0d tokens=%0d total_cycles=%0d output_tiles=%0d done_count=%0d valid_seq_len=%0d",
+                     ATTENTION_PE_ARCH, ATTENTION_SCHEDULE, stall_mode, N_HEAD, D_HEAD, D_MODEL, D_FFN, MAX_SEQ_LEN,
                      token_count, perf_total_layer_cycles, output_tile_count, top_done_count, current_valid_seq_len);
         end
         $display("ML_M3_BOUNDARY_OBS norm1=%0d mha=%0d residual1=%0d norm2=%0d ffn=%0d residual2=%0d output_tiles=%0d done=%0d",

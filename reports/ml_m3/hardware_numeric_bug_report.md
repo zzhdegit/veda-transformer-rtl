@@ -1,5 +1,11 @@
 # ML-M3 Hardware Numeric Bug Report
 
+## Closure Note
+
+This report is preserved as the pre-repair hardware numeric bug record. The bug is closed by hardware tag `hw-h9-real-weight-numeric-repair-accepted` at commit `a54e608a8dc7e63c7e5dd342f8b893bb1e0b7485`; the model branch did not modify hardware RTL. Current ML-M3 acceptance is `MODEL STAGE M3 PASS` with length1/2/8/16 H8/H9/bit-model bit-exact and zero mismatches.
+
+## Historical Bug Record
+
 - Hardware tag: `hw-h9-sfu-pe-interleaving-thesis-accepted`
 - Hardware commit: `9e0b4c9ba42356ee68e489e99cc5cf64e94f607e`
 - Affected path: common H8/H9 FFN W2 GEMV reduction path (`reconfigurable_pe_core` / `fp32_reduction_tree` / `fp32_add_wrapper` interaction).

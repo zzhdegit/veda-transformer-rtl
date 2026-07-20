@@ -1,12 +1,22 @@
 # ML-M3 Incremental KV Results
 
-Status: **BLOCKED BY ONE-TOKEN NUMERIC GATE**.
+Software full-vs-incremental reference: **PASS** (valid_seq_len=16, max_abs=3.618001937866211e-05).
 
-The mandatory one-token RTL smoke still fails bit-exact comparison against the
-hardware-aware bit model. Per the ML-M3 Numeric Alignment task boundary,
-length 2/8/16 RTL incremental KV co-simulation was not run after identifying
-the common RTL W2 reduction-path numeric blocker.
-
-Software full-vs-incremental reference from the earlier artifact audit remains
-PASS, but real RTL incremental KV closure must wait for the hardware numeric
-fix and a passing one-token H8/H9 smoke.
+| Length | Stall | Schedule | Token lines | Output lanes | Output tiles | Done count | valid_seq_len | Result |
+|---:|---|---|---:|---:|---:|---:|---:|---|
+| 1 | none | staged | 1 | 64 | 8 | 1 | 1 | PASS |
+| 1 | none | interleaved | 1 | 64 | 8 | 1 | 1 | PASS |
+| 1 | output_done | staged | 1 | 64 | 8 | 1 | 1 | PASS |
+| 1 | output_done | interleaved | 1 | 64 | 8 | 1 | 1 | PASS |
+| 2 | none | staged | 2 | 128 | 16 | 2 | 2 | PASS |
+| 2 | none | interleaved | 2 | 128 | 16 | 2 | 2 | PASS |
+| 2 | output_done | staged | 2 | 128 | 16 | 2 | 2 | PASS |
+| 2 | output_done | interleaved | 2 | 128 | 16 | 2 | 2 | PASS |
+| 8 | none | staged | 8 | 512 | 64 | 8 | 8 | PASS |
+| 8 | none | interleaved | 8 | 512 | 64 | 8 | 8 | PASS |
+| 8 | output_done | staged | 8 | 512 | 64 | 8 | 8 | PASS |
+| 8 | output_done | interleaved | 8 | 512 | 64 | 8 | 8 | PASS |
+| 16 | none | staged | 16 | 1024 | 128 | 16 | 16 | PASS |
+| 16 | none | interleaved | 16 | 1024 | 128 | 16 | 16 | PASS |
+| 16 | output_done | staged | 16 | 1024 | 128 | 16 | 16 | PASS |
+| 16 | output_done | interleaved | 16 | 1024 | 128 | 16 | 16 | PASS |
